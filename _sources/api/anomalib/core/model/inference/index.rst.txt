@@ -56,7 +56,7 @@ Classes
       Post-Process.
 
 
-   .. py:method:: predict(self, image: Union[str, numpy.ndarray], superimpose: bool = True) -> numpy.ndarray
+   .. py:method:: predict(self, image: Union[str, numpy.ndarray], superimpose: bool = True, meta_data: Optional[dict] = None) -> Tuple[numpy.ndarray, numpy.ndarray]
 
       Perform a prediction for a given input image.
 
@@ -196,7 +196,7 @@ Classes
       :rtype: np.ndarray
 
 
-   .. py:method:: post_process(self, predictions: numpy.ndarray, meta_data: Optional[Dict] = None) -> numpy.ndarray
+   .. py:method:: post_process(self, predictions: numpy.ndarray, meta_data: Optional[Dict] = None) -> Tuple[numpy.ndarray, numpy.ndarray]
 
       Post process the output predictions.
 

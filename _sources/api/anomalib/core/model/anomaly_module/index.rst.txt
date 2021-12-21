@@ -42,6 +42,12 @@ Classes
       :rtype: [Tensor]
 
 
+   .. py:method:: validation_step(self, batch, batch_idx) -> dict
+      :abstractmethod:
+
+      To be implemented in the subclasses.
+
+
    .. py:method:: predict_step(self, batch, batch_idx, _)
 
       Step function called during :meth:`~pytorch_lightning.trainer.trainer.Trainer.predict`.
@@ -77,21 +83,27 @@ Classes
       Called at the end of each test step.
 
 
-   .. py:method:: validation_epoch_end(self, _outputs)
+   .. py:method:: validation_epoch_end(self, outputs)
 
       Compute threshold and performance metrics.
 
       :param outputs: Batch of outputs from the validation step
 
 
-   .. py:method:: test_epoch_end(self, _outputs)
+   .. py:method:: test_epoch_end(self, outputs)
 
       Compute and save anomaly scores of the test set.
 
       :param outputs: Batch of outputs from the validation step
 
 
-   .. py:method:: _post_process(self, outputs, predict_labels=False)
+   .. py:method:: _compute_adaptive_threshold(self, outputs)
+
+
+   .. py:method:: _collect_outputs(self, image_metric, pixel_metric, outputs)
+
+
+   .. py:method:: _post_process(self, outputs)
 
       Compute labels based on model predictions.
 

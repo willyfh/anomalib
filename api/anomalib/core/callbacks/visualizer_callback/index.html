@@ -184,12 +184,15 @@
 <li class="toctree-l5"><a class="reference internal" href="../compress/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.compress</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../nncf_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.nncf_callback</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../save_to_csv/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.save_to_csv</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.timer</span></code></a></li>
 <li class="toctree-l5 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.visualizer_callback</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../metrics/adaptive_threshold/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.adaptive_threshold</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../metrics/anomaly_score_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.anomaly_score_distribution</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../metrics/auroc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.auroc</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../metrics/optimal_f1/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.optimal_f1</span></code></a></li>
 </ul>
@@ -325,7 +328,7 @@
 </table></div>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.core.callbacks.visualizer_callback.VisualizerCallback">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.core.callbacks.visualizer_callback.</span></span><span class="sig-name descname"><span class="pre">VisualizerCallback</span></span><a class="reference internal" href="../../../../../_modules/anomalib/core/callbacks/visualizer_callback.html#VisualizerCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.callbacks.visualizer_callback.VisualizerCallback" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.core.callbacks.visualizer_callback.</span></span><span class="sig-name descname"><span class="pre">VisualizerCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs_are_normalized</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/core/callbacks/visualizer_callback.html#VisualizerCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.callbacks.visualizer_callback.VisualizerCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pytorch_lightning.Callback</span></code></p>
 <p>Callback that visualizes the inference results of a model.</p>
 <p>The callback generates a figure showing the original image, the ground truth segmentation mask,
@@ -363,7 +366,7 @@ ensures that all images appear as part of the same step.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>_trainer</strong> (<em>pl.Trainer</em>) – Pytorch Lightning trainer</p></li>
+<li><p><strong>_trainer</strong> (<em>pl.Trainer</em>) – Pytorch Lightning trainer (unused)</p></li>
 <li><p><strong>pl_module</strong> (<em>pl.LightningModule</em>) – Anomaly module</p></li>
 </ul>
 </dd>

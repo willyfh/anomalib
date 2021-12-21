@@ -183,12 +183,15 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/compress/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.compress</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/nncf_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.nncf_callback</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/save_to_csv/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.save_to_csv</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.visualizer_callback</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../../../api/anomalib/core/metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/metrics/adaptive_threshold/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.adaptive_threshold</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/metrics/anomaly_score_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.anomaly_score_distribution</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/metrics/auroc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.auroc</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/metrics/optimal_f1/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.optimal_f1</span></code></a></li>
 </ul>
@@ -333,8 +336,9 @@
 <span class="sd">    config.yaml file.</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs_are_normalized</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
         <span class="sd">"""Visualizer callback."""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs_are_normalized</span> <span class="o">=</span> <span class="n">inputs_are_normalized</span>
 
 <div class="viewcode-block" id="VisualizerCallback._add_images"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/visualizer_callback/index.html#anomalib.core.callbacks.VisualizerCallback._add_images">[docs]</a>    <span class="k">def</span> <span class="nf">_add_images</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -387,6 +391,13 @@
 <span class="sd">        """</span>
         <span class="k">assert</span> <span class="n">outputs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs_are_normalized</span><span class="p">:</span>
+            <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.5</span>
+            <span class="n">normalize</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># anomaly maps are already normalized</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">threshold</span> <span class="o">=</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">pixel_threshold</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="n">normalize</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># raw anomaly maps. Still need to normalize</span>
+
         <span class="k">for</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">true_mask</span><span class="p">,</span> <span class="n">anomaly_map</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
             <span class="n">outputs</span><span class="p">[</span><span class="s2">"image_path"</span><span class="p">],</span> <span class="n">outputs</span><span class="p">[</span><span class="s2">"image"</span><span class="p">],</span> <span class="n">outputs</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">],</span> <span class="n">outputs</span><span class="p">[</span><span class="s2">"anomaly_maps"</span><span class="p">]</span>
         <span class="p">):</span>
@@ -394,8 +405,8 @@
             <span class="n">true_mask</span> <span class="o">=</span> <span class="n">true_mask</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
             <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">anomaly_map</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
 
-            <span class="n">heat_map</span> <span class="o">=</span> <span class="n">superimpose_anomaly_map</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
-            <span class="n">pred_mask</span> <span class="o">=</span> <span class="n">compute_mask</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">,</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+            <span class="n">heat_map</span> <span class="o">=</span> <span class="n">superimpose_anomaly_map</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">)</span>
+            <span class="n">pred_mask</span> <span class="o">=</span> <span class="n">compute_mask</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
             <span class="n">vis_img</span> <span class="o">=</span> <span class="n">mark_boundaries</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">pred_mask</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"thick"</span><span class="p">)</span>
 
             <span class="n">visualizer</span> <span class="o">=</span> <span class="n">Visualizer</span><span class="p">(</span><span class="n">num_rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_cols</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">figure_size</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
@@ -414,7 +425,7 @@
 <span class="sd">        ensures that all images appear as part of the same step.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            _trainer (pl.Trainer): Pytorch Lightning trainer</span>
+<span class="sd">            _trainer (pl.Trainer): Pytorch Lightning trainer (unused)</span>
 <span class="sd">            pl_module (pl.LightningModule): Anomaly module</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">logger</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pl_module</span><span class="o">.</span><span class="n">logger</span><span class="p">,</span> <span class="n">AnomalibWandbLogger</span><span class="p">):</span>

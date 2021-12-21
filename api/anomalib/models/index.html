@@ -184,12 +184,15 @@
 <li class="toctree-l5"><a class="reference internal" href="../core/callbacks/compress/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.compress</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../core/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../core/callbacks/nncf_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.nncf_callback</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../core/callbacks/normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../core/callbacks/save_to_csv/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.save_to_csv</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../core/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../core/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.visualizer_callback</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../core/metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../core/metrics/adaptive_threshold/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.adaptive_threshold</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../core/metrics/anomaly_score_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.anomaly_score_distribution</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../core/metrics/auroc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.auroc</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../core/metrics/optimal_f1/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.optimal_f1</span></code></a></li>
 </ul>
@@ -397,6 +400,11 @@
 </dl>
 </dd></dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.AnomalyModule.validation_step">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validation_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_idx</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#anomalib.models.AnomalyModule.validation_step" title="Permalink to this definition">¶</a></dt>
+<dd><p>To be implemented in the subclasses.</p>
+</dd></dl>
+<dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.AnomalyModule.predict_step">
 <span class="sig-name descname"><span class="pre">predict_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.AnomalyModule.predict_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Step function called during <code class="xref py py-meth docutils literal notranslate"><span class="pre">predict()</span></code>.</p>
@@ -444,7 +452,7 @@ These are required in <cite>validation_epoch_end</cite> for feature concatenatio
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.AnomalyModule.validation_epoch_end">
-<span class="sig-name descname"><span class="pre">validation_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_outputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.AnomalyModule.validation_epoch_end" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">validation_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.AnomalyModule.validation_epoch_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute threshold and performance metrics.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -454,7 +462,7 @@ These are required in <cite>validation_epoch_end</cite> for feature concatenatio
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.AnomalyModule.test_epoch_end">
-<span class="sig-name descname"><span class="pre">test_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_outputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.AnomalyModule.test_epoch_end" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">test_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.AnomalyModule.test_epoch_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute and save anomaly scores of the test set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -463,8 +471,16 @@ These are required in <cite>validation_epoch_end</cite> for feature concatenatio
 </dl>
 </dd></dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.AnomalyModule._compute_adaptive_threshold">
+<span class="sig-name descname"><span class="pre">_compute_adaptive_threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.AnomalyModule._compute_adaptive_threshold" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.AnomalyModule._collect_outputs">
+<span class="sig-name descname"><span class="pre">_collect_outputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixel_metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.AnomalyModule._collect_outputs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.AnomalyModule._post_process">
-<span class="sig-name descname"><span class="pre">_post_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.AnomalyModule._post_process" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">_post_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.AnomalyModule._post_process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute labels based on model predictions.</p>
 </dd></dl>
 <dl class="py method">
@@ -564,12 +580,15 @@ These are required in <cite>validation_epoch_end</cite> for feature concatenatio
 <li><a class="reference internal" href="#functions">Functions</a><ul>
 <li><a class="reference internal" href="#anomalib.models.AnomalyModule">AnomalyModule</a><ul>
 <li><a class="reference internal" href="#anomalib.models.AnomalyModule.forward">forward</a></li>
+<li><a class="reference internal" href="#anomalib.models.AnomalyModule.validation_step">validation_step</a></li>
 <li><a class="reference internal" href="#anomalib.models.AnomalyModule.predict_step">predict_step</a></li>
 <li><a class="reference internal" href="#anomalib.models.AnomalyModule.test_step">test_step</a></li>
 <li><a class="reference internal" href="#anomalib.models.AnomalyModule.validation_step_end">validation_step_end</a></li>
 <li><a class="reference internal" href="#anomalib.models.AnomalyModule.test_step_end">test_step_end</a></li>
 <li><a class="reference internal" href="#anomalib.models.AnomalyModule.validation_epoch_end">validation_epoch_end</a></li>
 <li><a class="reference internal" href="#anomalib.models.AnomalyModule.test_epoch_end">test_epoch_end</a></li>
+<li><a class="reference internal" href="#anomalib.models.AnomalyModule._compute_adaptive_threshold">_compute_adaptive_threshold</a></li>
+<li><a class="reference internal" href="#anomalib.models.AnomalyModule._collect_outputs">_collect_outputs</a></li>
 <li><a class="reference internal" href="#anomalib.models.AnomalyModule._post_process">_post_process</a></li>
 <li><a class="reference internal" href="#anomalib.models.AnomalyModule._log_metrics">_log_metrics</a></li>
 </ul>

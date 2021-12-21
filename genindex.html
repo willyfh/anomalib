@@ -182,12 +182,15 @@
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/callbacks/compress/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.compress</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/callbacks/nncf_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.nncf_callback</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/callbacks/normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/callbacks/save_to_csv/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.save_to_csv</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.visualizer_callback</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="api/anomalib/core/metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/metrics/adaptive_threshold/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.adaptive_threshold</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/metrics/anomaly_score_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.anomaly_score_distribution</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/metrics/auroc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.auroc</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/metrics/optimal_f1/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.optimal_f1</span></code></a></li>
 </ul>
@@ -356,8 +359,6 @@
           <li><a href="api/anomalib/data/transforms/index.html#anomalib.data.transforms.ToNumpy.__repr__">(anomalib.data.transforms.ToNumpy method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/data/tiler/index.html#anomalib.data.tiler.Tiler.__unfold">__unfold() (anomalib.data.tiler.Tiler method)</a>
 </li>
         <li><a href="api/anomalib/data/tiler/index.html#anomalib.data.tiler.Tiler.__validate_size_type">__validate_size_type() (anomalib.data.tiler.Tiler static method)</a>
@@ -370,9 +371,31 @@
           <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.VisualizerCallback._add_images">(anomalib.core.callbacks.VisualizerCallback method)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTec._clean">_clean() (anomalib.data.mvtec.MVTec method)</a>
 </li>
+        <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule._collect_outputs">_collect_outputs() (anomalib.core.model.anomaly_module.AnomalyModule method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/model/index.html#anomalib.core.model.AnomalyModule._collect_outputs">(anomalib.core.model.AnomalyModule method)</a>
+</li>
+          <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule._collect_outputs">(anomalib.models.AnomalyModule method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._collect_stats">_collect_stats() (anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback method)</a>
+</li>
+        <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule._compute_adaptive_threshold">_compute_adaptive_threshold() (anomalib.core.model.anomaly_module.AnomalyModule method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/model/index.html#anomalib.core.model.AnomalyModule._compute_adaptive_threshold">(anomalib.core.model.AnomalyModule method)</a>
+</li>
+          <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule._compute_adaptive_threshold">(anomalib.models.AnomalyModule method)</a>
+</li>
+        </ul></li>
         <li><a href="api/anomalib/core/model/multi_variate_gaussian/index.html#anomalib.core.model.multi_variate_gaussian.MultiVariateGaussian._cov">_cov() (anomalib.core.model.multi_variate_gaussian.MultiVariateGaussian static method)</a>
+</li>
+        <li><a href="api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._create_inference_model">_create_inference_model() (anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback static method)</a>
 </li>
         <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTec._download">_download() (anomalib.data.mvtec.MVTec method)</a>
 </li>
@@ -388,6 +411,8 @@
           <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule._log_metrics">(anomalib.models.AnomalyModule method)</a>
 </li>
         </ul></li>
+        <li><a href="api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._normalize">_normalize() (anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback method)</a>
+</li>
         <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule._post_process">_post_process() (anomalib.core.model.anomaly_module.AnomalyModule method)</a>
 
         <ul>
@@ -402,6 +427,8 @@
           <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.SparseRandomProjection._sparse_random_matrix">(anomalib.models.patchcore.utils.sampling.SparseRandomProjection method)</a>
 </li>
         </ul></li>
+        <li><a href="api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._standardize">_standardize() (anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback method)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -410,6 +437,12 @@
   <h2>A</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/core/metrics/index.html#anomalib.core.metrics.AdaptiveThreshold">AdaptiveThreshold (class in anomalib.core.metrics)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/metrics/adaptive_threshold/index.html#anomalib.core.metrics.adaptive_threshold.AdaptiveThreshold">(class in anomalib.core.metrics.adaptive_threshold)</a>
+</li>
+        </ul></li>
         <li><a href="api/anomalib/loggers/index.html#anomalib.loggers.AnomalibTensorBoardLogger.add_image">add_image() (anomalib.loggers.AnomalibTensorBoardLogger method)</a>
 
         <ul>
@@ -481,6 +514,13 @@
 </li>
         </ul></li>
         <li>
+    anomalib.core.callbacks.normalization
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/normalization/index.html#module-anomalib.core.callbacks.normalization">module</a>
+</li>
+        </ul></li>
+        <li>
     anomalib.core.callbacks.save_to_csv
 
         <ul>
@@ -506,6 +546,20 @@
 
         <ul>
           <li><a href="api/anomalib/core/metrics/index.html#module-anomalib.core.metrics">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.metrics.adaptive_threshold
+
+        <ul>
+          <li><a href="api/anomalib/core/metrics/adaptive_threshold/index.html#module-anomalib.core.metrics.adaptive_threshold">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.metrics.anomaly_score_distribution
+
+        <ul>
+          <li><a href="api/anomalib/core/metrics/anomaly_score_distribution/index.html#module-anomalib.core.metrics.anomaly_score_distribution">module</a>
 </li>
         </ul></li>
         <li>
@@ -620,6 +674,8 @@
           <li><a href="api/anomalib/data/transforms/pre_process/index.html#module-anomalib.data.transforms.pre_process">module</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     anomalib.data.utils
 
@@ -627,8 +683,6 @@
           <li><a href="api/anomalib/data/utils/index.html#module-anomalib.data.utils">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     anomalib.loggers
 
@@ -841,6 +895,14 @@
           <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule">(class in anomalib.models)</a>
 </li>
         </ul></li>
+        <li><a href="api/anomalib/core/metrics/index.html#anomalib.core.metrics.AnomalyScoreDistribution">AnomalyScoreDistribution (class in anomalib.core.metrics)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/metrics/anomaly_score_distribution/index.html#anomalib.core.metrics.anomaly_score_distribution.AnomalyScoreDistribution">(class in anomalib.core.metrics.anomaly_score_distribution)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback">AnomalyScoreNormalizationCallback (class in anomalib.core.callbacks.normalization)</a>
+</li>
         <li><a href="api/anomalib/core/metrics/index.html#anomalib.core.metrics.AUROC">AUROC (class in anomalib.core.metrics)</a>
 
         <ul>
@@ -863,9 +925,17 @@
           <li><a href="api/anomalib/core/callbacks/compress/index.html#anomalib.core.callbacks.compress.CompressModelCallback">(class in anomalib.core.callbacks.compress)</a>
 </li>
         </ul></li>
-        <li><a href="api/anomalib/core/metrics/index.html#anomalib.core.metrics.AUROC.compute">compute() (anomalib.core.metrics.AUROC method)</a>
+        <li><a href="api/anomalib/core/metrics/adaptive_threshold/index.html#anomalib.core.metrics.adaptive_threshold.AdaptiveThreshold.compute">compute() (anomalib.core.metrics.adaptive_threshold.AdaptiveThreshold method)</a>
 
         <ul>
+          <li><a href="api/anomalib/core/metrics/index.html#anomalib.core.metrics.AdaptiveThreshold.compute">(anomalib.core.metrics.AdaptiveThreshold method)</a>
+</li>
+          <li><a href="api/anomalib/core/metrics/anomaly_score_distribution/index.html#anomalib.core.metrics.anomaly_score_distribution.AnomalyScoreDistribution.compute">(anomalib.core.metrics.anomaly_score_distribution.AnomalyScoreDistribution method)</a>
+</li>
+          <li><a href="api/anomalib/core/metrics/index.html#anomalib.core.metrics.AnomalyScoreDistribution.compute">(anomalib.core.metrics.AnomalyScoreDistribution method)</a>
+</li>
+          <li><a href="api/anomalib/core/metrics/index.html#anomalib.core.metrics.AUROC.compute">(anomalib.core.metrics.AUROC method)</a>
+</li>
           <li><a href="api/anomalib/core/metrics/auroc/index.html#anomalib.core.metrics.auroc.AUROC.compute">(anomalib.core.metrics.auroc.AUROC method)</a>
 </li>
           <li><a href="api/anomalib/core/metrics/optimal_f1/index.html#anomalib.core.metrics.optimal_f1.OptimalF1.compute">(anomalib.core.metrics.optimal_f1.OptimalF1 method)</a>
@@ -883,14 +953,14 @@
         </ul></li>
         <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.AnomalyMapGenerator.compute_anomaly_score">compute_anomaly_score() (anomalib.models.patchcore.model.AnomalyMapGenerator static method)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.AnomalyMapGenerator.compute_anomaly_score">[1]</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.Loss.compute_layer_loss">compute_layer_loss() (anomalib.models.stfpm.Loss method)</a>
 
         <ul>
           <li><a href="api/anomalib/models/stfpm/model/index.html#anomalib.models.stfpm.model.Loss.compute_layer_loss">(anomalib.models.stfpm.model.Loss method)</a>, <a href="models/anomalib.models.stfpm.model.html#anomalib.models.stfpm.model.Loss.compute_layer_loss">[1]</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.AnomalyMapGenerator.compute_layer_map">compute_layer_map() (anomalib.models.stfpm.AnomalyMapGenerator method)</a>
 
         <ul>
@@ -1199,6 +1269,8 @@
 </li>
           <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#module-anomalib.core.callbacks.nncf_callback">anomalib.core.callbacks.nncf_callback</a>
 </li>
+          <li><a href="api/anomalib/core/callbacks/normalization/index.html#module-anomalib.core.callbacks.normalization">anomalib.core.callbacks.normalization</a>
+</li>
           <li><a href="api/anomalib/core/callbacks/save_to_csv/index.html#module-anomalib.core.callbacks.save_to_csv">anomalib.core.callbacks.save_to_csv</a>
 </li>
           <li><a href="api/anomalib/core/callbacks/timer/index.html#module-anomalib.core.callbacks.timer">anomalib.core.callbacks.timer</a>
@@ -1206,6 +1278,10 @@
           <li><a href="api/anomalib/core/callbacks/visualizer_callback/index.html#module-anomalib.core.callbacks.visualizer_callback">anomalib.core.callbacks.visualizer_callback</a>
 </li>
           <li><a href="api/anomalib/core/metrics/index.html#module-anomalib.core.metrics">anomalib.core.metrics</a>
+</li>
+          <li><a href="api/anomalib/core/metrics/adaptive_threshold/index.html#module-anomalib.core.metrics.adaptive_threshold">anomalib.core.metrics.adaptive_threshold</a>
+</li>
+          <li><a href="api/anomalib/core/metrics/anomaly_score_distribution/index.html#module-anomalib.core.metrics.anomaly_score_distribution">anomalib.core.metrics.anomaly_score_distribution</a>
 </li>
           <li><a href="api/anomalib/core/metrics/auroc/index.html#module-anomalib.core.metrics.auroc">anomalib.core.metrics.auroc</a>
 </li>
@@ -1348,9 +1424,13 @@
           <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.TimerCallback.on_fit_start">(anomalib.core.callbacks.TimerCallback method)</a>
 </li>
         </ul></li>
-        <li><a href="api/anomalib/core/callbacks/visualizer_callback/index.html#anomalib.core.callbacks.visualizer_callback.VisualizerCallback.on_test_batch_end">on_test_batch_end() (anomalib.core.callbacks.visualizer_callback.VisualizerCallback method)</a>
+        <li><a href="api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_predict_batch_end">on_predict_batch_end() (anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback method)</a>
+</li>
+        <li><a href="api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_test_batch_end">on_test_batch_end() (anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback method)</a>
 
         <ul>
+          <li><a href="api/anomalib/core/callbacks/visualizer_callback/index.html#anomalib.core.callbacks.visualizer_callback.VisualizerCallback.on_test_batch_end">(anomalib.core.callbacks.visualizer_callback.VisualizerCallback method)</a>
+</li>
           <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.VisualizerCallback.on_test_batch_end">(anomalib.core.callbacks.VisualizerCallback method)</a>
 </li>
         </ul></li>
@@ -1377,6 +1457,8 @@
         <ul>
           <li><a href="api/anomalib/core/callbacks/model_loader/index.html#anomalib.core.callbacks.model_loader.LoadModelCallback.on_test_start">(anomalib.core.callbacks.model_loader.LoadModelCallback method)</a>
 </li>
+          <li><a href="api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_test_start">(anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback method)</a>
+</li>
           <li><a href="api/anomalib/core/callbacks/timer/index.html#anomalib.core.callbacks.timer.TimerCallback.on_test_start">(anomalib.core.callbacks.timer.TimerCallback method)</a>
 </li>
           <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.TimerCallback.on_test_start">(anomalib.core.callbacks.TimerCallback method)</a>
@@ -1393,6 +1475,12 @@
 </li>
         </ul></li>
         <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.NNCFCallback.on_train_epoch_end">on_train_epoch_end() (anomalib.core.callbacks.nncf_callback.NNCFCallback method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_train_epoch_end">(anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_validation_batch_end">on_validation_batch_end() (anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback method)</a>
 </li>
         <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.OpenVINOInferencer">OpenVINOInferencer (class in anomalib.core.model.inference)</a>
 </li>
@@ -1668,22 +1756,30 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/data/tiler/index.html#anomalib.data.tiler.Tiler.untile">untile() (anomalib.data.tiler.Tiler method)</a>
 </li>
-        <li><a href="api/anomalib/core/metrics/optimal_f1/index.html#anomalib.core.metrics.optimal_f1.OptimalF1.update">update() (anomalib.core.metrics.optimal_f1.OptimalF1 method)</a>
+        <li><a href="api/anomalib/core/metrics/adaptive_threshold/index.html#anomalib.core.metrics.adaptive_threshold.AdaptiveThreshold.update">update() (anomalib.core.metrics.adaptive_threshold.AdaptiveThreshold method)</a>
 
         <ul>
+          <li><a href="api/anomalib/core/metrics/index.html#anomalib.core.metrics.AdaptiveThreshold.update">(anomalib.core.metrics.AdaptiveThreshold method)</a>
+</li>
+          <li><a href="api/anomalib/core/metrics/anomaly_score_distribution/index.html#anomalib.core.metrics.anomaly_score_distribution.AnomalyScoreDistribution.update">(anomalib.core.metrics.anomaly_score_distribution.AnomalyScoreDistribution method)</a>
+</li>
+          <li><a href="api/anomalib/core/metrics/index.html#anomalib.core.metrics.AnomalyScoreDistribution.update">(anomalib.core.metrics.AnomalyScoreDistribution method)</a>
+</li>
+          <li><a href="api/anomalib/core/metrics/optimal_f1/index.html#anomalib.core.metrics.optimal_f1.OptimalF1.update">(anomalib.core.metrics.optimal_f1.OptimalF1 method)</a>
+</li>
           <li><a href="api/anomalib/core/metrics/index.html#anomalib.core.metrics.OptimalF1.update">(anomalib.core.metrics.OptimalF1 method)</a>
 </li>
         </ul></li>
         <li><a href="api/anomalib/config/config/index.html#anomalib.config.config.update_device_config">update_device_config() (in module anomalib.config.config)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/models/patchcore/utils/sampling/k_center_greedy/index.html#anomalib.models.patchcore.utils.sampling.k_center_greedy.KCenterGreedy.update_distances">update_distances() (anomalib.models.patchcore.utils.sampling.k_center_greedy.KCenterGreedy method)</a>
 
         <ul>
           <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.KCenterGreedy.update_distances">(anomalib.models.patchcore.utils.sampling.KCenterGreedy method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/config/index.html#anomalib.config.update_input_size_config">update_input_size_config() (in module anomalib.config)</a>
 
         <ul>
@@ -1724,9 +1820,15 @@
           <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule.validation_epoch_end">(anomalib.models.AnomalyModule method)</a>
 </li>
         </ul></li>
-        <li><a href="api/anomalib/models/dfkde/model/index.html#anomalib.models.dfkde.model.DfkdeLightning.validation_step">validation_step() (anomalib.models.dfkde.model.DfkdeLightning method)</a>, <a href="models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeLightning.validation_step">[1]</a>
+        <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule.validation_step">validation_step() (anomalib.core.model.anomaly_module.AnomalyModule method)</a>
 
         <ul>
+          <li><a href="api/anomalib/core/model/index.html#anomalib.core.model.AnomalyModule.validation_step">(anomalib.core.model.AnomalyModule method)</a>
+</li>
+          <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule.validation_step">(anomalib.models.AnomalyModule method)</a>
+</li>
+          <li><a href="api/anomalib/models/dfkde/model/index.html#anomalib.models.dfkde.model.DfkdeLightning.validation_step">(anomalib.models.dfkde.model.DfkdeLightning method)</a>, <a href="models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeLightning.validation_step">[1]</a>
+</li>
           <li><a href="api/anomalib/models/dfm/model/index.html#anomalib.models.dfm.model.DfmLightning.validation_step">(anomalib.models.dfm.model.DfmLightning method)</a>, <a href="models/anomalib.models.dfm.model.html#anomalib.models.dfm.model.DfmLightning.validation_step">[1]</a>
 </li>
           <li><a href="api/anomalib/models/padim/model/index.html#anomalib.models.padim.model.PadimLightning.validation_step">(anomalib.models.padim.model.PadimLightning method)</a>, <a href="models/anomalib.models.padim.model.html#anomalib.models.padim.model.PadimLightning.validation_step">[1]</a>

@@ -22,7 +22,7 @@ Classes
 
 
 
-.. py:class:: VisualizerCallback
+.. py:class:: VisualizerCallback(inputs_are_normalized: bool = True)
 
    Bases: :py:obj:`pytorch_lightning.Callback`
 
@@ -63,7 +63,7 @@ Classes
       Currently only ``AnomalibWandbLogger`` is called from this method. This is because logging as a single batch
       ensures that all images appear as part of the same step.
 
-      :param _trainer: Pytorch Lightning trainer
+      :param _trainer: Pytorch Lightning trainer (unused)
       :type _trainer: pl.Trainer
       :param pl_module: Anomaly module
       :type pl_module: pl.LightningModule

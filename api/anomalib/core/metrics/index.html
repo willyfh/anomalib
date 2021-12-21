@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="anomalib.core.metrics.auroc" href="auroc/index.html" /><link rel="prev" title="anomalib.core.callbacks.visualizer_callback" href="../callbacks/visualizer_callback/index.html" />
+<link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="anomalib.core.metrics.adaptive_threshold" href="adaptive_threshold/index.html" /><link rel="prev" title="anomalib.core.callbacks.visualizer_callback" href="../callbacks/visualizer_callback/index.html" />
 
     <meta name="generator" content="sphinx-4.3.1, furo 2021.07.31.beta41"/>
         <title>anomalib.core.metrics - Anomalib 2021, Anomalib Contributors documentation</title>
@@ -184,12 +184,15 @@
 <li class="toctree-l5"><a class="reference internal" href="../callbacks/compress/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.compress</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../callbacks/nncf_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.nncf_callback</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../callbacks/normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../callbacks/save_to_csv/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.save_to_csv</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.visualizer_callback</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 current has-children current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="adaptive_threshold/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.adaptive_threshold</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="anomaly_score_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.anomaly_score_distribution</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="auroc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.auroc</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="optimal_f1/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.optimal_f1</span></code></a></li>
 </ul>
@@ -312,6 +315,8 @@
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="adaptive_threshold/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.adaptive_threshold</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="anomaly_score_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.anomaly_score_distribution</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="auroc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.auroc</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="optimal_f1/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.optimal_f1</span></code></a></li>
 </ul>
@@ -327,6 +332,12 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.core.metrics.AdaptiveThreshold" title="anomalib.core.metrics.AdaptiveThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AdaptiveThreshold</span></code></a></p></td>
+<td><p>Optimal F1 Metric.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.core.metrics.AnomalyScoreDistribution" title="anomalib.core.metrics.AnomalyScoreDistribution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnomalyScoreDistribution</span></code></a></p></td>
+<td><p>Mean and standard deviation of the anomaly scores of normal training data.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.core.metrics.AUROC" title="anomalib.core.metrics.AUROC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AUROC</span></code></a></p></td>
 <td><p>Area under the ROC curve.</p></td>
 </tr>
@@ -335,6 +346,47 @@
 </tr>
 </tbody>
 </table></div>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.core.metrics.AdaptiveThreshold">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.core.metrics.</span></span><span class="sig-name descname"><span class="pre">AdaptiveThreshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/core/metrics/adaptive_threshold.html#AdaptiveThreshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.metrics.AdaptiveThreshold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torchmetrics.Metric</span></code></p>
+<p>Optimal F1 Metric.</p>
+<p>Compute the optimal F1 score at the adaptive threshold, based on the F1 metric of the true labels and the
+predicted anomaly scores.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.core.metrics.AdaptiveThreshold.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#anomalib.core.metrics.AdaptiveThreshold.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the precision-recall curve metric.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.core.metrics.AdaptiveThreshold.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="headerlink" href="#anomalib.core.metrics.AdaptiveThreshold.compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the threshold that yields the optimal F1 score.</p>
+<p>Compute the F1 scores while varying the threshold. Store the optimal
+threshold as attribute and return the maximum value of the F1 score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Value of the F1 score at the optimal threshold.</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.core.metrics.AnomalyScoreDistribution">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.core.metrics.</span></span><span class="sig-name descname"><span class="pre">AnomalyScoreDistribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/core/metrics/anomaly_score_distribution.html#AnomalyScoreDistribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.metrics.AnomalyScoreDistribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torchmetrics.Metric</span></code></p>
+<p>Mean and standard deviation of the anomaly scores of normal training data.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.core.metrics.AnomalyScoreDistribution.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anomaly_scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anomaly_maps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#anomalib.core.metrics.AnomalyScoreDistribution.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the precision-recall curve metric.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.core.metrics.AnomalyScoreDistribution.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#anomalib.core.metrics.AnomalyScoreDistribution.compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute stats.</p>
+</dd></dl>
+</dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.core.metrics.AUROC">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.core.metrics.</span></span><span class="sig-name descname"><span class="pre">AUROC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compute_on_step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_sync_on_step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_sync_fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/core/metrics/auroc.html#AUROC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.metrics.AUROC" title="Permalink to this definition">¶</a></dt>
@@ -384,12 +436,12 @@ threshold as attribute and return the maximum value of the F1 score.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="auroc/index.html">
+          <a class="next-page" href="adaptive_threshold/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.auroc</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.adaptive_threshold</span></code></div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -438,6 +490,16 @@ threshold as attribute and return the maximum value of the F1 score.</p>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#package-contents">Package Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#anomalib.core.metrics.AdaptiveThreshold">AdaptiveThreshold</a><ul>
+<li><a class="reference internal" href="#anomalib.core.metrics.AdaptiveThreshold.update">update</a></li>
+<li><a class="reference internal" href="#anomalib.core.metrics.AdaptiveThreshold.compute">compute</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#anomalib.core.metrics.AnomalyScoreDistribution">AnomalyScoreDistribution</a><ul>
+<li><a class="reference internal" href="#anomalib.core.metrics.AnomalyScoreDistribution.update">update</a></li>
+<li><a class="reference internal" href="#anomalib.core.metrics.AnomalyScoreDistribution.compute">compute</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#anomalib.core.metrics.AUROC">AUROC</a><ul>
 <li><a class="reference internal" href="#anomalib.core.metrics.AUROC.compute">compute</a></li>
 </ul>

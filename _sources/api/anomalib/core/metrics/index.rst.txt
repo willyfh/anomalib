@@ -15,6 +15,8 @@ Submodules
    :titlesonly:
    :maxdepth: 1
 
+   adaptive_threshold/index.rst
+   anomaly_score_distribution/index.rst
    auroc/index.rst
    optimal_f1/index.rst
 
@@ -27,9 +29,53 @@ Classes
 
 .. autoapisummary::
 
+   anomalib.core.metrics.AdaptiveThreshold
+   anomalib.core.metrics.AnomalyScoreDistribution
    anomalib.core.metrics.AUROC
    anomalib.core.metrics.OptimalF1
 
+
+
+
+.. py:class:: AdaptiveThreshold(default_value: float, **kwargs)
+
+   Bases: :py:obj:`torchmetrics.Metric`
+
+   Optimal F1 Metric.
+
+   Compute the optimal F1 score at the adaptive threshold, based on the F1 metric of the true labels and the
+   predicted anomaly scores.
+
+   .. py:method:: update(self, preds: torch.Tensor, target: torch.Tensor) -> None
+
+      Update the precision-recall curve metric.
+
+
+   .. py:method:: compute(self) -> torch.Tensor
+
+      Compute the threshold that yields the optimal F1 score.
+
+      Compute the F1 scores while varying the threshold. Store the optimal
+      threshold as attribute and return the maximum value of the F1 score.
+
+      :returns: Value of the F1 score at the optimal threshold.
+
+
+
+.. py:class:: AnomalyScoreDistribution(**kwargs)
+
+   Bases: :py:obj:`torchmetrics.Metric`
+
+   Mean and standard deviation of the anomaly scores of normal training data.
+
+   .. py:method:: update(self, anomaly_scores: Optional[torch.Tensor] = None, anomaly_maps: Optional[torch.Tensor] = None) -> None
+
+      Update the precision-recall curve metric.
+
+
+   .. py:method:: compute(self) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]
+
+      Compute stats.
 
 
 
