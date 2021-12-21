@@ -1,0 +1,1795 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#" /><link rel="search" title="Search" href="search.html" />
+
+    <meta name="generator" content="sphinx-4.3.1, furo 2021.07.31.beta41"/><title>Index - Anomalib 2021, Anomalib Contributors documentation</title>
+<link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=93475b62d1c3bc01323a0eefdc14a62d77b12690" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style>
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="_static/pygments_dark.css"></head>
+  <body>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Anomalib 2021, Anomalib Contributors documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">Anomalib 2021, Anomalib Contributors documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="guides/getting_started.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/getting_started.html#training">Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/getting_started.html#development">Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Models</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="models.html">Models Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="models/anomalib.models.dfkde.model.html">anomalib.models.dfkde.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/anomalib.models.dfkde.normality_model.html">anomalib.models.dfkde.normality_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/anomalib.models.dfm.model.html">anomalib.models.dfm.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/anomalib.models.padim.model.html">anomalib.models.padim.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/anomalib.models.patchcore.model.html">anomalib.models.patchcore.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/anomalib.models.stfpm.model.html">anomalib.models.stfpm.model</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API Reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/anomalib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="api/anomalib/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.config</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/anomalib/config/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.config.config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="api/anomalib/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="api/anomalib/core/callbacks/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/callbacks/compress/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.compress</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.model_loader</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/callbacks/nncf_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.nncf_callback</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/callbacks/save_to_csv/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.save_to_csv</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.timer</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.visualizer_callback</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="api/anomalib/core/metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/metrics/auroc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.auroc</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/metrics/optimal_f1/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.optimal_f1</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="api/anomalib/core/model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.model</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/model/anomaly_module/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.model.anomaly_module</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/model/dynamic_module/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.model.dynamic_module</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/model/feature_extractor/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.model.feature_extractor</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/model/inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.model.inference</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/model/kde/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.model.kde</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/model/multi_variate_gaussian/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.model.multi_variate_gaussian</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/core/model/pca/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.model.pca</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="api/anomalib/data/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="api/anomalib/data/transforms/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.transforms</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/data/transforms/custom/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.transforms.custom</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/data/transforms/pre_process/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.transforms.pre_process</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="api/anomalib/data/mvtec/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.mvtec</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/anomalib/data/tiler/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.tiler</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/anomalib/data/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="api/anomalib/loggers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.loggers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/anomalib/loggers/base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.loggers.base</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/anomalib/loggers/tensorboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.loggers.tensorboard</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/anomalib/loggers/wandb/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.loggers.wandb</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="api/anomalib/models/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="api/anomalib/models/dfkde/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/models/dfkde/model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde.model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/models/dfkde/normality_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde.normality_model</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="api/anomalib/models/dfm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfm</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/models/dfm/dfm_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfm.dfm_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/models/dfm/model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfm.model</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="api/anomalib/models/padim/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.padim</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/models/padim/model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.padim.model</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="api/anomalib/models/patchcore/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="api/anomalib/models/patchcore/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6 has-children"><a class="reference internal" href="api/anomalib/models/patchcore/utils/sampling/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.utils.sampling</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l7"><a class="reference internal" href="api/anomalib/models/patchcore/utils/sampling/k_center_greedy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.utils.sampling.k_center_greedy</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/anomalib/models/patchcore/utils/sampling/nearest_neighbors/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.utils.sampling.nearest_neighbors</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/anomalib/models/patchcore/utils/sampling/random_projection/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.utils.sampling.random_projection</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/models/patchcore/model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.model</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="api/anomalib/models/stfpm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/models/stfpm/model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.model</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="api/anomalib/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/anomalib/utils/download_progress_bar/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.download_progress_bar</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/anomalib/utils/post_process/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.post_process</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/anomalib/utils/visualizer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.visualizer</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="guides/developing_on_docker.html">Developing on Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/structure_of_documentation.html">Structure of the Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/using_tox.html">Using Tox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/using_pre_commit.html">Pre-commit Hooks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Research</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="research/benchmark.html">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="research/papers.html">Awesome Anomaly Papers: Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="research/citation.html">Citing this Repository</a></li>
+</ul>
+
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <article role="main">
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        
+<section class="genindex-section">
+  <h1 id="index">Index</h1>
+  <div class="genindex-jumpbox"><a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#J"><strong>J</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a></div>
+</section>
+<section id="_" class="genindex-section">
+  <h2>_</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.Inferencer.__call__">__call__() (anomalib.core.model.inference.Inferencer method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/data/transforms/custom/index.html#anomalib.data.transforms.custom.Denormalize.__call__">(anomalib.data.transforms.custom.Denormalize method)</a>
+</li>
+          <li><a href="api/anomalib/data/transforms/custom/index.html#anomalib.data.transforms.custom.ToNumpy.__call__">(anomalib.data.transforms.custom.ToNumpy method)</a>
+</li>
+          <li><a href="api/anomalib/data/transforms/index.html#anomalib.data.transforms.Denormalize.__call__">(anomalib.data.transforms.Denormalize method)</a>
+</li>
+          <li><a href="api/anomalib/data/transforms/pre_process/index.html#anomalib.data.transforms.pre_process.PreProcessor.__call__">(anomalib.data.transforms.pre_process.PreProcessor method)</a>
+</li>
+          <li><a href="api/anomalib/data/transforms/index.html#anomalib.data.transforms.PreProcessor.__call__">(anomalib.data.transforms.PreProcessor method)</a>
+</li>
+          <li><a href="api/anomalib/data/transforms/index.html#anomalib.data.transforms.ToNumpy.__call__">(anomalib.data.transforms.ToNumpy method)</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.AnomalyMapGenerator.__call__">(anomalib.models.patchcore.model.AnomalyMapGenerator method)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.AnomalyMapGenerator.__call__">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.AnomalyMapGenerator.__call__">(anomalib.models.stfpm.AnomalyMapGenerator method)</a>
+</li>
+          <li><a href="api/anomalib/models/stfpm/model/index.html#anomalib.models.stfpm.model.AnomalyMapGenerator.__call__">(anomalib.models.stfpm.model.AnomalyMapGenerator method)</a>, <a href="models/anomalib.models.stfpm.model.html#anomalib.models.stfpm.model.AnomalyMapGenerator.__call__">[1]</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/data/tiler/index.html#anomalib.data.tiler.Tiler.__fold">__fold() (anomalib.data.tiler.Tiler method)</a>
+</li>
+        <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTec.__getitem__">__getitem__() (anomalib.data.mvtec.MVTec method)</a>
+</li>
+        <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.InitLoader.__iter__">__iter__() (anomalib.core.callbacks.nncf_callback.InitLoader method)</a>
+</li>
+        <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTec.__len__">__len__() (anomalib.data.mvtec.MVTec method)</a>
+</li>
+        <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.InitLoader.__next__">__next__() (anomalib.core.callbacks.nncf_callback.InitLoader method)</a>
+</li>
+        <li><a href="api/anomalib/data/tiler/index.html#anomalib.data.tiler.Tiler.__random_tile">__random_tile() (anomalib.data.tiler.Tiler method)</a>
+</li>
+        <li><a href="api/anomalib/data/transforms/custom/index.html#anomalib.data.transforms.custom.Denormalize.__repr__">__repr__() (anomalib.data.transforms.custom.Denormalize method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/data/transforms/custom/index.html#anomalib.data.transforms.custom.ToNumpy.__repr__">(anomalib.data.transforms.custom.ToNumpy method)</a>
+</li>
+          <li><a href="api/anomalib/data/transforms/index.html#anomalib.data.transforms.Denormalize.__repr__">(anomalib.data.transforms.Denormalize method)</a>
+</li>
+          <li><a href="api/anomalib/data/transforms/index.html#anomalib.data.transforms.ToNumpy.__repr__">(anomalib.data.transforms.ToNumpy method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/data/tiler/index.html#anomalib.data.tiler.Tiler.__unfold">__unfold() (anomalib.data.tiler.Tiler method)</a>
+</li>
+        <li><a href="api/anomalib/data/tiler/index.html#anomalib.data.tiler.Tiler.__validate_size_type">__validate_size_type() (anomalib.data.tiler.Tiler static method)</a>
+</li>
+        <li><a href="api/anomalib/index.html#anomalib.__version__">__version__ (in module anomalib)</a>
+</li>
+        <li><a href="api/anomalib/core/callbacks/visualizer_callback/index.html#anomalib.core.callbacks.visualizer_callback.VisualizerCallback._add_images">_add_images() (anomalib.core.callbacks.visualizer_callback.VisualizerCallback method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.VisualizerCallback._add_images">(anomalib.core.callbacks.VisualizerCallback method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTec._clean">_clean() (anomalib.data.mvtec.MVTec method)</a>
+</li>
+        <li><a href="api/anomalib/core/model/multi_variate_gaussian/index.html#anomalib.core.model.multi_variate_gaussian.MultiVariateGaussian._cov">_cov() (anomalib.core.model.multi_variate_gaussian.MultiVariateGaussian static method)</a>
+</li>
+        <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTec._download">_download() (anomalib.data.mvtec.MVTec method)</a>
+</li>
+        <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTec._extract">_extract() (anomalib.data.mvtec.MVTec method)</a>
+</li>
+        <li><a href="api/anomalib/core/model/dynamic_module/index.html#anomalib.core.model.dynamic_module.DynamicBufferModule._load_from_state_dict">_load_from_state_dict() (anomalib.core.model.dynamic_module.DynamicBufferModule method)</a>
+</li>
+        <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule._log_metrics">_log_metrics() (anomalib.core.model.anomaly_module.AnomalyModule method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/model/index.html#anomalib.core.model.AnomalyModule._log_metrics">(anomalib.core.model.AnomalyModule method)</a>
+</li>
+          <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule._log_metrics">(anomalib.models.AnomalyModule method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule._post_process">_post_process() (anomalib.core.model.anomaly_module.AnomalyModule method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/model/index.html#anomalib.core.model.AnomalyModule._post_process">(anomalib.core.model.AnomalyModule method)</a>
+</li>
+          <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule._post_process">(anomalib.models.AnomalyModule method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/models/patchcore/utils/sampling/random_projection/index.html#anomalib.models.patchcore.utils.sampling.random_projection.SparseRandomProjection._sparse_random_matrix">_sparse_random_matrix() (anomalib.models.patchcore.utils.sampling.random_projection.SparseRandomProjection method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.SparseRandomProjection._sparse_random_matrix">(anomalib.models.patchcore.utils.sampling.SparseRandomProjection method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="A" class="genindex-section">
+  <h2>A</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/loggers/index.html#anomalib.loggers.AnomalibTensorBoardLogger.add_image">add_image() (anomalib.loggers.AnomalibTensorBoardLogger method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/loggers/index.html#anomalib.loggers.AnomalibWandbLogger.add_image">(anomalib.loggers.AnomalibWandbLogger method)</a>
+</li>
+          <li><a href="api/anomalib/loggers/base/index.html#anomalib.loggers.base.ImageLoggerBase.add_image">(anomalib.loggers.base.ImageLoggerBase method)</a>
+</li>
+          <li><a href="api/anomalib/loggers/tensorboard/index.html#anomalib.loggers.tensorboard.AnomalibTensorBoardLogger.add_image">(anomalib.loggers.tensorboard.AnomalibTensorBoardLogger method)</a>
+</li>
+          <li><a href="api/anomalib/loggers/wandb/index.html#anomalib.loggers.wandb.AnomalibWandbLogger.add_image">(anomalib.loggers.wandb.AnomalibWandbLogger method)</a>
+</li>
+          <li><a href="api/anomalib/utils/visualizer/index.html#anomalib.utils.visualizer.Visualizer.add_image">(anomalib.utils.visualizer.Visualizer method)</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib
+
+        <ul>
+          <li><a href="api/anomalib/index.html#module-anomalib">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.config
+
+        <ul>
+          <li><a href="api/anomalib/config/index.html#module-anomalib.config">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.config.config
+
+        <ul>
+          <li><a href="api/anomalib/config/config/index.html#module-anomalib.config.config">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core
+
+        <ul>
+          <li><a href="api/anomalib/core/index.html#module-anomalib.core">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.callbacks
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/index.html#module-anomalib.core.callbacks">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.callbacks.compress
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/compress/index.html#module-anomalib.core.callbacks.compress">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.callbacks.model_loader
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/model_loader/index.html#module-anomalib.core.callbacks.model_loader">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.callbacks.nncf_callback
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#module-anomalib.core.callbacks.nncf_callback">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.callbacks.save_to_csv
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/save_to_csv/index.html#module-anomalib.core.callbacks.save_to_csv">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.callbacks.timer
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/timer/index.html#module-anomalib.core.callbacks.timer">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.callbacks.visualizer_callback
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/visualizer_callback/index.html#module-anomalib.core.callbacks.visualizer_callback">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.metrics
+
+        <ul>
+          <li><a href="api/anomalib/core/metrics/index.html#module-anomalib.core.metrics">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.metrics.auroc
+
+        <ul>
+          <li><a href="api/anomalib/core/metrics/auroc/index.html#module-anomalib.core.metrics.auroc">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.metrics.optimal_f1
+
+        <ul>
+          <li><a href="api/anomalib/core/metrics/optimal_f1/index.html#module-anomalib.core.metrics.optimal_f1">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.model
+
+        <ul>
+          <li><a href="api/anomalib/core/model/index.html#module-anomalib.core.model">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.model.anomaly_module
+
+        <ul>
+          <li><a href="api/anomalib/core/model/anomaly_module/index.html#module-anomalib.core.model.anomaly_module">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.model.dynamic_module
+
+        <ul>
+          <li><a href="api/anomalib/core/model/dynamic_module/index.html#module-anomalib.core.model.dynamic_module">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.model.feature_extractor
+
+        <ul>
+          <li><a href="api/anomalib/core/model/feature_extractor/index.html#module-anomalib.core.model.feature_extractor">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.model.inference
+
+        <ul>
+          <li><a href="api/anomalib/core/model/inference/index.html#module-anomalib.core.model.inference">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.model.kde
+
+        <ul>
+          <li><a href="api/anomalib/core/model/kde/index.html#module-anomalib.core.model.kde">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.model.multi_variate_gaussian
+
+        <ul>
+          <li><a href="api/anomalib/core/model/multi_variate_gaussian/index.html#module-anomalib.core.model.multi_variate_gaussian">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.core.model.pca
+
+        <ul>
+          <li><a href="api/anomalib/core/model/pca/index.html#module-anomalib.core.model.pca">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.data
+
+        <ul>
+          <li><a href="api/anomalib/data/index.html#module-anomalib.data">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.data.mvtec
+
+        <ul>
+          <li><a href="api/anomalib/data/mvtec/index.html#module-anomalib.data.mvtec">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.data.tiler
+
+        <ul>
+          <li><a href="api/anomalib/data/tiler/index.html#module-anomalib.data.tiler">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.data.transforms
+
+        <ul>
+          <li><a href="api/anomalib/data/transforms/index.html#module-anomalib.data.transforms">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.data.transforms.custom
+
+        <ul>
+          <li><a href="api/anomalib/data/transforms/custom/index.html#module-anomalib.data.transforms.custom">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.data.transforms.pre_process
+
+        <ul>
+          <li><a href="api/anomalib/data/transforms/pre_process/index.html#module-anomalib.data.transforms.pre_process">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.data.utils
+
+        <ul>
+          <li><a href="api/anomalib/data/utils/index.html#module-anomalib.data.utils">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    anomalib.loggers
+
+        <ul>
+          <li><a href="api/anomalib/loggers/index.html#module-anomalib.loggers">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.loggers.base
+
+        <ul>
+          <li><a href="api/anomalib/loggers/base/index.html#module-anomalib.loggers.base">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.loggers.tensorboard
+
+        <ul>
+          <li><a href="api/anomalib/loggers/tensorboard/index.html#module-anomalib.loggers.tensorboard">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.loggers.wandb
+
+        <ul>
+          <li><a href="api/anomalib/loggers/wandb/index.html#module-anomalib.loggers.wandb">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models
+
+        <ul>
+          <li><a href="api/anomalib/models/index.html#module-anomalib.models">module</a>, <a href="models.html#module-anomalib.models">[1]</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.dfkde
+
+        <ul>
+          <li><a href="api/anomalib/models/dfkde/index.html#module-anomalib.models.dfkde">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.dfkde.model
+
+        <ul>
+          <li><a href="api/anomalib/models/dfkde/model/index.html#module-anomalib.models.dfkde.model">module</a>, <a href="models/anomalib.models.dfkde.model.html#module-anomalib.models.dfkde.model">[1]</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.dfkde.normality_model
+
+        <ul>
+          <li><a href="api/anomalib/models/dfkde/normality_model/index.html#module-anomalib.models.dfkde.normality_model">module</a>, <a href="models/anomalib.models.dfkde.normality_model.html#module-anomalib.models.dfkde.normality_model">[1]</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.dfm
+
+        <ul>
+          <li><a href="api/anomalib/models/dfm/index.html#module-anomalib.models.dfm">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.dfm.dfm_model
+
+        <ul>
+          <li><a href="api/anomalib/models/dfm/dfm_model/index.html#module-anomalib.models.dfm.dfm_model">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.dfm.model
+
+        <ul>
+          <li><a href="api/anomalib/models/dfm/model/index.html#module-anomalib.models.dfm.model">module</a>, <a href="models/anomalib.models.dfm.model.html#module-anomalib.models.dfm.model">[1]</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.padim
+
+        <ul>
+          <li><a href="api/anomalib/models/padim/index.html#module-anomalib.models.padim">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.padim.model
+
+        <ul>
+          <li><a href="api/anomalib/models/padim/model/index.html#module-anomalib.models.padim.model">module</a>, <a href="models/anomalib.models.padim.model.html#module-anomalib.models.padim.model">[1]</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.patchcore
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/index.html#module-anomalib.models.patchcore">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.patchcore.model
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/model/index.html#module-anomalib.models.patchcore.model">module</a>, <a href="models/anomalib.models.patchcore.model.html#module-anomalib.models.patchcore.model">[1]</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.patchcore.utils
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/index.html#module-anomalib.models.patchcore.utils">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.patchcore.utils.sampling
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#module-anomalib.models.patchcore.utils.sampling">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.patchcore.utils.sampling.k_center_greedy
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/k_center_greedy/index.html#module-anomalib.models.patchcore.utils.sampling.k_center_greedy">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.patchcore.utils.sampling.nearest_neighbors
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/nearest_neighbors/index.html#module-anomalib.models.patchcore.utils.sampling.nearest_neighbors">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.patchcore.utils.sampling.random_projection
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/random_projection/index.html#module-anomalib.models.patchcore.utils.sampling.random_projection">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.stfpm
+
+        <ul>
+          <li><a href="api/anomalib/models/stfpm/index.html#module-anomalib.models.stfpm">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.models.stfpm.model
+
+        <ul>
+          <li><a href="api/anomalib/models/stfpm/model/index.html#module-anomalib.models.stfpm.model">module</a>, <a href="models/anomalib.models.stfpm.model.html#module-anomalib.models.stfpm.model">[1]</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.utils
+
+        <ul>
+          <li><a href="api/anomalib/utils/index.html#module-anomalib.utils">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.utils.download_progress_bar
+
+        <ul>
+          <li><a href="api/anomalib/utils/download_progress_bar/index.html#module-anomalib.utils.download_progress_bar">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.utils.post_process
+
+        <ul>
+          <li><a href="api/anomalib/utils/post_process/index.html#module-anomalib.utils.post_process">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.utils.visualizer
+
+        <ul>
+          <li><a href="api/anomalib/utils/visualizer/index.html#module-anomalib.utils.visualizer">module</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/loggers/index.html#anomalib.loggers.AnomalibTensorBoardLogger">AnomalibTensorBoardLogger (class in anomalib.loggers)</a>
+
+        <ul>
+          <li><a href="api/anomalib/loggers/tensorboard/index.html#anomalib.loggers.tensorboard.AnomalibTensorBoardLogger">(class in anomalib.loggers.tensorboard)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/loggers/index.html#anomalib.loggers.AnomalibWandbLogger">AnomalibWandbLogger (class in anomalib.loggers)</a>
+
+        <ul>
+          <li><a href="api/anomalib/loggers/wandb/index.html#anomalib.loggers.wandb.AnomalibWandbLogger">(class in anomalib.loggers.wandb)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/utils/post_process/index.html#anomalib.utils.post_process.anomaly_map_to_color_map">anomaly_map_to_color_map() (in module anomalib.utils.post_process)</a>
+</li>
+        <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.AnomalyMapGenerator">AnomalyMapGenerator (class in anomalib.models.patchcore.model)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.AnomalyMapGenerator">[1]</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.AnomalyMapGenerator">(class in anomalib.models.stfpm)</a>
+</li>
+          <li><a href="api/anomalib/models/stfpm/model/index.html#anomalib.models.stfpm.model.AnomalyMapGenerator">(class in anomalib.models.stfpm.model)</a>, <a href="models/anomalib.models.stfpm.model.html#anomalib.models.stfpm.model.AnomalyMapGenerator">[1]</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/model/index.html#anomalib.core.model.AnomalyModule">AnomalyModule (class in anomalib.core.model)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule">(class in anomalib.core.model.anomaly_module)</a>
+</li>
+          <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule">(class in anomalib.models)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/metrics/index.html#anomalib.core.metrics.AUROC">AUROC (class in anomalib.core.metrics)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/metrics/auroc/index.html#anomalib.core.metrics.auroc.AUROC">(class in anomalib.core.metrics.auroc)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="C" class="genindex-section">
+  <h2>C</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/utils/visualizer/index.html#anomalib.utils.visualizer.Visualizer.close">close() (anomalib.utils.visualizer.Visualizer method)</a>
+</li>
+        <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.CompressModelCallback">CompressModelCallback (class in anomalib.core.callbacks)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/compress/index.html#anomalib.core.callbacks.compress.CompressModelCallback">(class in anomalib.core.callbacks.compress)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/metrics/index.html#anomalib.core.metrics.AUROC.compute">compute() (anomalib.core.metrics.AUROC method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/metrics/auroc/index.html#anomalib.core.metrics.auroc.AUROC.compute">(anomalib.core.metrics.auroc.AUROC method)</a>
+</li>
+          <li><a href="api/anomalib/core/metrics/optimal_f1/index.html#anomalib.core.metrics.optimal_f1.OptimalF1.compute">(anomalib.core.metrics.optimal_f1.OptimalF1 method)</a>
+</li>
+          <li><a href="api/anomalib/core/metrics/index.html#anomalib.core.metrics.OptimalF1.compute">(anomalib.core.metrics.OptimalF1 method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.AnomalyMapGenerator.compute_anomaly_map">compute_anomaly_map() (anomalib.models.patchcore.model.AnomalyMapGenerator method)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.AnomalyMapGenerator.compute_anomaly_map">[1]</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.AnomalyMapGenerator.compute_anomaly_map">(anomalib.models.stfpm.AnomalyMapGenerator method)</a>
+</li>
+          <li><a href="api/anomalib/models/stfpm/model/index.html#anomalib.models.stfpm.model.AnomalyMapGenerator.compute_anomaly_map">(anomalib.models.stfpm.model.AnomalyMapGenerator method)</a>, <a href="models/anomalib.models.stfpm.model.html#anomalib.models.stfpm.model.AnomalyMapGenerator.compute_anomaly_map">[1]</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.AnomalyMapGenerator.compute_anomaly_score">compute_anomaly_score() (anomalib.models.patchcore.model.AnomalyMapGenerator static method)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.AnomalyMapGenerator.compute_anomaly_score">[1]</a>
+</li>
+        <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.Loss.compute_layer_loss">compute_layer_loss() (anomalib.models.stfpm.Loss method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/stfpm/model/index.html#anomalib.models.stfpm.model.Loss.compute_layer_loss">(anomalib.models.stfpm.model.Loss method)</a>, <a href="models/anomalib.models.stfpm.model.html#anomalib.models.stfpm.model.Loss.compute_layer_loss">[1]</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.AnomalyMapGenerator.compute_layer_map">compute_layer_map() (anomalib.models.stfpm.AnomalyMapGenerator method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/stfpm/model/index.html#anomalib.models.stfpm.model.AnomalyMapGenerator.compute_layer_map">(anomalib.models.stfpm.model.AnomalyMapGenerator method)</a>, <a href="models/anomalib.models.stfpm.model.html#anomalib.models.stfpm.model.AnomalyMapGenerator.compute_layer_map">[1]</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/utils/post_process/index.html#anomalib.utils.post_process.compute_mask">compute_mask() (in module anomalib.utils.post_process)</a>
+</li>
+        <li><a href="api/anomalib/data/tiler/index.html#anomalib.data.tiler.compute_new_image_size">compute_new_image_size() (in module anomalib.data.tiler)</a>
+</li>
+        <li><a href="api/anomalib/models/stfpm/model/index.html#anomalib.models.stfpm.model.StfpmLightning.configure_callbacks">configure_callbacks() (anomalib.models.stfpm.model.StfpmLightning method)</a>, <a href="models/anomalib.models.stfpm.model.html#anomalib.models.stfpm.model.StfpmLightning.configure_callbacks">[1]</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.StfpmLightning.configure_callbacks">(anomalib.models.stfpm.StfpmLightning method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/models/dfkde/model/index.html#anomalib.models.dfkde.model.DfkdeLightning.configure_optimizers">configure_optimizers() (anomalib.models.dfkde.model.DfkdeLightning static method)</a>, <a href="models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeLightning.configure_optimizers">[1]</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/dfm/model/index.html#anomalib.models.dfm.model.DfmLightning.configure_optimizers">(anomalib.models.dfm.model.DfmLightning static method)</a>, <a href="models/anomalib.models.dfm.model.html#anomalib.models.dfm.model.DfmLightning.configure_optimizers">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/padim/model/index.html#anomalib.models.padim.model.PadimLightning.configure_optimizers">(anomalib.models.padim.model.PadimLightning static method)</a>, <a href="models/anomalib.models.padim.model.html#anomalib.models.padim.model.PadimLightning.configure_optimizers">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.PatchcoreLightning.configure_optimizers">(anomalib.models.patchcore.model.PatchcoreLightning method)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.PatchcoreLightning.configure_optimizers">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/stfpm/model/index.html#anomalib.models.stfpm.model.StfpmLightning.configure_optimizers">(anomalib.models.stfpm.model.StfpmLightning method)</a>, <a href="models/anomalib.models.stfpm.model.html#anomalib.models.stfpm.model.StfpmLightning.configure_optimizers">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.StfpmLightning.configure_optimizers">(anomalib.models.stfpm.StfpmLightning method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/model/kde/index.html#anomalib.core.model.kde.GaussianKDE.cov">cov() (anomalib.core.model.kde.GaussianKDE static method)</a>
+</li>
+        <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.criterion_fn">criterion_fn() (in module anomalib.core.callbacks.nncf_callback)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="D" class="genindex-section">
+  <h2>D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/data/transforms/index.html#anomalib.data.transforms.Denormalize">Denormalize (class in anomalib.data.transforms)</a>
+
+        <ul>
+          <li><a href="api/anomalib/data/transforms/custom/index.html#anomalib.data.transforms.custom.Denormalize">(class in anomalib.data.transforms.custom)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/models/dfkde/model/index.html#anomalib.models.dfkde.model.DfkdeLightning">DfkdeLightning (class in anomalib.models.dfkde.model)</a>, <a href="models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeLightning">[1]</a>
+</li>
+        <li><a href="api/anomalib/models/dfm/model/index.html#anomalib.models.dfm.model.DfmLightning">DfmLightning (class in anomalib.models.dfm.model)</a>, <a href="models/anomalib.models.dfm.model.html#anomalib.models.dfm.model.DfmLightning">[1]</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/models/dfm/dfm_model/index.html#anomalib.models.dfm.dfm_model.DFMModel">DFMModel (class in anomalib.models.dfm.dfm_model)</a>
+</li>
+        <li><a href="api/anomalib/utils/download_progress_bar/index.html#anomalib.utils.download_progress_bar.DownloadProgressBar">DownloadProgressBar (class in anomalib.utils.download_progress_bar)</a>
+</li>
+        <li><a href="api/anomalib/data/tiler/index.html#anomalib.data.tiler.downscale_image">downscale_image() (in module anomalib.data.tiler)</a>
+</li>
+        <li><a href="api/anomalib/core/model/dynamic_module/index.html#anomalib.core.model.dynamic_module.DynamicBufferModule">DynamicBufferModule (class in anomalib.core.model.dynamic_module)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="E" class="genindex-section">
+  <h2>E</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/models/dfkde/normality_model/index.html#anomalib.models.dfkde.normality_model.NormalityModel.evaluate">evaluate() (anomalib.models.dfkde.normality_model.NormalityModel method)</a>, <a href="models/anomalib.models.dfkde.normality_model.html#anomalib.models.dfkde.normality_model.NormalityModel.evaluate">[1]</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="F" class="genindex-section">
+  <h2>F</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/core/model/feature_extractor/index.html#anomalib.core.model.feature_extractor.FeatureExtractor">FeatureExtractor (class in anomalib.core.model.feature_extractor)</a>
+</li>
+        <li><a href="api/anomalib/core/model/kde/index.html#anomalib.core.model.kde.GaussianKDE.fit">fit() (anomalib.core.model.kde.GaussianKDE method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/model/multi_variate_gaussian/index.html#anomalib.core.model.multi_variate_gaussian.MultiVariateGaussian.fit">(anomalib.core.model.multi_variate_gaussian.MultiVariateGaussian method)</a>
+</li>
+          <li><a href="api/anomalib/core/model/pca/index.html#anomalib.core.model.pca.PCA.fit">(anomalib.core.model.pca.PCA method)</a>
+</li>
+          <li><a href="api/anomalib/models/dfkde/normality_model/index.html#anomalib.models.dfkde.normality_model.NormalityModel.fit">(anomalib.models.dfkde.normality_model.NormalityModel method)</a>, <a href="models/anomalib.models.dfkde.normality_model.html#anomalib.models.dfkde.normality_model.NormalityModel.fit">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/dfm/dfm_model/index.html#anomalib.models.dfm.dfm_model.DFMModel.fit">(anomalib.models.dfm.dfm_model.DFMModel method)</a>
+</li>
+          <li><a href="api/anomalib/models/dfm/dfm_model/index.html#anomalib.models.dfm.dfm_model.SingleClassGaussian.fit">(anomalib.models.dfm.dfm_model.SingleClassGaussian method)</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/nearest_neighbors/index.html#anomalib.models.patchcore.utils.sampling.nearest_neighbors.NearestNeighbors.fit">(anomalib.models.patchcore.utils.sampling.nearest_neighbors.NearestNeighbors method)</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.NearestNeighbors.fit">(anomalib.models.patchcore.utils.sampling.NearestNeighbors method)</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/random_projection/index.html#anomalib.models.patchcore.utils.sampling.random_projection.SparseRandomProjection.fit">(anomalib.models.patchcore.utils.sampling.random_projection.SparseRandomProjection method)</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.SparseRandomProjection.fit">(anomalib.models.patchcore.utils.sampling.SparseRandomProjection method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/model/pca/index.html#anomalib.core.model.pca.PCA.fit_transform">fit_transform() (anomalib.core.model.pca.PCA method)</a>
+</li>
+        <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule.forward">forward() (anomalib.core.model.anomaly_module.AnomalyModule method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/model/index.html#anomalib.core.model.AnomalyModule.forward">(anomalib.core.model.AnomalyModule method)</a>
+</li>
+          <li><a href="api/anomalib/core/model/feature_extractor/index.html#anomalib.core.model.feature_extractor.FeatureExtractor.forward">(anomalib.core.model.feature_extractor.FeatureExtractor method)</a>
+</li>
+          <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.Inferencer.forward">(anomalib.core.model.inference.Inferencer method)</a>
+</li>
+          <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.OpenVINOInferencer.forward">(anomalib.core.model.inference.OpenVINOInferencer method)</a>
+</li>
+          <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.TorchInferencer.forward">(anomalib.core.model.inference.TorchInferencer method)</a>
+</li>
+          <li><a href="api/anomalib/core/model/kde/index.html#anomalib.core.model.kde.GaussianKDE.forward">(anomalib.core.model.kde.GaussianKDE method)</a>
+</li>
+          <li><a href="api/anomalib/core/model/multi_variate_gaussian/index.html#anomalib.core.model.multi_variate_gaussian.MultiVariateGaussian.forward">(anomalib.core.model.multi_variate_gaussian.MultiVariateGaussian method)</a>
+</li>
+          <li><a href="api/anomalib/core/model/pca/index.html#anomalib.core.model.pca.PCA.forward">(anomalib.core.model.pca.PCA method)</a>
+</li>
+          <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule.forward">(anomalib.models.AnomalyModule method)</a>
+</li>
+          <li><a href="api/anomalib/models/dfkde/normality_model/index.html#anomalib.models.dfkde.normality_model.NormalityModel.forward">(anomalib.models.dfkde.normality_model.NormalityModel method)</a>, <a href="models/anomalib.models.dfkde.normality_model.html#anomalib.models.dfkde.normality_model.NormalityModel.forward">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/dfm/dfm_model/index.html#anomalib.models.dfm.dfm_model.DFMModel.forward">(anomalib.models.dfm.dfm_model.DFMModel method)</a>
+</li>
+          <li><a href="api/anomalib/models/dfm/dfm_model/index.html#anomalib.models.dfm.dfm_model.SingleClassGaussian.forward">(anomalib.models.dfm.dfm_model.SingleClassGaussian method)</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.PatchcoreModel.forward">(anomalib.models.patchcore.model.PatchcoreModel method)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.PatchcoreModel.forward">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.Loss.forward">(anomalib.models.stfpm.Loss method)</a>
+</li>
+          <li><a href="api/anomalib/models/stfpm/model/index.html#anomalib.models.stfpm.model.Loss.forward">(anomalib.models.stfpm.model.Loss method)</a>, <a href="models/anomalib.models.stfpm.model.html#anomalib.models.stfpm.model.Loss.forward">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/stfpm/model/index.html#anomalib.models.stfpm.model.STFPMModel.forward">(anomalib.models.stfpm.model.STFPMModel method)</a>, <a href="models/anomalib.models.stfpm.model.html#anomalib.models.stfpm.model.STFPMModel.forward">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.STFPMModel.forward">(anomalib.models.stfpm.STFPMModel method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="G" class="genindex-section">
+  <h2>G</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/core/model/kde/index.html#anomalib.core.model.kde.GaussianKDE">GaussianKDE (class in anomalib.core.model.kde)</a>
+</li>
+        <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.PatchcoreModel.generate_embedding">generate_embedding() (anomalib.models.patchcore.model.PatchcoreModel method)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.PatchcoreModel.generate_embedding">[1]</a>
+</li>
+        <li><a href="api/anomalib/config/index.html#anomalib.config.get_configurable_parameters">get_configurable_parameters() (in module anomalib.config)</a>
+
+        <ul>
+          <li><a href="api/anomalib/config/config/index.html#anomalib.config.config.get_configurable_parameters">(in module anomalib.config.config)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/data/index.html#anomalib.data.get_datamodule">get_datamodule() (in module anomalib.data)</a>
+</li>
+        <li><a href="api/anomalib/core/model/feature_extractor/index.html#anomalib.core.model.feature_extractor.FeatureExtractor.get_features">get_features() (anomalib.core.model.feature_extractor.FeatureExtractor method)</a>
+</li>
+        <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.InitLoader.get_inputs">get_inputs() (anomalib.core.callbacks.nncf_callback.InitLoader method)</a>
+</li>
+        <li><a href="api/anomalib/loggers/index.html#anomalib.loggers.get_logger">get_logger() (in module anomalib.loggers)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/models/index.html#anomalib.models.get_model">get_model() (in module anomalib.models)</a>, <a href="models.html#anomalib.models.get_model">[1]</a>
+</li>
+        <li><a href="api/anomalib/models/patchcore/utils/sampling/k_center_greedy/index.html#anomalib.models.patchcore.utils.sampling.k_center_greedy.KCenterGreedy.get_new_cluster_centers">get_new_cluster_centers() (anomalib.models.patchcore.utils.sampling.k_center_greedy.KCenterGreedy method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.KCenterGreedy.get_new_cluster_centers">(anomalib.models.patchcore.utils.sampling.KCenterGreedy method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/models/patchcore/utils/sampling/k_center_greedy/index.html#anomalib.models.patchcore.utils.sampling.k_center_greedy.KCenterGreedy.get_new_idx">get_new_idx() (anomalib.models.patchcore.utils.sampling.k_center_greedy.KCenterGreedy method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.KCenterGreedy.get_new_idx">(anomalib.models.patchcore.utils.sampling.KCenterGreedy method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.InitLoader.get_target">get_target() (anomalib.core.callbacks.nncf_callback.InitLoader method)</a>
+</li>
+        <li><a href="api/anomalib/core/model/dynamic_module/index.html#anomalib.core.model.dynamic_module.DynamicBufferModule.get_tensor_attribute">get_tensor_attribute() (anomalib.core.model.dynamic_module.DynamicBufferModule method)</a>
+</li>
+        <li><a href="api/anomalib/data/transforms/pre_process/index.html#anomalib.data.transforms.pre_process.PreProcessor.get_transforms">get_transforms() (anomalib.data.transforms.pre_process.PreProcessor method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/data/transforms/index.html#anomalib.data.transforms.PreProcessor.get_transforms">(anomalib.data.transforms.PreProcessor method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="I" class="genindex-section">
+  <h2>I</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/loggers/base/index.html#anomalib.loggers.base.ImageLoggerBase">ImageLoggerBase (class in anomalib.loggers.base)</a>
+</li>
+        <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.Inferencer">Inferencer (class in anomalib.core.model.inference)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.InitLoader">InitLoader (class in anomalib.core.callbacks.nncf_callback)</a>
+</li>
+        <li><a href="api/anomalib/core/model/pca/index.html#anomalib.core.model.pca.PCA.inverse_transform">inverse_transform() (anomalib.core.model.pca.PCA method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="J" class="genindex-section">
+  <h2>J</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/models/patchcore/utils/sampling/random_projection/index.html#anomalib.models.patchcore.utils.sampling.random_projection.SparseRandomProjection.johnson_lindenstrauss_min_dim">johnson_lindenstrauss_min_dim() (anomalib.models.patchcore.utils.sampling.random_projection.SparseRandomProjection method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.SparseRandomProjection.johnson_lindenstrauss_min_dim">(anomalib.models.patchcore.utils.sampling.SparseRandomProjection method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="K" class="genindex-section">
+  <h2>K</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.KCenterGreedy">KCenterGreedy (class in anomalib.models.patchcore.utils.sampling)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/k_center_greedy/index.html#anomalib.models.patchcore.utils.sampling.k_center_greedy.KCenterGreedy">(class in anomalib.models.patchcore.utils.sampling.k_center_greedy)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/models/patchcore/utils/sampling/nearest_neighbors/index.html#anomalib.models.patchcore.utils.sampling.nearest_neighbors.NearestNeighbors.kneighbors">kneighbors() (anomalib.models.patchcore.utils.sampling.nearest_neighbors.NearestNeighbors method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.NearestNeighbors.kneighbors">(anomalib.models.patchcore.utils.sampling.NearestNeighbors method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="L" class="genindex-section">
+  <h2>L</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.Inferencer.load_model">load_model() (anomalib.core.model.inference.Inferencer method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.OpenVINOInferencer.load_model">(anomalib.core.model.inference.OpenVINOInferencer method)</a>
+</li>
+          <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.TorchInferencer.load_model">(anomalib.core.model.inference.TorchInferencer method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.LoadModelCallback">LoadModelCallback (class in anomalib.core.callbacks)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/model_loader/index.html#anomalib.core.callbacks.model_loader.LoadModelCallback">(class in anomalib.core.callbacks.model_loader)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.Loss">Loss (class in anomalib.models.stfpm)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/stfpm/model/index.html#anomalib.models.stfpm.model.Loss">(class in anomalib.models.stfpm.model)</a>, <a href="models/anomalib.models.stfpm.model.html#anomalib.models.stfpm.model.Loss">[1]</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="M" class="genindex-section">
+  <h2>M</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    module
+
+        <ul>
+          <li><a href="api/anomalib/index.html#module-anomalib">anomalib</a>
+</li>
+          <li><a href="api/anomalib/config/index.html#module-anomalib.config">anomalib.config</a>
+</li>
+          <li><a href="api/anomalib/config/config/index.html#module-anomalib.config.config">anomalib.config.config</a>
+</li>
+          <li><a href="api/anomalib/core/index.html#module-anomalib.core">anomalib.core</a>
+</li>
+          <li><a href="api/anomalib/core/callbacks/index.html#module-anomalib.core.callbacks">anomalib.core.callbacks</a>
+</li>
+          <li><a href="api/anomalib/core/callbacks/compress/index.html#module-anomalib.core.callbacks.compress">anomalib.core.callbacks.compress</a>
+</li>
+          <li><a href="api/anomalib/core/callbacks/model_loader/index.html#module-anomalib.core.callbacks.model_loader">anomalib.core.callbacks.model_loader</a>
+</li>
+          <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#module-anomalib.core.callbacks.nncf_callback">anomalib.core.callbacks.nncf_callback</a>
+</li>
+          <li><a href="api/anomalib/core/callbacks/save_to_csv/index.html#module-anomalib.core.callbacks.save_to_csv">anomalib.core.callbacks.save_to_csv</a>
+</li>
+          <li><a href="api/anomalib/core/callbacks/timer/index.html#module-anomalib.core.callbacks.timer">anomalib.core.callbacks.timer</a>
+</li>
+          <li><a href="api/anomalib/core/callbacks/visualizer_callback/index.html#module-anomalib.core.callbacks.visualizer_callback">anomalib.core.callbacks.visualizer_callback</a>
+</li>
+          <li><a href="api/anomalib/core/metrics/index.html#module-anomalib.core.metrics">anomalib.core.metrics</a>
+</li>
+          <li><a href="api/anomalib/core/metrics/auroc/index.html#module-anomalib.core.metrics.auroc">anomalib.core.metrics.auroc</a>
+</li>
+          <li><a href="api/anomalib/core/metrics/optimal_f1/index.html#module-anomalib.core.metrics.optimal_f1">anomalib.core.metrics.optimal_f1</a>
+</li>
+          <li><a href="api/anomalib/core/model/index.html#module-anomalib.core.model">anomalib.core.model</a>
+</li>
+          <li><a href="api/anomalib/core/model/anomaly_module/index.html#module-anomalib.core.model.anomaly_module">anomalib.core.model.anomaly_module</a>
+</li>
+          <li><a href="api/anomalib/core/model/dynamic_module/index.html#module-anomalib.core.model.dynamic_module">anomalib.core.model.dynamic_module</a>
+</li>
+          <li><a href="api/anomalib/core/model/feature_extractor/index.html#module-anomalib.core.model.feature_extractor">anomalib.core.model.feature_extractor</a>
+</li>
+          <li><a href="api/anomalib/core/model/inference/index.html#module-anomalib.core.model.inference">anomalib.core.model.inference</a>
+</li>
+          <li><a href="api/anomalib/core/model/kde/index.html#module-anomalib.core.model.kde">anomalib.core.model.kde</a>
+</li>
+          <li><a href="api/anomalib/core/model/multi_variate_gaussian/index.html#module-anomalib.core.model.multi_variate_gaussian">anomalib.core.model.multi_variate_gaussian</a>
+</li>
+          <li><a href="api/anomalib/core/model/pca/index.html#module-anomalib.core.model.pca">anomalib.core.model.pca</a>
+</li>
+          <li><a href="api/anomalib/data/index.html#module-anomalib.data">anomalib.data</a>
+</li>
+          <li><a href="api/anomalib/data/mvtec/index.html#module-anomalib.data.mvtec">anomalib.data.mvtec</a>
+</li>
+          <li><a href="api/anomalib/data/tiler/index.html#module-anomalib.data.tiler">anomalib.data.tiler</a>
+</li>
+          <li><a href="api/anomalib/data/transforms/index.html#module-anomalib.data.transforms">anomalib.data.transforms</a>
+</li>
+          <li><a href="api/anomalib/data/transforms/custom/index.html#module-anomalib.data.transforms.custom">anomalib.data.transforms.custom</a>
+</li>
+          <li><a href="api/anomalib/data/transforms/pre_process/index.html#module-anomalib.data.transforms.pre_process">anomalib.data.transforms.pre_process</a>
+</li>
+          <li><a href="api/anomalib/data/utils/index.html#module-anomalib.data.utils">anomalib.data.utils</a>
+</li>
+          <li><a href="api/anomalib/loggers/index.html#module-anomalib.loggers">anomalib.loggers</a>
+</li>
+          <li><a href="api/anomalib/loggers/base/index.html#module-anomalib.loggers.base">anomalib.loggers.base</a>
+</li>
+          <li><a href="api/anomalib/loggers/tensorboard/index.html#module-anomalib.loggers.tensorboard">anomalib.loggers.tensorboard</a>
+</li>
+          <li><a href="api/anomalib/loggers/wandb/index.html#module-anomalib.loggers.wandb">anomalib.loggers.wandb</a>
+</li>
+          <li><a href="api/anomalib/models/index.html#module-anomalib.models">anomalib.models</a>, <a href="models.html#module-anomalib.models">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/dfkde/index.html#module-anomalib.models.dfkde">anomalib.models.dfkde</a>
+</li>
+          <li><a href="api/anomalib/models/dfkde/model/index.html#module-anomalib.models.dfkde.model">anomalib.models.dfkde.model</a>, <a href="models/anomalib.models.dfkde.model.html#module-anomalib.models.dfkde.model">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/dfkde/normality_model/index.html#module-anomalib.models.dfkde.normality_model">anomalib.models.dfkde.normality_model</a>, <a href="models/anomalib.models.dfkde.normality_model.html#module-anomalib.models.dfkde.normality_model">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/dfm/index.html#module-anomalib.models.dfm">anomalib.models.dfm</a>
+</li>
+          <li><a href="api/anomalib/models/dfm/dfm_model/index.html#module-anomalib.models.dfm.dfm_model">anomalib.models.dfm.dfm_model</a>
+</li>
+          <li><a href="api/anomalib/models/dfm/model/index.html#module-anomalib.models.dfm.model">anomalib.models.dfm.model</a>, <a href="models/anomalib.models.dfm.model.html#module-anomalib.models.dfm.model">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/padim/index.html#module-anomalib.models.padim">anomalib.models.padim</a>
+</li>
+          <li><a href="api/anomalib/models/padim/model/index.html#module-anomalib.models.padim.model">anomalib.models.padim.model</a>, <a href="models/anomalib.models.padim.model.html#module-anomalib.models.padim.model">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/index.html#module-anomalib.models.patchcore">anomalib.models.patchcore</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/model/index.html#module-anomalib.models.patchcore.model">anomalib.models.patchcore.model</a>, <a href="models/anomalib.models.patchcore.model.html#module-anomalib.models.patchcore.model">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/utils/index.html#module-anomalib.models.patchcore.utils">anomalib.models.patchcore.utils</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#module-anomalib.models.patchcore.utils.sampling">anomalib.models.patchcore.utils.sampling</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/k_center_greedy/index.html#module-anomalib.models.patchcore.utils.sampling.k_center_greedy">anomalib.models.patchcore.utils.sampling.k_center_greedy</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/nearest_neighbors/index.html#module-anomalib.models.patchcore.utils.sampling.nearest_neighbors">anomalib.models.patchcore.utils.sampling.nearest_neighbors</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/random_projection/index.html#module-anomalib.models.patchcore.utils.sampling.random_projection">anomalib.models.patchcore.utils.sampling.random_projection</a>
+</li>
+          <li><a href="api/anomalib/models/stfpm/index.html#module-anomalib.models.stfpm">anomalib.models.stfpm</a>
+</li>
+          <li><a href="api/anomalib/models/stfpm/model/index.html#module-anomalib.models.stfpm.model">anomalib.models.stfpm.model</a>, <a href="models/anomalib.models.stfpm.model.html#module-anomalib.models.stfpm.model">[1]</a>
+</li>
+          <li><a href="api/anomalib/utils/index.html#module-anomalib.utils">anomalib.utils</a>
+</li>
+          <li><a href="api/anomalib/utils/download_progress_bar/index.html#module-anomalib.utils.download_progress_bar">anomalib.utils.download_progress_bar</a>
+</li>
+          <li><a href="api/anomalib/utils/post_process/index.html#module-anomalib.utils.post_process">anomalib.utils.post_process</a>
+</li>
+          <li><a href="api/anomalib/utils/visualizer/index.html#module-anomalib.utils.visualizer">anomalib.utils.visualizer</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/core/model/multi_variate_gaussian/index.html#anomalib.core.model.multi_variate_gaussian.MultiVariateGaussian">MultiVariateGaussian (class in anomalib.core.model.multi_variate_gaussian)</a>
+</li>
+        <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTec">MVTec (class in anomalib.data.mvtec)</a>
+</li>
+        <li><a href="api/anomalib/data/index.html#anomalib.data.MVTecDataModule">MVTecDataModule (class in anomalib.data)</a>
+
+        <ul>
+          <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTecDataModule">(class in anomalib.data.mvtec)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="N" class="genindex-section">
+  <h2>N</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.NearestNeighbors">NearestNeighbors (class in anomalib.models.patchcore.utils.sampling)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/nearest_neighbors/index.html#anomalib.models.patchcore.utils.sampling.nearest_neighbors.NearestNeighbors">(class in anomalib.models.patchcore.utils.sampling.nearest_neighbors)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.NNCFCallback">NNCFCallback (class in anomalib.core.callbacks.nncf_callback)</a>
+</li>
+        <li><a href="api/anomalib/models/dfkde/normality_model/index.html#anomalib.models.dfkde.normality_model.NormalityModel">NormalityModel (class in anomalib.models.dfkde.normality_model)</a>, <a href="models/anomalib.models.dfkde.normality_model.html#anomalib.models.dfkde.normality_model.NormalityModel">[1]</a>
+</li>
+        <li><a href="api/anomalib/models/patchcore/utils/sampling/random_projection/index.html#anomalib.models.patchcore.utils.sampling.random_projection.NotFittedError">NotFittedError</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="O" class="genindex-section">
+  <h2>O</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/core/callbacks/timer/index.html#anomalib.core.callbacks.timer.TimerCallback.on_fit_end">on_fit_end() (anomalib.core.callbacks.timer.TimerCallback method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.TimerCallback.on_fit_end">(anomalib.core.callbacks.TimerCallback method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/callbacks/timer/index.html#anomalib.core.callbacks.timer.TimerCallback.on_fit_start">on_fit_start() (anomalib.core.callbacks.timer.TimerCallback method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.TimerCallback.on_fit_start">(anomalib.core.callbacks.TimerCallback method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/callbacks/visualizer_callback/index.html#anomalib.core.callbacks.visualizer_callback.VisualizerCallback.on_test_batch_end">on_test_batch_end() (anomalib.core.callbacks.visualizer_callback.VisualizerCallback method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.VisualizerCallback.on_test_batch_end">(anomalib.core.callbacks.VisualizerCallback method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/callbacks/timer/index.html#anomalib.core.callbacks.timer.TimerCallback.on_test_end">on_test_end() (anomalib.core.callbacks.timer.TimerCallback method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.TimerCallback.on_test_end">(anomalib.core.callbacks.TimerCallback method)</a>
+</li>
+          <li><a href="api/anomalib/core/callbacks/visualizer_callback/index.html#anomalib.core.callbacks.visualizer_callback.VisualizerCallback.on_test_end">(anomalib.core.callbacks.visualizer_callback.VisualizerCallback method)</a>
+</li>
+          <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.VisualizerCallback.on_test_end">(anomalib.core.callbacks.VisualizerCallback method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/callbacks/save_to_csv/index.html#anomalib.core.callbacks.save_to_csv.SaveToCSVCallback.on_test_epoch_end">on_test_epoch_end() (anomalib.core.callbacks.save_to_csv.SaveToCSVCallback method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.SaveToCSVCallback.on_test_epoch_end">(anomalib.core.callbacks.SaveToCSVCallback method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.LoadModelCallback.on_test_start">on_test_start() (anomalib.core.callbacks.LoadModelCallback method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/model_loader/index.html#anomalib.core.callbacks.model_loader.LoadModelCallback.on_test_start">(anomalib.core.callbacks.model_loader.LoadModelCallback method)</a>
+</li>
+          <li><a href="api/anomalib/core/callbacks/timer/index.html#anomalib.core.callbacks.timer.TimerCallback.on_test_start">(anomalib.core.callbacks.timer.TimerCallback method)</a>
+</li>
+          <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.TimerCallback.on_test_start">(anomalib.core.callbacks.TimerCallback method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.NNCFCallback.on_train_batch_start">on_train_batch_start() (anomalib.core.callbacks.nncf_callback.NNCFCallback method)</a>
+</li>
+        <li><a href="api/anomalib/core/callbacks/compress/index.html#anomalib.core.callbacks.compress.CompressModelCallback.on_train_end">on_train_end() (anomalib.core.callbacks.compress.CompressModelCallback method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.CompressModelCallback.on_train_end">(anomalib.core.callbacks.CompressModelCallback method)</a>
+</li>
+          <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.NNCFCallback.on_train_end">(anomalib.core.callbacks.nncf_callback.NNCFCallback method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.NNCFCallback.on_train_epoch_end">on_train_epoch_end() (anomalib.core.callbacks.nncf_callback.NNCFCallback method)</a>
+</li>
+        <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.OpenVINOInferencer">OpenVINOInferencer (class in anomalib.core.model.inference)</a>
+</li>
+        <li><a href="api/anomalib/core/metrics/index.html#anomalib.core.metrics.OptimalF1">OptimalF1 (class in anomalib.core.metrics)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/metrics/optimal_f1/index.html#anomalib.core.metrics.optimal_f1.OptimalF1">(class in anomalib.core.metrics.optimal_f1)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="P" class="genindex-section">
+  <h2>P</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/models/padim/model/index.html#anomalib.models.padim.model.PadimLightning">PadimLightning (class in anomalib.models.padim.model)</a>, <a href="models/anomalib.models.padim.model.html#anomalib.models.padim.model.PadimLightning">[1]</a>
+</li>
+        <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.PatchcoreLightning">PatchcoreLightning (class in anomalib.models.patchcore.model)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.PatchcoreLightning">[1]</a>
+</li>
+        <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.PatchcoreModel">PatchcoreModel (class in anomalib.models.patchcore.model)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.PatchcoreModel">[1]</a>
+</li>
+        <li><a href="api/anomalib/core/model/pca/index.html#anomalib.core.model.pca.PCA">PCA (class in anomalib.core.model.pca)</a>
+</li>
+        <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.Inferencer.post_process">post_process() (anomalib.core.model.inference.Inferencer method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.OpenVINOInferencer.post_process">(anomalib.core.model.inference.OpenVINOInferencer method)</a>
+</li>
+          <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.TorchInferencer.post_process">(anomalib.core.model.inference.TorchInferencer method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.Inferencer.pre_process">pre_process() (anomalib.core.model.inference.Inferencer method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.OpenVINOInferencer.pre_process">(anomalib.core.model.inference.OpenVINOInferencer method)</a>
+</li>
+          <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.TorchInferencer.pre_process">(anomalib.core.model.inference.TorchInferencer method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.Inferencer.predict">predict() (anomalib.core.model.inference.Inferencer method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/dfkde/normality_model/index.html#anomalib.models.dfkde.normality_model.NormalityModel.predict">(anomalib.models.dfkde.normality_model.NormalityModel method)</a>, <a href="models/anomalib.models.dfkde.normality_model.html#anomalib.models.dfkde.normality_model.NormalityModel.predict">[1]</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule.predict_step">predict_step() (anomalib.core.model.anomaly_module.AnomalyModule method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/model/index.html#anomalib.core.model.AnomalyModule.predict_step">(anomalib.core.model.AnomalyModule method)</a>
+</li>
+          <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule.predict_step">(anomalib.models.AnomalyModule method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTecDataModule.prepare_data">prepare_data() (anomalib.data.mvtec.MVTecDataModule method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/data/index.html#anomalib.data.MVTecDataModule.prepare_data">(anomalib.data.MVTecDataModule method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/models/dfkde/normality_model/index.html#anomalib.models.dfkde.normality_model.NormalityModel.preprocess">preprocess() (anomalib.models.dfkde.normality_model.NormalityModel method)</a>, <a href="models/anomalib.models.dfkde.normality_model.html#anomalib.models.dfkde.normality_model.NormalityModel.preprocess">[1]</a>
+</li>
+        <li><a href="api/anomalib/data/transforms/index.html#anomalib.data.transforms.PreProcessor">PreProcessor (class in anomalib.data.transforms)</a>
+
+        <ul>
+          <li><a href="api/anomalib/data/transforms/pre_process/index.html#anomalib.data.transforms.pre_process.PreProcessor">(class in anomalib.data.transforms.pre_process)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="R" class="genindex-section">
+  <h2>R</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/data/utils/index.html#anomalib.data.utils.read_image">read_image() (in module anomalib.data.utils)</a>
+</li>
+        <li><a href="api/anomalib/models/patchcore/utils/sampling/k_center_greedy/index.html#anomalib.models.patchcore.utils.sampling.k_center_greedy.KCenterGreedy.reset_distances">reset_distances() (anomalib.models.patchcore.utils.sampling.k_center_greedy.KCenterGreedy method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.KCenterGreedy.reset_distances">(anomalib.models.patchcore.utils.sampling.KCenterGreedy method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.PatchcoreModel.reshape_embedding">reshape_embedding() (anomalib.models.patchcore.model.PatchcoreModel static method)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.PatchcoreModel.reshape_embedding">[1]</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="S" class="genindex-section">
+  <h2>S</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/models/patchcore/utils/sampling/k_center_greedy/index.html#anomalib.models.patchcore.utils.sampling.k_center_greedy.KCenterGreedy.sample_coreset">sample_coreset() (anomalib.models.patchcore.utils.sampling.k_center_greedy.KCenterGreedy method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.KCenterGreedy.sample_coreset">(anomalib.models.patchcore.utils.sampling.KCenterGreedy method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/loggers/index.html#anomalib.loggers.AnomalibWandbLogger.save">save() (anomalib.loggers.AnomalibWandbLogger method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/loggers/wandb/index.html#anomalib.loggers.wandb.AnomalibWandbLogger.save">(anomalib.loggers.wandb.AnomalibWandbLogger method)</a>
+</li>
+          <li><a href="api/anomalib/utils/visualizer/index.html#anomalib.utils.visualizer.Visualizer.save">(anomalib.utils.visualizer.Visualizer method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.SaveToCSVCallback">SaveToCSVCallback (class in anomalib.core.callbacks)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/save_to_csv/index.html#anomalib.core.callbacks.save_to_csv.SaveToCSVCallback">(class in anomalib.core.callbacks.save_to_csv)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/models/dfm/dfm_model/index.html#anomalib.models.dfm.dfm_model.DFMModel.score">score() (anomalib.models.dfm.dfm_model.DFMModel method)</a>
+</li>
+        <li><a href="api/anomalib/models/dfm/dfm_model/index.html#anomalib.models.dfm.dfm_model.SingleClassGaussian.score_samples">score_samples() (anomalib.models.dfm.dfm_model.SingleClassGaussian method)</a>
+</li>
+        <li><a href="api/anomalib/models/patchcore/utils/sampling/k_center_greedy/index.html#anomalib.models.patchcore.utils.sampling.k_center_greedy.KCenterGreedy.select_coreset_idxs">select_coreset_idxs() (anomalib.models.patchcore.utils.sampling.k_center_greedy.KCenterGreedy method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.KCenterGreedy.select_coreset_idxs">(anomalib.models.patchcore.utils.sampling.KCenterGreedy method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.NNCFCallback.setup">setup() (anomalib.core.callbacks.nncf_callback.NNCFCallback method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTecDataModule.setup">(anomalib.data.mvtec.MVTecDataModule method)</a>
+</li>
+          <li><a href="api/anomalib/data/index.html#anomalib.data.MVTecDataModule.setup">(anomalib.data.MVTecDataModule method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/utils/visualizer/index.html#anomalib.utils.visualizer.Visualizer.show">show() (anomalib.utils.visualizer.Visualizer method)</a>
+</li>
+        <li><a href="api/anomalib/models/dfm/dfm_model/index.html#anomalib.models.dfm.dfm_model.SingleClassGaussian">SingleClassGaussian (class in anomalib.models.dfm.dfm_model)</a>
+</li>
+        <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.SparseRandomProjection">SparseRandomProjection (class in anomalib.models.patchcore.utils.sampling)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/random_projection/index.html#anomalib.models.patchcore.utils.sampling.random_projection.SparseRandomProjection">(class in anomalib.models.patchcore.utils.sampling.random_projection)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.StfpmLightning">StfpmLightning (class in anomalib.models.stfpm)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/stfpm/model/index.html#anomalib.models.stfpm.model.StfpmLightning">(class in anomalib.models.stfpm.model)</a>, <a href="models/anomalib.models.stfpm.model.html#anomalib.models.stfpm.model.StfpmLightning">[1]</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.STFPMModel">STFPMModel (class in anomalib.models.stfpm)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/stfpm/model/index.html#anomalib.models.stfpm.model.STFPMModel">(class in anomalib.models.stfpm.model)</a>, <a href="models/anomalib.models.stfpm.model.html#anomalib.models.stfpm.model.STFPMModel">[1]</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/data/tiler/index.html#anomalib.data.tiler.StrideSizeError">StrideSizeError</a>
+</li>
+        <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.PatchcoreModel.subsample_embedding">subsample_embedding() (anomalib.models.patchcore.model.PatchcoreModel static method)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.PatchcoreModel.subsample_embedding">[1]</a>
+</li>
+        <li><a href="api/anomalib/utils/post_process/index.html#anomalib.utils.post_process.superimpose_anomaly_map">superimpose_anomaly_map() (in module anomalib.utils.post_process)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="T" class="genindex-section">
+  <h2>T</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTecDataModule.test_dataloader">test_dataloader() (anomalib.data.mvtec.MVTecDataModule method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/data/index.html#anomalib.data.MVTecDataModule.test_dataloader">(anomalib.data.MVTecDataModule method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule.test_epoch_end">test_epoch_end() (anomalib.core.model.anomaly_module.AnomalyModule method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/model/index.html#anomalib.core.model.AnomalyModule.test_epoch_end">(anomalib.core.model.AnomalyModule method)</a>
+</li>
+          <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule.test_epoch_end">(anomalib.models.AnomalyModule method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule.test_step">test_step() (anomalib.core.model.anomaly_module.AnomalyModule method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/model/index.html#anomalib.core.model.AnomalyModule.test_step">(anomalib.core.model.AnomalyModule method)</a>
+</li>
+          <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule.test_step">(anomalib.models.AnomalyModule method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule.test_step_end">test_step_end() (anomalib.core.model.anomaly_module.AnomalyModule method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/model/index.html#anomalib.core.model.AnomalyModule.test_step_end">(anomalib.core.model.AnomalyModule method)</a>
+</li>
+          <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule.test_step_end">(anomalib.models.AnomalyModule method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/data/tiler/index.html#anomalib.data.tiler.Tiler.tile">tile() (anomalib.data.tiler.Tiler method)</a>
+</li>
+        <li><a href="api/anomalib/data/tiler/index.html#anomalib.data.tiler.Tiler">Tiler (class in anomalib.data.tiler)</a>
+</li>
+        <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.TimerCallback">TimerCallback (class in anomalib.core.callbacks)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/timer/index.html#anomalib.core.callbacks.timer.TimerCallback">(class in anomalib.core.callbacks.timer)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/models/dfkde/normality_model/index.html#anomalib.models.dfkde.normality_model.NormalityModel.to_probability">to_probability() (anomalib.models.dfkde.normality_model.NormalityModel method)</a>, <a href="models/anomalib.models.dfkde.normality_model.html#anomalib.models.dfkde.normality_model.NormalityModel.to_probability">[1]</a>
+</li>
+        <li><a href="api/anomalib/data/transforms/index.html#anomalib.data.transforms.ToNumpy">ToNumpy (class in anomalib.data.transforms)</a>
+
+        <ul>
+          <li><a href="api/anomalib/data/transforms/custom/index.html#anomalib.data.transforms.custom.ToNumpy">(class in anomalib.data.transforms.custom)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/core/model/inference/index.html#anomalib.core.model.inference.TorchInferencer">TorchInferencer (class in anomalib.core.model.inference)</a>
+</li>
+        <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTecDataModule.train_dataloader">train_dataloader() (anomalib.data.mvtec.MVTecDataModule method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/data/index.html#anomalib.data.MVTecDataModule.train_dataloader">(anomalib.data.MVTecDataModule method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/models/dfkde/model/index.html#anomalib.models.dfkde.model.DfkdeLightning.training_epoch_end">training_epoch_end() (anomalib.models.dfkde.model.DfkdeLightning method)</a>, <a href="models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeLightning.training_epoch_end">[1]</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/dfm/model/index.html#anomalib.models.dfm.model.DfmLightning.training_epoch_end">(anomalib.models.dfm.model.DfmLightning method)</a>, <a href="models/anomalib.models.dfm.model.html#anomalib.models.dfm.model.DfmLightning.training_epoch_end">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/padim/model/index.html#anomalib.models.padim.model.PadimLightning.training_epoch_end">(anomalib.models.padim.model.PadimLightning method)</a>, <a href="models/anomalib.models.padim.model.html#anomalib.models.padim.model.PadimLightning.training_epoch_end">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.PatchcoreLightning.training_epoch_end">(anomalib.models.patchcore.model.PatchcoreLightning method)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.PatchcoreLightning.training_epoch_end">[1]</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/models/dfkde/model/index.html#anomalib.models.dfkde.model.DfkdeLightning.training_step">training_step() (anomalib.models.dfkde.model.DfkdeLightning method)</a>, <a href="models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeLightning.training_step">[1]</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/dfm/model/index.html#anomalib.models.dfm.model.DfmLightning.training_step">(anomalib.models.dfm.model.DfmLightning method)</a>, <a href="models/anomalib.models.dfm.model.html#anomalib.models.dfm.model.DfmLightning.training_step">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/padim/model/index.html#anomalib.models.padim.model.PadimLightning.training_step">(anomalib.models.padim.model.PadimLightning method)</a>, <a href="models/anomalib.models.padim.model.html#anomalib.models.padim.model.PadimLightning.training_step">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.PatchcoreLightning.training_step">(anomalib.models.patchcore.model.PatchcoreLightning method)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.PatchcoreLightning.training_step">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/stfpm/model/index.html#anomalib.models.stfpm.model.StfpmLightning.training_step">(anomalib.models.stfpm.model.StfpmLightning method)</a>, <a href="models/anomalib.models.stfpm.model.html#anomalib.models.stfpm.model.StfpmLightning.training_step">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.StfpmLightning.training_step">(anomalib.models.stfpm.StfpmLightning method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/model/pca/index.html#anomalib.core.model.pca.PCA.transform">transform() (anomalib.core.model.pca.PCA method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/random_projection/index.html#anomalib.models.patchcore.utils.sampling.random_projection.SparseRandomProjection.transform">(anomalib.models.patchcore.utils.sampling.random_projection.SparseRandomProjection method)</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.SparseRandomProjection.transform">(anomalib.models.patchcore.utils.sampling.SparseRandomProjection method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="U" class="genindex-section">
+  <h2>U</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/data/tiler/index.html#anomalib.data.tiler.Tiler.untile">untile() (anomalib.data.tiler.Tiler method)</a>
+</li>
+        <li><a href="api/anomalib/core/metrics/optimal_f1/index.html#anomalib.core.metrics.optimal_f1.OptimalF1.update">update() (anomalib.core.metrics.optimal_f1.OptimalF1 method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/metrics/index.html#anomalib.core.metrics.OptimalF1.update">(anomalib.core.metrics.OptimalF1 method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/config/config/index.html#anomalib.config.config.update_device_config">update_device_config() (in module anomalib.config.config)</a>
+</li>
+        <li><a href="api/anomalib/models/patchcore/utils/sampling/k_center_greedy/index.html#anomalib.models.patchcore.utils.sampling.k_center_greedy.KCenterGreedy.update_distances">update_distances() (anomalib.models.patchcore.utils.sampling.k_center_greedy.KCenterGreedy method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/patchcore/utils/sampling/index.html#anomalib.models.patchcore.utils.sampling.KCenterGreedy.update_distances">(anomalib.models.patchcore.utils.sampling.KCenterGreedy method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/config/index.html#anomalib.config.update_input_size_config">update_input_size_config() (in module anomalib.config)</a>
+
+        <ul>
+          <li><a href="api/anomalib/config/config/index.html#anomalib.config.config.update_input_size_config">(in module anomalib.config.config)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/config/config/index.html#anomalib.config.config.update_multi_gpu_training_config">update_multi_gpu_training_config() (in module anomalib.config.config)</a>
+</li>
+        <li><a href="api/anomalib/config/index.html#anomalib.config.update_nncf_config">update_nncf_config() (in module anomalib.config)</a>
+
+        <ul>
+          <li><a href="api/anomalib/config/config/index.html#anomalib.config.config.update_nncf_config">(in module anomalib.config.config)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/utils/download_progress_bar/index.html#anomalib.utils.download_progress_bar.DownloadProgressBar.update_to">update_to() (anomalib.utils.download_progress_bar.DownloadProgressBar method)</a>
+</li>
+        <li><a href="api/anomalib/data/tiler/index.html#anomalib.data.tiler.upscale_image">upscale_image() (in module anomalib.data.tiler)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="V" class="genindex-section">
+  <h2>V</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTecDataModule.val_dataloader">val_dataloader() (anomalib.data.mvtec.MVTecDataModule method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/data/index.html#anomalib.data.MVTecDataModule.val_dataloader">(anomalib.data.MVTecDataModule method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule.validation_epoch_end">validation_epoch_end() (anomalib.core.model.anomaly_module.AnomalyModule method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/model/index.html#anomalib.core.model.AnomalyModule.validation_epoch_end">(anomalib.core.model.AnomalyModule method)</a>
+</li>
+          <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule.validation_epoch_end">(anomalib.models.AnomalyModule method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/models/dfkde/model/index.html#anomalib.models.dfkde.model.DfkdeLightning.validation_step">validation_step() (anomalib.models.dfkde.model.DfkdeLightning method)</a>, <a href="models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeLightning.validation_step">[1]</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/dfm/model/index.html#anomalib.models.dfm.model.DfmLightning.validation_step">(anomalib.models.dfm.model.DfmLightning method)</a>, <a href="models/anomalib.models.dfm.model.html#anomalib.models.dfm.model.DfmLightning.validation_step">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/padim/model/index.html#anomalib.models.padim.model.PadimLightning.validation_step">(anomalib.models.padim.model.PadimLightning method)</a>, <a href="models/anomalib.models.padim.model.html#anomalib.models.padim.model.PadimLightning.validation_step">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.PatchcoreLightning.validation_step">(anomalib.models.patchcore.model.PatchcoreLightning method)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.PatchcoreLightning.validation_step">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/stfpm/model/index.html#anomalib.models.stfpm.model.StfpmLightning.validation_step">(anomalib.models.stfpm.model.StfpmLightning method)</a>, <a href="models/anomalib.models.stfpm.model.html#anomalib.models.stfpm.model.StfpmLightning.validation_step">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.StfpmLightning.validation_step">(anomalib.models.stfpm.StfpmLightning method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule.validation_step_end">validation_step_end() (anomalib.core.model.anomaly_module.AnomalyModule method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/model/index.html#anomalib.core.model.AnomalyModule.validation_step_end">(anomalib.core.model.AnomalyModule method)</a>
+</li>
+          <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule.validation_step_end">(anomalib.models.AnomalyModule method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/utils/visualizer/index.html#anomalib.utils.visualizer.Visualizer">Visualizer (class in anomalib.utils.visualizer)</a>
+</li>
+        <li><a href="api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.VisualizerCallback">VisualizerCallback (class in anomalib.core.callbacks)</a>
+
+        <ul>
+          <li><a href="api/anomalib/core/callbacks/visualizer_callback/index.html#anomalib.core.callbacks.visualizer_callback.VisualizerCallback">(class in anomalib.core.callbacks.visualizer_callback)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+
+      </article>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; 
+            |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/main.js"></script>
+    </body>
+</html>

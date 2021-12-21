@@ -1,0 +1,60 @@
+:py:mod:`anomalib.utils.visualizer`
+===================================
+
+.. py:module:: anomalib.utils.visualizer
+
+.. autoapi-nested-parse::
+
+   Anomaly Visualization.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.visualizer.Visualizer
+
+
+
+
+.. py:class:: Visualizer(num_rows: int, num_cols: int, figure_size: Tuple[int, int])
+
+   Anomaly Visualization.
+
+   .. py:method:: add_image(self, image: numpy.ndarray, title: str, color_map: Optional[str] = None, index: Optional[int] = None)
+
+      Add image to figure.
+
+      :param image: Image which should be added to the figure.
+      :type image: np.ndarray
+      :param title: Image title shown on the plot.
+      :type title: str
+      :param color_map: Name of matplotlib color map used to map scalar data to colours. Defaults to None.
+      :type color_map: Optional[str]
+      :param index: Figure index. Defaults to None.
+      :type index: Optional[int]
+
+
+   .. py:method:: show(self)
+
+      Show image on a matplotlib figure.
+
+
+   .. py:method:: save(self, filename: pathlib.Path)
+
+      Save image.
+
+      :param filename: Path: Filename to save image
+
+
+   .. py:method:: close(self)
+
+      Close figure.
+
+
+

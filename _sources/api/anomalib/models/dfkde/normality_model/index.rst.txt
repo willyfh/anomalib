@@ -1,0 +1,94 @@
+:py:mod:`anomalib.models.dfkde.normality_model`
+===============================================
+
+.. py:module:: anomalib.models.dfkde.normality_model
+
+.. autoapi-nested-parse::
+
+   Normality model of DFKDE.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.dfkde.normality_model.NormalityModel
+
+
+
+
+.. py:class:: NormalityModel(n_comps: int = 16, pre_processing: str = 'scale', filter_count: int = 40000, threshold_steepness: float = 0.05, threshold_offset: float = 12.0)
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   Normality Model for the DFKDE algorithm.
+
+   .. py:method:: fit(self, dataset: torch.Tensor)
+
+      Fit a kde model to dataset.
+
+      :param dataset: Input dataset to fit the model.
+      :param dataset: torch.Tensor:
+
+      :returns: Boolean confirming whether the training is successful.
+
+
+   .. py:method:: preprocess(self, feature_stack: torch.Tensor, max_length: Optional[torch.Tensor] = None) -> Tuple[torch.Tensor, torch.Tensor]
+
+      Pre process the CNN features.
+
+      :param feature_stack: Features extracted from CNN
+      :param max_length:
+      :param feature_stack: torch.Tensor:
+      :param max_length: Optional[Tensor]:  (Default value = None)
+
+      :returns: Stacked features and length
+      :rtype: (Tuple)
+
+
+   .. py:method:: evaluate(self, features: torch.Tensor, as_density: Optional[bool] = False, as_log_likelihood: Optional[bool] = False) -> torch.Tensor
+
+      Compute the KDE scores.
+
+      :param features: Features
+      :type features: torch.Tensor
+      :param as_density: [description]. Defaults to False.
+      :type as_density: Optional[bool], optional
+      :param as_log_likelihood: [description]. Defaults to False.
+      :type as_log_likelihood: Optional[bool], optional
+
+      :returns: Score
+      :rtype: torch.Tensor
+
+
+   .. py:method:: predict(self, features: torch.Tensor) -> torch.Tensor
+
+      Predicts the probability that the features belong to the anomalous class.
+
+      :param features: Feature from which the output probabilities are detected.
+      :type features: torch.Tensor
+
+      :returns: Detection probabilities
+
+
+   .. py:method:: to_probability(self, densities: torch.Tensor) -> torch.Tensor
+
+      Converts density scores to anomaly probabilities (see https://www.desmos.com/calculator/ifju7eesg7).
+
+      :param densities: density of an image
+      :param densities: torch.Tensor:
+
+      :returns: probability that image with {density} is anomalous
+
+
+   .. py:method:: forward(self, features: torch.Tensor) -> torch.Tensor
+
+      Make module callable.
+
+
+

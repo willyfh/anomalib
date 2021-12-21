@@ -1,0 +1,96 @@
+:py:mod:`anomalib.data`
+=======================
+
+.. py:module:: anomalib.data
+
+.. autoapi-nested-parse::
+
+   Anomalib Datasets.
+
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   transforms/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   mvtec/index.rst
+   tiler/index.rst
+   utils/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.data.MVTecDataModule
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.data.get_datamodule
+
+
+
+.. py:class:: MVTecDataModule(root: str, category: str, image_size: Optional[Union[int, Tuple[int, int]]] = None, train_batch_size: int = 32, test_batch_size: int = 32, num_workers: int = 8, transform_config: Optional[Union[str, albumentations.Compose]] = None)
+
+   Bases: :py:obj:`pytorch_lightning.core.datamodule.LightningDataModule`
+
+   MVTec Lightning Data Module.
+
+   .. py:method:: prepare_data(self)
+
+      Prepare MVTec Dataset.
+
+
+   .. py:method:: setup(self, stage: Optional[str] = None) -> None
+
+      Setup train, validation and test data.
+
+      :param stage: Optional[str]:  Train/Val/Test stages. (Default value = None)
+
+
+   .. py:method:: train_dataloader(self) -> torch.utils.data.DataLoader
+
+      Get train dataloader.
+
+
+   .. py:method:: val_dataloader(self) -> torch.utils.data.DataLoader
+
+      Get validation dataloader.
+
+
+   .. py:method:: test_dataloader(self) -> torch.utils.data.DataLoader
+
+      Get test dataloader.
+
+
+
+.. py:function:: get_datamodule(config: Union[omegaconf.DictConfig, omegaconf.ListConfig])
+
+   Get Anomaly Datamodule.
+
+   :param config: Configuration of the anomaly model
+   :param config: Union[DictConfig, ListConfig]:
+
+   :returns: PyTorch Lightning DataModule
+
+

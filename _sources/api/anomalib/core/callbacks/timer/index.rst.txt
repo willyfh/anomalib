@@ -1,0 +1,88 @@
+:py:mod:`anomalib.core.callbacks.timer`
+=======================================
+
+.. py:module:: anomalib.core.callbacks.timer
+
+.. autoapi-nested-parse::
+
+   Callback to measure training and testing time of a PyTorch Lightning module.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.core.callbacks.timer.TimerCallback
+
+
+
+
+.. py:class:: TimerCallback
+
+   Bases: :py:obj:`pytorch_lightning.Callback`
+
+   Callback that measures the training and testing time of a PyTorch Lightning module.
+
+   .. py:method:: on_fit_start(self, trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule) -> None
+
+      Call when fit begins.
+
+      Sets the start time to the time training started.
+
+      :param trainer: PyTorch Lightning trainer.
+      :type trainer: Trainer
+      :param pl_module: Current training module.
+      :type pl_module: LightningModule
+
+      :returns: None
+
+
+   .. py:method:: on_fit_end(self, trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule) -> None
+
+      Call when fit ends.
+
+      Prints the time taken for training.
+
+      :param trainer: PyTorch Lightning trainer.
+      :type trainer: Trainer
+      :param pl_module: Current training module.
+      :type pl_module: LightningModule
+
+      :returns: None
+
+
+   .. py:method:: on_test_start(self, trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule) -> None
+
+      Call when the test begins.
+
+      Sets the start time to the time testing started.
+      Goes over all the test dataloaders and adds the number of images in each.
+
+      :param trainer: PyTorch Lightning trainer.
+      :type trainer: Trainer
+      :param pl_module: Current training module.
+      :type pl_module: LightningModule
+
+      :returns: None
+
+
+   .. py:method:: on_test_end(self, trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule) -> None
+
+      Call when the test ends.
+
+      Prints the time taken for testing and the throughput in frames per second.
+
+      :param trainer: PyTorch Lightning trainer.
+      :type trainer: Trainer
+      :param pl_module: Current training module.
+      :type pl_module: LightningModule
+
+      :returns: None
+
+
+

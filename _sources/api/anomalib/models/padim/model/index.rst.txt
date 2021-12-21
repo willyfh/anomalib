@@ -1,0 +1,71 @@
+:py:mod:`anomalib.models.padim.model`
+=====================================
+
+.. py:module:: anomalib.models.padim.model
+
+.. autoapi-nested-parse::
+
+   PaDiM: a Patch Distribution Modeling Framework for Anomaly Detection and Localization.
+
+   Paper https://arxiv.org/abs/2011.08785
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.padim.model.PadimLightning
+
+
+
+
+.. py:class:: PadimLightning(hparams)
+
+   Bases: :py:obj:`anomalib.core.model.AnomalyModule`
+
+   PaDiM: a Patch Distribution Modeling Framework for Anomaly Detection and Localization.
+
+   .. py:method:: configure_optimizers()
+      :staticmethod:
+
+      PADIM doesn't require optimization, therefore returns no optimizers.
+
+
+   .. py:method:: training_step(self, batch, _)
+
+      Training Step of PADIM. For each batch, hierarchical features are extracted from the CNN.
+
+      :param batch: Input batch
+      :param _: Index of the batch.
+
+      :returns: Hierarchical feature map
+
+
+   .. py:method:: training_epoch_end(self, outputs) -> None
+
+      Fit a multivariate gaussian model on an embedding extracted from deep hierarchical CNN features.
+
+      :param outputs: Batch of outputs from the training step
+
+      :returns: None
+
+
+   .. py:method:: validation_step(self, batch, _)
+
+      Validation Step of PADIM.
+
+      Similar to the training step, hierarchical features are extracted from the CNN for each batch.
+
+      :param batch: Input batch
+      :param _: Index of the batch.
+
+      :returns: Dictionary containing images, features, true labels and masks.
+                These are required in `validation_epoch_end` for feature concatenation.
+
+
+

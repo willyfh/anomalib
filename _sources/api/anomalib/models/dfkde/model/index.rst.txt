@@ -1,0 +1,69 @@
+:py:mod:`anomalib.models.dfkde.model`
+=====================================
+
+.. py:module:: anomalib.models.dfkde.model
+
+.. autoapi-nested-parse::
+
+   DFKDE: Deep Feature Kernel Density Estimation.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.dfkde.model.DfkdeLightning
+
+
+
+
+.. py:class:: DfkdeLightning(hparams: Union[omegaconf.dictconfig.DictConfig, omegaconf.listconfig.ListConfig])
+
+   Bases: :py:obj:`anomalib.core.model.AnomalyModule`
+
+   DFKDE: Deep Featured Kernel Density Estimation.
+
+   .. py:method:: configure_optimizers()
+      :staticmethod:
+
+      DFKDE doesn't require optimization, therefore returns no optimizers.
+
+
+   .. py:method:: training_step(self, batch, _)
+
+      Training Step of DFKDE. For each batch, features are extracted from the CNN.
+
+      :param batch: Input batch
+      :param _: Index of the batch.
+
+      :returns: Deep CNN features.
+
+
+   .. py:method:: training_epoch_end(self, outputs: List[Dict[str, Any]]) -> None
+
+      Fit a KDE model on deep CNN features.
+
+      :param outputs: Batch of outputs from the training step
+      :param outputs: dict:
+
+      :returns: None
+
+
+   .. py:method:: validation_step(self, batch, _)
+
+      Validation Step of DFKDE.
+
+      Similar to the training step, features are extracted from the CNN for each batch.
+
+      :param batch: Input batch
+      :param _: Index of the batch.
+
+      :returns: Dictionary containing probability, prediction and ground truth values.
+
+
+

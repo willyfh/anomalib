@@ -1,0 +1,38 @@
+:py:mod:`anomalib.core.metrics.auroc`
+=====================================
+
+.. py:module:: anomalib.core.metrics.auroc
+
+.. autoapi-nested-parse::
+
+   Implementation of AUROC metric based on TorchMetrics.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.core.metrics.auroc.AUROC
+
+
+
+
+.. py:class:: AUROC(num_classes: Optional[int] = None, pos_label: Optional[int] = None, compute_on_step: bool = True, dist_sync_on_step: bool = False, process_group: Optional[Any] = None, dist_sync_fn: Callable = None)
+
+   Bases: :py:obj:`torchmetrics.ROC`
+
+   Area under the ROC curve.
+
+   .. py:method:: compute(self) -> torch.Tensor
+
+      First compute ROC curve, then compute area under the curve.
+
+      :returns: Value of the AUROC metric
+
+
+

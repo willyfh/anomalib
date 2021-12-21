@@ -1,0 +1,65 @@
+:py:mod:`anomalib.data.transforms.custom`
+=========================================
+
+.. py:module:: anomalib.data.transforms.custom
+
+.. autoapi-nested-parse::
+
+   Custom Image/Tensor Transforms.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.data.transforms.custom.Denormalize
+   anomalib.data.transforms.custom.ToNumpy
+
+
+
+
+.. py:class:: Denormalize(mean: Optional[List[float]] = None, std: Optional[List[float]] = None)
+
+   Denormalize Torch Tensor into np image format.
+
+   .. py:method:: __call__(self, tensor: torch.Tensor) -> numpy.ndarray
+
+      Denormalize the input.
+
+      :param tensor: Input tensor image (C, H, W)
+      :type tensor: Tensor
+
+      :returns: Denormalized numpy array (H, W, C).
+
+
+   .. py:method:: __repr__(self)
+
+      Representational string.
+
+
+
+.. py:class:: ToNumpy
+
+   Convert Tensor into Numpy Array.
+
+   .. py:method:: __call__(self, tensor: torch.Tensor, dims: Optional[Tuple[int, Ellipsis]] = None) -> numpy.ndarray
+
+      Convert Tensor into Numpy Array.
+
+      :param tensor: Tensor to convert
+      :param dims: Convert dimensions from torch to numpy format.
+
+      :returns: Converted numpy ndarray.
+
+
+   .. py:method:: __repr__(self)
+
+      Representational string.
+
+
+

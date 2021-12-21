@@ -1,0 +1,106 @@
+:py:mod:`anomalib.data.mvtec`
+=============================
+
+.. py:module:: anomalib.data.mvtec
+
+.. autoapi-nested-parse::
+
+   MVTec Dataset.
+
+   MVTec This script contains PyTorch Dataset, Dataloader and PyTorch
+   Lightning DataModule for the MVTec dataset.
+
+   If the dataset is not on the file system, the script downloads and
+   extracts the dataset and create PyTorch data objects.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.data.mvtec.MVTec
+   anomalib.data.mvtec.MVTecDataModule
+
+
+
+
+.. py:class:: MVTec(root: Union[pathlib.Path, str], category: str, pre_process: anomalib.data.transforms.PreProcessor, task: str = 'segmentation', is_train: bool = True, download: bool = False)
+
+   Bases: :py:obj:`torchvision.datasets.folder.VisionDataset`
+
+   MVTec PyTorch Dataset.
+
+   .. py:method:: _download(self) -> None
+
+      Download the MVTec dataset.
+
+
+   .. py:method:: _extract(self) -> None
+
+      Extract MVTec Dataset.
+
+
+   .. py:method:: _clean(self) -> None
+
+      Cleanup MVTec Dataset tar file.
+
+
+   .. py:method:: __len__(self) -> int
+
+      Get length of the dataset.
+
+
+   .. py:method:: __getitem__(self, index: int) -> Dict[str, Union[str, torch.Tensor]]
+
+      Get dataset item for the index ``index``.
+
+      :param index: Index to get the item.
+      :type index: int
+
+      :returns:
+
+                Dict of image tensor during training.
+                    Otherwise, Dict containing image path, target path, image tensor, label and transformed bounding box.
+      :rtype: Union[Dict[str, Tensor], Dict[str, Union[str, Tensor]]]
+
+
+
+.. py:class:: MVTecDataModule(root: str, category: str, image_size: Optional[Union[int, Tuple[int, int]]] = None, train_batch_size: int = 32, test_batch_size: int = 32, num_workers: int = 8, transform_config: Optional[Union[str, albumentations.Compose]] = None)
+
+   Bases: :py:obj:`pytorch_lightning.core.datamodule.LightningDataModule`
+
+   MVTec Lightning Data Module.
+
+   .. py:method:: prepare_data(self)
+
+      Prepare MVTec Dataset.
+
+
+   .. py:method:: setup(self, stage: Optional[str] = None) -> None
+
+      Setup train, validation and test data.
+
+      :param stage: Optional[str]:  Train/Val/Test stages. (Default value = None)
+
+
+   .. py:method:: train_dataloader(self) -> torch.utils.data.DataLoader
+
+      Get train dataloader.
+
+
+   .. py:method:: val_dataloader(self) -> torch.utils.data.DataLoader
+
+      Get validation dataloader.
+
+
+   .. py:method:: test_dataloader(self) -> torch.utils.data.DataLoader
+
+      Get test dataloader.
+
+
+

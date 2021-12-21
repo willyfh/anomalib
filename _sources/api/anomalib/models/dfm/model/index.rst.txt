@@ -1,0 +1,71 @@
+:py:mod:`anomalib.models.dfm.model`
+===================================
+
+.. py:module:: anomalib.models.dfm.model
+
+.. autoapi-nested-parse::
+
+   DFM: Deep Feature Kernel Density Estimation.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.dfm.model.DfmLightning
+
+
+
+
+.. py:class:: DfmLightning(hparams: Union[omegaconf.DictConfig, omegaconf.ListConfig])
+
+   Bases: :py:obj:`anomalib.core.model.AnomalyModule`
+
+   DFM: Deep Featured Kernel Density Estimation.
+
+   .. py:method:: configure_optimizers() -> None
+      :staticmethod:
+
+      DFM doesn't require optimization, therefore returns no optimizers.
+
+
+   .. py:method:: training_step(self, batch, _)
+
+      Training Step of DFM.
+
+      For each batch, features are extracted from the CNN.
+
+      :param batch: Input batch
+      :param _: Index of the batch.
+
+      :returns: Deep CNN features.
+
+
+   .. py:method:: training_epoch_end(self, outputs: List[Dict[str, Any]]) -> None
+
+      Fit a KDE model on deep CNN features.
+
+      :param outputs: Batch of outputs from the training step
+      :param outputs: dict:
+
+      :returns: None
+
+
+   .. py:method:: validation_step(self, batch, _)
+
+      Validation Step of DFM.
+
+      Similar to the training step, features are extracted from the CNN for each batch.
+
+      :param batch: Dict: Input batch
+      :param batch_idx: int: Index of the batch.
+
+      :returns: Dictionary containing FRE anomaly scores and ground-truth.
+
+
+

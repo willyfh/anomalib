@@ -1,0 +1,74 @@
+:py:mod:`anomalib.core.metrics`
+===============================
+
+.. py:module:: anomalib.core.metrics
+
+.. autoapi-nested-parse::
+
+   Custom anomaly evaluation metrics.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   auroc/index.rst
+   optimal_f1/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.core.metrics.AUROC
+   anomalib.core.metrics.OptimalF1
+
+
+
+
+.. py:class:: AUROC(num_classes: Optional[int] = None, pos_label: Optional[int] = None, compute_on_step: bool = True, dist_sync_on_step: bool = False, process_group: Optional[Any] = None, dist_sync_fn: Callable = None)
+
+   Bases: :py:obj:`torchmetrics.ROC`
+
+   Area under the ROC curve.
+
+   .. py:method:: compute(self) -> torch.Tensor
+
+      First compute ROC curve, then compute area under the curve.
+
+      :returns: Value of the AUROC metric
+
+
+
+.. py:class:: OptimalF1(num_classes: int, **kwargs)
+
+   Bases: :py:obj:`torchmetrics.Metric`
+
+   Optimal F1 Metric.
+
+   Compute the optimal F1 score at the adaptive threshold, based on the F1 metric of the true labels and the
+   predicted anomaly scores.
+
+   .. py:method:: update(self, preds: torch.Tensor, target: torch.Tensor) -> None
+
+      Update the precision-recall curve metric.
+
+
+   .. py:method:: compute(self) -> torch.Tensor
+
+      Compute the value of the optimal F1 score.
+
+      Compute the F1 scores while varying the threshold. Store the optimal
+      threshold as attribute and return the maximum value of the F1 score.
+
+      :returns: Value of the F1 score at the optimal threshold.
+
+
+

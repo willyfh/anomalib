@@ -1,0 +1,101 @@
+:py:mod:`anomalib.core.callbacks.nncf_callback`
+===============================================
+
+.. py:module:: anomalib.core.callbacks.nncf_callback
+
+.. autoapi-nested-parse::
+
+   NNCF Callback.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.core.callbacks.nncf_callback.InitLoader
+   anomalib.core.callbacks.nncf_callback.NNCFCallback
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.core.callbacks.nncf_callback.criterion_fn
+
+
+
+.. py:function:: criterion_fn(outputs, criterion)
+
+   Calls the criterion function on outputs.
+
+
+.. py:class:: InitLoader(data_loader: torch.utils.data.dataloader.DataLoader)
+
+   Bases: :py:obj:`nncf.torch.initialization.PTInitializingDataLoader`
+
+   Initializing data loader for NNCF to be used with unsupervised training algorithms.
+
+   .. py:method:: __iter__(self)
+
+      Create iterator for dataloader.
+
+
+   .. py:method:: __next__(self) -> Any
+
+      Return next item from dataloader iterator.
+
+
+   .. py:method:: get_inputs(self, dataloader_output) -> Tuple[Tuple, Dict]
+
+      Get input to model.
+
+      :returns: Tuple[Tuple, Dict]: The current model call to be made during
+                the initialization process
+      :rtype: (dataloader_output,), {}
+
+
+   .. py:method:: get_target(self, _)
+
+      Return structure for ground truth in loss criterion based on dataloader output.
+
+      :returns: None
+
+
+
+.. py:class:: NNCFCallback(config, dirpath, filename)
+
+   Bases: :py:obj:`pytorch_lightning.Callback`
+
+   Callback for NNCF compression.
+
+   Assumes that the pl module contains a 'model' attribute, which is
+   the PyTorch module that must be compressed.
+
+   .. py:method:: setup(self, _: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, __: Optional[str] = None) -> None
+
+      Call when fit or test begins.
+
+
+   .. py:method:: on_train_batch_start(self, trainer, _pl_module: pytorch_lightning.LightningModule, _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+
+      Call when the train batch begins.
+
+
+   .. py:method:: on_train_end(self, _trainer, _pl_module: pytorch_lightning.LightningModule) -> None
+
+      Call when the train ends.
+
+
+   .. py:method:: on_train_epoch_end(self, _trainer: pytorch_lightning.Trainer, _pl_module: pytorch_lightning.LightningModule, _unused: Optional[Any] = None) -> None
+
+      Call when the train epoch ends.
+
+
+

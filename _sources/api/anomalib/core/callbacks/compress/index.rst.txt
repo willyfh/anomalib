@@ -1,0 +1,45 @@
+:py:mod:`anomalib.core.callbacks.compress`
+==========================================
+
+.. py:module:: anomalib.core.callbacks.compress
+
+.. autoapi-nested-parse::
+
+   Callback that compresses a trained model by first exporting to .onnx format, and then converting to OpenVINO IR.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.core.callbacks.compress.CompressModelCallback
+
+
+
+
+.. py:class:: CompressModelCallback(input_size: Tuple[int, int], dirpath: str, filename: str)
+
+   Bases: :py:obj:`pytorch_lightning.Callback`
+
+   Callback to compresses a trained model.
+
+   Model is first exported to .onnx format, and then converted to OpenVINO IR.
+
+   :param input_size: Tuple of image height, width
+   :type input_size: Tuple[int, int]
+   :param dirpath: Path for model output
+   :type dirpath: str
+   :param filename: Name of output model
+   :type filename: str
+
+   .. py:method:: on_train_end(self, trainer, pl_module: pytorch_lightning.LightningModule) -> None
+
+      Call when the train ends.
+
+
+

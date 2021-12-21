@@ -1,0 +1,44 @@
+:py:mod:`anomalib.core.callbacks.save_to_csv`
+=============================================
+
+.. py:module:: anomalib.core.callbacks.save_to_csv
+
+.. autoapi-nested-parse::
+
+   Callback to save metrics to CSV.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.core.callbacks.save_to_csv.SaveToCSVCallback
+
+
+
+
+.. py:class:: SaveToCSVCallback
+
+   Bases: :py:obj:`pytorch_lightning.Callback`
+
+   Callback that saves the inference results of a model.
+
+   The callback generates a csv file that saves different performance
+   metrics and results.
+
+   .. py:method:: on_test_epoch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.core.model.AnomalyModule) -> None
+
+      Save Results at the end of training.
+
+      :param _trainer: Pytorch lightning trainer object (unused)
+      :type _trainer: Trainer
+      :param pl_module: Lightning modules derived from BaseAnomalyLightning object.
+      :type pl_module: LightningModule
+
+
+

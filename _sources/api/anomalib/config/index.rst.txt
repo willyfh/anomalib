@@ -1,0 +1,71 @@
+:py:mod:`anomalib.config`
+=========================
+
+.. py:module:: anomalib.config
+
+.. autoapi-nested-parse::
+
+   Utilities to get configurable parameters.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   config/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.config.get_configurable_parameters
+   anomalib.config.update_input_size_config
+   anomalib.config.update_nncf_config
+
+
+
+.. py:function:: get_configurable_parameters(model_name: Optional[str] = None, model_config_path: Optional[Union[pathlib.Path, str]] = None, weight_file: Optional[str] = None, openvino: bool = False, config_filename: Optional[str] = 'config', config_file_extension: Optional[str] = 'yaml') -> Union[omegaconf.DictConfig, omegaconf.ListConfig]
+
+   Get configurable parameters.
+
+   :param model_name: Optional[str]:  (Default value = None)
+   :param model_config_path: Optional[Union[Path, str]]:  (Default value = None)
+   :param weight_file: Path to the weight file
+   :param openvino: Use OpenVINO
+   :param config_filename: Optional[str]:  (Default value = "config")
+   :param config_file_extension: Optional[str]:  (Default value = "yaml")
+
+   :returns: Configurable parameters in DictConfig object.
+
+
+.. py:function:: update_input_size_config(config: Union[omegaconf.DictConfig, omegaconf.ListConfig]) -> Union[omegaconf.DictConfig, omegaconf.ListConfig]
+
+   Update config with image size as tuple, effective input size and tiling stride.
+
+   Convert integer image size parameters into tuples, calculate the effective input size based on image size
+   and crop size, and set tiling stride if undefined.
+
+   :param config: Configurable parameters object
+   :type config: Union[DictConfig, ListConfig]
+
+   :returns: Configurable parameters with updated values
+
+
+.. py:function:: update_nncf_config(config: Union[omegaconf.DictConfig, omegaconf.ListConfig]) -> Union[omegaconf.DictConfig, omegaconf.ListConfig]
+
+   Set the NNCF input size based on the value of the crop_size parameter in the configurable parameters object.
+
+   :param config: Dictconfig: Configurable parameters of the current run.
+
+   :returns: Updated configurable parameters in DictConfig object.
+
+

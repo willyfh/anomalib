@@ -1,0 +1,111 @@
+:py:mod:`anomalib.models.patchcore.utils.sampling.k_center_greedy`
+==================================================================
+
+.. py:module:: anomalib.models.patchcore.utils.sampling.k_center_greedy
+
+.. autoapi-nested-parse::
+
+   This module comprises PatchCore Sampling Methods for the embedding.
+
+   - k Center Greedy Method
+       Returns points that minimizes the maximum distance of any point to a center.
+       . https://arxiv.org/abs/1708.00489
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.patchcore.utils.sampling.k_center_greedy.KCenterGreedy
+
+
+
+
+.. py:class:: KCenterGreedy(model: anomalib.models.patchcore.utils.sampling.random_projection.SparseRandomProjection, embedding: torch.Tensor, sampling_ratio: float)
+
+   Implements k-center-greedy method.
+
+   :param model: model with scikit-like API with decision_function. Defaults to SparseRandomProjection.
+   :param embedding: Embedding vector extracted from a CNN
+   :type embedding: Tensor
+   :param sampling_ratio: Ratio to choose coreset size from the embedding size.
+   :type sampling_ratio: float
+
+   .. rubric:: Example
+
+   >>> embedding.shape
+   torch.Size([219520, 1536])
+   >>> sampler = KCenterGreedy(embedding=embedding)
+   >>> sampled_idxs = sampler.select_coreset_idxs()
+   >>> coreset = embedding[sampled_idxs]
+   >>> coreset.shape
+   torch.Size([219, 1536])
+
+   .. py:method:: reset_distances(self) -> None
+
+      Reset minimum distances.
+
+
+   .. py:method:: get_new_cluster_centers(self, cluster_centers: List[int]) -> List[int]
+
+      Get new cluster center indexes from the list of cluster indexes.
+
+      :param cluster_centers: List of cluster center indexes.
+      :type cluster_centers: List[int]
+
+      :returns: List of new cluster center indexes.
+      :rtype: List[int]
+
+
+   .. py:method:: update_distances(self, cluster_centers: List[int]) -> None
+
+      Update min distances given cluster centers.
+
+      :param cluster_centers: indices of cluster centers
+      :type cluster_centers: List[int]
+
+
+   .. py:method:: get_new_idx(self) -> int
+
+      Get index value of a sample.
+
+      Based on (i) either minimum distance of the cluster or (ii) random subsampling from the embedding.
+
+      :returns: Sample index
+      :rtype: int
+
+
+   .. py:method:: select_coreset_idxs(self, selected_idxs: Optional[List[int]] = None) -> List[int]
+
+      Greedily form a coreset to minimize the maximum distance of a cluster.
+
+      :param selected_idxs: index of samples already selected. Defaults to an empty set.
+
+      :returns: indices of samples selected to minimize distance to cluster centers
+
+
+   .. py:method:: sample_coreset(self, selected_idxs: Optional[List[int]] = None) -> torch.Tensor
+
+      Select coreset from the embedding.
+
+      :param selected_idxs: index of samples already selected. Defaults to an empty set.
+
+      :returns: Output coreset
+      :rtype: Tensor
+
+      .. rubric:: Example
+
+      >>> embedding.shape
+      torch.Size([219520, 1536])
+      >>> sampler = KCenterGreedy(...)
+      >>> coreset = sampler.sample_coreset()
+      >>> coreset.shape
+      torch.Size([219, 1536])
+
+
+

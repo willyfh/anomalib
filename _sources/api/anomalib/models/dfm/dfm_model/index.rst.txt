@@ -1,0 +1,113 @@
+:py:mod:`anomalib.models.dfm.dfm_model`
+=======================================
+
+.. py:module:: anomalib.models.dfm.dfm_model
+
+.. autoapi-nested-parse::
+
+   Normality model of DFKDE.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.dfm.dfm_model.SingleClassGaussian
+   anomalib.models.dfm.dfm_model.DFMModel
+
+
+
+
+.. py:class:: SingleClassGaussian
+
+   Bases: :py:obj:`anomalib.core.model.dynamic_module.DynamicBufferModule`
+
+   Model Gaussian distribution over a set of points.
+
+   .. py:method:: fit(self, dataset: torch.Tensor) -> None
+
+      Fit a Gaussian model to dataset X.
+
+          Covariance matrix is not calculated directly using:
+              C = X.X^T
+          Instead, it is represented in terms of the Singular Value Decomposition of X:
+              X = U.S.V^T
+          Hence,
+              C = U.S^2.U^T
+          This simplifies the calculation of the log-likelihood without requiring full matrix inversion.
+
+      :param dataset: Input dataset to fit the model.
+      :type dataset: Tensor
+
+
+   .. py:method:: score_samples(self, features: torch.Tensor) -> torch.Tensor
+
+      Compute the NLL (negative log likelihood) scores.
+
+      :param features: semantic features on which density modeling is performed.
+      :type features: Tensor
+
+      :returns: Torch tensor of scores
+      :rtype: nll (Tensor)
+
+
+   .. py:method:: forward(self, dataset: torch.Tensor) -> None
+
+      Provides the same functionality as `fit`.
+
+      Transforms the input dataset based on singular values calculated earlier.
+
+      :param dataset: Input dataset
+      :type dataset: Tensor
+
+
+
+.. py:class:: DFMModel(n_comps: float = 0.97, score_type: str = 'fre')
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   Model for the DFM algorithm.
+
+   :param n_comps: Ratio from which number of components for PCA are calculated. Defaults to 0.97.
+   :type n_comps: float, optional
+   :param score_type: Scoring type. Options are `fre` and `nll`. Defaults to "fre".
+   :type score_type: str, optional
+
+   .. py:method:: fit(self, dataset: torch.Tensor) -> None
+
+      Fit a pca transformation and a Gaussian model to dataset.
+
+      :param dataset: Input dataset to fit the model.
+      :type dataset: Tensor
+
+
+   .. py:method:: score(self, features: torch.Tensor) -> torch.Tensor
+
+      Compute scores.
+
+      Scores are either PCA-based feature reconstruction error (FRE) scores or
+      the Gaussian density-based NLL scores
+
+      :param features: semantic features on which PCA and density modeling is performed.
+      :type features: torch.Tensor
+
+      :returns: numpy array of scores
+      :rtype: score (Tensor)
+
+
+   .. py:method:: forward(self, dataset: torch.Tensor) -> None
+
+      Provides the same functionality as `fit`.
+
+      Transforms the input dataset based on singular values calculated earlier.
+
+      :param dataset: Input dataset
+      :type dataset: Tensor
+
+
+

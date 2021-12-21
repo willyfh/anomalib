@@ -1,0 +1,201 @@
+:py:mod:`anomalib.models.patchcore.model`
+=========================================
+
+.. py:module:: anomalib.models.patchcore.model
+
+.. autoapi-nested-parse::
+
+   Towards Total Recall in Industrial Anomaly Detection https://arxiv.org/abs/2106.08265.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.patchcore.model.AnomalyMapGenerator
+   anomalib.models.patchcore.model.PatchcoreModel
+   anomalib.models.patchcore.model.PatchcoreLightning
+
+
+
+
+.. py:class:: AnomalyMapGenerator(input_size: Union[omegaconf.ListConfig, Tuple], sigma: int = 4)
+
+   Generate Anomaly Heatmap.
+
+   .. py:method:: compute_anomaly_map(self, patch_scores: torch.Tensor) -> torch.Tensor
+
+      Pixel Level Anomaly Heatmap.
+
+      :param patch_scores: Patch-level anomaly scores
+      :type patch_scores: torch.Tensor
+
+      :returns: Map of the pixel-level anomaly scores
+      :rtype: torch.Tensor
+
+
+   .. py:method:: compute_anomaly_score(patch_scores: torch.Tensor) -> torch.Tensor
+      :staticmethod:
+
+      Compute Image-Level Anomaly Score.
+
+      :param patch_scores: Patch-level anomaly scores
+      :type patch_scores: torch.Tensor
+
+      :returns: Image-level anomaly scores
+      :rtype: torch.Tensor
+
+
+   .. py:method:: __call__(self, **kwargs: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]
+
+      Returns anomaly_map and anomaly_score.
+
+      Expects `patch_scores` keyword to be passed explicitly
+
+      Example
+      >>> anomaly_map_generator = AnomalyMapGenerator(input_size=input_size)
+      >>> map, score = anomaly_map_generator(patch_scores=numpy_array)
+
+      :raises ValueError: If `patch_scores` key is not found
+
+      :returns: anomaly_map, anomaly_score
+      :rtype: Tuple[torch.Tensor, torch.Tensor]
+
+
+
+.. py:class:: PatchcoreModel(layers: List[str], input_size: Tuple[int, int], backbone: str = 'wide_resnet50_2', apply_tiling: bool = False, tile_size: Optional[Tuple[int, int]] = None, tile_stride: Optional[int] = None)
+
+   Bases: :py:obj:`anomalib.core.model.dynamic_module.DynamicBufferModule`, :py:obj:`torch.nn.Module`
+
+   Patchcore Module.
+
+   .. py:method:: forward(self, input_tensor: torch.Tensor) -> Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]
+
+      Return Embedding during training, or a tuple of anomaly map and anomaly score during testing.
+
+      Steps performed:
+      1. Get features from a CNN.
+      2. Generate embedding based on the features.
+      3. Compute anomaly map in test mode.
+
+      :param input_tensor: Input tensor
+      :type input_tensor: Tensor
+
+      :returns:
+
+                Embedding for training,
+                    anomaly map and anomaly score for testing.
+      :rtype: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]
+
+
+   .. py:method:: generate_embedding(self, features: Dict[str, torch.Tensor]) -> torch.Tensor
+
+      Generate embedding from hierarchical feature map.
+
+      :param features: Hierarchical feature map from a CNN (ResNet18 or WideResnet)
+      :param features: Dict[str:Tensor]:
+
+      :returns: Embedding vector
+
+
+   .. py:method:: reshape_embedding(embedding: torch.Tensor) -> torch.Tensor
+      :staticmethod:
+
+      Reshape Embedding.
+
+      Reshapes Embedding to the following format:
+      [Batch, Embedding, Patch, Patch] to [Batch*Patch*Patch, Embedding]
+
+      :param embedding: Embedding tensor extracted from CNN features.
+      :type embedding: Tensor
+
+      :returns: Reshaped embedding tensor.
+      :rtype: Tensor
+
+
+   .. py:method:: subsample_embedding(embedding: torch.Tensor, sampling_ratio: float) -> torch.Tensor
+      :staticmethod:
+
+      Subsample embedding based on coreset sampling.
+
+      :param embedding: Embedding tensor from the CNN
+      :type embedding: np.ndarray
+      :param sampling_ratio: Coreset sampling ratio
+      :type sampling_ratio: float
+
+      :returns: Subsampled embedding whose dimensionality is reduced.
+      :rtype: np.ndarray
+
+
+
+.. py:class:: PatchcoreLightning(hparams)
+
+   Bases: :py:obj:`anomalib.core.model.AnomalyModule`
+
+   PatchcoreLightning Module to train PatchCore algorithm.
+
+   :param layers: Layers used for feature extraction
+   :type layers: List[str]
+   :param input_size: Input size for the model.
+   :type input_size: Tuple[int, int]
+   :param tile_size: Tile size
+   :type tile_size: Tuple[int, int]
+   :param tile_stride: Stride for tiling
+   :type tile_stride: int
+   :param backbone: Pre-trained model backbone. Defaults to "resnet18".
+   :type backbone: str, optional
+   :param apply_tiling: Apply tiling. Defaults to False.
+   :type apply_tiling: bool, optional
+
+   .. py:method:: configure_optimizers(self)
+
+      Configure optimizers.
+
+      :returns: Do not set optimizers by returning None.
+      :rtype: None
+
+
+   .. py:method:: training_step(self, batch, _)
+
+      Generate feature embedding of the batch.
+
+      :param batch: Batch containing image filename,
+                    image, label and mask
+      :type batch: Dict[str, Any]
+      :param _: Batch Index
+      :type _: int
+
+      :returns: Embedding Vector
+      :rtype: Dict[str, np.ndarray]
+
+
+   .. py:method:: training_epoch_end(self, outputs)
+
+      Concatenate batch embeddings to generate normal embedding.
+
+      Apply coreset subsampling to the embedding set for dimensionality reduction.
+
+      :param outputs: List of embedding vectors
+      :type outputs: List[Dict[str, np.ndarray]]
+
+
+   .. py:method:: validation_step(self, batch, _)
+
+      Get batch of anomaly maps from input image batch.
+
+      :param batch: Batch containing image filename,
+                    image, label and mask
+      :type batch: Dict[str, Any]
+      :param _: Batch Index
+      :type _: int
+
+      :returns: Image filenames, test images, GT and predicted label/masks
+      :rtype: Dict[str, Any]
+
+
+

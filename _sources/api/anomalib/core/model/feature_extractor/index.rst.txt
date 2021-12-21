@@ -1,0 +1,67 @@
+:py:mod:`anomalib.core.model.feature_extractor`
+===============================================
+
+.. py:module:: anomalib.core.model.feature_extractor
+
+.. autoapi-nested-parse::
+
+   Feature Extractor.
+
+   This script extracts features from a CNN network
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.core.model.feature_extractor.FeatureExtractor
+
+
+
+
+.. py:class:: FeatureExtractor(backbone: torch.nn.Module, layers: Iterable[str])
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   Extract features from a CNN.
+
+   .. rubric:: Example
+
+   >>> import torch
+   >>> import torchvision
+   >>> from anomalib.core.model.feature_extractor import FeatureExtractor
+
+   >>> model = FeatureExtractor(model=torchvision.models.resnet18(), layers=['layer1', 'layer2', 'layer3'])
+   >>> input = torch.rand((32, 3, 256, 256))
+   >>> features = model(input)
+
+   >>> [layer for layer in features.keys()]
+       ['layer1', 'layer2', 'layer3']
+   >>> [feature.shape for feature in features.values()]
+       [torch.Size([32, 64, 64, 64]), torch.Size([32, 128, 32, 32]), torch.Size([32, 256, 16, 16])]
+
+   .. py:method:: get_features(self, layer_id: str) -> Callable
+
+      Get layer features.
+
+      :param layer_id: str: Layer ID
+
+      :returns: Layer features
+
+
+   .. py:method:: forward(self, input_tensor: torch.Tensor) -> Dict[str, torch.Tensor]
+
+      Forward-pass input tensor into the CNN.
+
+      :param input_tensor: Input tensor
+      :type input_tensor: Tensor
+
+      :returns: Feature map extracted from the CNN
+
+
+
