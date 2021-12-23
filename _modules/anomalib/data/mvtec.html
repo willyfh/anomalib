@@ -509,10 +509,10 @@
     <span class="n">samples</span><span class="o">.</span><span class="n">label_index</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">label_index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">create_validation_set</span><span class="p">:</span>
-        <span class="n">samples</span> <span class="o">=</span> <span class="n">create_validation_set_from_test_set</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">create_validation_set_from_test_set</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
 
     <span class="c1"># Get the data frame for the split.</span>
-    <span class="k">if</span> <span class="n">split</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">split</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"train"</span><span class="p">,</span> <span class="s2">"test"</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">split</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">split</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"train"</span><span class="p">,</span> <span class="s2">"val"</span><span class="p">,</span> <span class="s2">"test"</span><span class="p">]:</span>
         <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="n">split</span><span class="p">]</span>
         <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -527,9 +527,11 @@
         <span class="n">root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
         <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">pre_process</span><span class="p">:</span> <span class="n">PreProcessor</span><span class="p">,</span>
+        <span class="n">split</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">task</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"segmentation"</span><span class="p">,</span>
-        <span class="n">is_train</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">download</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">create_validation_set</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Mvtec Dataset class.</span>
 
@@ -537,9 +539,11 @@
 <span class="sd">            root: Path to the MVTec dataset</span>
 <span class="sd">            category: Name of the MVTec category.</span>
 <span class="sd">            pre_process: List of pre_processing object containing albumentation compose.</span>
+<span class="sd">            split: 'train', 'val' or 'test'</span>
 <span class="sd">            task: ``classification`` or ``segmentation``</span>
-<span class="sd">            is_train: Boolean to check if the split is training</span>
 <span class="sd">            download: Boolean to download the MVTec dataset.</span>
+<span class="sd">            seed: seed used for the random subset splitting</span>
+<span class="sd">            create_validation_set: Create a validation subset in addition to the train and test subsets</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; from anomalib.data.mvtec import MVTec</span>
@@ -574,7 +578,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">root</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">category</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="s2">"train"</span> <span class="k">if</span> <span class="n">is_train</span> <span class="k">else</span> <span class="s2">"test"</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="n">split</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">task</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span> <span class="o">=</span> <span class="n">pre_process</span>
@@ -582,7 +586,9 @@
         <span class="k">if</span> <span class="n">download</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_download</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="n">make_mvtec_dataset</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="n">category</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="n">make_mvtec_dataset</span><span class="p">(</span>
+            <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="n">category</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">create_validation_set</span><span class="o">=</span><span class="n">create_validation_set</span>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="MVTec._download"><a class="viewcode-back" href="../../../api/anomalib/data/mvtec/index.html#anomalib.data.MVTec._download">[docs]</a>    <span class="k">def</span> <span class="nf">_download</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Download the MVTec dataset."""</span>
@@ -637,8 +643,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="s2">"train"</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">==</span> <span class="s2">"classification"</span><span class="p">:</span>
             <span class="n">pre_processed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
             <span class="n">item</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"image"</span><span class="p">:</span> <span class="n">pre_processed</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]}</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="s2">"test"</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"val"</span><span class="p">,</span> <span class="s2">"test"</span><span class="p">]:</span>
             <span class="n">label_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">label_index</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 
             <span class="n">item</span><span class="p">[</span><span class="s2">"image_path"</span><span class="p">]</span> <span class="o">=</span> <span class="n">image_path</span>
@@ -676,6 +681,8 @@
         <span class="n">test_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
         <span class="n">num_workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
         <span class="n">transform_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">create_validation_set</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Mvtec Lightning Data Module.</span>
 
@@ -687,6 +694,8 @@
 <span class="sd">            test_batch_size: Testing batch size.</span>
 <span class="sd">            num_workers: Number of workers.</span>
 <span class="sd">            transform_config: Config for pre-processing.</span>
+<span class="sd">            seed: seed used for the random subset splitting</span>
+<span class="sd">            create_validation_set: Create a validation subset in addition to the train and test subsets</span>
 
 <span class="sd">        Examples</span>
 <span class="sd">            &gt;&gt;&gt; from anomalib.data import MVTecDataModule</span>
@@ -725,28 +734,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span> <span class="o">=</span> <span class="n">test_batch_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span> <span class="o">=</span> <span class="n">num_workers</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_validation_set</span> <span class="o">=</span> <span class="n">create_validation_set</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">:</span> <span class="n">Dataset</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">val_data</span><span class="p">:</span> <span class="n">Dataset</span>
-
-<div class="viewcode-block" id="MVTecDataModule.prepare_data"><a class="viewcode-back" href="../../../api/anomalib/data/mvtec/index.html#anomalib.data.MVTecDataModule.prepare_data">[docs]</a>    <span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">"""Prepare MVTec Dataset."""</span>
-        <span class="c1"># Train</span>
-        <span class="n">MVTec</span><span class="p">(</span>
-            <span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
-            <span class="n">category</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
-            <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">,</span>
-            <span class="n">is_train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="c1"># Test</span>
-        <span class="n">MVTec</span><span class="p">(</span>
-            <span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
-            <span class="n">category</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
-            <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">,</span>
-            <span class="n">is_train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span></div>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_data</span><span class="p">:</span> <span class="n">Dataset</span>
+        <span class="k">if</span> <span class="n">create_validation_set</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">val_data</span><span class="p">:</span> <span class="n">Dataset</span>
 
 <div class="viewcode-block" id="MVTecDataModule.setup"><a class="viewcode-back" href="../../../api/anomalib/data/mvtec/index.html#anomalib.data.MVTecDataModule.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Setup train, validation and test data.</span>
@@ -754,18 +748,31 @@
 <span class="sd">        Args:</span>
 <span class="sd">          stage: Optional[str]:  Train/Val/Test stages. (Default value = None)</span>
 <span class="sd">        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">val_data</span> <span class="o">=</span> <span class="n">MVTec</span><span class="p">(</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_validation_set</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">val_data</span> <span class="o">=</span> <span class="n">MVTec</span><span class="p">(</span>
+                <span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
+                <span class="n">category</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
+                <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">,</span>
+                <span class="n">split</span><span class="o">=</span><span class="s2">"val"</span><span class="p">,</span>
+                <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
+                <span class="n">create_validation_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">create_validation_set</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_data</span> <span class="o">=</span> <span class="n">MVTec</span><span class="p">(</span>
             <span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
             <span class="n">category</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
             <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">,</span>
-            <span class="n">is_train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">split</span><span class="o">=</span><span class="s2">"test"</span><span class="p">,</span>
+            <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
+            <span class="n">create_validation_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">create_validation_set</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">stage</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">"fit"</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span> <span class="o">=</span> <span class="n">MVTec</span><span class="p">(</span>
                 <span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
                 <span class="n">category</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
                 <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">,</span>
-                <span class="n">is_train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span></div>
+                <span class="n">split</span><span class="o">=</span><span class="s2">"train"</span><span class="p">,</span>
+                <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
+                <span class="n">create_validation_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">create_validation_set</span><span class="p">,</span></div>
             <span class="p">)</span>
 
 <div class="viewcode-block" id="MVTecDataModule.train_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/mvtec/index.html#anomalib.data.MVTecDataModule.train_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataLoader</span><span class="p">:</span>
@@ -774,11 +781,12 @@
 
 <div class="viewcode-block" id="MVTecDataModule.val_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/mvtec/index.html#anomalib.data.MVTecDataModule.val_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">val_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataLoader</span><span class="p">:</span>
         <span class="sd">"""Get validation dataloader."""</span>
-        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">val_data</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">)</span></div>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">val_data</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_validation_set</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_data</span>
+        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MVTecDataModule.test_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/mvtec/index.html#anomalib.data.MVTecDataModule.test_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">test_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataLoader</span><span class="p">:</span>
         <span class="sd">"""Get test dataloader."""</span>
-        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">val_data</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_data</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">)</span></div></div>
 </pre></div>
       </article>
       <footer>
