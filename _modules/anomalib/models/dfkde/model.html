@@ -327,9 +327,9 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torchvision</span>
 <span class="kn">from</span> <span class="nn">omegaconf.dictconfig</span> <span class="kn">import</span> <span class="n">DictConfig</span>
 <span class="kn">from</span> <span class="nn">omegaconf.listconfig</span> <span class="kn">import</span> <span class="n">ListConfig</span>
-<span class="kn">from</span> <span class="nn">torchvision.models</span> <span class="kn">import</span> <span class="n">resnet50</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.core.model</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
 <span class="kn">from</span> <span class="nn">anomalib.core.model.feature_extractor</span> <span class="kn">import</span> <span class="n">FeatureExtractor</span>
@@ -344,7 +344,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">threshold_steepness</span> <span class="o">=</span> <span class="mf">0.05</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">threshold_offset</span> <span class="o">=</span> <span class="mi">12</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="s2">"avgpool"</span><span class="p">])</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="s2">"avgpool"</span><span class="p">])</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">normality_model</span> <span class="o">=</span> <span class="n">NormalityModel</span><span class="p">(</span>
             <span class="n">filter_count</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">max_training_points</span><span class="p">,</span>

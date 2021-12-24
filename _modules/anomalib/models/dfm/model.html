@@ -327,8 +327,8 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torchvision</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
-<span class="kn">from</span> <span class="nn">torchvision.models</span> <span class="kn">import</span> <span class="n">resnet18</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.core.model</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
 <span class="kn">from</span> <span class="nn">anomalib.core.model.feature_extractor</span> <span class="kn">import</span> <span class="n">FeatureExtractor</span>
@@ -341,7 +341,9 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="s2">"avgpool"</span><span class="p">])</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="s2">"avgpool"</span><span class="p">])</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">dfm_model</span> <span class="o">=</span> <span class="n">DFMModel</span><span class="p">(</span><span class="n">n_comps</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">pca_level</span><span class="p">,</span> <span class="n">score_type</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">score_type</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">automatic_optimization</span> <span class="o">=</span> <span class="kc">False</span>
 
