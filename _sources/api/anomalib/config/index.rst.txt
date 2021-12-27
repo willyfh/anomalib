@@ -45,6 +45,7 @@ Functions
    :param config_file_extension: Optional[str]:  (Default value = "yaml")
 
    :returns: Configurable parameters in DictConfig object.
+   :rtype: Union[DictConfig, ListConfig]
 
 
 .. py:function:: update_input_size_config(config: Union[omegaconf.DictConfig, omegaconf.ListConfig]) -> Union[omegaconf.DictConfig, omegaconf.ListConfig]
@@ -58,14 +59,17 @@ Functions
    :type config: Union[DictConfig, ListConfig]
 
    :returns: Configurable parameters with updated values
+   :rtype: Union[DictConfig, ListConfig]
 
 
 .. py:function:: update_nncf_config(config: Union[omegaconf.DictConfig, omegaconf.ListConfig]) -> Union[omegaconf.DictConfig, omegaconf.ListConfig]
 
    Set the NNCF input size based on the value of the crop_size parameter in the configurable parameters object.
 
-   :param config: Dictconfig: Configurable parameters of the current run.
+   :param config: Configurable parameters of the current run.
+   :type config: Union[DictConfig, ListConfig]
 
    :returns: Updated configurable parameters in DictConfig object.
+   :rtype: Union[DictConfig, ListConfig]
 
 

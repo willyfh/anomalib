@@ -165,8 +165,12 @@
 <li class="toctree-l2"><a class="reference internal" href="models/anomalib.models.dfkde.model.html">anomalib.models.dfkde.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/anomalib.models.dfkde.normality_model.html">anomalib.models.dfkde.normality_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/anomalib.models.dfm.model.html">anomalib.models.dfm.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/anomalib.models.dfm.dfm_model.html">anomalib.models.dfm.dfm_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/anomalib.models.padim.model.html">anomalib.models.padim.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/anomalib.models.patchcore.model.html">anomalib.models.patchcore.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/anomalib.models.patchcore.utils.sampling.k_center_greedy.html">anomalib.models.patchcore.utils.sampling.k_center_greedy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/anomalib.models.patchcore.utils.sampling.nearest_neighbors.html">anomalib.models.patchcore.utils.sampling.nearest_neighbors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/anomalib.models.patchcore.utils.sampling.random_projection.html">anomalib.models.patchcore.utils.sampling.random_projection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models/anomalib.models.stfpm.model.html">anomalib.models.stfpm.model</a></li>
 </ul>
 </li>
@@ -315,16 +319,16 @@
 <section id="segmentation">
 <h3>Segmentation<a class="headerlink" href="#segmentation" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p><a class="reference internal" href="#padim">Padim</a></p></li>
-<li><p><a class="reference internal" href="#patchcore">PatchCore</a></p></li>
-<li><p><a class="reference internal" href="#stfpm">STFPM</a> (Supports OpenVINO)</p></li>
+<li><p><a class="reference external" href="https://arxiv.org/pdf/2011.08785.pdf">Padim</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/pdf/2106.08265.pdf">PatchCore</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/pdf/2103.04257.pdf">STFPM</a> (Supports OpenVINO)</p></li>
 </ul>
 </section>
 <section id="classification">
 <h3>Classification<a class="headerlink" href="#classification" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="#dfkde">DFKDE</a></p></li>
-<li><p><a class="reference internal" href="#dfm">DFM</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/pdf/1909.11786.pdf">DFM</a></p></li>
 </ul>
 </section>
 </section>
@@ -358,30 +362,26 @@
 </dl>
 </dd></dl>
 </section>
-<section id="base">
-<h2>Base<a class="headerlink" href="#base" title="Permalink to this headline">¶</a></h2>
-<div class="table-wrapper"><table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%"/>
-<col style="width: 90%"/>
-</colgroup>
-<tbody>
-</tbody>
-</table></div>
-</section>
 <section id="dfkde">
 <h2>DFKDE<a class="headerlink" href="#dfkde" title="Permalink to this headline">¶</a></h2>
-<section id="deep-feature-kernel-density-estimation">
-<h3>Deep Feature Kernel Density Estimation<a class="headerlink" href="#deep-feature-kernel-density-estimation" title="Permalink to this headline">¶</a></h3>
+<p>Model Type: Classification</p>
+<section id="description">
+<h3>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
 <p>Fast anomaly classification algorithm that consists of a deep feature extraction stage followed by anomaly classification stage consisting of PCA and Gaussian Kernel Density Estimation.</p>
-</section>
 <section id="feature-extraction">
-<h3>Feature Extraction<a class="headerlink" href="#feature-extraction" title="Permalink to this headline">¶</a></h3>
+<h4>Feature Extraction<a class="headerlink" href="#feature-extraction" title="Permalink to this headline">¶</a></h4>
 <p>Features are extracted by feeding the images through a ResNet50 backbone, which was pre-trained on ImageNet. The output of the penultimate layer (average pooling layer) of the network is used to obtain a semantic feature vector with a fixed length of 2048.</p>
 </section>
 <section id="anomaly-detection">
-<h3>Anomaly Detection<a class="headerlink" href="#anomaly-detection" title="Permalink to this headline">¶</a></h3>
+<h4>Anomaly Detection<a class="headerlink" href="#anomaly-detection" title="Permalink to this headline">¶</a></h4>
 <p>In the anomaly classification stage, the features are first reduced to the first 16 principal components. Gaussian Kernel Density is then used to obtain an estimate of the probability density of new examples, based on the collection of training features obtained during the training phase.</p>
+</section>
+</section>
+<section id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python tools/train.py --model dfkde
+</pre></div>
+</div>
 <div class="table-wrapper"><table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%"/>
@@ -400,23 +400,25 @@
 </section>
 <section id="dfm">
 <h2>DFM<a class="headerlink" href="#dfm" title="Permalink to this headline">¶</a></h2>
-<section id="probabilistic-modeling-of-deep-features">
-<h3>Probabilistic Modeling of Deep Features<a class="headerlink" href="#probabilistic-modeling-of-deep-features" title="Permalink to this headline">¶</a></h3>
+<p>This is the implementation of <a class="reference external" href="https://arxiv.org/pdf/1909.11786.pdf">DFM</a> paper.</p>
+<p>Model Type: Classification</p>
+<section id="id3">
+<h3>Description<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>Fast anomaly classification algorithm that consists of a deep feature extraction stage followed by anomaly classification stage consisting of PCA and class-conditional Gaussian Density Estimation.</p>
-</section>
-<section id="id2">
-<h3>Feature Extraction<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<section id="id4">
+<h4>Feature Extraction<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <p>Features are extracted by feeding the images through a ResNet18 backbone, which was pre-trained on ImageNet. The output of the penultimate layer (average pooling layer) of the network is used to obtain a semantic feature vector with a fixed length of 2048.</p>
 </section>
-<section id="id3">
-<h3>Anomaly Detection<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<dl class="simple">
-<dt>In the anomaly classification stage, class-conditional PCA transformations and Gaussian Density models are learned. Two types of scores are calculated</dt><dd><ol class="lowerroman simple">
-<li><p>Feature-reconstruction scores (norm of the difference between the high-dimensional pre-image of a reduced dimension feature and the original high-dimensional feature), and</p></li>
-<li><p>Negative log-likelihood under the learnt density models. Either of these scores can be used for anomaly detection.</p></li>
-</ol>
-</dd>
-</dl>
+<section id="id5">
+<h4>Anomaly Detection<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<p>In the anomaly classification stage, class-conditional PCA transformations and Gaussian Density models are learned. Two types of scores are calculated (i) Feature-reconstruction scores (norm of the difference between the high-dimensional pre-image of a reduced dimension feature and the original high-dimensional feature), and (ii) Negative log-likelihood under the learnt density models. Either of these scores can be used for anomaly detection.</p>
+</section>
+</section>
+<section id="id6">
+<h3>Usage<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python tools/train.py --model dfm
+</pre></div>
+</div>
 <div class="table-wrapper"><table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%"/>
@@ -426,12 +428,31 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="models/anomalib.models.dfm.model.html#module-anomalib.models.dfm.model" title="anomalib.models.dfm.model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dfm.model</span></code></a></p></td>
 <td><p>DFM: Deep Feature Kernel Density Estimation.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="models/anomalib.models.dfm.dfm_model.html#module-anomalib.models.dfm.dfm_model" title="anomalib.models.dfm.dfm_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dfm.dfm_model</span></code></a></p></td>
+<td><p>Normality model of DFKDE.</p></td>
+</tr>
 </tbody>
 </table></div>
 </section>
 </section>
 <section id="padim">
 <h2>Padim<a class="headerlink" href="#padim" title="Permalink to this headline">¶</a></h2>
+<p>This is the implementation of the <a class="reference external" href="https://arxiv.org/pdf/2011.08785.pdf">PaDiM</a> paper.</p>
+<p>Model Type: Segmentation</p>
+<section id="id8">
+<h3>Description<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>PaDiM is a patch based algorithm. It relies on a pre-trained CNN feature extractor. The image is broken into patches and embeddings are extracted from each patch using different layers of the feature extractors. The activation vectors from different layers are concatenated to get embedding vectors carrying information from different semantic levels and resolutions. This helps encode fine grained and global contexts. However, since the generated embedding vectors may carry redundant information, dimensions are reduced using random selection. A multivariate gaussian distribution is generated for each patch embedding across the entire training batch. Thus, for each patch of the set of training images, we have a different multivariate gaussian distribution. These gaussian distributions are represented as a matrix of gaussian parameters.</p>
+<p>During inference, Mahalanobis distance is used to score each patch position of the test image. It uses the inverse of the covariance matrix calculated for the patch during training. The matrix of Mahalanobis distances forms the anomaly map with higher scores indicating anomalous regions.</p>
+</section>
+<section id="architecture">
+<h3>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h3>
+<img alt="PaDiM Architecture" src="_images/architecture.jpg"/>
+</section>
+<section id="id9">
+<h3>Usage<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python tools/train.py --model padim
+</pre></div>
+</div>
 <div class="table-wrapper"><table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%"/>
@@ -444,8 +465,25 @@
 </tbody>
 </table></div>
 </section>
+</section>
 <section id="patchcore">
 <h2>PatchCore<a class="headerlink" href="#patchcore" title="Permalink to this headline">¶</a></h2>
+<p>This is the implementation of the <a class="reference external" href="https://arxiv.org/pdf/2106.08265.pdf">PatchCore</a> paper.</p>
+<p>Model Type: Segmentation</p>
+<section id="id11">
+<h3>Description<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>The PatchCore algorithm is based on the idea that an image can be classified as anomalous as soon as a single patch is anomalous. The input image is tiled. These tiles act as patches which are fed into the neural network. It consists of a single pre-trained network which is used to extract “mid” level features patches. The “mid” level here refers to the feature extraction layer of the neural network model. Lower level features are generally too broad and higher level features are specific to the dataset the model is trained on. The features extracted during training phase are stored in a memory bank of neighbourhood aware patch level features.</p>
+<p>During inference this memory bank is coreset subsampled. Coreset subsampling generates a subset which best approximates the structure of the available set and allows for approximate solution finding. This subset helps reduce the search cost associated with nearest neighbour search. The anomaly score is taken as the maximum distance between the test patch in the test patch collection to each respective nearest neighbour.</p>
+</section>
+<section id="id12">
+<h3>Architecture<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<img alt="PatchCore Architecture" src="_images/architecture1.jpg"/>
+</section>
+<section id="id13">
+<h3>Usage<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python tools/train.py --model patchcore
+</pre></div>
+</div>
 <div class="table-wrapper"><table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%"/>
@@ -453,13 +491,39 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="models/anomalib.models.patchcore.model.html#module-anomalib.models.patchcore.model" title="anomalib.models.patchcore.model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">patchcore.model</span></code></a></p></td>
-<td><p>Towards Total Recall in Industrial Anomaly Detection <a class="reference external" href="https://arxiv.org/abs/2106.08265">https://arxiv.org/abs/2106.08265</a>.</p></td>
+<td><p>Towards Total Recall in Industrial Anomaly Detection.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="models/anomalib.models.patchcore.utils.sampling.k_center_greedy.html#module-anomalib.models.patchcore.utils.sampling.k_center_greedy" title="anomalib.models.patchcore.utils.sampling.k_center_greedy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">patchcore.utils.sampling.k_center_greedy</span></code></a></p></td>
+<td><p>This module comprises PatchCore Sampling Methods for the embedding.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="models/anomalib.models.patchcore.utils.sampling.nearest_neighbors.html#module-anomalib.models.patchcore.utils.sampling.nearest_neighbors" title="anomalib.models.patchcore.utils.sampling.nearest_neighbors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">patchcore.utils.sampling.nearest_neighbors</span></code></a></p></td>
+<td><p>This module comprises PatchCore Sampling Methods for the embedding.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="models/anomalib.models.patchcore.utils.sampling.random_projection.html#module-anomalib.models.patchcore.utils.sampling.random_projection" title="anomalib.models.patchcore.utils.sampling.random_projection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">patchcore.utils.sampling.random_projection</span></code></a></p></td>
+<td><p>This module comprises PatchCore Sampling Methods for the embedding.</p></td>
 </tr>
 </tbody>
 </table></div>
 </section>
+</section>
 <section id="stfpm">
 <h2>STFPM<a class="headerlink" href="#stfpm" title="Permalink to this headline">¶</a></h2>
+<p>This is the implementation of the <a class="reference external" href="https://arxiv.org/pdf/2103.04257.pdf">STFPM</a> paper.</p>
+<p>Model Type: Segmentation</p>
+<section id="id15">
+<h3>Description<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>STFPM algorithm which consists of a pre-trained teacher network and a student network with identical architecture. The student network learns the distribution of anomaly-free images by matching the features with the counterpart features in the teacher network. Multi-scale feature matching is used to enhance robustness. This hierarchical feature matching enables the student network to receive a mixture of multi-level knowledge from the feature pyramid thus allowing for anomaly detection of various sizes.</p>
+<p>During inference, the feature pyramids of teacher and student networks are compared. Larger difference indicates a higher probability of anomaly occurrence.</p>
+</section>
+<section id="id16">
+<h3>Architecture<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<img alt="STFPM Architecture" src="_images/architecture2.jpg"/>
+</section>
+<section id="id17">
+<h3>Usage<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python tools/train.py --model stfpm
+</pre></div>
+</div>
 <div class="table-wrapper"><table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%"/>
@@ -471,6 +535,7 @@
 </tr>
 </tbody>
 </table></div>
+</section>
 </section>
 </section>
 
@@ -535,22 +600,40 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#module-anomalib.models">Loading Models</a></li>
-<li><a class="reference internal" href="#base">Base</a></li>
 <li><a class="reference internal" href="#dfkde">DFKDE</a><ul>
-<li><a class="reference internal" href="#deep-feature-kernel-density-estimation">Deep Feature Kernel Density Estimation</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
 <li><a class="reference internal" href="#feature-extraction">Feature Extraction</a></li>
 <li><a class="reference internal" href="#anomaly-detection">Anomaly Detection</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#dfm">DFM</a><ul>
-<li><a class="reference internal" href="#probabilistic-modeling-of-deep-features">Probabilistic Modeling of Deep Features</a></li>
-<li><a class="reference internal" href="#id2">Feature Extraction</a></li>
-<li><a class="reference internal" href="#id3">Anomaly Detection</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#padim">Padim</a></li>
-<li><a class="reference internal" href="#patchcore">PatchCore</a></li>
+<li><a class="reference internal" href="#dfm">DFM</a><ul>
+<li><a class="reference internal" href="#id3">Description</a><ul>
+<li><a class="reference internal" href="#id4">Feature Extraction</a></li>
+<li><a class="reference internal" href="#id5">Anomaly Detection</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">Usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#padim">Padim</a><ul>
+<li><a class="reference internal" href="#id8">Description</a></li>
+<li><a class="reference internal" href="#architecture">Architecture</a></li>
+<li><a class="reference internal" href="#id9">Usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#patchcore">PatchCore</a><ul>
+<li><a class="reference internal" href="#id11">Description</a></li>
+<li><a class="reference internal" href="#id12">Architecture</a></li>
+<li><a class="reference internal" href="#id13">Usage</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#stfpm">STFPM</a><ul>
+<li><a class="reference internal" href="#id15">Description</a></li>
+<li><a class="reference internal" href="#id16">Architecture</a></li>
+<li><a class="reference internal" href="#id17">Usage</a></li>
 <li><a class="reference internal" href="#anomalib.models.get_model">get_model</a></li>
 </ul>
 </li>

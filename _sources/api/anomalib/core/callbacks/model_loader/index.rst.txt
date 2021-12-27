@@ -26,11 +26,13 @@ Classes
 
    Bases: :py:obj:`pytorch_lightning.Callback`
 
-   Callback that loads model weights from the state dict.
+   Callback that loads the model weights from the state dict.
 
    .. py:method:: on_test_start(self, trainer, pl_module: pytorch_lightning.LightningModule) -> None
 
       Call when the test begins.
+
+      Loads the model weights from ``weights_path`` into the PyTorch module.
 
 
 

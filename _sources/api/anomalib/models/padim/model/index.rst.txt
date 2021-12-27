@@ -24,11 +24,14 @@ Classes
 
 
 
-.. py:class:: PadimLightning(hparams)
+.. py:class:: PadimLightning(hparams: Union[omegaconf.DictConfig, omegaconf.ListConfig])
 
    Bases: :py:obj:`anomalib.core.model.AnomalyModule`
 
    PaDiM: a Patch Distribution Modeling Framework for Anomaly Detection and Localization.
+
+   :param hparams: Model params
+   :type hparams: Union[DictConfig, ListConfig]
 
    .. py:method:: configure_optimizers()
       :staticmethod:
@@ -41,16 +44,18 @@ Classes
       Training Step of PADIM. For each batch, hierarchical features are extracted from the CNN.
 
       :param batch: Input batch
+      :type batch: Dict[str,Tensor]
       :param _: Index of the batch.
 
       :returns: Hierarchical feature map
 
 
-   .. py:method:: training_epoch_end(self, outputs) -> None
+   .. py:method:: training_epoch_end(self, outputs: List[Dict[str, torch.Tensor]]) -> None
 
       Fit a multivariate gaussian model on an embedding extracted from deep hierarchical CNN features.
 
       :param outputs: Batch of outputs from the training step
+      :type outputs: List[Dict[str, Tensor]]
 
       :returns: None
 

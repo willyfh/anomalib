@@ -49,6 +49,8 @@ Functions
 
    AnomalyModule to train, validate, predict and test images.
 
+   Acts as a base class for all the Anomaly Modules in the library.
+
    :param params: Configuration
    :type params: Union[DictConfig, ListConfig]
 
@@ -60,7 +62,7 @@ Functions
       :type batch: Tensor
 
       :returns: Output tensor from the model.
-      :rtype: [Tensor]
+      :rtype: Tensor
 
 
    .. py:method:: validation_step(self, batch, batch_idx) -> dict
@@ -77,8 +79,11 @@ Functions
       Override to add any processing logic.
 
       :param batch: Current batch
+      :type batch: Tensor
       :param batch_idx: Index of current batch
+      :type batch_idx: int
       :param dataloader_idx: Index of the current dataloader
+      :type dataloader_idx: int
 
       :returns: Predicted output
 
@@ -88,6 +93,7 @@ Functions
       Calls validation_step for anomaly map/score calculation.
 
       :param batch: Input batch
+      :type batch: Tensor
       :param _: Index of the batch.
 
       :returns: Dictionary containing images, features, true labels and masks.

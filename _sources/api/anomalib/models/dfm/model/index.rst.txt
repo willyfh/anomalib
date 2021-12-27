@@ -41,17 +41,18 @@ Classes
       For each batch, features are extracted from the CNN.
 
       :param batch: Input batch
+      :type batch: Dict[str, Tensor]
       :param _: Index of the batch.
 
       :returns: Deep CNN features.
 
 
-   .. py:method:: training_epoch_end(self, outputs: List[Dict[str, Any]]) -> None
+   .. py:method:: training_epoch_end(self, outputs: List[Dict[str, torch.Tensor]]) -> None
 
       Fit a KDE model on deep CNN features.
 
       :param outputs: Batch of outputs from the training step
-      :param outputs: dict:
+      :type outputs: List[Dict[str, Tensor]]
 
       :returns: None
 
@@ -62,8 +63,8 @@ Classes
 
       Similar to the training step, features are extracted from the CNN for each batch.
 
-      :param batch: Dict: Input batch
-      :param batch_idx: int: Index of the batch.
+      :param batch: Input batch
+      :type batch: List[Dict[str, Any]]
 
       :returns: Dictionary containing FRE anomaly scores and ground-truth.
 

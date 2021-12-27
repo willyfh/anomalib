@@ -28,42 +28,56 @@ Classes
 
    Normality Model for the DFKDE algorithm.
 
-   .. py:method:: fit(self, dataset: torch.Tensor)
+   :param n_comps: Number of PCA components. Defaults to 16.
+   :type n_comps: int, optional
+   :param pre_processing: Preprocess features before passing to KDE.
+                          Options are between `norm` and `scale`. Defaults to "scale".
+   :type pre_processing: str, optional
+   :param filter_count: Number of training points to fit the KDE model. Defaults to 40000.
+   :type filter_count: int, optional
+   :param threshold_steepness: Controls how quickly the value saturates around zero. Defaults to 0.05.
+   :type threshold_steepness: float, optional
+   :param threshold_offset: Offset of the density function from 0. Defaults to 12.0.
+   :type threshold_offset: float, optional
+
+   .. py:method:: fit(self, dataset: torch.Tensor) -> bool
 
       Fit a kde model to dataset.
 
       :param dataset: Input dataset to fit the model.
-      :param dataset: torch.Tensor:
+      :type dataset: Tensor
 
       :returns: Boolean confirming whether the training is successful.
 
 
    .. py:method:: preprocess(self, feature_stack: torch.Tensor, max_length: Optional[torch.Tensor] = None) -> Tuple[torch.Tensor, torch.Tensor]
 
-      Pre process the CNN features.
+      Pre-process the CNN features.
 
       :param feature_stack: Features extracted from CNN
-      :param max_length:
-      :param feature_stack: torch.Tensor:
-      :param max_length: Optional[Tensor]:  (Default value = None)
+      :type feature_stack: Tensor
+      :param max_length: Used to unit normalize the feature_stack vector. If ``max_len`` is not
+                         provided, the length is calculated from the ``feature_stack``. Defaults to None.
+      :type max_length: Optional[Tensor]
 
       :returns: Stacked features and length
       :rtype: (Tuple)
 
 
-   .. py:method:: evaluate(self, features: torch.Tensor, as_density: Optional[bool] = False, as_log_likelihood: Optional[bool] = False) -> torch.Tensor
+   .. py:method:: evaluate(self, features: torch.Tensor, as_log_likelihood: Optional[bool] = False) -> torch.Tensor
 
       Compute the KDE scores.
 
-      :param features: Features
-      :type features: torch.Tensor
-      :param as_density: [description]. Defaults to False.
-      :type as_density: Optional[bool], optional
-      :param as_log_likelihood: [description]. Defaults to False.
+      The scores calculated from the KDE model are converted to densities. If `as_log_likelihood` is set to true then
+          the log of the scores are calculated.
+
+      :param features: Features to which the PCA model is fit.
+      :type features: Tensor
+      :param as_log_likelihood: If true, gets log likelihood scores. Defaults to False.
       :type as_log_likelihood: Optional[bool], optional
 
       :returns: Score
-      :rtype: torch.Tensor
+      :rtype: (Tensor)
 
 
    .. py:method:: predict(self, features: torch.Tensor) -> torch.Tensor
@@ -71,7 +85,7 @@ Classes
       Predicts the probability that the features belong to the anomalous class.
 
       :param features: Feature from which the output probabilities are detected.
-      :type features: torch.Tensor
+      :type features: Tensor
 
       :returns: Detection probabilities
 
@@ -80,8 +94,8 @@ Classes
 
       Converts density scores to anomaly probabilities (see https://www.desmos.com/calculator/ifju7eesg7).
 
-      :param densities: density of an image
-      :param densities: torch.Tensor:
+      :param densities: density of an image.
+      :type densities: Tensor
 
       :returns: probability that image with {density} is anomalous
 

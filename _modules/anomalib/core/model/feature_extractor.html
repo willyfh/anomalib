@@ -164,8 +164,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfkde.model.html">anomalib.models.dfkde.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfkde.normality_model.html">anomalib.models.dfkde.normality_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfm.model.html">anomalib.models.dfm.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfm.dfm_model.html">anomalib.models.dfm.dfm_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.padim.model.html">anomalib.models.padim.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.model.html">anomalib.models.patchcore.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.utils.sampling.k_center_greedy.html">anomalib.models.patchcore.utils.sampling.k_center_greedy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.utils.sampling.nearest_neighbors.html">anomalib.models.patchcore.utils.sampling.nearest_neighbors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.utils.sampling.random_projection.html">anomalib.models.patchcore.utils.sampling.random_projection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.stfpm.model.html">anomalib.models.stfpm.model</a></li>
 </ul>
 </li>
@@ -336,6 +340,10 @@
 <div class="viewcode-block" id="FeatureExtractor"><a class="viewcode-back" href="../../../../api/anomalib/core/model/feature_extractor/index.html#anomalib.core.model.feature_extractor.FeatureExtractor">[docs]</a><span class="k">class</span> <span class="nc">FeatureExtractor</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">"""Extract features from a CNN.</span>
 
+<span class="sd">    Args:</span>
+<span class="sd">        backbone (nn.Module): The backbone to which the feature extraction hooks are attached.</span>
+<span class="sd">        layers (Iterable[str]): List of layer names of the backbone to which the hooks are attached.</span>
+
 <span class="sd">    Example:</span>
 <span class="sd">        &gt;&gt;&gt; import torch</span>
 <span class="sd">        &gt;&gt;&gt; import torchvision</span>
@@ -365,7 +373,7 @@
         <span class="sd">"""Get layer features.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            layer_id: str: Layer ID</span>
+<span class="sd">            layer_id (str): Layer ID</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Layer features</span>

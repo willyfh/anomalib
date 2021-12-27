@@ -164,8 +164,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfkde.model.html">anomalib.models.dfkde.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfkde.normality_model.html">anomalib.models.dfkde.normality_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfm.model.html">anomalib.models.dfm.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfm.dfm_model.html">anomalib.models.dfm.dfm_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.padim.model.html">anomalib.models.padim.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.model.html">anomalib.models.patchcore.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.utils.sampling.k_center_greedy.html">anomalib.models.patchcore.utils.sampling.k_center_greedy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.utils.sampling.nearest_neighbors.html">anomalib.models.patchcore.utils.sampling.nearest_neighbors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.utils.sampling.random_projection.html">anomalib.models.patchcore.utils.sampling.random_projection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.stfpm.model.html">anomalib.models.stfpm.model</a></li>
 </ul>
 </li>
@@ -319,7 +323,7 @@
 <div class="viewcode-block" id="CompressModelCallback"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/index.html#anomalib.core.callbacks.compress.CompressModelCallback">[docs]</a><span class="k">class</span> <span class="nc">CompressModelCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
     <span class="sd">"""Callback to compresses a trained model.</span>
 
-<span class="sd">    Model is first exported to .onnx format, and then converted to OpenVINO IR.</span>
+<span class="sd">    Model is first exported to ``.onnx`` format, and then converted to OpenVINO IR.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        input_size (Tuple[int, int]): Tuple of image height, width</span>
@@ -333,7 +337,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
 
 <div class="viewcode-block" id="CompressModelCallback.on_train_end"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/compress/index.html#anomalib.core.callbacks.compress.CompressModelCallback.on_train_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_train_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">LightningModule</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pylint: disable=W0613</span>
-        <span class="sd">"""Call when the train ends."""</span>
+        <span class="sd">"""Call when the train ends.</span>
+
+<span class="sd">        Converts the model to ``onnx`` format and then calls OpenVINO's model optimizer to get the</span>
+<span class="sd">        ``.xml`` and ``.bin`` IR files.</span>
+<span class="sd">        """</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">onnx_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dirpath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span> <span class="s2">".onnx"</span><span class="p">)</span>
         <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_size</span>

@@ -165,8 +165,12 @@
 <li class="toctree-l2"><a class="reference internal" href="anomalib.models.dfkde.model.html">anomalib.models.dfkde.model</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">anomalib.models.dfkde.normality_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="anomalib.models.dfm.model.html">anomalib.models.dfm.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anomalib.models.dfm.dfm_model.html">anomalib.models.dfm.dfm_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="anomalib.models.padim.model.html">anomalib.models.padim.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="anomalib.models.patchcore.model.html">anomalib.models.patchcore.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anomalib.models.patchcore.utils.sampling.k_center_greedy.html">anomalib.models.patchcore.utils.sampling.k_center_greedy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anomalib.models.patchcore.utils.sampling.nearest_neighbors.html">anomalib.models.patchcore.utils.sampling.nearest_neighbors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anomalib.models.patchcore.utils.sampling.random_projection.html">anomalib.models.patchcore.utils.sampling.random_projection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="anomalib.models.stfpm.model.html">anomalib.models.stfpm.model</a></li>
 </ul>
 </li>
@@ -328,37 +332,49 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfkde.normality_model.</span></span><span class="sig-name descname"><span class="pre">NormalityModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_comps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_processing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'scale'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">40000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_steepness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">12.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/anomalib/models/dfkde/normality_model.html#NormalityModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.normality_model.NormalityModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
 <p>Normality Model for the DFKDE algorithm.</p>
-<p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.normality_model.NormalityModel.evaluate">
-<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_density</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_log_likelihood</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../_modules/anomalib/models/dfkde/normality_model.html#NormalityModel.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.normality_model.NormalityModel.evaluate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the KDE scores.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>features</strong> (<em>torch.Tensor</em>) – Features</p></li>
-<li><p><strong>as_density</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – [description]. Defaults to False.</p></li>
-<li><p><strong>as_log_likelihood</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – [description]. Defaults to False.</p></li>
+<li><p><strong>n_comps</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of PCA components. Defaults to 16.</p></li>
+<li><p><strong>pre_processing</strong> (<em>str</em><em>, </em><em>optional</em>) – Preprocess features before passing to KDE.
+Options are between <cite>norm</cite> and <cite>scale</cite>. Defaults to “scale”.</p></li>
+<li><p><strong>filter_count</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of training points to fit the KDE model. Defaults to 40000.</p></li>
+<li><p><strong>threshold_steepness</strong> (<em>float</em><em>, </em><em>optional</em>) – Controls how quickly the value saturates around zero. Defaults to 0.05.</p></li>
+<li><p><strong>threshold_offset</strong> (<em>float</em><em>, </em><em>optional</em>) – Offset of the density function from 0. Defaults to 12.0.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.dfkde.normality_model.NormalityModel.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_log_likelihood</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../_modules/anomalib/models/dfkde/normality_model.html#NormalityModel.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.normality_model.NormalityModel.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the KDE scores.</p>
+<dl class="simple">
+<dt>The scores calculated from the KDE model are converted to densities. If <cite>as_log_likelihood</cite> is set to true then</dt><dd><p>the log of the scores are calculated.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>features</strong> (<em>Tensor</em>) – Features to which the PCA model is fit.</p></li>
+<li><p><strong>as_log_likelihood</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – If true, gets log likelihood scores. Defaults to False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Score</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>torch.Tensor</p>
+<dd class="field-odd"><p>(Tensor)</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.dfkde.normality_model.NormalityModel.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/anomalib/models/dfkde/normality_model.html#NormalityModel.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.normality_model.NormalityModel.fit" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/anomalib/models/dfkde/normality_model.html#NormalityModel.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.normality_model.NormalityModel.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit a kde model to dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dataset</strong> – Input dataset to fit the model.</p></li>
-<li><p><strong>dataset</strong> – torch.Tensor:</p></li>
-</ul>
+<dd class="field-odd"><p><strong>dataset</strong> (<em>Tensor</em>) – Input dataset to fit the model.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Boolean confirming whether the training is successful.</p>
@@ -376,7 +392,7 @@
 <dd><p>Predicts the probability that the features belong to the anomalous class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>features</strong> (<em>torch.Tensor</em>) – Feature from which the output probabilities are detected.</p>
+<dd class="field-odd"><p><strong>features</strong> (<em>Tensor</em>) – Feature from which the output probabilities are detected.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Detection probabilities</p>
@@ -386,14 +402,13 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.dfkde.normality_model.NormalityModel.preprocess">
 <span class="sig-name descname"><span class="pre">preprocess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_stack</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/anomalib/models/dfkde/normality_model.html#NormalityModel.preprocess"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.normality_model.NormalityModel.preprocess" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pre process the CNN features.</p>
+<dd><p>Pre-process the CNN features.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>feature_stack</strong> – Features extracted from CNN</p></li>
-<li><p><strong>max_length</strong> – </p></li>
-<li><p><strong>feature_stack</strong> – torch.Tensor:</p></li>
-<li><p><strong>max_length</strong> – Optional[Tensor]:  (Default value = None)</p></li>
+<li><p><strong>feature_stack</strong> (<em>Tensor</em>) – Features extracted from CNN</p></li>
+<li><p><strong>max_length</strong> (<em>Optional</em><em>[</em><em>Tensor</em><em>]</em>) – Used to unit normalize the feature_stack vector. If <code class="docutils literal notranslate"><span class="pre">max_len</span></code> is not
+provided, the length is calculated from the <code class="docutils literal notranslate"><span class="pre">feature_stack</span></code>. Defaults to None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -410,10 +425,7 @@
 <dd><p>Converts density scores to anomaly probabilities (see <a class="reference external" href="https://www.desmos.com/calculator/ifju7eesg7">https://www.desmos.com/calculator/ifju7eesg7</a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>densities</strong> – density of an image</p></li>
-<li><p><strong>densities</strong> – torch.Tensor:</p></li>
-</ul>
+<dd class="field-odd"><p><strong>densities</strong> (<em>Tensor</em>) – density of an image.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>probability that image with {density} is anomalous</p>

@@ -164,8 +164,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../models/anomalib.models.dfkde.model.html">anomalib.models.dfkde.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../models/anomalib.models.dfkde.normality_model.html">anomalib.models.dfkde.normality_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../models/anomalib.models.dfm.model.html">anomalib.models.dfm.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../models/anomalib.models.dfm.dfm_model.html">anomalib.models.dfm.dfm_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../models/anomalib.models.padim.model.html">anomalib.models.padim.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../models/anomalib.models.patchcore.model.html">anomalib.models.patchcore.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../models/anomalib.models.patchcore.utils.sampling.k_center_greedy.html">anomalib.models.patchcore.utils.sampling.k_center_greedy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../models/anomalib.models.patchcore.utils.sampling.nearest_neighbors.html">anomalib.models.patchcore.utils.sampling.nearest_neighbors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../models/anomalib.models.patchcore.utils.sampling.random_projection.html">anomalib.models.patchcore.utils.sampling.random_projection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../models/anomalib.models.stfpm.model.html">anomalib.models.stfpm.model</a></li>
 </ul>
 </li>
@@ -336,11 +340,11 @@
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 
 
-<div class="viewcode-block" id="NotFittedError"><a class="viewcode-back" href="../../../../../../api/anomalib/models/patchcore/utils/sampling/random_projection/index.html#anomalib.models.patchcore.utils.sampling.NotFittedError">[docs]</a><span class="k">class</span> <span class="nc">NotFittedError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span></div>
+<div class="viewcode-block" id="NotFittedError"><a class="viewcode-back" href="../../../../../../models/anomalib.models.patchcore.utils.sampling.random_projection.html#anomalib.models.patchcore.utils.sampling.NotFittedError">[docs]</a><span class="k">class</span> <span class="nc">NotFittedError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span></div>
     <span class="sd">"""Raise Exception if estimator is used before fitting."""</span>
 
 
-<div class="viewcode-block" id="SparseRandomProjection"><a class="viewcode-back" href="../../../../../../api/anomalib/models/patchcore/utils/sampling/random_projection/index.html#anomalib.models.patchcore.utils.sampling.SparseRandomProjection">[docs]</a><span class="k">class</span> <span class="nc">SparseRandomProjection</span><span class="p">:</span>
+<div class="viewcode-block" id="SparseRandomProjection"><a class="viewcode-back" href="../../../../../../models/anomalib.models.patchcore.utils.sampling.random_projection.html#anomalib.models.patchcore.utils.sampling.SparseRandomProjection">[docs]</a><span class="k">class</span> <span class="nc">SparseRandomProjection</span><span class="p">:</span>
     <span class="sd">"""Sparse Random Projection using PyTorch operations.</span>
 
 <span class="sd">    Args:</span>
@@ -398,7 +402,7 @@
 
         <span class="k">return</span> <span class="n">components</span></div>
 
-<div class="viewcode-block" id="SparseRandomProjection.johnson_lindenstrauss_min_dim"><a class="viewcode-back" href="../../../../../../api/anomalib/models/patchcore/utils/sampling/random_projection/index.html#anomalib.models.patchcore.utils.sampling.SparseRandomProjection.johnson_lindenstrauss_min_dim">[docs]</a>    <span class="k">def</span> <span class="nf">johnson_lindenstrauss_min_dim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">):</span>
+<div class="viewcode-block" id="SparseRandomProjection.johnson_lindenstrauss_min_dim"><a class="viewcode-back" href="../../../../../../models/anomalib.models.patchcore.utils.sampling.random_projection.html#anomalib.models.patchcore.utils.sampling.SparseRandomProjection.johnson_lindenstrauss_min_dim">[docs]</a>    <span class="k">def</span> <span class="nf">johnson_lindenstrauss_min_dim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">):</span>
         <span class="sd">"""Find a 'safe' number of components to randomly project to.</span>
 
 <span class="sd">        Ref eqn 2.1 https://cseweb.ucsd.edu/~dasgupta/papers/jl.pdf</span>
@@ -411,7 +415,7 @@
         <span class="n">denominator</span> <span class="o">=</span> <span class="p">(</span><span class="n">eps</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">eps</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span> <span class="o">/</span> <span class="n">denominator</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SparseRandomProjection.fit"><a class="viewcode-back" href="../../../../../../api/anomalib/models/patchcore/utils/sampling/random_projection/index.html#anomalib.models.patchcore.utils.sampling.SparseRandomProjection.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedding</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"SparseRandomProjection"</span><span class="p">:</span>
+<div class="viewcode-block" id="SparseRandomProjection.fit"><a class="viewcode-back" href="../../../../../../models/anomalib.models.patchcore.utils.sampling.random_projection.html#anomalib.models.patchcore.utils.sampling.SparseRandomProjection.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedding</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"SparseRandomProjection"</span><span class="p">:</span>
         <span class="sd">"""Generates sparse matrix from the embedding tensor.</span>
 
 <span class="sd">        Args:</span>
@@ -435,7 +439,7 @@
 
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="SparseRandomProjection.transform"><a class="viewcode-back" href="../../../../../../api/anomalib/models/patchcore/utils/sampling/random_projection/index.html#anomalib.models.patchcore.utils.sampling.SparseRandomProjection.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedding</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="SparseRandomProjection.transform"><a class="viewcode-back" href="../../../../../../models/anomalib.models.patchcore.utils.sampling.random_projection.html#anomalib.models.patchcore.utils.sampling.SparseRandomProjection.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedding</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Project the data by using matrix product with the random matrix.</span>
 
 <span class="sd">        Args:</span>

@@ -44,18 +44,24 @@ Classes
    >>> trainer = Trainer(logger=logger)
 
    :param save_dir: Save directory
-   :param name: Experiment name. Defaults to ``'default'``. If it is the empty string then no per-experiment
-                subdirectory is used.
+   :type save_dir: str
+   :param name: Experiment name. Defaults to ``'default'``. If it is the empty string then no
+                per-experiment subdirectory is used.
+   :type name: Optional, str
    :param version: Experiment version. If version is not specified the logger inspects the save
                    directory for existing versions, then automatically assigns the next available version.
                    If it is a string then it is used as the run-specific subdirectory name,
                    otherwise ``'version_${version}'`` is used.
+   :type version: Optional, int, str
    :param log_graph: Adds the computational graph to tensorboard. This requires that
                      the user has defined the `self.example_input_array` attribute in their
                      model.
+   :type log_graph: bool
    :param default_hp_metric: Enables a placeholder metric with key `hp_metric` when `log_hyperparams` is
                              called without a metric (otherwise calls to log_hyperparams without a metric are ignored).
+   :type default_hp_metric: bool
    :param prefix: A string to put at the beginning of metric keys.
+   :type prefix: str
    :param \*\*kwargs: Additional arguments like `comment`, `filename_suffix`, etc. used by
                       :class:`SummaryWriter` can be passed as keyword arguments in this logger.
 

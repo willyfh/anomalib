@@ -66,11 +66,11 @@ Functions
    Compute anomaly mask via thresholding the predicted anomaly map.
 
    :param anomaly_map: Anomaly map predicted via the model
+   :type anomaly_map: np.ndarray
    :param threshold: Value to threshold anomaly scores into 0-1 range.
-   :param kernel_size: Value to apply morphological operations to the predicted mask
-   :param anomaly_map: np.ndarray:
-   :param threshold: float:
-   :param kernel_size: int:  (Default value = 4)
+   :type threshold: float
+   :param kernel_size: Value to apply morphological operations to the predicted mask. Defaults to 4.
+   :type kernel_size: int
 
    :returns: Predicted anomaly mask
 

@@ -30,6 +30,11 @@ Classes
 
    Extract features from a CNN.
 
+   :param backbone: The backbone to which the feature extraction hooks are attached.
+   :type backbone: nn.Module
+   :param layers: List of layer names of the backbone to which the hooks are attached.
+   :type layers: Iterable[str]
+
    .. rubric:: Example
 
    >>> import torch
@@ -49,7 +54,8 @@ Classes
 
       Get layer features.
 
-      :param layer_id: str: Layer ID
+      :param layer_id: Layer ID
+      :type layer_id: str
 
       :returns: Layer features
 

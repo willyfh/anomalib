@@ -65,11 +65,13 @@ Functions
 
       Return structure for ground truth in loss criterion based on dataloader output.
 
+      This implementation does not do anything and is a placeholder.
+
       :returns: None
 
 
 
-.. py:class:: NNCFCallback(config, dirpath, filename)
+.. py:class:: NNCFCallback(config: Union[omegaconf.ListConfig, omegaconf.DictConfig], dirpath: str, filename: str)
 
    Bases: :py:obj:`pytorch_lightning.Callback`
 
@@ -78,24 +80,39 @@ Functions
    Assumes that the pl module contains a 'model' attribute, which is
    the PyTorch module that must be compressed.
 
+   :param config: NNCF Configuration
+   :type config: Union[ListConfig, DictConfig]
+   :param dirpath: Path where the export `onnx` and the OpenVINO `xml` and `bin` IR are saved.
+   :type dirpath: str
+   :param filename: Name of the generated model files.
+   :type filename: str
+
    .. py:method:: setup(self, _: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, __: Optional[str] = None) -> None
 
       Call when fit or test begins.
+
+      Takes the pytorch model and wraps it using the compression controller so that it is ready for nncf fine-tuning.
 
 
    .. py:method:: on_train_batch_start(self, trainer, _pl_module: pytorch_lightning.LightningModule, _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
 
       Call when the train batch begins.
 
+      Prepare compression method to continue training the model in the next step.
+
 
    .. py:method:: on_train_end(self, _trainer, _pl_module: pytorch_lightning.LightningModule) -> None
 
       Call when the train ends.
 
+      Exports onnx model and if compression controller is not None, uses the onnx model to generate the OpenVINO IR.
 
-   .. py:method:: on_train_epoch_end(self, _trainer: pytorch_lightning.Trainer, _pl_module: pytorch_lightning.LightningModule, _unused: Optional[Any] = None) -> None
 
-      Call when the train epoch ends.
+   .. py:method:: on_train_epoch_start(self, _trainer: pytorch_lightning.Trainer, _pl_module: pytorch_lightning.LightningModule) -> None
+
+      Call when the train epoch starts.
+
+      Prepare compression method to continue training the model in the next epoch.
 
 
 

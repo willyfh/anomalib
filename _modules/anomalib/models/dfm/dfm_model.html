@@ -164,8 +164,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfkde.model.html">anomalib.models.dfkde.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfkde.normality_model.html">anomalib.models.dfkde.normality_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfm.model.html">anomalib.models.dfm.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfm.dfm_model.html">anomalib.models.dfm.dfm_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.padim.model.html">anomalib.models.padim.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.model.html">anomalib.models.patchcore.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.utils.sampling.k_center_greedy.html">anomalib.models.patchcore.utils.sampling.k_center_greedy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.utils.sampling.nearest_neighbors.html">anomalib.models.patchcore.utils.sampling.nearest_neighbors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.utils.sampling.random_projection.html">anomalib.models.patchcore.utils.sampling.random_projection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.stfpm.model.html">anomalib.models.stfpm.model</a></li>
 </ul>
 </li>
@@ -333,7 +337,7 @@
 <span class="kn">from</span> <span class="nn">anomalib.core.model.pca</span> <span class="kn">import</span> <span class="n">PCA</span>
 
 
-<div class="viewcode-block" id="SingleClassGaussian"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/dfm_model/index.html#anomalib.models.dfm.dfm_model.SingleClassGaussian">[docs]</a><span class="k">class</span> <span class="nc">SingleClassGaussian</span><span class="p">(</span><span class="n">DynamicBufferModule</span><span class="p">):</span>
+<div class="viewcode-block" id="SingleClassGaussian"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.dfm_model.html#anomalib.models.dfm.dfm_model.SingleClassGaussian">[docs]</a><span class="k">class</span> <span class="nc">SingleClassGaussian</span><span class="p">(</span><span class="n">DynamicBufferModule</span><span class="p">):</span>
     <span class="sd">"""Model Gaussian distribution over a set of points."""</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -346,16 +350,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">u_mat</span><span class="p">:</span> <span class="n">Tensor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sigma_mat</span><span class="p">:</span> <span class="n">Tensor</span>
 
-<div class="viewcode-block" id="SingleClassGaussian.fit"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/dfm_model/index.html#anomalib.models.dfm.dfm_model.SingleClassGaussian.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="SingleClassGaussian.fit"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.dfm_model.html#anomalib.models.dfm.dfm_model.SingleClassGaussian.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Fit a Gaussian model to dataset X.</span>
 
-<span class="sd">            Covariance matrix is not calculated directly using:</span>
-<span class="sd">                C = X.X^T</span>
-<span class="sd">            Instead, it is represented in terms of the Singular Value Decomposition of X:</span>
-<span class="sd">                X = U.S.V^T</span>
-<span class="sd">            Hence,</span>
-<span class="sd">                C = U.S^2.U^T</span>
-<span class="sd">            This simplifies the calculation of the log-likelihood without requiring full matrix inversion.</span>
+<span class="sd">        Covariance matrix is not calculated directly using:</span>
+<span class="sd">        ``C = X.X^T``</span>
+<span class="sd">        Instead, it is represented in terms of the Singular Value Decomposition of X:</span>
+<span class="sd">        ``X = U.S.V^T``</span>
+<span class="sd">        Hence,</span>
+<span class="sd">        ``C = U.S^2.U^T``</span>
+<span class="sd">        This simplifies the calculation of the log-likelihood without requiring full matrix inversion.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            dataset (Tensor): Input dataset to fit the model.</span>
@@ -366,7 +370,7 @@
         <span class="n">data_centered</span> <span class="o">=</span> <span class="p">(</span><span class="n">dataset</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_vec</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">u_mat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma_mat</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">data_centered</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SingleClassGaussian.score_samples"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/dfm_model/index.html#anomalib.models.dfm.dfm_model.SingleClassGaussian.score_samples">[docs]</a>    <span class="k">def</span> <span class="nf">score_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="SingleClassGaussian.score_samples"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.dfm_model.html#anomalib.models.dfm.dfm_model.SingleClassGaussian.score_samples">[docs]</a>    <span class="k">def</span> <span class="nf">score_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Compute the NLL (negative log likelihood) scores.</span>
 
 <span class="sd">        Args:</span>
@@ -379,7 +383,7 @@
         <span class="n">nll</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">features_transformed</span> <span class="o">*</span> <span class="n">features_transformed</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma_mat</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">nll</span></div>
 
-<div class="viewcode-block" id="SingleClassGaussian.forward"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/dfm_model/index.html#anomalib.models.dfm.dfm_model.SingleClassGaussian.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="SingleClassGaussian.forward"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.dfm_model.html#anomalib.models.dfm.dfm_model.SingleClassGaussian.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Provides the same functionality as `fit`.</span>
 
 <span class="sd">        Transforms the input dataset based on singular values calculated earlier.</span>
@@ -390,7 +394,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="DFMModel"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/dfm_model/index.html#anomalib.models.dfm.dfm_model.DFMModel">[docs]</a><span class="k">class</span> <span class="nc">DFMModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="viewcode-block" id="DFMModel"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.dfm_model.html#anomalib.models.dfm.dfm_model.DFMModel">[docs]</a><span class="k">class</span> <span class="nc">DFMModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">"""Model for the DFM algorithm.</span>
 
 <span class="sd">    Args:</span>
@@ -405,7 +409,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span> <span class="o">=</span> <span class="n">SingleClassGaussian</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">score_type</span> <span class="o">=</span> <span class="n">score_type</span>
 
-<div class="viewcode-block" id="DFMModel.fit"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/dfm_model/index.html#anomalib.models.dfm.dfm_model.DFMModel.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="DFMModel.fit"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.dfm_model.html#anomalib.models.dfm.dfm_model.DFMModel.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Fit a pca transformation and a Gaussian model to dataset.</span>
 
 <span class="sd">        Args:</span>
@@ -416,7 +420,7 @@
         <span class="n">features_reduced</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pca_model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">features_reduced</span><span class="o">.</span><span class="n">T</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DFMModel.score"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/dfm_model/index.html#anomalib.models.dfm.dfm_model.DFMModel.score">[docs]</a>    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="DFMModel.score"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.dfm_model.html#anomalib.models.dfm.dfm_model.DFMModel.score">[docs]</a>    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Compute scores.</span>
 
 <span class="sd">        Scores are either PCA-based feature reconstruction error (FRE) scores or</span>
@@ -439,7 +443,7 @@
 
         <span class="k">return</span> <span class="n">score</span></div>
 
-<div class="viewcode-block" id="DFMModel.forward"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/dfm_model/index.html#anomalib.models.dfm.dfm_model.DFMModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="DFMModel.forward"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.dfm_model.html#anomalib.models.dfm.dfm_model.DFMModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Provides the same functionality as `fit`.</span>
 
 <span class="sd">        Transforms the input dataset based on singular values calculated earlier.</span>

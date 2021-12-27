@@ -28,7 +28,7 @@ Classes
 
    Callback to compresses a trained model.
 
-   Model is first exported to .onnx format, and then converted to OpenVINO IR.
+   Model is first exported to ``.onnx`` format, and then converted to OpenVINO IR.
 
    :param input_size: Tuple of image height, width
    :type input_size: Tuple[int, int]
@@ -40,6 +40,9 @@ Classes
    .. py:method:: on_train_end(self, trainer, pl_module: pytorch_lightning.LightningModule) -> None
 
       Call when the train ends.
+
+      Converts the model to ``onnx`` format and then calls OpenVINO's model optimizer to get the
+      ``.xml`` and ``.bin`` IR files.
 
 
 

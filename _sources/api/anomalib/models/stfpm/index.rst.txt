@@ -43,9 +43,9 @@ Classes
       Compute the layer map based on cosine similarity.
 
       :param teacher_features: Teacher features
+      :type teacher_features: Tensor
       :param student_features: Student features
-      :param teacher_features: Tensor:
-      :param student_features: Tensor:
+      :type student_features: Tensor
 
       :returns: Anomaly score based on cosine similarity.
 
@@ -55,9 +55,9 @@ Classes
       Compute the overall anomaly map via element-wise production the interpolated anomaly maps.
 
       :param teacher_features: Teacher features
+      :type teacher_features: Dict[str, Tensor]
       :param student_features: Student features
-      :param teacher_features: Dict[str: Tensor]:
-      :param student_features: Dict[str: Tensor]:
+      :type student_features: Dict[str, Tensor]
 
       :returns: Final anomaly map
 
@@ -87,7 +87,7 @@ Classes
 
    Bases: :py:obj:`torch.nn.Module`
 
-   Feature Pyramid Loss This class implmenents the feature pyramid loss function proposed in STFPM [1] paper.
+   Feature Pyramid Loss This class implmenents the feature pyramid loss function proposed in STFPM paper.
 
    .. rubric:: Example
 
@@ -111,9 +111,9 @@ Classes
       Compute layer loss based on Equation (1) in Section 3.2 of the paper.
 
       :param teacher_feats: Teacher features
+      :type teacher_feats: Tensor
       :param student_feats: Student features
-      :param teacher_feats: Tensor:
-      :param student_feats: Tensor:
+      :type student_feats: Tensor
 
       :returns: L2 distance between teacher and student features.
 
@@ -123,10 +123,9 @@ Classes
       Compute the overall loss via the weighted average of the layer losses computed by the cosine similarity.
 
       :param teacher_features: Teacher features
+      :type teacher_features: Dict[str, Tensor]
       :param student_features: Student features
-      :param teacher_features: Dict[str:
-      :param Tensor]:
-      :param student_features: Dict[str:
+      :type student_features: Dict[str, Tensor]
 
       :returns: Total loss, which is the weighted average of the layer losses.
 
@@ -158,6 +157,7 @@ Classes
       For each batch, teacher and student and teacher features are extracted from the CNN.
 
       :param batch: Input batch
+      :type batch: Tensor
       :param _: Index of the batch.
 
       :returns: Hierarchical feature map
@@ -171,6 +171,7 @@ Classes
       anomaly map is computed.
 
       :param batch: Input batch
+      :type batch: Tensor
       :param _: Index of the batch.
 
       :returns: Dictionary containing images, anomaly maps, true labels and masks.
@@ -205,6 +206,7 @@ Classes
       During the evaluation mode, it returns the predicted anomaly map.
 
       :param images: Batch of images.
+      :type images: Tensor
 
       :returns: Teacher and student features when in training mode, otherwise the predicted anomaly maps.
 

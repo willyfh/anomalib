@@ -28,12 +28,11 @@ Classes
 
    Callback that saves the inference results of a model.
 
-   The callback generates a csv file that saves different performance
-   metrics and results.
+   The callback generates a csv file that saves the predicted label, the true label and the image name.
 
    .. py:method:: on_test_epoch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.core.model.AnomalyModule) -> None
 
-      Save Results at the end of training.
+      Save Results at the end of testing.
 
       :param _trainer: Pytorch lightning trainer object (unused)
       :type _trainer: Trainer

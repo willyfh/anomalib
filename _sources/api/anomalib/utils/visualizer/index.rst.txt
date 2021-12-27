@@ -26,6 +26,22 @@ Classes
 
    Anomaly Visualization.
 
+   The visualizer object is responsible for collating all the images passed to it into a single image. This can then
+   either be logged by accessing the `figure` attribute or can be saved directly by calling `save()` method.
+
+   .. rubric:: Example
+
+   >>> visualizer = Visualizer(num_rows=1, num_cols=5, figure_size=(12, 3))
+   >>> visualizer.add_image(image=image, title="Image")
+   >>> visualizer.close()
+
+   :param num_rows: Number of rows of images in the figure.
+   :type num_rows: int
+   :param num_cols: Number of columns/images in each row.
+   :type num_cols: int
+   :param figure_size: Size of output figure
+   :type figure_size: Tuple[int, int]
+
    .. py:method:: add_image(self, image: numpy.ndarray, title: str, color_map: Optional[str] = None, index: Optional[int] = None)
 
       Add image to figure.
@@ -49,7 +65,8 @@ Classes
 
       Save image.
 
-      :param filename: Path: Filename to save image
+      :param filename: Filename to save image
+      :type filename: Path
 
 
    .. py:method:: close(self)

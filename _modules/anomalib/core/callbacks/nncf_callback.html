@@ -164,8 +164,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfkde.model.html">anomalib.models.dfkde.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfkde.normality_model.html">anomalib.models.dfkde.normality_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfm.model.html">anomalib.models.dfm.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfm.dfm_model.html">anomalib.models.dfm.dfm_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.padim.model.html">anomalib.models.padim.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.model.html">anomalib.models.patchcore.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.utils.sampling.k_center_greedy.html">anomalib.models.patchcore.utils.sampling.k_center_greedy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.utils.sampling.nearest_neighbors.html">anomalib.models.patchcore.utils.sampling.nearest_neighbors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.utils.sampling.random_projection.html">anomalib.models.patchcore.utils.sampling.random_projection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.stfpm.model.html">anomalib.models.stfpm.model</a></li>
 </ul>
 </li>
@@ -311,7 +315,7 @@
 <span></span><span class="sd">"""NNCF Callback."""</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
 <span class="kn">import</span> <span class="nn">yaml</span>
@@ -319,7 +323,7 @@
 <span class="kn">from</span> <span class="nn">nncf.api.compression</span> <span class="kn">import</span> <span class="n">CompressionAlgorithmController</span><span class="p">,</span> <span class="n">CompressionScheduler</span>
 <span class="kn">from</span> <span class="nn">nncf.torch</span> <span class="kn">import</span> <span class="n">create_compressed_model</span><span class="p">,</span> <span class="n">register_default_init_args</span>
 <span class="kn">from</span> <span class="nn">nncf.torch.initialization</span> <span class="kn">import</span> <span class="n">PTInitializingDataLoader</span>
-<span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">OmegaConf</span>
+<span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">,</span> <span class="n">OmegaConf</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Callback</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data.dataloader</span> <span class="kn">import</span> <span class="n">DataLoader</span>
 
@@ -360,6 +364,8 @@
 <div class="viewcode-block" id="InitLoader.get_target"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.InitLoader.get_target">[docs]</a>    <span class="k">def</span> <span class="nf">get_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
         <span class="sd">"""Return structure for ground truth in loss criterion based on dataloader output.</span>
 
+<span class="sd">        This implementation does not do anything and is a placeholder.</span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            None</span>
 <span class="sd">        """</span>
@@ -371,9 +377,14 @@
 
 <span class="sd">    Assumes that the pl module contains a 'model' attribute, which is</span>
 <span class="sd">    the PyTorch module that must be compressed.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config (Union[ListConfig, DictConfig]): NNCF Configuration</span>
+<span class="sd">        dirpath (str): Path where the export `onnx` and the OpenVINO `xml` and `bin` IR are saved.</span>
+<span class="sd">        filename (str): Name of the generated model files.</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ListConfig</span><span class="p">,</span> <span class="n">DictConfig</span><span class="p">],</span> <span class="n">dirpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">config_dict</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">OmegaConf</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">optimization</span><span class="o">.</span><span class="n">nncf</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nncf_config</span> <span class="o">=</span> <span class="n">NNCFConfig</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">config_dict</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dirpath</span> <span class="o">=</span> <span class="n">dirpath</span>
@@ -388,7 +399,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">compression_scheduler</span><span class="p">:</span> <span class="n">CompressionScheduler</span>
 
 <div class="viewcode-block" id="NNCFCallback.setup"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.NNCFCallback.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">,</span> <span class="n">__</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Call when fit or test begins."""</span>
+        <span class="sd">"""Call when fit or test begins.</span>
+
+<span class="sd">        Takes the pytorch model and wraps it using the compression controller so that it is ready for nncf fine-tuning.</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_ctrl</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">init_loader</span> <span class="o">=</span> <span class="n">InitLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_loader</span><span class="p">)</span>
             <span class="n">nncf_config</span> <span class="o">=</span> <span class="n">register_default_init_args</span><span class="p">(</span>
@@ -401,13 +415,19 @@
 <div class="viewcode-block" id="NNCFCallback.on_train_batch_start"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.NNCFCallback.on_train_batch_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_train_batch_start</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">_pl_module</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">,</span> <span class="n">_batch</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">_batch_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">_dataloader_idx</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Call when the train batch begins."""</span>
+        <span class="sd">"""Call when the train batch begins.</span>
+
+<span class="sd">        Prepare compression method to continue training the model in the next step.</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compression_scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_ctrl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">trainer</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">loss_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_ctrl</span><span class="o">.</span><span class="n">loss</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="NNCFCallback.on_train_end"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.NNCFCallback.on_train_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_train_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_trainer</span><span class="p">,</span> <span class="n">_pl_module</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Call when the train ends."""</span>
+        <span class="sd">"""Call when the train ends.</span>
+
+<span class="sd">        Exports onnx model and if compression controller is not None, uses the onnx model to generate the OpenVINO IR.</span>
+<span class="sd">        """</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">onnx_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dirpath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span> <span class="s2">".onnx"</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_ctrl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -415,10 +435,11 @@
         <span class="n">optimize_command</span> <span class="o">=</span> <span class="s2">"mo --input_model "</span> <span class="o">+</span> <span class="n">onnx_path</span> <span class="o">+</span> <span class="s2">" --output_dir "</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dirpath</span>
         <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">optimize_command</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="NNCFCallback.on_train_epoch_end"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.NNCFCallback.on_train_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_train_epoch_end</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">_trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">_pl_module</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">,</span> <span class="n">_unused</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Call when the train epoch ends."""</span>
+<div class="viewcode-block" id="NNCFCallback.on_train_epoch_start"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.NNCFCallback.on_train_epoch_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_train_epoch_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">_pl_module</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""Call when the train epoch starts.</span>
+
+<span class="sd">        Prepare compression method to continue training the model in the next epoch.</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compression_scheduler</span><span class="o">.</span><span class="n">epoch_step</span><span class="p">()</span></div></div>
 </pre></div>
       </article>

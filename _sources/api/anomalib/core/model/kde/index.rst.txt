@@ -28,11 +28,15 @@ Classes
 
    Gaussian Kernel Density Estimation.
 
+   :param dataset: Dataset on which to fit the KDE model. Defaults to None.
+   :type dataset: Optional[Tensor], optional
+
    .. py:method:: forward(self, features: torch.Tensor) -> torch.Tensor
 
       Get the KDE estimates from the feature map.
 
-      :param features: torch.Tensor: Feature map extracted from the CNN
+      :param features: Feature map extracted from the CNN
+      :type features: Tensor
 
       Returns: KDE Estimates
 
@@ -41,18 +45,19 @@ Classes
 
       Fit a KDE model to the input dataset.
 
-      :param dataset: torch.Tensor: Input dataset.
+      :param dataset: Input dataset.
+      :type dataset: Tensor
 
       :returns: None
 
 
-   .. py:method:: cov(tensor: torch.Tensor, bias: Optional[bool] = False) -> torch.Tensor
+   .. py:method:: cov(tensor: torch.Tensor) -> torch.Tensor
       :staticmethod:
 
-      Calculate covariance matrix.
+      Calculate the unbiased covariance matrix.
 
-      :param tensor: torch.Tensor: Input tensor from which covariance matrix is computed.
-      :param bias: Optional[bool]:  (Default value = False)
+      :param tensor: Input tensor from which covariance matrix is computed.
+      :type tensor: Tensor
 
       :returns: Output covariance matrix.
 

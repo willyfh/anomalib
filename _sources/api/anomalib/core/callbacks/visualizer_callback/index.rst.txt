@@ -31,10 +31,22 @@ Classes
    The callback generates a figure showing the original image, the ground truth segmentation mask,
    the predicted error heat map, and the predicted segmentation mask.
 
-   To save the images to the filesystem, add the 'local' keyword to the project.log_images_to parameter in the
+   To save the images to the filesystem, add the 'local' keyword to the `project.log_images_to` parameter in the
    config.yaml file.
 
    .. py:method:: _add_images(self, visualizer: anomalib.utils.visualizer.Visualizer, module: anomalib.core.model.AnomalyModule, filename: pathlib.Path)
+
+      Save image to logger/local storage.
+
+      Saves the image in `visualizer.figure` to the respective loggers and local storage if specified in
+      `log_images_to` in `config.yaml` of the models.
+
+      :param visualizer: Visualizer object from which the `figure` is saved/logged.
+      :type visualizer: Visualizer
+      :param module: Anomaly module which holds reference to `hparams` and `logger`.
+      :type module: AnomalyModule
+      :param filename: Path of the input image. This name is used as name for the generated image.
+      :type filename: Path
 
 
    .. py:method:: on_test_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, outputs: Optional[pytorch_lightning.utilities.types.STEP_OUTPUT], _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None

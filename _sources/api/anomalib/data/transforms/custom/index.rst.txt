@@ -5,7 +5,7 @@
 
 .. autoapi-nested-parse::
 
-   Custom Image/Tensor Transforms.
+   Dataset Utils.
 
 
 
@@ -51,13 +51,16 @@ Classes
 
       Convert Tensor into Numpy Array.
 
-      :param tensor: Tensor to convert
+      :param tensor: Tensor to convert. Input tensor in range 0-1.
+      :type tensor: Tensor
       :param dims: Convert dimensions from torch to numpy format.
+                   Tuple corresponding to axis permutation from torch tensor to numpy array. Defaults to None.
+      :type dims: Optional[Tuple[int, ...]], optional
 
       :returns: Converted numpy ndarray.
 
 
-   .. py:method:: __repr__(self)
+   .. py:method:: __repr__(self) -> str
 
       Representational string.
 

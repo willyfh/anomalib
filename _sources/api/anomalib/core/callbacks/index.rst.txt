@@ -47,7 +47,7 @@ Classes
 
    Callback to compresses a trained model.
 
-   Model is first exported to .onnx format, and then converted to OpenVINO IR.
+   Model is first exported to ``.onnx`` format, and then converted to OpenVINO IR.
 
    :param input_size: Tuple of image height, width
    :type input_size: Tuple[int, int]
@@ -60,17 +60,22 @@ Classes
 
       Call when the train ends.
 
+      Converts the model to ``onnx`` format and then calls OpenVINO's model optimizer to get the
+      ``.xml`` and ``.bin`` IR files.
+
 
 
 .. py:class:: LoadModelCallback(weights_path)
 
    Bases: :py:obj:`pytorch_lightning.Callback`
 
-   Callback that loads model weights from the state dict.
+   Callback that loads the model weights from the state dict.
 
    .. py:method:: on_test_start(self, trainer, pl_module: pytorch_lightning.LightningModule) -> None
 
       Call when the test begins.
+
+      Loads the model weights from ``weights_path`` into the PyTorch module.
 
 
 
@@ -80,12 +85,11 @@ Classes
 
    Callback that saves the inference results of a model.
 
-   The callback generates a csv file that saves different performance
-   metrics and results.
+   The callback generates a csv file that saves the predicted label, the true label and the image name.
 
    .. py:method:: on_test_epoch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.core.model.AnomalyModule) -> None
 
-      Save Results at the end of training.
+      Save Results at the end of testing.
 
       :param _trainer: Pytorch lightning trainer object (unused)
       :type _trainer: Trainer
@@ -167,10 +171,22 @@ Classes
    The callback generates a figure showing the original image, the ground truth segmentation mask,
    the predicted error heat map, and the predicted segmentation mask.
 
-   To save the images to the filesystem, add the 'local' keyword to the project.log_images_to parameter in the
+   To save the images to the filesystem, add the 'local' keyword to the `project.log_images_to` parameter in the
    config.yaml file.
 
    .. py:method:: _add_images(self, visualizer: anomalib.utils.visualizer.Visualizer, module: anomalib.core.model.AnomalyModule, filename: pathlib.Path)
+
+      Save image to logger/local storage.
+
+      Saves the image in `visualizer.figure` to the respective loggers and local storage if specified in
+      `log_images_to` in `config.yaml` of the models.
+
+      :param visualizer: Visualizer object from which the `figure` is saved/logged.
+      :type visualizer: Visualizer
+      :param module: Anomaly module which holds reference to `hparams` and `logger`.
+      :type module: AnomalyModule
+      :param filename: Path of the input image. This name is used as name for the generated image.
+      :type filename: Path
 
 
    .. py:method:: on_test_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, outputs: Optional[pytorch_lightning.utilities.types.STEP_OUTPUT], _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None

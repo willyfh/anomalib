@@ -79,12 +79,12 @@ Functions
 
 
 
-.. py:function:: get_datamodule(config: Union[omegaconf.DictConfig, omegaconf.ListConfig])
+.. py:function:: get_datamodule(config: Union[omegaconf.DictConfig, omegaconf.ListConfig]) -> pytorch_lightning.LightningDataModule
 
    Get Anomaly Datamodule.
 
-   :param config: Configuration of the anomaly model
-   :param config: Union[DictConfig, ListConfig]:
+   :param config: Configuration of the anomaly model.
+   :type config: Union[DictConfig, ListConfig]
 
    :returns: PyTorch Lightning DataModule
 
