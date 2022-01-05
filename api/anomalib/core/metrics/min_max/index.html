@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" /><link rel="next" title="anomalib.core.callbacks.save_to_csv" href="../save_to_csv/index.html" /><link rel="prev" title="anomalib.core.callbacks.nncf_callback" href="../nncf_callback/index.html" />
+<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" /><link rel="next" title="anomalib.core.metrics.optimal_f1" href="../optimal_f1/index.html" /><link rel="prev" title="anomalib.core.metrics.auroc" href="../auroc/index.html" />
 
     <meta name="generator" content="sphinx-4.3.1, furo 2021.07.31.beta41"/>
-        <title>anomalib.core.callbacks.normalization - Anomalib 2021, Anomalib Contributors documentation</title>
+        <title>anomalib.core.metrics.min_max - Anomalib 2021, Anomalib Contributors documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css" />
@@ -184,21 +184,23 @@
 </ul>
 </li>
 <li class="toctree-l3 current has-children"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l4 current has-children"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l5"><a class="reference internal" href="../compress/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.compress</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.model_loader</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../nncf_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.nncf_callback</span></code></a></li>
-<li class="toctree-l5 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.normalization</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../save_to_csv/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.save_to_csv</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.timer</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.visualizer_callback</span></code></a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../callbacks/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../callbacks/compress/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.compress</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.min_max_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.model_loader</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../callbacks/nncf_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.nncf_callback</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../callbacks/save_to_csv/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.save_to_csv</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.timer</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.visualizer_callback</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../../metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../../metrics/adaptive_threshold/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.adaptive_threshold</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../../metrics/anomaly_score_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.anomaly_score_distribution</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../../metrics/auroc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.auroc</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../../metrics/optimal_f1/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.optimal_f1</span></code></a></li>
+<li class="toctree-l4 current has-children"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="../adaptive_threshold/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.adaptive_threshold</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../anomaly_score_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.anomaly_score_distribution</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../auroc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.auroc</span></code></a></li>
+<li class="toctree-l5 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.min_max</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../optimal_f1/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.optimal_f1</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.model</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -265,6 +267,11 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../utils/normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.normalization</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../utils/normalization/cdf/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.normalization.cdf</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../utils/normalization/min_max/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.normalization.min_max</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/download_progress_bar/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.download_progress_bar</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/post_process/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.post_process</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/visualizer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.visualizer</span></code></a></li>
@@ -312,9 +319,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <section id="module-anomalib.core.callbacks.normalization">
-<span id="anomalib-core-callbacks-normalization"></span><h1><a class="reference internal" href="#module-anomalib.core.callbacks.normalization" title="anomalib.core.callbacks.normalization"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.normalization</span></code></a><a class="headerlink" href="#module-anomalib.core.callbacks.normalization" title="Permalink to this headline">¶</a></h1>
-<p>Anomaly Score Normalization Callback.</p>
+        <section id="module-anomalib.core.metrics.min_max">
+<span id="anomalib-core-metrics-min-max"></span><h1><a class="reference internal" href="#module-anomalib.core.metrics.min_max" title="anomalib.core.metrics.min_max"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.min_max</span></code></a><a class="headerlink" href="#module-anomalib.core.metrics.min_max" title="Permalink to this headline">¶</a></h1>
+<p>Module that tracks the min and max values of the observations in each batch.</p>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 <section id="classes">
@@ -325,68 +332,25 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback" title="anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnomalyScoreNormalizationCallback</span></code></a></p></td>
-<td><p>Callback that standardizes the image-level and pixel-level anomaly scores.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.core.metrics.min_max.MinMax" title="anomalib.core.metrics.min_max.MinMax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MinMax</span></code></a></p></td>
+<td><p>Track the min and max values of the observations in each batch.</p></td>
 </tr>
 </tbody>
 </table></div>
 <dl class="py class">
-<dt class="sig sig-object py" id="anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.core.callbacks.normalization.</span></span><span class="sig-name descname"><span class="pre">AnomalyScoreNormalizationCallback</span></span><a class="reference internal" href="../../../../../_modules/anomalib/core/callbacks/normalization.html#AnomalyScoreNormalizationCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pytorch_lightning.Callback</span></code></p>
-<p>Callback that standardizes the image-level and pixel-level anomaly scores.</p>
+<dt class="sig sig-object py" id="anomalib.core.metrics.min_max.MinMax">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.core.metrics.min_max.</span></span><span class="sig-name descname"><span class="pre">MinMax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/core/metrics/min_max.html#MinMax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.metrics.min_max.MinMax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torchmetrics.Metric</span></code></p>
+<p>Track the min and max values of the observations in each batch.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_test_start">
-<span class="sig-name descname"><span class="pre">on_test_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_trainer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.Trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.LightningModule</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/core/callbacks/normalization.html#AnomalyScoreNormalizationCallback.on_test_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_test_start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called when the test begins.</p>
+<dt class="sig sig-object py" id="anomalib.core.metrics.min_max.MinMax.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/core/metrics/min_max.html#MinMax.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.metrics.min_max.MinMax.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the min and max values.</p>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_train_epoch_end">
-<span class="sig-name descname"><span class="pre">on_train_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.Trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.LightningModule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_unused</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/core/callbacks/normalization.html#AnomalyScoreNormalizationCallback.on_train_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_train_epoch_end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called when the train epoch ends.</p>
-<p>Use the current model to compute the anomaly score distributions
-of the normal training data. This is needed after every epoch, because the statistics must be
-stored in the state dict of the checkpoint file.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_validation_batch_end">
-<span class="sig-name descname"><span class="pre">on_validation_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_trainer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.Trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.LightningModule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">pytorch_lightning.utilities.types.STEP_OUTPUT</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_batch_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_dataloader_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/core/callbacks/normalization.html#AnomalyScoreNormalizationCallback.on_validation_batch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_validation_batch_end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called when the validation batch ends, standardizes the predicted scores and anomaly maps.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_test_batch_end">
-<span class="sig-name descname"><span class="pre">on_test_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_trainer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.Trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.LightningModule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">pytorch_lightning.utilities.types.STEP_OUTPUT</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_batch_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_dataloader_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/core/callbacks/normalization.html#AnomalyScoreNormalizationCallback.on_test_batch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_test_batch_end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called when the test batch ends, normalizes the predicted scores and anomaly maps.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_predict_batch_end">
-<span class="sig-name descname"><span class="pre">on_predict_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_trainer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.Trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.LightningModule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_batch_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_dataloader_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/core/callbacks/normalization.html#AnomalyScoreNormalizationCallback.on_predict_batch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_predict_batch_end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called when the predict batch ends, normalizes the predicted scores and anomaly maps.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._collect_stats">
-<span class="sig-name descname"><span class="pre">_collect_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/core/callbacks/normalization.html#AnomalyScoreNormalizationCallback._collect_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._collect_stats" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect the statistics of the normal training data.</p>
-<dl class="simple">
-<dt>Create a trainer and use it to predict the anomaly maps and scores of the normal training data. Then</dt><dd><p>estimate the distribution of anomaly scores for normal data at the image and pixel level by computing
-the mean and standard deviations. A dictionary containing the computed statistics is stored in self.stats.</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._create_inference_model">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_create_inference_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/core/callbacks/normalization.html#AnomalyScoreNormalizationCallback._create_inference_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._create_inference_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a duplicate of the PL module that can be used to perform inference on the training set.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._standardize">
-<span class="sig-name descname"><span class="pre">_standardize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.utilities.types.STEP_OUTPUT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/core/callbacks/normalization.html#AnomalyScoreNormalizationCallback._standardize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._standardize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Standardize the predicted scores and anomaly maps to the z-domain.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._normalize">
-<span class="sig-name descname"><span class="pre">_normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.utilities.types.STEP_OUTPUT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.LightningModule</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/core/callbacks/normalization.html#AnomalyScoreNormalizationCallback._normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._normalize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Normalize the predicted scores and anomaly maps by first standardizing and then computing the CDF.</p>
+<dt class="sig sig-object py" id="anomalib.core.metrics.min_max.MinMax.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/core/metrics/min_max.html#MinMax.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.core.metrics.min_max.MinMax.compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return min and max values.</p>
 </dd></dl>
 </dd></dl>
 </section>
@@ -397,23 +361,23 @@ the mean and standard deviations. A dictionary containing the computed statistic
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../save_to_csv/index.html">
+          <a class="next-page" href="../optimal_f1/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.save_to_csv</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.optimal_f1</span></code></div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../nncf_callback/index.html">
+          <a class="prev-page" href="../auroc/index.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.nncf_callback</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.auroc</span></code></div>
                 
               </div>
             </a>
@@ -427,7 +391,7 @@ the mean and standard deviations. A dictionary containing the computed statistic
               <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
               <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
             |
-            <a class="muted-link" href="../../../../../_sources/api/anomalib/core/callbacks/normalization/index.rst.txt"
+            <a class="muted-link" href="../../../../../_sources/api/anomalib/core/metrics/min_max/index.rst.txt"
                rel="nofollow">
               Show Source
             </a>
@@ -447,19 +411,12 @@ the mean and standard deviations. A dictionary containing the computed statistic
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.normalization</span></code></a><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.min_max</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
-<li><a class="reference internal" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback">AnomalyScoreNormalizationCallback</a><ul>
-<li><a class="reference internal" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_test_start">on_test_start</a></li>
-<li><a class="reference internal" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_train_epoch_end">on_train_epoch_end</a></li>
-<li><a class="reference internal" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_validation_batch_end">on_validation_batch_end</a></li>
-<li><a class="reference internal" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_test_batch_end">on_test_batch_end</a></li>
-<li><a class="reference internal" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_predict_batch_end">on_predict_batch_end</a></li>
-<li><a class="reference internal" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._collect_stats">_collect_stats</a></li>
-<li><a class="reference internal" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._create_inference_model">_create_inference_model</a></li>
-<li><a class="reference internal" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._standardize">_standardize</a></li>
-<li><a class="reference internal" href="#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._normalize">_normalize</a></li>
+<li><a class="reference internal" href="#anomalib.core.metrics.min_max.MinMax">MinMax</a><ul>
+<li><a class="reference internal" href="#anomalib.core.metrics.min_max.MinMax.update">update</a></li>
+<li><a class="reference internal" href="#anomalib.core.metrics.min_max.MinMax.compute">compute</a></li>
 </ul>
 </li>
 </ul>

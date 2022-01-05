@@ -1,0 +1,41 @@
+:py:mod:`anomalib.core.metrics.min_max`
+=======================================
+
+.. py:module:: anomalib.core.metrics.min_max
+
+.. autoapi-nested-parse::
+
+   Module that tracks the min and max values of the observations in each batch.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.core.metrics.min_max.MinMax
+
+
+
+
+.. py:class:: MinMax(**kwargs)
+
+   Bases: :py:obj:`torchmetrics.Metric`
+
+   Track the min and max values of the observations in each batch.
+
+   .. py:method:: update(self, predictions: torch.Tensor) -> None
+
+      Update the min and max values.
+
+
+   .. py:method:: compute(self) -> Tuple[torch.Tensor, torch.Tensor]
+
+      Return min and max values.
+
+
+

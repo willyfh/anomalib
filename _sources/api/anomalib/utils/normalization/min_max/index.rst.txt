@@ -1,0 +1,29 @@
+:py:mod:`anomalib.utils.normalization.min_max`
+==============================================
+
+.. py:module:: anomalib.utils.normalization.min_max
+
+.. autoapi-nested-parse::
+
+   Tools for min-max normalization.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.normalization.min_max.normalize
+
+
+
+.. py:function:: normalize(targets: Union[numpy.ndarray, torch.Tensor, numpy.float32], threshold: Union[numpy.ndarray, torch.Tensor, float], min_val: Union[numpy.ndarray, torch.Tensor, float], max_val: Union[numpy.ndarray, torch.Tensor, float]) -> Union[numpy.ndarray, torch.Tensor]
+
+   Apply min-max normalization and shift the values such that the threshold value is centered at 0.5.
+
+

@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
     <meta name="generator" content="sphinx-4.3.1, furo 2021.07.31.beta41"/>
-        <title>anomalib.core.callbacks.normalization - Anomalib 2021, Anomalib Contributors documentation</title>
+        <title>anomalib.utils.normalization.min_max - Anomalib 2021, Anomalib Contributors documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
@@ -184,10 +184,11 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/anomalib/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.cdf_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/compress/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.compress</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/nncf_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.nncf_callback</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/save_to_csv/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.save_to_csv</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.callbacks.visualizer_callback</span></code></a></li>
@@ -197,6 +198,7 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/metrics/adaptive_threshold/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.adaptive_threshold</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/metrics/anomaly_score_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.anomaly_score_distribution</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/metrics/auroc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.auroc</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/metrics/min_max/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.min_max</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/core/metrics/optimal_f1/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.core.metrics.optimal_f1</span></code></a></li>
 </ul>
 </li>
@@ -264,6 +266,11 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/anomalib/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../../api/anomalib/utils/normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.normalization</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/normalization/cdf/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.normalization.cdf</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/normalization/min_max/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.normalization.min_max</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/utils/download_progress_bar/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.download_progress_bar</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/utils/post_process/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.post_process</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/utils/visualizer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.visualizer</span></code></a></li>
@@ -311,126 +318,47 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <h1>Source code for anomalib.core.callbacks.normalization</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Anomaly Score Normalization Callback."""</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+        <h1>Source code for anomalib.utils.normalization.min_max</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Tools for min-max normalization."""</span>
 
-<span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
+<span class="c1"># Copyright (C) 2020 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the "License");</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1"># http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an "AS IS" BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions</span>
+<span class="c1"># and limitations under the License.</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Callback</span><span class="p">,</span> <span class="n">Trainer</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.types</span> <span class="kn">import</span> <span class="n">STEP_OUTPUT</span>
-<span class="kn">from</span> <span class="nn">torch.distributions</span> <span class="kn">import</span> <span class="n">LogNormal</span><span class="p">,</span> <span class="n">Normal</span>
-
-<span class="kn">from</span> <span class="nn">anomalib.models</span> <span class="kn">import</span> <span class="n">get_model</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 
 
-<div class="viewcode-block" id="AnomalyScoreNormalizationCallback"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback">[docs]</a><span class="k">class</span> <span class="nc">AnomalyScoreNormalizationCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
-    <span class="sd">"""Callback that standardizes the image-level and pixel-level anomaly scores."""</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">image_dist</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogNormal</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pixel_dist</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogNormal</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-
-<div class="viewcode-block" id="AnomalyScoreNormalizationCallback.on_test_start"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_test_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_test_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Called when the test begins."""</span>
-        <span class="n">pl_module</span><span class="o">.</span><span class="n">image_metrics</span><span class="o">.</span><span class="n">F1</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.5</span>
-        <span class="n">pl_module</span><span class="o">.</span><span class="n">pixel_metrics</span><span class="o">.</span><span class="n">F1</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.5</span></div>
-
-<div class="viewcode-block" id="AnomalyScoreNormalizationCallback.on_train_epoch_end"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_train_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_train_epoch_end</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">,</span> <span class="n">_unused</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Called when the train epoch ends.</span>
-
-<span class="sd">        Use the current model to compute the anomaly score distributions</span>
-<span class="sd">        of the normal training data. This is needed after every epoch, because the statistics must be</span>
-<span class="sd">        stored in the state dict of the checkpoint file.</span>
-<span class="sd">        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_collect_stats</span><span class="p">(</span><span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="AnomalyScoreNormalizationCallback.on_validation_batch_end"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_validation_batch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_batch_end</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">_trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span>
-        <span class="n">pl_module</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">,</span>
-        <span class="n">outputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">STEP_OUTPUT</span><span class="p">],</span>
-        <span class="n">_batch</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-        <span class="n">_batch_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">_dataloader_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Called when the validation batch ends, standardizes the predicted scores and anomaly maps."""</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_standardize</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="AnomalyScoreNormalizationCallback.on_test_batch_end"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_test_batch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_test_batch_end</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">_trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span>
-        <span class="n">pl_module</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">,</span>
-        <span class="n">outputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">STEP_OUTPUT</span><span class="p">],</span>
-        <span class="n">_batch</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-        <span class="n">_batch_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">_dataloader_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Called when the test batch ends, normalizes the predicted scores and anomaly maps."""</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_standardize</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_normalize</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="AnomalyScoreNormalizationCallback.on_predict_batch_end"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback.on_predict_batch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_predict_batch_end</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">_trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span>
-        <span class="n">pl_module</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">,</span>
-        <span class="n">outputs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span>
-        <span class="n">_batch</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-        <span class="n">_batch_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">_dataloader_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Called when the predict batch ends, normalizes the predicted scores and anomaly maps."""</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_standardize</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_normalize</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">)</span>
-        <span class="n">outputs</span><span class="p">[</span><span class="s2">"pred_labels"</span><span class="p">]</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mf">0.5</span></div>
-
-<div class="viewcode-block" id="AnomalyScoreNormalizationCallback._collect_stats"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._collect_stats">[docs]</a>    <span class="k">def</span> <span class="nf">_collect_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">):</span>
-        <span class="sd">"""Collect the statistics of the normal training data.</span>
-
-<span class="sd">        Create a trainer and use it to predict the anomaly maps and scores of the normal training data. Then</span>
-<span class="sd">         estimate the distribution of anomaly scores for normal data at the image and pixel level by computing</span>
-<span class="sd">         the mean and standard deviations. A dictionary containing the computed statistics is stored in self.stats.</span>
-<span class="sd">        """</span>
-        <span class="n">predictions</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">gpus</span><span class="o">=</span><span class="n">trainer</span><span class="o">.</span><span class="n">gpus</span><span class="p">)</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
-            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_inference_model</span><span class="p">(</span><span class="n">pl_module</span><span class="p">),</span> <span class="n">dataloaders</span><span class="o">=</span><span class="n">trainer</span><span class="o">.</span><span class="n">datamodule</span><span class="o">.</span><span class="n">train_dataloader</span><span class="p">()</span>
-        <span class="p">)</span>
-        <span class="n">pl_module</span><span class="o">.</span><span class="n">training_distribution</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">predictions</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s2">"pred_scores"</span> <span class="ow">in</span> <span class="n">batch</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                <span class="n">pl_module</span><span class="o">.</span><span class="n">training_distribution</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">anomaly_scores</span><span class="o">=</span><span class="n">batch</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">])</span>
-            <span class="k">if</span> <span class="s2">"anomaly_maps"</span> <span class="ow">in</span> <span class="n">batch</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                <span class="n">pl_module</span><span class="o">.</span><span class="n">training_distribution</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">anomaly_maps</span><span class="o">=</span><span class="n">batch</span><span class="p">[</span><span class="s2">"anomaly_maps"</span><span class="p">])</span>
-        <span class="n">pl_module</span><span class="o">.</span><span class="n">training_distribution</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span></div>
-
-    <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="AnomalyScoreNormalizationCallback._create_inference_model"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._create_inference_model">[docs]</a>    <span class="k">def</span> <span class="nf">_create_inference_model</span><span class="p">(</span><span class="n">pl_module</span><span class="p">):</span>
-        <span class="sd">"""Create a duplicate of the PL module that can be used to perform inference on the training set."""</span>
-        <span class="n">new_model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">pl_module</span><span class="o">.</span><span class="n">hparams</span><span class="p">)</span>
-        <span class="n">new_model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">pl_module</span><span class="o">.</span><span class="n">state_dict</span><span class="p">())</span>
-        <span class="k">return</span> <span class="n">new_model</span></div>
-
-<div class="viewcode-block" id="AnomalyScoreNormalizationCallback._standardize"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._standardize">[docs]</a>    <span class="k">def</span> <span class="nf">_standardize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">:</span> <span class="n">STEP_OUTPUT</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Standardize the predicted scores and anomaly maps to the z-domain."""</span>
-        <span class="n">stats</span> <span class="o">=</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">training_distribution</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">]</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
-
-        <span class="n">outputs</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">])</span>
-        <span class="n">outputs</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">]</span> <span class="o">-</span> <span class="n">stats</span><span class="o">.</span><span class="n">image_mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">stats</span><span class="o">.</span><span class="n">image_std</span>
-        <span class="k">if</span> <span class="s2">"anomaly_maps"</span> <span class="ow">in</span> <span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="n">outputs</span><span class="p">[</span><span class="s2">"anomaly_maps"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"anomaly_maps"</span><span class="p">])</span> <span class="o">-</span> <span class="n">stats</span><span class="o">.</span><span class="n">pixel_mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">stats</span><span class="o">.</span><span class="n">pixel_std</span>
-            <span class="n">outputs</span><span class="p">[</span><span class="s2">"anomaly_maps"</span><span class="p">]</span> <span class="o">-=</span> <span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">image_mean</span> <span class="o">-</span> <span class="n">stats</span><span class="o">.</span><span class="n">pixel_mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">stats</span><span class="o">.</span><span class="n">pixel_std</span></div>
-
-<div class="viewcode-block" id="AnomalyScoreNormalizationCallback._normalize"><a class="viewcode-back" href="../../../../api/anomalib/core/callbacks/normalization/index.html#anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback._normalize">[docs]</a>    <span class="k">def</span> <span class="nf">_normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">:</span> <span class="n">STEP_OUTPUT</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Normalize the predicted scores and anomaly maps by first standardizing and then computing the CDF."""</span>
-        <span class="n">device</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">]</span><span class="o">.</span><span class="n">device</span>
-        <span class="n">image_threshold</span> <span class="o">=</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">image_threshold</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
-        <span class="n">pixel_threshold</span> <span class="o">=</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">pixel_threshold</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
-
-        <span class="n">norm</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">]),</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">]))</span>
-        <span class="n">outputs</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">]</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">]</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span> <span class="o">-</span> <span class="n">image_threshold</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s2">"anomaly_maps"</span> <span class="ow">in</span> <span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="n">outputs</span><span class="p">[</span><span class="s2">"anomaly_maps"</span><span class="p">]</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"anomaly_maps"</span><span class="p">]</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span> <span class="o">-</span> <span class="n">pixel_threshold</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span></div></div>
+<div class="viewcode-block" id="normalize"><a class="viewcode-back" href="../../../../api/anomalib/utils/normalization/min_max/index.html#anomalib.utils.normalization.min_max.normalize">[docs]</a><span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span>
+    <span class="n">targets</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">],</span>
+    <span class="n">threshold</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+    <span class="n">min_val</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+    <span class="n">max_val</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+    <span class="sd">"""Apply min-max normalization and shift the values such that the threshold value is centered at 0.5."""</span>
+    <span class="n">normalized</span> <span class="o">=</span> <span class="p">((</span><span class="n">targets</span> <span class="o">-</span> <span class="n">threshold</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_val</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">))</span> <span class="o">+</span> <span class="mf">0.5</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)):</span>
+        <span class="n">normalized</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">normalized</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">normalized</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">normalized</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
+        <span class="n">normalized</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">normalized</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># pylint: disable=not-callable</span>
+        <span class="n">normalized</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">normalized</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>  <span class="c1"># pylint: disable=not-callable</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Targets must be either Tensor or Numpy array. Received </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">normalized</span></div>
 </pre></div>
       </article>
       <footer>

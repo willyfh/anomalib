@@ -1,7 +1,7 @@
-:py:mod:`anomalib.core.callbacks.normalization`
-===============================================
+:py:mod:`anomalib.core.callbacks.cdf_normalization`
+===================================================
 
-.. py:module:: anomalib.core.callbacks.normalization
+.. py:module:: anomalib.core.callbacks.cdf_normalization
 
 .. autoapi-nested-parse::
 
@@ -17,12 +17,12 @@ Classes
 
 .. autoapisummary::
 
-   anomalib.core.callbacks.normalization.AnomalyScoreNormalizationCallback
+   anomalib.core.callbacks.cdf_normalization.CdfNormalizationCallback
 
 
 
 
-.. py:class:: AnomalyScoreNormalizationCallback
+.. py:class:: CdfNormalizationCallback
 
    Bases: :py:obj:`pytorch_lightning.Callback`
 
@@ -72,14 +72,12 @@ Classes
       Create a duplicate of the PL module that can be used to perform inference on the training set.
 
 
-   .. py:method:: _standardize(self, outputs: pytorch_lightning.utilities.types.STEP_OUTPUT, pl_module) -> None
+   .. py:method:: _standardize_batch(outputs: pytorch_lightning.utilities.types.STEP_OUTPUT, pl_module) -> None
+      :staticmethod:
 
-      Standardize the predicted scores and anomaly maps to the z-domain.
 
-
-   .. py:method:: _normalize(self, outputs: pytorch_lightning.utilities.types.STEP_OUTPUT, pl_module: pytorch_lightning.LightningModule) -> None
-
-      Normalize the predicted scores and anomaly maps by first standardizing and then computing the CDF.
+   .. py:method:: _normalize_batch(outputs: pytorch_lightning.utilities.types.STEP_OUTPUT, pl_module: pytorch_lightning.LightningModule) -> None
+      :staticmethod:
 
 
 
