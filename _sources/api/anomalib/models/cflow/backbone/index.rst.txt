@@ -1,0 +1,73 @@
+:py:mod:`anomalib.models.cflow.backbone`
+========================================
+
+.. py:module:: anomalib.models.cflow.backbone
+
+.. autoapi-nested-parse::
+
+   Helper functions to create backbone model.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.cflow.backbone.positional_encoding_2d
+   anomalib.models.cflow.backbone.subnet_fc
+   anomalib.models.cflow.backbone.cflow_head
+
+
+
+.. py:function:: positional_encoding_2d(condition_vector: int, height: int, width: int) -> torch.Tensor
+
+   Creates embedding to store relative position of the feature vector using sine and cosine functions.
+
+   :param condition_vector: Length of the condition vector
+   :type condition_vector: int
+   :param height: H of the positions
+   :type height: int
+   :param width: W of the positions
+   :type width: int
+
+   :raises ValueError: Cannot generate encoding with conditional vector length not as multiple of 4
+
+   :returns: condition_vector x HEIGHT x WIDTH position matrix
+   :rtype: torch.Tensor
+
+
+.. py:function:: subnet_fc(dims_in: int, dims_out: int)
+
+   Subnetwork which predicts the affine coefficients.
+
+   :param dims_in: input dimensions
+   :type dims_in: int
+   :param dims_out: output dimensions
+   :type dims_out: int
+
+   :returns: Feed-forward subnetwork
+   :rtype: nn.Sequential
+
+
+.. py:function:: cflow_head(condition_vector: int, coupling_blocks: int, clamp_alpha: float, n_features: int) -> FrEIA.framework.sequence_inn.SequenceINN
+
+   Create invertible decoder network.
+
+   :param condition_vector: length of the condition vector
+   :type condition_vector: int
+   :param coupling_blocks: number of coupling blocks to build the decoder
+   :type coupling_blocks: int
+   :param clamp_alpha: clamping value to avoid exploding values
+   :type clamp_alpha: float
+   :param n_features: number of decoder features
+   :type n_features: int
+
+   :returns: decoder network block
+   :rtype: SequenceINN
+
+
