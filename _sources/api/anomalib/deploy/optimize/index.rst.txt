@@ -1,0 +1,50 @@
+:py:mod:`anomalib.deploy.optimize`
+==================================
+
+.. py:module:: anomalib.deploy.optimize
+
+.. autoapi-nested-parse::
+
+   Utilities for optimization and OpenVINO conversion.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.deploy.optimize.get_model_metadata
+   anomalib.deploy.optimize.export_convert
+
+
+
+.. py:function:: get_model_metadata(model: anomalib.core.model.anomaly_module.AnomalyModule) -> Dict[str, torch.Tensor]
+
+   Get meta data related to normalization from model.
+
+   :param model: Anomaly model which contains metadata related to normalization.
+   :type model: AnomalyModule
+
+   :returns: metadata
+   :rtype: Dict[str, Tensor]
+
+
+.. py:function:: export_convert(model: anomalib.core.model.anomaly_module.AnomalyModule, input_size: Union[List[int], Tuple[int, int]], onnx_path: Union[str, pathlib.Path], export_path: Union[str, pathlib.Path])
+
+   Export the model to onnx format and convert to OpenVINO IR.
+
+   :param model: Model to convert.
+   :type model: AnomalyModule
+   :param input_size: Image size used as the input for onnx converter.
+   :type input_size: Union[List[int], Tuple[int, int]]
+   :param onnx_path: Path to output onnx model.
+   :type onnx_path: Union[str, Path]
+   :param export_path: Path to exported OpenVINO IR.
+   :type export_path: Union[str, Path]
+
+

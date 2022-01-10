@@ -22,12 +22,12 @@ Functions
 
 
 
-.. py:function:: read_image(path: str) -> numpy.ndarray
+.. py:function:: read_image(path: Union[str, pathlib.Path]) -> numpy.ndarray
 
    Read image from disk in RGB format.
 
    :param path: path to the image file
-   :type path: str
+   :type path: str, Path
 
    .. rubric:: Example
 

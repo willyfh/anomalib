@@ -1,0 +1,273 @@
+:py:mod:`anomalib.deploy.inferencers`
+=====================================
+
+.. py:module:: anomalib.deploy.inferencers
+
+.. autoapi-nested-parse::
+
+   Inferencers for Torch and OpenVINO.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   base/index.rst
+   openvino/index.rst
+   torch/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.deploy.inferencers.Inferencer
+   anomalib.deploy.inferencers.OpenVINOInferencer
+   anomalib.deploy.inferencers.TorchInferencer
+
+
+
+
+.. py:class:: Inferencer
+
+   Bases: :py:obj:`abc.ABC`
+
+   Abstract class for the inference.
+
+   This is used by both Torch and OpenVINO inference.
+
+   .. py:method:: load_model(self, path: Union[str, pathlib.Path])
+      :abstractmethod:
+
+      Load Model.
+
+
+   .. py:method:: pre_process(self, image: numpy.ndarray) -> Union[numpy.ndarray, torch.Tensor]
+      :abstractmethod:
+
+      Pre-process.
+
+
+   .. py:method:: forward(self, image: Union[numpy.ndarray, torch.Tensor]) -> Union[numpy.ndarray, torch.Tensor]
+      :abstractmethod:
+
+      Forward-Pass input to model.
+
+
+   .. py:method:: post_process(self, predictions: Union[numpy.ndarray, torch.Tensor], meta_data: Optional[Dict]) -> Tuple[numpy.ndarray, float]
+      :abstractmethod:
+
+      Post-Process.
+
+
+   .. py:method:: predict(self, image: Union[str, numpy.ndarray, pathlib.Path], superimpose: bool = True, meta_data: Optional[dict] = None) -> Tuple[numpy.ndarray, float]
+
+      Perform a prediction for a given input image.
+
+      The main workflow is (i) pre-processing, (ii) forward-pass, (iii) post-process.
+
+      :param image: Input image whose output is to be predicted.
+                    It could be either a path to image or numpy array itself.
+      :type image: Union[str, np.ndarray]
+      :param superimpose: If this is set to True, output predictions
+                          will be superimposed onto the original image. If false, `predict`
+                          method will return the raw heatmap.
+      :type superimpose: bool
+
+      :returns: Output predictions to be visualized.
+      :rtype: np.ndarray
+
+
+   .. py:method:: __call__(self, image: numpy.ndarray) -> Tuple[numpy.ndarray, float]
+
+      Call predict on the Image.
+
+      :param image: Input Image
+      :type image: np.ndarray
+
+      :returns: Output predictions to be visualized
+      :rtype: np.ndarray
+
+
+   .. py:method:: _normalize(self, anomaly_maps: Union[torch.Tensor, numpy.ndarray], pred_scores: Union[torch.Tensor, numpy.float32], meta_data: Union[Dict, omegaconf.DictConfig]) -> Tuple[Union[numpy.ndarray, torch.Tensor], float]
+
+      Applies normalization and resizes the image.
+
+      :param anomaly_maps: Predicted raw anomaly map.
+      :type anomaly_maps: Union[Tensor, np.ndarray]
+      :param pred_scores: Predicted anomaly score
+      :type pred_scores: Union[Tensor, np.float32]
+      :param meta_data: Meta data. Post-processing step sometimes requires
+                        additional meta data such as image shape. This variable comprises such info.
+      :type meta_data: Dict
+
+      :returns:
+
+                Post processed predictions that are ready to be visualized and
+                    predicted scores.
+      :rtype: Tuple[Union[np.ndarray, Tensor], float]
+
+
+   .. py:method:: _load_meta_data(self, path: Optional[Union[str, pathlib.Path]] = None) -> Union[omegaconf.DictConfig, Dict[str, Union[float, numpy.ndarray, torch.Tensor]]]
+
+      Loads the meta data from the given path.
+
+      :param path: Path to JSON file containing the metadata.
+                   If no path is provided, it returns an empty dict. Defaults to None.
+      :type path: Optional[Union[str, Path]], optional
+
+      :returns: Dictionary containing the metadata.
+      :rtype: Union[DictConfig, Dict]
+
+
+
+.. py:class:: OpenVINOInferencer(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], path: Union[str, pathlib.Path, Tuple[bytes, bytes]], meta_data_path: Union[str, pathlib.Path] = None)
+
+   Bases: :py:obj:`anomalib.deploy.inferencers.base.Inferencer`
+
+   OpenVINO implementation for the inference.
+
+   :param config: Configurable parameters that are used
+                  during the training stage.
+   :type config: DictConfig
+   :param path: Path to the openvino onnx, xml or bin file.
+   :type path: Union[str, Path]
+   :param meta_data_path: Path to metadata file. Defaults to None.
+   :type meta_data_path: Union[str, Path], optional
+
+   .. py:method:: load_model(self, path: Union[str, pathlib.Path, Tuple[bytes, bytes]])
+
+      Load the OpenVINO model.
+
+      :param path: Path to the onnx or xml and bin files
+                   or tuple of .xml and .bin data as bytes.
+      :type path: Union[str, Path, Tuple[bytes, bytes]]
+
+      :returns:
+
+                Input and Output blob names
+                    together with the Executable network.
+      :rtype: [Tuple[str, str, ExecutableNetwork]]
+
+
+   .. py:method:: pre_process(self, image: numpy.ndarray) -> numpy.ndarray
+
+      Pre process the input image by applying transformations.
+
+      :param image: Input image.
+      :type image: np.ndarray
+
+      :returns: pre-processed image.
+      :rtype: np.ndarray
+
+
+   .. py:method:: forward(self, image: numpy.ndarray) -> numpy.ndarray
+
+      Forward-Pass input tensor to the model.
+
+      :param image: Input tensor.
+      :type image: np.ndarray
+
+      :returns: Output predictions.
+      :rtype: np.ndarray
+
+
+   .. py:method:: post_process(self, predictions: numpy.ndarray, meta_data: Optional[Union[Dict, omegaconf.DictConfig]] = None) -> Tuple[numpy.ndarray, float]
+
+      Post process the output predictions.
+
+      :param predictions: Raw output predicted by the model.
+      :type predictions: np.ndarray
+      :param meta_data: Meta data. Post-processing step sometimes requires
+                        additional meta data such as image shape. This variable comprises such info.
+                        Defaults to None.
+      :type meta_data: Dict, optional
+
+      :returns: Post processed predictions that are ready to be visualized.
+      :rtype: np.ndarray
+
+
+
+.. py:class:: TorchInferencer(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model_source: Union[str, pathlib.Path, anomalib.core.model.AnomalyModule], meta_data_path: Union[str, pathlib.Path] = None)
+
+   Bases: :py:obj:`anomalib.deploy.inferencers.base.Inferencer`
+
+   PyTorch implementation for the inference.
+
+   :param config: Configurable parameters that are used
+                  during the training stage.
+   :type config: DictConfig
+   :param model_source: Path to the model ckpt file or the Anomaly model.
+   :type model_source: Union[str, Path, AnomalyModule]
+   :param meta_data_path: Path to metadata file. If none, it tries to load the params
+                          from the model state_dict. Defaults to None.
+   :type meta_data_path: Union[str, Path], optional
+
+   .. py:method:: _load_meta_data(self, path: Optional[Union[str, pathlib.Path]] = None) -> Union[Dict, omegaconf.DictConfig]
+
+      Load metadata from file or from model state dict.
+
+      :param path: Path to metadata file. If none, it tries to load the params
+                   from the model state_dict. Defaults to None.
+      :type path: Optional[Union[str, Path]], optional
+
+      :returns: Dictionary containing the meta_data.
+      :rtype: Dict
+
+
+   .. py:method:: load_model(self, path: Union[str, pathlib.Path]) -> anomalib.core.model.AnomalyModule
+
+      Load the PyTorch model.
+
+      :param path: Path to model ckpt file.
+      :type path: Union[str, Path]
+
+      :returns: PyTorch Lightning model.
+      :rtype: (AnomalyModule)
+
+
+   .. py:method:: pre_process(self, image: numpy.ndarray) -> torch.Tensor
+
+      Pre process the input image by applying transformations.
+
+      :param image: Input image
+      :type image: np.ndarray
+
+      :returns: pre-processed image.
+      :rtype: Tensor
+
+
+   .. py:method:: forward(self, image: torch.Tensor) -> torch.Tensor
+
+      Forward-Pass input tensor to the model.
+
+      :param image: Input tensor.
+      :type image: Tensor
+
+      :returns: Output predictions.
+      :rtype: Tensor
+
+
+   .. py:method:: post_process(self, predictions: torch.Tensor, meta_data: Optional[Union[Dict, omegaconf.DictConfig]] = None) -> Tuple[numpy.ndarray, float]
+
+      Post process the output predictions.
+
+      :param predictions: Raw output predicted by the model.
+      :type predictions: Tensor
+      :param meta_data: Meta data. Post-processing step sometimes requires
+                        additional meta data such as image shape. This variable comprises such info.
+                        Defaults to None.
+      :type meta_data: Dict, optional
+
+      :returns: Post processed predictions that are ready to be visualized.
+      :rtype: np.ndarray
+
+
+
