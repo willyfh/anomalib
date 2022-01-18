@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="API Reference" href="../api/index.html" /><link rel="prev" title="anomalib.models.patchcore.model" href="anomalib.models.patchcore.model.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="API Reference" href="../api/index.html" /><link rel="prev" title="anomalib.models.patchcore.utils.sampling.random_projection" href="anomalib.models.patchcore.utils.sampling.random_projection.html" />
 
     <meta name="generator" content="sphinx-4.3.1, furo 2021.07.31.beta41"/>
         <title>anomalib.models.stfpm.model - Anomalib 2021, Anomalib Contributors documentation</title>
@@ -168,6 +168,9 @@
 <li class="toctree-l2"><a class="reference internal" href="anomalib.models.dfm.dfm_model.html">anomalib.models.dfm.dfm_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="anomalib.models.padim.model.html">anomalib.models.padim.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="anomalib.models.patchcore.model.html">anomalib.models.patchcore.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anomalib.models.patchcore.utils.sampling.k_center_greedy.html">anomalib.models.patchcore.utils.sampling.k_center_greedy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anomalib.models.patchcore.utils.sampling.nearest_neighbors.html">anomalib.models.patchcore.utils.sampling.nearest_neighbors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anomalib.models.patchcore.utils.sampling.random_projection.html">anomalib.models.patchcore.utils.sampling.random_projection</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">anomalib.models.stfpm.model</a></li>
 </ul>
 </li>
@@ -259,17 +262,26 @@
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/patchcore/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/patchcore/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6 has-children"><a class="reference internal" href="../api/anomalib/models/patchcore/utils/sampling/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.utils.sampling</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l7"><a class="reference internal" href="../api/anomalib/models/patchcore/utils/sampling/k_center_greedy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.utils.sampling.k_center_greedy</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../api/anomalib/models/patchcore/utils/sampling/nearest_neighbors/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.utils.sampling.nearest_neighbors</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../api/anomalib/models/patchcore/utils/sampling/random_projection/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.utils.sampling.random_projection</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/patchcore/model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.model</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/stfpm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/stfpm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/stfpm/model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.model</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/utils/normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.normalization</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/utils/normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.normalization</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/utils/normalization/cdf/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.normalization.cdf</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/utils/normalization/min_max/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.normalization.min_max</span></code></a></li>
 </ul>
@@ -576,14 +588,14 @@ These are required in <cite>validation_epoch_end</cite> for feature concatenatio
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="anomalib.models.patchcore.model.html">
+          <a class="prev-page" href="anomalib.models.patchcore.utils.sampling.random_projection.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">anomalib.models.patchcore.model</div>
+                <div class="title">anomalib.models.patchcore.utils.sampling.random_projection</div>
                 
               </div>
             </a>
