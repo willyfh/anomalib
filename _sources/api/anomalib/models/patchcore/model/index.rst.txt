@@ -120,18 +120,16 @@ Classes
       :rtype: Tensor
 
 
-   .. py:method:: subsample_embedding(embedding: torch.Tensor, sampling_ratio: float) -> torch.Tensor
-      :staticmethod:
+   .. py:method:: create_coreset(self, embedding: torch.Tensor, sample_count: int = 500, eps: float = 0.9)
 
-      Subsample embedding based on coreset sampling.
+      Creates n subsampled coreset for given sample_set.
 
-      :param embedding: Embedding tensor from the CNN
-      :type embedding: np.ndarray
-      :param sampling_ratio: Coreset sampling ratio
-      :type sampling_ratio: float
-
-      :returns: Subsampled embedding whose dimensionality is reduced.
-      :rtype: np.ndarray
+      :param embedding: (sample_count, d) tensor of patches.
+      :type embedding: Tensor
+      :param sample_count: Number of patches to select.
+      :type sample_count: int
+      :param eps: Parameter for spare projection aggression.
+      :type eps: float
 
 
 
