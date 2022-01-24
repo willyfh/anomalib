@@ -120,18 +120,27 @@ Classes
       :rtype: Tensor
 
 
-   .. py:method:: subsample_embedding(embedding: torch.Tensor, sampling_ratio: float) -> torch.Tensor
-      :staticmethod:
+   .. py:method:: subsample_embedding(self, embedding: torch.Tensor, sampling_ratio: float) -> None
 
-      Subsample embedding based on coreset sampling.
+      Subsample embedding based on coreset sampling and store to memory.
 
       :param embedding: Embedding tensor from the CNN
       :type embedding: np.ndarray
       :param sampling_ratio: Coreset sampling ratio
       :type sampling_ratio: float
 
-      :returns: Subsampled embedding whose dimensionality is reduced.
-      :rtype: np.ndarray
+
+   .. py:method:: nearest_neighbors(self, embedding: torch.Tensor, n_neighbors: int = 9) -> torch.Tensor
+
+      Nearest Neighbours using brute force method and euclidean norm.
+
+      :param embedding: Features to compare the distance with the memory bank.
+      :type embedding: Tensor
+      :param n_neighbors: Number of neighbors to look at
+      :type n_neighbors: int
+
+      :returns: Patch scores.
+      :rtype: Tensor
 
 
 
@@ -154,7 +163,7 @@ Classes
    :param apply_tiling: Apply tiling. Defaults to False.
    :type apply_tiling: bool, optional
 
-   .. py:method:: configure_optimizers(self)
+   .. py:method:: configure_optimizers(self) -> None
 
       Configure optimizers.
 
