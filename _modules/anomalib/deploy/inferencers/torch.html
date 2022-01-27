@@ -463,8 +463,16 @@
             <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">predictions</span>
             <span class="n">pred_score</span> <span class="o">=</span> <span class="n">anomaly_map</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">anomaly_map</span><span class="p">,</span> <span class="n">pred_score</span> <span class="o">=</span> <span class="n">predictions</span>
-            <span class="n">pred_score</span> <span class="o">=</span> <span class="n">pred_score</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+            <span class="c1"># NOTE: Patchcore `forward`` returns heatmap and score.</span>
+            <span class="c1">#   We need to add the following check to ensure the variables</span>
+            <span class="c1">#   are properly assigned. Without this check, the code</span>
+            <span class="c1">#   throws an error regarding type mismatch torch vs np.</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">predictions</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="n">Tensor</span><span class="p">)):</span>
+                <span class="n">anomaly_map</span><span class="p">,</span> <span class="n">pred_score</span> <span class="o">=</span> <span class="n">predictions</span>
+                <span class="n">pred_score</span> <span class="o">=</span> <span class="n">pred_score</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">anomaly_map</span><span class="p">,</span> <span class="n">pred_score</span> <span class="o">=</span> <span class="n">predictions</span>
+                <span class="n">pred_score</span> <span class="o">=</span> <span class="n">pred_score</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
 
         <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">anomaly_map</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
 
