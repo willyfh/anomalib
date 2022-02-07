@@ -47,7 +47,7 @@ Functions
 
 .. py:class:: AnomalyModule(params: Union[omegaconf.DictConfig, omegaconf.ListConfig])
 
-   Bases: :py:obj:`pytorch_lightning.LightningModule`
+   Bases: :py:obj:`pytorch_lightning.LightningModule`, :py:obj:`abc.ABC`
 
    AnomalyModule to train, validate, predict and test images.
 
@@ -73,7 +73,7 @@ Functions
       To be implemented in the subclasses.
 
 
-   .. py:method:: predict_step(self, batch, batch_idx, _)
+   .. py:method:: predict_step(self, batch: Any, batch_idx: int, _dataloader_idx: Optional[int] = None) -> Any
 
       Step function called during :meth:`~pytorch_lightning.trainer.trainer.Trainer.predict`.
 
@@ -84,8 +84,8 @@ Functions
       :type batch: Tensor
       :param batch_idx: Index of current batch
       :type batch_idx: int
-      :param dataloader_idx: Index of the current dataloader
-      :type dataloader_idx: int
+      :param _dataloader_idx: Index of the current dataloader
+      :type _dataloader_idx: int
 
       :returns: Predicted output
 

@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="anomalib.data.tiler" href="../tiler/index.html" /><link rel="prev" title="anomalib.data.transforms.pre_process" href="../transforms/pre_process/index.html" />
+<link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="anomalib.data.tiler" href="../tiler/index.html" /><link rel="prev" title="anomalib.data.inference" href="../inference/index.html" />
 
     <meta name="generator" content="sphinx-4.3.1, furo 2021.07.31.beta41"/>
         <title>anomalib.data.mvtec - Anomalib 2021, Anomalib Contributors documentation</title>
@@ -221,6 +221,7 @@
 <li class="toctree-l5"><a class="reference internal" href="../transforms/pre_process/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.transforms.pre_process</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="../inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.inference</span></code></a></li>
 <li class="toctree-l4 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.mvtec</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../tiler/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.tiler</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></a></li>
@@ -418,18 +419,23 @@ extracts the dataset and create PyTorch data objects.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.data.mvtec.MVTecDataModule.train_dataloader">
-<span class="sig-name descname"><span class="pre">train_dataloader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.utils.data.DataLoader</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#MVTecDataModule.train_dataloader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.MVTecDataModule.train_dataloader" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">train_dataloader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">pytorch_lightning.utilities.types.TRAIN_DATALOADERS</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#MVTecDataModule.train_dataloader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.MVTecDataModule.train_dataloader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get train dataloader.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.data.mvtec.MVTecDataModule.val_dataloader">
-<span class="sig-name descname"><span class="pre">val_dataloader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.utils.data.DataLoader</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#MVTecDataModule.val_dataloader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.MVTecDataModule.val_dataloader" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">val_dataloader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">pytorch_lightning.utilities.types.EVAL_DATALOADERS</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#MVTecDataModule.val_dataloader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.MVTecDataModule.val_dataloader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get validation dataloader.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.data.mvtec.MVTecDataModule.test_dataloader">
-<span class="sig-name descname"><span class="pre">test_dataloader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.utils.data.DataLoader</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#MVTecDataModule.test_dataloader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.MVTecDataModule.test_dataloader" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">test_dataloader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">pytorch_lightning.utilities.types.EVAL_DATALOADERS</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#MVTecDataModule.test_dataloader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.MVTecDataModule.test_dataloader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get test dataloader.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.data.mvtec.MVTecDataModule.predict_dataloader">
+<span class="sig-name descname"><span class="pre">predict_dataloader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">pytorch_lightning.utilities.types.EVAL_DATALOADERS</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#MVTecDataModule.predict_dataloader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.MVTecDataModule.predict_dataloader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get predict dataloader.</p>
 </dd></dl>
 </dd></dl>
 </section>
@@ -449,14 +455,14 @@ extracts the dataset and create PyTorch data objects.</p>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../transforms/pre_process/index.html">
+          <a class="prev-page" href="../inference/index.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.transforms.pre_process</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.inference</span></code></div>
                 
               </div>
             </a>
@@ -506,6 +512,7 @@ extracts the dataset and create PyTorch data objects.</p>
 <li><a class="reference internal" href="#anomalib.data.mvtec.MVTecDataModule.train_dataloader">train_dataloader</a></li>
 <li><a class="reference internal" href="#anomalib.data.mvtec.MVTecDataModule.val_dataloader">val_dataloader</a></li>
 <li><a class="reference internal" href="#anomalib.data.mvtec.MVTecDataModule.test_dataloader">test_dataloader</a></li>
+<li><a class="reference internal" href="#anomalib.data.mvtec.MVTecDataModule.predict_dataloader">predict_dataloader</a></li>
 </ul>
 </li>
 </ul>

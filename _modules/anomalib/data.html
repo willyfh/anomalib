@@ -220,6 +220,7 @@
 <li class="toctree-l5"><a class="reference internal" href="../../api/anomalib/data/transforms/pre_process/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.transforms.pre_process</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/anomalib/data/inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.inference</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/anomalib/data/mvtec/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.mvtec</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/anomalib/data/tiler/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.tiler</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/anomalib/data/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></a></li>
@@ -351,6 +352,7 @@
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">LightningDataModule</span>
 
+<span class="kn">from</span> <span class="nn">.inference</span> <span class="kn">import</span> <span class="n">InferenceDataset</span>
 <span class="kn">from</span> <span class="nn">.mvtec</span> <span class="kn">import</span> <span class="n">MVTecDataModule</span>
 
 
@@ -380,6 +382,9 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Unknown dataset!"</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">datamodule</span></div>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"get_datamodule"</span><span class="p">,</span> <span class="s2">"InferenceDataset"</span><span class="p">]</span>
 </pre></div>
       </article>
       <footer>

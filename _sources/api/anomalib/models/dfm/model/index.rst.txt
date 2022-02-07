@@ -47,14 +47,9 @@ Classes
       :returns: Deep CNN features.
 
 
-   .. py:method:: training_epoch_end(self, outputs: List[Dict[str, torch.Tensor]]) -> None
+   .. py:method:: on_validation_start(self) -> None
 
-      Fit a KDE model on deep CNN features.
-
-      :param outputs: Batch of outputs from the training step
-      :type outputs: List[Dict[str, Tensor]]
-
-      :returns: None
+      Fit a KDE Model to the embedding collected from the training set.
 
 
    .. py:method:: validation_step(self, batch, _)

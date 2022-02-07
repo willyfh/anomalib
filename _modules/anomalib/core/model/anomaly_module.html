@@ -220,6 +220,7 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/data/transforms/pre_process/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.transforms.pre_process</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/data/inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.inference</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/data/mvtec/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.mvtec</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/data/tiler/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.tiler</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/data/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></a></li>
@@ -346,7 +347,8 @@
 <span class="c1"># See the License for the specific language governing permissions</span>
 <span class="c1"># and limitations under the License.</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
@@ -362,7 +364,7 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="AnomalyModule"><a class="viewcode-back" href="../../../../api/anomalib/core/model/index.html#anomalib.core.model.anomaly_module.AnomalyModule">[docs]</a><span class="k">class</span> <span class="nc">AnomalyModule</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
+<div class="viewcode-block" id="AnomalyModule"><a class="viewcode-back" href="../../../../api/anomalib/core/model/index.html#anomalib.core.model.anomaly_module.AnomalyModule">[docs]</a><span class="k">class</span> <span class="nc">AnomalyModule</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
     <span class="sd">"""AnomalyModule to train, validate, predict and test images.</span>
 
 <span class="sd">    Acts as a base class for all the Anomaly Modules in the library.</span>
@@ -409,7 +411,7 @@
         <span class="sd">"""To be implemented in the subclasses."""</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
-<div class="viewcode-block" id="AnomalyModule.predict_step"><a class="viewcode-back" href="../../../../api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule.predict_step">[docs]</a>    <span class="k">def</span> <span class="nf">predict_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ, signature-differs</span>
+<div class="viewcode-block" id="AnomalyModule.predict_step"><a class="viewcode-back" href="../../../../api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule.predict_step">[docs]</a>    <span class="k">def</span> <span class="nf">predict_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">_dataloader_idx</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
         <span class="sd">"""Step function called during :meth:`~pytorch_lightning.trainer.trainer.Trainer.predict`.</span>
 
 <span class="sd">        By default, it calls :meth:`~pytorch_lightning.core.lightning.LightningModule.forward`.</span>
@@ -418,7 +420,7 @@
 <span class="sd">        Args:</span>
 <span class="sd">            batch (Tensor): Current batch</span>
 <span class="sd">            batch_idx (int): Index of current batch</span>
-<span class="sd">            dataloader_idx (int): Index of the current dataloader</span>
+<span class="sd">            _dataloader_idx (int): Index of the current dataloader</span>
 
 <span class="sd">        Return:</span>
 <span class="sd">            Predicted output</span>

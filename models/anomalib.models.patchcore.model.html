@@ -221,6 +221,7 @@
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/data/transforms/pre_process/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.transforms.pre_process</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="../api/anomalib/data/inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.inference</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/anomalib/data/mvtec/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.mvtec</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/anomalib/data/tiler/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.tiler</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/anomalib/data/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></a></li>
@@ -441,26 +442,19 @@
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.patchcore.model.PatchcoreLightning.training_epoch_end">
-<span class="sig-name descname"><span class="pre">training_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/anomalib/models/patchcore/model.html#PatchcoreLightning.training_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.patchcore.model.PatchcoreLightning.training_epoch_end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Concatenate batch embeddings to generate normal embedding.</p>
-<p>Apply coreset subsampling to the embedding set for dimensionality reduction.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>outputs</strong> (<em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>np.ndarray</em><em>]</em><em>]</em>) – List of embedding vectors</p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="anomalib.models.patchcore.model.PatchcoreLightning.on_validation_start">
+<span class="sig-name descname"><span class="pre">on_validation_start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/anomalib/models/patchcore/model.html#PatchcoreLightning.on_validation_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.patchcore.model.PatchcoreLightning.on_validation_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply subsampling to the embedding collected from the training set.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.patchcore.model.PatchcoreLightning.training_step">
-<span class="sig-name descname"><span class="pre">training_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/anomalib/models/patchcore/model.html#PatchcoreLightning.training_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.patchcore.model.PatchcoreLightning.training_step" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">training_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_batch_idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/anomalib/models/patchcore/model.html#PatchcoreLightning.training_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.patchcore.model.PatchcoreLightning.training_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate feature embedding of the batch.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>batch</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Batch containing image filename,
-image, label and mask</p></li>
-<li><p><strong>_</strong> (<em>int</em>) – Batch Index</p></li>
+<li><p><strong>batch</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Batch containing image filename, image, label and mask</p></li>
+<li><p><strong>_batch_idx</strong> (<em>int</em>) – Batch Index</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -654,7 +648,7 @@ image, label and mask</p></li>
 </li>
 <li><a class="reference internal" href="#anomalib.models.patchcore.model.PatchcoreLightning">PatchcoreLightning</a><ul>
 <li><a class="reference internal" href="#anomalib.models.patchcore.model.PatchcoreLightning.configure_optimizers">configure_optimizers</a></li>
-<li><a class="reference internal" href="#anomalib.models.patchcore.model.PatchcoreLightning.training_epoch_end">training_epoch_end</a></li>
+<li><a class="reference internal" href="#anomalib.models.patchcore.model.PatchcoreLightning.on_validation_start">on_validation_start</a></li>
 <li><a class="reference internal" href="#anomalib.models.patchcore.model.PatchcoreLightning.training_step">training_step</a></li>
 <li><a class="reference internal" href="#anomalib.models.patchcore.model.PatchcoreLightning.validation_step">validation_step</a></li>
 </ul>

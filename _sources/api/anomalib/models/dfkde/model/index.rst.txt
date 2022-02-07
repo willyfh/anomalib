@@ -37,24 +37,20 @@ Classes
       DFKDE doesn't require optimization, therefore returns no optimizers.
 
 
-   .. py:method:: training_step(self, batch, _)
+   .. py:method:: training_step(self, batch, _batch_idx)
 
       Training Step of DFKDE. For each batch, features are extracted from the CNN.
 
-      :param batch: Input batch
-      :type batch: Tensor
+      :param batch: Batch containing image filename, image, label and mask
+      :type batch: Dict[str, Any]
+      :param _batch_idx: Index of the batch.
 
       :returns: Deep CNN features.
 
 
-   .. py:method:: training_epoch_end(self, outputs: List[Dict[str, Any]]) -> None
+   .. py:method:: on_validation_start(self) -> None
 
-      Fit a KDE model on deep CNN features.
-
-      :param outputs: Batch of outputs from the training step
-      :type outputs: List[Dict[str, Any]]
-
-      :returns: None
+      Fit a KDE Model to the embedding collected from the training set.
 
 
    .. py:method:: validation_step(self, batch, _)

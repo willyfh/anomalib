@@ -220,6 +220,7 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/data/transforms/pre_process/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.transforms.pre_process</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/data/inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.inference</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/data/mvtec/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.mvtec</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/data/tiler/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.tiler</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/data/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></a></li>
@@ -346,7 +347,7 @@
 <span class="c1"># See the License for the specific language governing permissions</span>
 <span class="c1"># and limitations under the License.</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torchvision</span>
@@ -369,6 +370,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">dfm_model</span> <span class="o">=</span> <span class="n">DFMModel</span><span class="p">(</span><span class="n">n_comps</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">pca_level</span><span class="p">,</span> <span class="n">score_type</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">score_type</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">automatic_optimization</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="nd">@staticmethod</span>
 <div class="viewcode-block" id="DfmLightning.configure_optimizers"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.model.html#anomalib.models.dfm.model.DfmLightning.configure_optimizers">[docs]</a>    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -390,21 +392,21 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
         <span class="n">layer_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">"image"</span><span class="p">])</span>
-        <span class="n">feature_vector</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">layer_outputs</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">"feature_vector"</span><span class="p">:</span> <span class="n">feature_vector</span><span class="p">}</span></div>
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">layer_outputs</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
 
-<div class="viewcode-block" id="DfmLightning.training_epoch_end"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.model.html#anomalib.models.dfm.model.DfmLightning.training_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">training_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Fit a KDE model on deep CNN features.</span>
+        <span class="c1"># NOTE: `self.embedding` appends each batch embedding to</span>
+        <span class="c1">#   store the training set embedding. We manually append these</span>
+        <span class="c1">#   values mainly due to the new order of hooks introduced after PL v1.4.0</span>
+        <span class="c1">#   https://github.com/PyTorchLightning/pytorch-lightning/pull/7357</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">embedding</span><span class="p">)</span></div>
 
-<span class="sd">        Args:</span>
-<span class="sd">          outputs (List[Dict[str, Tensor]]): Batch of outputs from the training step</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">          None</span>
-<span class="sd">        """</span>
-
-        <span class="n">feature_stack</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">output</span><span class="p">[</span><span class="s2">"feature_vector"</span><span class="p">]</span> <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dfm_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">feature_stack</span><span class="p">)</span></div>
+<div class="viewcode-block" id="DfmLightning.on_validation_start"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.model.html#anomalib.models.dfm.model.DfmLightning.on_validation_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""Fit a KDE Model to the embedding collected from the training set."""</span>
+        <span class="c1"># NOTE: Previous anomalib versions fit Gaussian at the end of the epoch.</span>
+        <span class="c1">#   This is not possible anymore with PyTorch Lightning v1.4.0 since validation</span>
+        <span class="c1">#   is run within train epoch.</span>
+        <span class="n">embeddings</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dfm_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DfmLightning.validation_step"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.model.html#anomalib.models.dfm.model.DfmLightning.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
         <span class="sd">"""Validation Step of DFM.</span>

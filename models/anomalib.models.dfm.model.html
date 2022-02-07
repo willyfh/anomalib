@@ -221,6 +221,7 @@
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/data/transforms/pre_process/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.transforms.pre_process</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="../api/anomalib/data/inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.inference</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/anomalib/data/mvtec/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.mvtec</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/anomalib/data/tiler/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.tiler</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/anomalib/data/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></a></li>
@@ -356,17 +357,9 @@
 <dd><p>DFM doesn’t require optimization, therefore returns no optimizers.</p>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfm.model.DfmLightning.training_epoch_end">
-<span class="sig-name descname"><span class="pre">training_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/anomalib/models/dfm/model.html#DfmLightning.training_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.model.DfmLightning.training_epoch_end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fit a KDE model on deep CNN features.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>outputs</strong> (<em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Tensor</em><em>]</em><em>]</em>) – Batch of outputs from the training step</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None</p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="anomalib.models.dfm.model.DfmLightning.on_validation_start">
+<span class="sig-name descname"><span class="pre">on_validation_start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/anomalib/models/dfm/model.html#DfmLightning.on_validation_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.model.DfmLightning.on_validation_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a KDE Model to the embedding collected from the training set.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.dfm.model.DfmLightning.training_step">
@@ -459,7 +452,7 @@
 <li><a class="reference internal" href="#">anomalib.models.dfm.model</a><ul>
 <li><a class="reference internal" href="#anomalib.models.dfm.model.DfmLightning">DfmLightning</a><ul>
 <li><a class="reference internal" href="#anomalib.models.dfm.model.DfmLightning.configure_optimizers">configure_optimizers</a></li>
-<li><a class="reference internal" href="#anomalib.models.dfm.model.DfmLightning.training_epoch_end">training_epoch_end</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.model.DfmLightning.on_validation_start">on_validation_start</a></li>
 <li><a class="reference internal" href="#anomalib.models.dfm.model.DfmLightning.training_step">training_step</a></li>
 <li><a class="reference internal" href="#anomalib.models.dfm.model.DfmLightning.validation_step">validation_step</a></li>
 </ul>

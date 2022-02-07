@@ -83,19 +83,24 @@ Classes
       :param stage: Optional[str]:  Train/Val/Test stages. (Default value = None)
 
 
-   .. py:method:: train_dataloader(self) -> torch.utils.data.DataLoader
+   .. py:method:: train_dataloader(self) -> pytorch_lightning.utilities.types.TRAIN_DATALOADERS
 
       Get train dataloader.
 
 
-   .. py:method:: val_dataloader(self) -> torch.utils.data.DataLoader
+   .. py:method:: val_dataloader(self) -> pytorch_lightning.utilities.types.EVAL_DATALOADERS
 
       Get validation dataloader.
 
 
-   .. py:method:: test_dataloader(self) -> torch.utils.data.DataLoader
+   .. py:method:: test_dataloader(self) -> pytorch_lightning.utilities.types.EVAL_DATALOADERS
 
       Get test dataloader.
+
+
+   .. py:method:: predict_dataloader(self) -> pytorch_lightning.utilities.types.EVAL_DATALOADERS
+
+      Get predict dataloader.
 
 
 

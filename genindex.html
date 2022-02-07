@@ -219,6 +219,7 @@
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/data/transforms/pre_process/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.transforms.pre_process</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="api/anomalib/data/inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.inference</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/anomalib/data/mvtec/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.mvtec</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/anomalib/data/tiler/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.tiler</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/anomalib/data/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></a></li>
@@ -365,12 +366,24 @@
         </ul></li>
         <li><a href="api/anomalib/data/tiler/index.html#anomalib.data.tiler.Tiler.__fold">__fold() (anomalib.data.tiler.Tiler method)</a>
 </li>
-        <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTec.__getitem__">__getitem__() (anomalib.data.mvtec.MVTec method)</a>
+        <li><a href="api/anomalib/data/inference/index.html#anomalib.data.inference.InferenceDataset.__getitem__">__getitem__() (anomalib.data.inference.InferenceDataset method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/data/index.html#anomalib.data.InferenceDataset.__getitem__">(anomalib.data.InferenceDataset method)</a>
 </li>
+          <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTec.__getitem__">(anomalib.data.mvtec.MVTec method)</a>
+</li>
+        </ul></li>
         <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.InitLoader.__iter__">__iter__() (anomalib.core.callbacks.nncf_callback.InitLoader method)</a>
 </li>
-        <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTec.__len__">__len__() (anomalib.data.mvtec.MVTec method)</a>
+        <li><a href="api/anomalib/data/inference/index.html#anomalib.data.inference.InferenceDataset.__len__">__len__() (anomalib.data.inference.InferenceDataset method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/data/index.html#anomalib.data.InferenceDataset.__len__">(anomalib.data.InferenceDataset method)</a>
 </li>
+          <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTec.__len__">(anomalib.data.mvtec.MVTec method)</a>
+</li>
+        </ul></li>
         <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.InitLoader.__next__">__next__() (anomalib.core.callbacks.nncf_callback.InitLoader method)</a>
 </li>
         <li><a href="api/anomalib/data/tiler/index.html#anomalib.data.tiler.Tiler.__random_tile">__random_tile() (anomalib.data.tiler.Tiler method)</a>
@@ -721,6 +734,13 @@
 </li>
         </ul></li>
         <li>
+    anomalib.data.inference
+
+        <ul>
+          <li><a href="api/anomalib/data/inference/index.html#module-anomalib.data.inference">module</a>
+</li>
+        </ul></li>
+        <li>
     anomalib.data.mvtec
 
         <ul>
@@ -776,6 +796,8 @@
           <li><a href="api/anomalib/deploy/inferencers/index.html#module-anomalib.deploy.inferencers">module</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     anomalib.deploy.inferencers.base
 
@@ -783,8 +805,6 @@
           <li><a href="api/anomalib/deploy/inferencers/base/index.html#module-anomalib.deploy.inferencers.base">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     anomalib.deploy.inferencers.openvino
 
@@ -1334,6 +1354,8 @@
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/data/utils/index.html#anomalib.data.utils.get_image_filenames">get_image_filenames() (in module anomalib.data.utils)</a>
+</li>
         <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.InitLoader.get_inputs">get_inputs() (anomalib.core.callbacks.nncf_callback.InitLoader method)</a>
 </li>
         <li><a href="api/anomalib/loggers/index.html#anomalib.loggers.get_logger">get_logger() (in module anomalib.loggers)</a>
@@ -1364,14 +1386,20 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/loggers/base/index.html#anomalib.loggers.base.ImageLoggerBase">ImageLoggerBase (class in anomalib.loggers.base)</a>
 </li>
+        <li><a href="api/anomalib/data/index.html#anomalib.data.InferenceDataset">InferenceDataset (class in anomalib.data)</a>
+
+        <ul>
+          <li><a href="api/anomalib/data/inference/index.html#anomalib.data.inference.InferenceDataset">(class in anomalib.data.inference)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/deploy/inferencers/index.html#anomalib.deploy.inferencers.Inferencer">Inferencer (class in anomalib.deploy.inferencers)</a>
 
         <ul>
           <li><a href="api/anomalib/deploy/inferencers/base/index.html#anomalib.deploy.inferencers.base.Inferencer">(class in anomalib.deploy.inferencers.base)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.InitLoader">InitLoader (class in anomalib.core.callbacks.nncf_callback)</a>
 </li>
         <li><a href="api/anomalib/core/model/pca/index.html#anomalib.core.model.pca.PCA.inverse_transform">inverse_transform() (anomalib.core.model.pca.PCA method)</a>
@@ -1510,6 +1538,8 @@
 </li>
           <li><a href="api/anomalib/data/index.html#module-anomalib.data">anomalib.data</a>
 </li>
+          <li><a href="api/anomalib/data/inference/index.html#module-anomalib.data.inference">anomalib.data.inference</a>
+</li>
           <li><a href="api/anomalib/data/mvtec/index.html#module-anomalib.data.mvtec">anomalib.data.mvtec</a>
 </li>
           <li><a href="api/anomalib/data/tiler/index.html#module-anomalib.data.tiler">anomalib.data.tiler</a>
@@ -1601,12 +1631,8 @@
 </li>
         <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTec">MVTec (class in anomalib.data.mvtec)</a>
 </li>
-        <li><a href="api/anomalib/data/index.html#anomalib.data.MVTecDataModule">MVTecDataModule (class in anomalib.data)</a>
-
-        <ul>
-          <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTecDataModule">(class in anomalib.data.mvtec)</a>
+        <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTecDataModule">MVTecDataModule (class in anomalib.data.mvtec)</a>
 </li>
-        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -1717,8 +1743,6 @@
           <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.NNCFCallback.on_train_end">(anomalib.core.callbacks.nncf_callback.NNCFCallback method)</a>
 </li>
         </ul></li>
-        <li><a href="api/anomalib/core/callbacks/cdf_normalization/index.html#anomalib.core.callbacks.cdf_normalization.CdfNormalizationCallback.on_train_epoch_end">on_train_epoch_end() (anomalib.core.callbacks.cdf_normalization.CdfNormalizationCallback method)</a>
-</li>
         <li><a href="api/anomalib/core/callbacks/nncf_callback/index.html#anomalib.core.callbacks.nncf_callback.NNCFCallback.on_train_epoch_start">on_train_epoch_start() (anomalib.core.callbacks.nncf_callback.NNCFCallback method)</a>
 </li>
         <li><a href="api/anomalib/core/callbacks/cdf_normalization/index.html#anomalib.core.callbacks.cdf_normalization.CdfNormalizationCallback.on_validation_batch_end">on_validation_batch_end() (anomalib.core.callbacks.cdf_normalization.CdfNormalizationCallback method)</a>
@@ -1727,10 +1751,20 @@
           <li><a href="api/anomalib/core/callbacks/min_max_normalization/index.html#anomalib.core.callbacks.min_max_normalization.MinMaxNormalizationCallback.on_validation_batch_end">(anomalib.core.callbacks.min_max_normalization.MinMaxNormalizationCallback method)</a>
 </li>
         </ul></li>
-        <li><a href="api/anomalib/models/ganomaly/index.html#anomalib.models.ganomaly.GanomalyLightning.on_validation_start">on_validation_start() (anomalib.models.ganomaly.GanomalyLightning method)</a>
+        <li><a href="api/anomalib/core/callbacks/cdf_normalization/index.html#anomalib.core.callbacks.cdf_normalization.CdfNormalizationCallback.on_validation_epoch_start">on_validation_epoch_start() (anomalib.core.callbacks.cdf_normalization.CdfNormalizationCallback method)</a>
+</li>
+        <li><a href="api/anomalib/models/dfkde/model/index.html#anomalib.models.dfkde.model.DfkdeLightning.on_validation_start">on_validation_start() (anomalib.models.dfkde.model.DfkdeLightning method)</a>, <a href="models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeLightning.on_validation_start">[1]</a>
 
         <ul>
+          <li><a href="api/anomalib/models/dfm/model/index.html#anomalib.models.dfm.model.DfmLightning.on_validation_start">(anomalib.models.dfm.model.DfmLightning method)</a>, <a href="models/anomalib.models.dfm.model.html#anomalib.models.dfm.model.DfmLightning.on_validation_start">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/ganomaly/index.html#anomalib.models.ganomaly.GanomalyLightning.on_validation_start">(anomalib.models.ganomaly.GanomalyLightning method)</a>
+</li>
           <li><a href="api/anomalib/models/ganomaly/model/index.html#anomalib.models.ganomaly.model.GanomalyLightning.on_validation_start">(anomalib.models.ganomaly.model.GanomalyLightning method)</a>, <a href="models/anomalib.models.ganomaly.model.html#anomalib.models.ganomaly.model.GanomalyLightning.on_validation_start">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/padim/model/index.html#anomalib.models.padim.model.PadimLightning.on_validation_start">(anomalib.models.padim.model.PadimLightning method)</a>, <a href="models/anomalib.models.padim.model.html#anomalib.models.padim.model.PadimLightning.on_validation_start">[1]</a>
+</li>
+          <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.PatchcoreLightning.on_validation_start">(anomalib.models.patchcore.model.PatchcoreLightning method)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.PatchcoreLightning.on_validation_start">[1]</a>
 </li>
         </ul></li>
         <li><a href="api/anomalib/deploy/inferencers/index.html#anomalib.deploy.inferencers.OpenVINOInferencer">OpenVINOInferencer (class in anomalib.deploy.inferencers)</a>
@@ -1801,6 +1835,8 @@
           <li><a href="api/anomalib/models/dfkde/normality_model/index.html#anomalib.models.dfkde.normality_model.NormalityModel.predict">(anomalib.models.dfkde.normality_model.NormalityModel method)</a>, <a href="models/anomalib.models.dfkde.normality_model.html#anomalib.models.dfkde.normality_model.NormalityModel.predict">[1]</a>
 </li>
         </ul></li>
+        <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTecDataModule.predict_dataloader">predict_dataloader() (anomalib.data.mvtec.MVTecDataModule method)</a>
+</li>
         <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule.predict_step">predict_step() (anomalib.core.model.anomaly_module.AnomalyModule method)</a>
 
         <ul>
@@ -1868,8 +1904,6 @@
         <ul>
           <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTecDataModule.setup">(anomalib.data.mvtec.MVTecDataModule method)</a>
 </li>
-          <li><a href="api/anomalib/data/index.html#anomalib.data.MVTecDataModule.setup">(anomalib.data.MVTecDataModule method)</a>
-</li>
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
@@ -1910,11 +1944,7 @@
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTecDataModule.test_dataloader">test_dataloader() (anomalib.data.mvtec.MVTecDataModule method)</a>
-
-        <ul>
-          <li><a href="api/anomalib/data/index.html#anomalib.data.MVTecDataModule.test_dataloader">(anomalib.data.MVTecDataModule method)</a>
 </li>
-        </ul></li>
         <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule.test_epoch_end">test_epoch_end() (anomalib.core.model.anomaly_module.AnomalyModule method)</a>
 
         <ul>
@@ -1957,10 +1987,10 @@
           <li><a href="api/anomalib/core/callbacks/timer/index.html#anomalib.core.callbacks.timer.TimerCallback">(class in anomalib.core.callbacks.timer)</a>
 </li>
         </ul></li>
-        <li><a href="api/anomalib/models/dfkde/normality_model/index.html#anomalib.models.dfkde.normality_model.NormalityModel.to_probability">to_probability() (anomalib.models.dfkde.normality_model.NormalityModel method)</a>, <a href="models/anomalib.models.dfkde.normality_model.html#anomalib.models.dfkde.normality_model.NormalityModel.to_probability">[1]</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/models/dfkde/normality_model/index.html#anomalib.models.dfkde.normality_model.NormalityModel.to_probability">to_probability() (anomalib.models.dfkde.normality_model.NormalityModel method)</a>, <a href="models/anomalib.models.dfkde.normality_model.html#anomalib.models.dfkde.normality_model.NormalityModel.to_probability">[1]</a>
+</li>
         <li><a href="api/anomalib/data/transforms/index.html#anomalib.data.transforms.ToNumpy">ToNumpy (class in anomalib.data.transforms)</a>
 
         <ul>
@@ -1974,21 +2004,7 @@
 </li>
         </ul></li>
         <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTecDataModule.train_dataloader">train_dataloader() (anomalib.data.mvtec.MVTecDataModule method)</a>
-
-        <ul>
-          <li><a href="api/anomalib/data/index.html#anomalib.data.MVTecDataModule.train_dataloader">(anomalib.data.MVTecDataModule method)</a>
 </li>
-        </ul></li>
-        <li><a href="api/anomalib/models/dfkde/model/index.html#anomalib.models.dfkde.model.DfkdeLightning.training_epoch_end">training_epoch_end() (anomalib.models.dfkde.model.DfkdeLightning method)</a>, <a href="models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeLightning.training_epoch_end">[1]</a>
-
-        <ul>
-          <li><a href="api/anomalib/models/dfm/model/index.html#anomalib.models.dfm.model.DfmLightning.training_epoch_end">(anomalib.models.dfm.model.DfmLightning method)</a>, <a href="models/anomalib.models.dfm.model.html#anomalib.models.dfm.model.DfmLightning.training_epoch_end">[1]</a>
-</li>
-          <li><a href="api/anomalib/models/padim/model/index.html#anomalib.models.padim.model.PadimLightning.training_epoch_end">(anomalib.models.padim.model.PadimLightning method)</a>, <a href="models/anomalib.models.padim.model.html#anomalib.models.padim.model.PadimLightning.training_epoch_end">[1]</a>
-</li>
-          <li><a href="api/anomalib/models/patchcore/model/index.html#anomalib.models.patchcore.model.PatchcoreLightning.training_epoch_end">(anomalib.models.patchcore.model.PatchcoreLightning method)</a>, <a href="models/anomalib.models.patchcore.model.html#anomalib.models.patchcore.model.PatchcoreLightning.training_epoch_end">[1]</a>
-</li>
-        </ul></li>
         <li><a href="api/anomalib/models/cflow/model/index.html#anomalib.models.cflow.model.CflowLightning.training_step">training_step() (anomalib.models.cflow.model.CflowLightning method)</a>
 
         <ul>
@@ -2076,11 +2092,7 @@
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/data/mvtec/index.html#anomalib.data.mvtec.MVTecDataModule.val_dataloader">val_dataloader() (anomalib.data.mvtec.MVTecDataModule method)</a>
-
-        <ul>
-          <li><a href="api/anomalib/data/index.html#anomalib.data.MVTecDataModule.val_dataloader">(anomalib.data.MVTecDataModule method)</a>
 </li>
-        </ul></li>
         <li><a href="api/anomalib/core/model/anomaly_module/index.html#anomalib.core.model.anomaly_module.AnomalyModule.validation_epoch_end">validation_epoch_end() (anomalib.core.model.anomaly_module.AnomalyModule method)</a>
 
         <ul>

@@ -24,6 +24,7 @@ Submodules
    :titlesonly:
    :maxdepth: 1
 
+   inference/index.rst
    mvtec/index.rst
    tiler/index.rst
    utils/index.rst
@@ -37,7 +38,7 @@ Classes
 
 .. autoapisummary::
 
-   anomalib.data.MVTecDataModule
+   anomalib.data.InferenceDataset
 
 
 
@@ -50,32 +51,20 @@ Functions
 
 
 
-.. py:class:: MVTecDataModule(root: str, category: str, image_size: Optional[Union[int, Tuple[int, int]]] = None, train_batch_size: int = 32, test_batch_size: int = 32, num_workers: int = 8, transform_config: Optional[Union[str, albumentations.Compose]] = None, seed: int = 0, create_validation_set: bool = False)
+.. py:class:: InferenceDataset(path: Union[str, pathlib.Path], pre_process: Optional[anomalib.data.transforms.PreProcessor] = None, image_size: Optional[Union[int, Tuple[int, int]]] = None, transform_config: Optional[Union[str, albumentations.Compose]] = None)
 
-   Bases: :py:obj:`pytorch_lightning.core.datamodule.LightningDataModule`
+   Bases: :py:obj:`torch.utils.data.dataset.Dataset`
 
-   MVTec Lightning Data Module.
+   Inference Dataset to perform prediction.
 
-   .. py:method:: setup(self, stage: Optional[str] = None) -> None
+   .. py:method:: __len__(self) -> int
 
-      Setup train, validation and test data.
-
-      :param stage: Optional[str]:  Train/Val/Test stages. (Default value = None)
+      Get the number of images in the given path.
 
 
-   .. py:method:: train_dataloader(self) -> torch.utils.data.DataLoader
+   .. py:method:: __getitem__(self, index: int) -> Any
 
-      Get train dataloader.
-
-
-   .. py:method:: val_dataloader(self) -> torch.utils.data.DataLoader
-
-      Get validation dataloader.
-
-
-   .. py:method:: test_dataloader(self) -> torch.utils.data.DataLoader
-
-      Get test dataloader.
+      Get the image based on the `index`.
 
 
 

@@ -33,9 +33,9 @@ Classes
       Called when the test begins.
 
 
-   .. py:method:: on_train_epoch_end(self, trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, _unused: Optional[Any] = None) -> None
+   .. py:method:: on_validation_epoch_start(self, trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule) -> None
 
-      Called when the train epoch ends.
+      Called when the validation starts after training.
 
       Use the current model to compute the anomaly score distributions
       of the normal training data. This is needed after every epoch, because the statistics must be

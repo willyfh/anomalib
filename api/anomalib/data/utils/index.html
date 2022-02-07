@@ -221,6 +221,7 @@
 <li class="toctree-l5"><a class="reference internal" href="../transforms/pre_process/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.transforms.pre_process</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="../inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.inference</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../mvtec/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.mvtec</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../tiler/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.tiler</span></code></a></li>
 <li class="toctree-l4 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></a></li>
@@ -343,11 +344,30 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.data.utils.read_image" title="anomalib.data.utils.read_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_image</span></code></a>(path: Union[str, pathlib.Path]) → numpy.ndarray</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.data.utils.get_image_filenames" title="anomalib.data.utils.get_image_filenames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_image_filenames</span></code></a>(path: Union[str, pathlib.Path]) → List[str]</p></td>
+<td><p>Get image filenames.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.data.utils.read_image" title="anomalib.data.utils.read_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_image</span></code></a>(path: Union[str, pathlib.Path]) → numpy.ndarray</p></td>
 <td><p>Read image from disk in RGB format.</p></td>
 </tr>
 </tbody>
 </table></div>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.data.utils.get_image_filenames">
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">get_image_filenames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/utils.html#get_image_filenames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.get_image_filenames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get image filenames.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em>) – Path to image or image-folder.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of image filenames</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="anomalib.data.utils.read_image">
 <span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">read_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/utils.html#read_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.read_image" title="Permalink to this definition">¶</a></dt>
@@ -428,6 +448,7 @@
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#functions">Functions</a><ul>
+<li><a class="reference internal" href="#anomalib.data.utils.get_image_filenames">get_image_filenames</a></li>
 <li><a class="reference internal" href="#anomalib.data.utils.read_image">read_image</a></li>
 </ul>
 </li>

@@ -1,0 +1,41 @@
+:py:mod:`anomalib.data.inference`
+=================================
+
+.. py:module:: anomalib.data.inference
+
+.. autoapi-nested-parse::
+
+   Inference Dataset.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.data.inference.InferenceDataset
+
+
+
+
+.. py:class:: InferenceDataset(path: Union[str, pathlib.Path], pre_process: Optional[anomalib.data.transforms.PreProcessor] = None, image_size: Optional[Union[int, Tuple[int, int]]] = None, transform_config: Optional[Union[str, albumentations.Compose]] = None)
+
+   Bases: :py:obj:`torch.utils.data.dataset.Dataset`
+
+   Inference Dataset to perform prediction.
+
+   .. py:method:: __len__(self) -> int
+
+      Get the number of images in the given path.
+
+
+   .. py:method:: __getitem__(self, index: int) -> Any
+
+      Get the image based on the `index`.
+
+
+

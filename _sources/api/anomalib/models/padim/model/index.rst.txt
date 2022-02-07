@@ -39,25 +39,20 @@ Classes
       PADIM doesn't require optimization, therefore returns no optimizers.
 
 
-   .. py:method:: training_step(self, batch, _)
+   .. py:method:: training_step(self, batch, _batch_idx)
 
       Training Step of PADIM. For each batch, hierarchical features are extracted from the CNN.
 
-      :param batch: Input batch
-      :type batch: Dict[str,Tensor]
-      :param _: Index of the batch.
+      :param batch: Batch containing image filename, image, label and mask
+      :type batch: Dict[str, Any]
+      :param _batch_idx: Index of the batch.
 
       :returns: Hierarchical feature map
 
 
-   .. py:method:: training_epoch_end(self, outputs: List[Dict[str, torch.Tensor]]) -> None
+   .. py:method:: on_validation_start(self) -> None
 
-      Fit a multivariate gaussian model on an embedding extracted from deep hierarchical CNN features.
-
-      :param outputs: Batch of outputs from the training step
-      :type outputs: List[Dict[str, Tensor]]
-
-      :returns: None
+      Fit a Gaussian to the embedding collected from the training set.
 
 
    .. py:method:: validation_step(self, batch, _)
