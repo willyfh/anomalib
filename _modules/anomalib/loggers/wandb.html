@@ -278,7 +278,11 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/anomalib/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../../../api/anomalib/utils/normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.normalization</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../api/anomalib/utils/hpo/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.hpo</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../api/anomalib/utils/hpo/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.hpo.config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../api/anomalib/utils/normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.normalization</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../api/anomalib/utils/normalization/cdf/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.normalization.cdf</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../api/anomalib/utils/normalization/min_max/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.normalization.min_max</span></code></a></li>
 </ul>
@@ -350,10 +354,11 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">wandb</span>
 <span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="kn">import</span> <span class="n">Figure</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.loggers.wandb</span> <span class="kn">import</span> <span class="n">WandbLogger</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities</span> <span class="kn">import</span> <span class="n">rank_zero_only</span>
+
+<span class="kn">import</span> <span class="nn">wandb</span>
 
 <span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">ImageLoggerBase</span>
 

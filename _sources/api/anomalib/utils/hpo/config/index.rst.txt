@@ -1,0 +1,33 @@
+:py:mod:`anomalib.utils.hpo.config`
+===================================
+
+.. py:module:: anomalib.utils.hpo.config
+
+.. autoapi-nested-parse::
+
+   Utils to update configuration files.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.hpo.config.flatten_sweep_params
+
+
+
+.. py:function:: flatten_sweep_params(params_dict: omegaconf.DictConfig) -> omegaconf.DictConfig
+
+   Flatten the nested parameters section of the config object.
+
+   :param params_dict: DictConfig: The dictionary containing the hpo parameters in the original, nested, structure.
+
+   :returns: flattened version of the parameter dictionary.
+
+
