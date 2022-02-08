@@ -1,0 +1,49 @@
+:py:mod:`anomalib.utils.metrics.optimal_f1`
+===========================================
+
+.. py:module:: anomalib.utils.metrics.optimal_f1
+
+.. autoapi-nested-parse::
+
+   Implementation of Optimal F1 score based on TorchMetrics.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.metrics.optimal_f1.OptimalF1
+
+
+
+
+.. py:class:: OptimalF1(num_classes: int, **kwargs)
+
+   Bases: :py:obj:`torchmetrics.Metric`
+
+   Optimal F1 Metric.
+
+   Compute the optimal F1 score at the adaptive threshold, based on the F1 metric of the true labels and the
+   predicted anomaly scores.
+
+   .. py:method:: update(self, preds: torch.Tensor, target: torch.Tensor) -> None
+
+      Update the precision-recall curve metric.
+
+
+   .. py:method:: compute(self) -> torch.Tensor
+
+      Compute the value of the optimal F1 score.
+
+      Compute the F1 scores while varying the threshold. Store the optimal
+      threshold as attribute and return the maximum value of the F1 score.
+
+      :returns: Value of the F1 score at the optimal threshold.
+
+
+

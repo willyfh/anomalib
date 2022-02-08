@@ -1,0 +1,161 @@
+:py:mod:`anomalib.models.components.dimensionality_reduction`
+=============================================================
+
+.. py:module:: anomalib.models.components.dimensionality_reduction
+
+.. autoapi-nested-parse::
+
+   Algorithms for decomposition and dimensionality reduction.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   pca/index.rst
+   random_projection/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.components.dimensionality_reduction.PCA
+   anomalib.models.components.dimensionality_reduction.SparseRandomProjection
+
+
+
+
+.. py:class:: PCA(n_components: Union[float, int])
+
+   Bases: :py:obj:`anomalib.models.components.base.DynamicBufferModule`
+
+   Principle Component Analysis (PCA).
+
+   :param n_components: Number of components. Can be either integer number of components
+                        or a ratio between 0-1.
+   :type n_components: float
+
+   .. py:method:: fit(self, dataset: torch.Tensor) -> None
+
+      Fits the PCA model to the dataset.
+
+      :param dataset: Input dataset to fit the model.
+      :type dataset: Tensor
+
+
+   .. py:method:: fit_transform(self, dataset: torch.Tensor) -> torch.Tensor
+
+      Fit and transform PCA to dataset.
+
+      :param dataset: Dataset to which the PCA if fit and transformed
+      :type dataset: Tensor
+
+      :returns: Transformed dataset
+
+
+   .. py:method:: transform(self, features: torch.Tensor) -> torch.Tensor
+
+      Transforms the features based on singular vectors calculated earlier.
+
+      :param features: Input features
+      :type features: Tensor
+
+      :returns: Transformed features
+
+
+   .. py:method:: inverse_transform(self, features: torch.Tensor) -> torch.Tensor
+
+      Inverses the transformed features.
+
+      :param features: Transformed features
+      :type features: Tensor
+
+      Returns: Inverse features
+
+
+   .. py:method:: forward(self, features: torch.Tensor) -> torch.Tensor
+
+      Transforms the features.
+
+      :param features: Input features
+      :type features: Tensor
+
+      :returns: Transformed features
+
+
+
+.. py:class:: SparseRandomProjection(eps: float = 0.1, random_state: Optional[int] = None)
+
+   Sparse Random Projection using PyTorch operations.
+
+   :param eps: Minimum distortion rate parameter for calculating
+               Johnson-Lindenstrauss minimum dimensions. Defaults to 0.1.
+   :type eps: float, optional
+   :param random_state: Uses the seed to set the random
+                        state for sample_without_replacement function. Defaults to None.
+   :type random_state: Optional[int], optional
+
+   .. py:method:: _sparse_random_matrix(self, n_features: int)
+
+      Random sparse matrix. Based on https://web.stanford.edu/~hastie/Papers/Ping/KDD06_rp.pdf.
+
+      :param n_features: Dimentionality of the original source space
+      :type n_features: int
+
+      :returns:
+
+                Sparse matrix of shape (n_components, n_features).
+                    The generated Gaussian random matrix is in CSR (compressed sparse row)
+                    format.
+      :rtype: Tensor
+
+
+   .. py:method:: johnson_lindenstrauss_min_dim(self, n_samples: int, eps: float = 0.1)
+
+      Find a 'safe' number of components to randomly project to.
+
+      Ref eqn 2.1 https://cseweb.ucsd.edu/~dasgupta/papers/jl.pdf
+
+      :param n_samples: Number of samples used to compute safe components
+      :type n_samples: int
+      :param eps: Minimum distortion rate. Defaults to 0.1.
+      :type eps: float, optional
+
+
+   .. py:method:: fit(self, embedding: torch.Tensor) -> SparseRandomProjection
+
+      Generates sparse matrix from the embedding tensor.
+
+      :param embedding: embedding tensor for generating embedding
+      :type embedding: Tensor
+
+      :returns: Return self to be used as
+                >>> generator = SparseRandomProjection()
+                >>> generator = generator.fit()
+      :rtype: (SparseRandomProjection)
+
+
+   .. py:method:: transform(self, embedding: torch.Tensor) -> torch.Tensor
+
+      Project the data by using matrix product with the random matrix.
+
+      :param embedding: Embedding of shape (n_samples, n_features)
+                        The input data to project into a smaller dimensional space
+      :type embedding: Tensor
+
+      :returns:
+
+                Sparse matrix of shape
+                    (n_samples, n_components) Projected array.
+      :rtype: projected_embedding (Tensor)
+
+
+

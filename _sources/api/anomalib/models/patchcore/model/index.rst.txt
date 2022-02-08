@@ -72,7 +72,7 @@ Classes
 
 .. py:class:: PatchcoreModel(layers: List[str], input_size: Tuple[int, int], backbone: str = 'wide_resnet50_2', apply_tiling: bool = False, tile_size: Optional[Tuple[int, int]] = None, tile_stride: Optional[int] = None)
 
-   Bases: :py:obj:`anomalib.core.model.dynamic_module.DynamicBufferModule`, :py:obj:`torch.nn.Module`
+   Bases: :py:obj:`anomalib.models.components.DynamicBufferModule`, :py:obj:`torch.nn.Module`
 
    Patchcore Module.
 
@@ -146,7 +146,7 @@ Classes
 
 .. py:class:: PatchcoreLightning(hparams)
 
-   Bases: :py:obj:`anomalib.core.model.AnomalyModule`
+   Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
    PatchcoreLightning Module to train PatchCore algorithm.
 

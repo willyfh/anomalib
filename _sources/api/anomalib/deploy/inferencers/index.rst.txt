@@ -195,7 +195,7 @@ Classes
 
 
 
-.. py:class:: TorchInferencer(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model_source: Union[str, pathlib.Path, anomalib.core.model.AnomalyModule], meta_data_path: Union[str, pathlib.Path] = None)
+.. py:class:: TorchInferencer(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model_source: Union[str, pathlib.Path, anomalib.models.components.AnomalyModule], meta_data_path: Union[str, pathlib.Path] = None)
 
    Bases: :py:obj:`anomalib.deploy.inferencers.base.Inferencer`
 
@@ -222,7 +222,7 @@ Classes
       :rtype: Dict
 
 
-   .. py:method:: load_model(self, path: Union[str, pathlib.Path]) -> anomalib.core.model.AnomalyModule
+   .. py:method:: load_model(self, path: Union[str, pathlib.Path]) -> anomalib.models.components.AnomalyModule
 
       Load the PyTorch model.
 

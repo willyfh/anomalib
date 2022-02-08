@@ -23,7 +23,7 @@ Functions
 
 
 
-.. py:function:: get_model_metadata(model: anomalib.core.model.anomaly_module.AnomalyModule) -> Dict[str, torch.Tensor]
+.. py:function:: get_model_metadata(model: anomalib.models.components.AnomalyModule) -> Dict[str, torch.Tensor]
 
    Get meta data related to normalization from model.
 
@@ -34,7 +34,7 @@ Functions
    :rtype: Dict[str, Tensor]
 
 
-.. py:function:: export_convert(model: anomalib.core.model.anomaly_module.AnomalyModule, input_size: Union[List[int], Tuple[int, int]], onnx_path: Union[str, pathlib.Path], export_path: Union[str, pathlib.Path])
+.. py:function:: export_convert(model: anomalib.models.components.AnomalyModule, input_size: Union[List[int], Tuple[int, int]], onnx_path: Union[str, pathlib.Path], export_path: Union[str, pathlib.Path])
 
    Export the model to onnx format and convert to OpenVINO IR.
 

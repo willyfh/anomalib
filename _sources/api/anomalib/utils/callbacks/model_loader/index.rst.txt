@@ -1,0 +1,38 @@
+:py:mod:`anomalib.utils.callbacks.model_loader`
+===============================================
+
+.. py:module:: anomalib.utils.callbacks.model_loader
+
+.. autoapi-nested-parse::
+
+   Callback that loads model weights from the state dict.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.callbacks.model_loader.LoadModelCallback
+
+
+
+
+.. py:class:: LoadModelCallback(weights_path)
+
+   Bases: :py:obj:`pytorch_lightning.Callback`
+
+   Callback that loads the model weights from the state dict.
+
+   .. py:method:: on_test_start(self, trainer, pl_module: pytorch_lightning.LightningModule) -> None
+
+      Call when the test begins.
+
+      Loads the model weights from ``weights_path`` into the PyTorch module.
+
+
+

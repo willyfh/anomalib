@@ -1,0 +1,41 @@
+:py:mod:`anomalib.utils.metrics.anomaly_score_distribution`
+===========================================================
+
+.. py:module:: anomalib.utils.metrics.anomaly_score_distribution
+
+.. autoapi-nested-parse::
+
+   Module that computes the parameters of the normal data distribution of the training set.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.metrics.anomaly_score_distribution.AnomalyScoreDistribution
+
+
+
+
+.. py:class:: AnomalyScoreDistribution(**kwargs)
+
+   Bases: :py:obj:`torchmetrics.Metric`
+
+   Mean and standard deviation of the anomaly scores of normal training data.
+
+   .. py:method:: update(self, anomaly_scores: Optional[torch.Tensor] = None, anomaly_maps: Optional[torch.Tensor] = None) -> None
+
+      Update the precision-recall curve metric.
+
+
+   .. py:method:: compute(self) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]
+
+      Compute stats.
+
+
+

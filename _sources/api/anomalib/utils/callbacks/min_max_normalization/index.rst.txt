@@ -1,0 +1,57 @@
+:py:mod:`anomalib.utils.callbacks.min_max_normalization`
+========================================================
+
+.. py:module:: anomalib.utils.callbacks.min_max_normalization
+
+.. autoapi-nested-parse::
+
+   Anomaly Score Normalization Callback that uses min-max normalization.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.callbacks.min_max_normalization.MinMaxNormalizationCallback
+
+
+
+
+.. py:class:: MinMaxNormalizationCallback
+
+   Bases: :py:obj:`pytorch_lightning.Callback`
+
+   Callback that normalizes the image-level and pixel-level anomaly scores using min-max normalization.
+
+   .. py:method:: on_test_start(self, _trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule) -> None
+
+      Called when the test begins.
+
+
+   .. py:method:: on_validation_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, outputs: pytorch_lightning.utilities.types.STEP_OUTPUT, _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+
+      Called when the validation batch ends, update the min and max observed values.
+
+
+   .. py:method:: on_test_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, outputs: pytorch_lightning.utilities.types.STEP_OUTPUT, _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+
+      Called when the test batch ends, normalizes the predicted scores and anomaly maps.
+
+
+   .. py:method:: on_predict_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, outputs: Dict, _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+
+      Called when the predict batch ends, normalizes the predicted scores and anomaly maps.
+
+
+   .. py:method:: _normalize_batch(outputs, pl_module)
+      :staticmethod:
+
+      Normalize a batch of predictions.
+
+
+

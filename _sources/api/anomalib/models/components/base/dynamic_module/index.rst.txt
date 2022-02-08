@@ -1,0 +1,57 @@
+:py:mod:`anomalib.models.components.base.dynamic_module`
+========================================================
+
+.. py:module:: anomalib.models.components.base.dynamic_module
+
+.. autoapi-nested-parse::
+
+   Dynamic Buffer Module.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.components.base.dynamic_module.DynamicBufferModule
+
+
+
+
+.. py:class:: DynamicBufferModule
+
+   Bases: :py:obj:`abc.ABC`, :py:obj:`torch.nn.Module`
+
+   Torch module that allows loading variables from the state dict even in the case of shape mismatch.
+
+   .. py:method:: get_tensor_attribute(self, attribute_name: str) -> torch.Tensor
+
+      Get attribute of the tensor given the name.
+
+      :param attribute_name: Name of the tensor
+      :type attribute_name: str
+
+      :raises ValueError: `attribute_name` is not a torch Tensor
+
+      :returns: Tensor attribute
+      :rtype: Tensor
+
+
+   .. py:method:: _load_from_state_dict(self, state_dict: dict, prefix: str, *args)
+
+      Resizes the local buffers to match those stored in the state dict.
+
+      Overrides method from parent class.
+
+      :param state_dict: State dictionary containing weights
+      :type state_dict: dict
+      :param prefix: Prefix of the weight file.
+      :type prefix: str
+      :param \*args:
+
+
+

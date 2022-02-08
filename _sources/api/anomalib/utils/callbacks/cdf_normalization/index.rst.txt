@@ -1,0 +1,83 @@
+:py:mod:`anomalib.utils.callbacks.cdf_normalization`
+====================================================
+
+.. py:module:: anomalib.utils.callbacks.cdf_normalization
+
+.. autoapi-nested-parse::
+
+   Anomaly Score Normalization Callback.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback
+
+
+
+
+.. py:class:: CdfNormalizationCallback
+
+   Bases: :py:obj:`pytorch_lightning.Callback`
+
+   Callback that standardizes the image-level and pixel-level anomaly scores.
+
+   .. py:method:: on_test_start(self, _trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule) -> None
+
+      Called when the test begins.
+
+
+   .. py:method:: on_validation_epoch_start(self, trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule) -> None
+
+      Called when the validation starts after training.
+
+      Use the current model to compute the anomaly score distributions
+      of the normal training data. This is needed after every epoch, because the statistics must be
+      stored in the state dict of the checkpoint file.
+
+
+   .. py:method:: on_validation_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, outputs: Optional[pytorch_lightning.utilities.types.STEP_OUTPUT], _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+
+      Called when the validation batch ends, standardizes the predicted scores and anomaly maps.
+
+
+   .. py:method:: on_test_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, outputs: Optional[pytorch_lightning.utilities.types.STEP_OUTPUT], _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+
+      Called when the test batch ends, normalizes the predicted scores and anomaly maps.
+
+
+   .. py:method:: on_predict_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, outputs: Dict, _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+
+      Called when the predict batch ends, normalizes the predicted scores and anomaly maps.
+
+
+   .. py:method:: _collect_stats(self, trainer, pl_module)
+
+      Collect the statistics of the normal training data.
+
+      Create a trainer and use it to predict the anomaly maps and scores of the normal training data. Then
+       estimate the distribution of anomaly scores for normal data at the image and pixel level by computing
+       the mean and standard deviations. A dictionary containing the computed statistics is stored in self.stats.
+
+
+   .. py:method:: _create_inference_model(pl_module)
+      :staticmethod:
+
+      Create a duplicate of the PL module that can be used to perform inference on the training set.
+
+
+   .. py:method:: _standardize_batch(outputs: pytorch_lightning.utilities.types.STEP_OUTPUT, pl_module) -> None
+      :staticmethod:
+
+
+   .. py:method:: _normalize_batch(outputs: pytorch_lightning.utilities.types.STEP_OUTPUT, pl_module: pytorch_lightning.LightningModule) -> None
+      :staticmethod:
+
+
+

@@ -1,0 +1,84 @@
+:py:mod:`anomalib.utils.callbacks.visualizer_callback`
+======================================================
+
+.. py:module:: anomalib.utils.callbacks.visualizer_callback
+
+.. autoapi-nested-parse::
+
+   Visualizer Callback.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.callbacks.visualizer_callback.VisualizerCallback
+
+
+
+
+.. py:class:: VisualizerCallback(inputs_are_normalized: bool = True)
+
+   Bases: :py:obj:`pytorch_lightning.Callback`
+
+   Callback that visualizes the inference results of a model.
+
+   The callback generates a figure showing the original image, the ground truth segmentation mask,
+   the predicted error heat map, and the predicted segmentation mask.
+
+   To save the images to the filesystem, add the 'local' keyword to the `project.log_images_to` parameter in the
+   config.yaml file.
+
+   .. py:method:: _add_images(self, visualizer: anomalib.post_processing.Visualizer, module: anomalib.models.components.AnomalyModule, filename: pathlib.Path)
+
+      Save image to logger/local storage.
+
+      Saves the image in `visualizer.figure` to the respective loggers and local storage if specified in
+      `log_images_to` in `config.yaml` of the models.
+
+      :param visualizer: Visualizer object from which the `figure` is saved/logged.
+      :type visualizer: Visualizer
+      :param module: Anomaly module which holds reference to `hparams` and `logger`.
+      :type module: AnomalyModule
+      :param filename: Path of the input image. This name is used as name for the generated image.
+      :type filename: Path
+
+
+   .. py:method:: on_test_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, outputs: Optional[pytorch_lightning.utilities.types.STEP_OUTPUT], _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+
+      Log images at the end of every batch.
+
+      :param _trainer: Pytorch lightning trainer object (unused).
+      :type _trainer: Trainer
+      :param pl_module: Lightning modules derived from BaseAnomalyLightning object as
+      :type pl_module: LightningModule
+      :param currently only they support logging images.:
+      :param outputs: Outputs of the current test step.
+      :type outputs: Dict[str, Any]
+      :param _batch: Input batch of the current test step (unused).
+      :type _batch: Any
+      :param _batch_idx: Index of the current test batch (unused).
+      :type _batch_idx: int
+      :param _dataloader_idx: Index of the dataloader that yielded the current batch (unused).
+      :type _dataloader_idx: int
+
+
+   .. py:method:: on_test_end(self, _trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule) -> None
+
+      Sync logs.
+
+      Currently only ``AnomalibWandbLogger`` is called from this method. This is because logging as a single batch
+      ensures that all images appear as part of the same step.
+
+      :param _trainer: Pytorch Lightning trainer (unused)
+      :type _trainer: pl.Trainer
+      :param pl_module: Anomaly module
+      :type pl_module: pl.LightningModule
+
+
+

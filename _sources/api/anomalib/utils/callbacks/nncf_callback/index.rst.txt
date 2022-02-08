@@ -1,0 +1,118 @@
+:py:mod:`anomalib.utils.callbacks.nncf_callback`
+================================================
+
+.. py:module:: anomalib.utils.callbacks.nncf_callback
+
+.. autoapi-nested-parse::
+
+   NNCF Callback.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.callbacks.nncf_callback.InitLoader
+   anomalib.utils.callbacks.nncf_callback.NNCFCallback
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.callbacks.nncf_callback.criterion_fn
+
+
+
+.. py:function:: criterion_fn(outputs, criterion)
+
+   Calls the criterion function on outputs.
+
+
+.. py:class:: InitLoader(data_loader: torch.utils.data.dataloader.DataLoader)
+
+   Bases: :py:obj:`nncf.torch.initialization.PTInitializingDataLoader`
+
+   Initializing data loader for NNCF to be used with unsupervised training algorithms.
+
+   .. py:method:: __iter__(self)
+
+      Create iterator for dataloader.
+
+
+   .. py:method:: __next__(self) -> Any
+
+      Return next item from dataloader iterator.
+
+
+   .. py:method:: get_inputs(self, dataloader_output) -> Tuple[Tuple, Dict]
+
+      Get input to model.
+
+      :returns: Tuple[Tuple, Dict]: The current model call to be made during
+                the initialization process
+      :rtype: (dataloader_output,), {}
+
+
+   .. py:method:: get_target(self, _)
+
+      Return structure for ground truth in loss criterion based on dataloader output.
+
+      This implementation does not do anything and is a placeholder.
+
+      :returns: None
+
+
+
+.. py:class:: NNCFCallback(config: Union[omegaconf.ListConfig, omegaconf.DictConfig], dirpath: str, filename: str)
+
+   Bases: :py:obj:`pytorch_lightning.Callback`
+
+   Callback for NNCF compression.
+
+   Assumes that the pl module contains a 'model' attribute, which is
+   the PyTorch module that must be compressed.
+
+   :param config: NNCF Configuration
+   :type config: Union[ListConfig, DictConfig]
+   :param dirpath: Path where the export `onnx` and the OpenVINO `xml` and `bin` IR are saved.
+   :type dirpath: str
+   :param filename: Name of the generated model files.
+   :type filename: str
+
+   .. py:method:: setup(self, trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, stage: Optional[str] = None) -> None
+
+      Call when fit or test begins.
+
+      Takes the pytorch model and wraps it using the compression controller so that it is ready for nncf fine-tuning.
+
+
+   .. py:method:: on_train_batch_start(self, trainer: pytorch_lightning.Trainer, _pl_module: pytorch_lightning.LightningModule, _batch: Any, _batch_idx: int, _unused: Optional[int] = 0) -> None
+
+      Call when the train batch begins.
+
+      Prepare compression method to continue training the model in the next step.
+
+
+   .. py:method:: on_train_end(self, _trainer: pytorch_lightning.Trainer, _pl_module: pytorch_lightning.LightningModule) -> None
+
+      Call when the train ends.
+
+      Exports onnx model and if compression controller is not None, uses the onnx model to generate the OpenVINO IR.
+
+
+   .. py:method:: on_train_epoch_start(self, _trainer: pytorch_lightning.Trainer, _pl_module: pytorch_lightning.LightningModule) -> None
+
+      Call when the train epoch starts.
+
+      Prepare compression method to continue training the model in the next epoch.
+
+
+

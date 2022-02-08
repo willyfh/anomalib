@@ -1,0 +1,50 @@
+:py:mod:`anomalib.data.utils.image`
+===================================
+
+.. py:module:: anomalib.data.utils.image
+
+.. autoapi-nested-parse::
+
+   Image Utils.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.data.utils.image.get_image_filenames
+   anomalib.data.utils.image.read_image
+
+
+
+.. py:function:: get_image_filenames(path: Union[str, pathlib.Path]) -> List[str]
+
+   Get image filenames.
+
+   :param path: Path to image or image-folder.
+   :type path: Union[str, Path]
+
+   :returns: List of image filenames
+   :rtype: List[str]
+
+
+.. py:function:: read_image(path: Union[str, pathlib.Path]) -> numpy.ndarray
+
+   Read image from disk in RGB format.
+
+   :param path: path to the image file
+   :type path: str, Path
+
+   .. rubric:: Example
+
+   >>> image = read_image("test_image.jpg")
+
+   :returns: image as numpy array
+
+

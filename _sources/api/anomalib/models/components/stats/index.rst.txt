@@ -1,0 +1,137 @@
+:py:mod:`anomalib.models.components.stats`
+==========================================
+
+.. py:module:: anomalib.models.components.stats
+
+.. autoapi-nested-parse::
+
+   Statistical functions.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   kde/index.rst
+   multi_variate_gaussian/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.components.stats.GaussianKDE
+   anomalib.models.components.stats.MultiVariateGaussian
+
+
+
+
+.. py:class:: GaussianKDE(dataset: Optional[torch.Tensor] = None)
+
+   Bases: :py:obj:`anomalib.models.components.base.DynamicBufferModule`
+
+   Gaussian Kernel Density Estimation.
+
+   :param dataset: Dataset on which to fit the KDE model. Defaults to None.
+   :type dataset: Optional[Tensor], optional
+
+   .. py:method:: forward(self, features: torch.Tensor) -> torch.Tensor
+
+      Get the KDE estimates from the feature map.
+
+      :param features: Feature map extracted from the CNN
+      :type features: Tensor
+
+      Returns: KDE Estimates
+
+
+   .. py:method:: fit(self, dataset: torch.Tensor) -> None
+
+      Fit a KDE model to the input dataset.
+
+      :param dataset: Input dataset.
+      :type dataset: Tensor
+
+      :returns: None
+
+
+   .. py:method:: cov(tensor: torch.Tensor) -> torch.Tensor
+      :staticmethod:
+
+      Calculate the unbiased covariance matrix.
+
+      :param tensor: Input tensor from which covariance matrix is computed.
+      :type tensor: Tensor
+
+      :returns: Output covariance matrix.
+
+
+
+.. py:class:: MultiVariateGaussian(n_features, n_patches)
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   Multi Variate Gaussian Distribution.
+
+   .. py:method:: _cov(observations: torch.Tensor, rowvar: bool = False, bias: bool = False, ddof: Optional[int] = None, aweights: torch.Tensor = None) -> torch.Tensor
+      :staticmethod:
+
+      Estimates covariance matrix like numpy.cov.
+
+      :param observations: A 1-D or 2-D array containing multiple variables and observations.
+                           Each row of `m` represents a variable, and each column a single
+                           observation of all those variables. Also see `rowvar` below.
+      :type observations: Tensor
+      :param rowvar: If `rowvar` is True (default), then each row represents a
+                     variable, with observations in the columns. Otherwise, the relationship
+                     is transposed: each column represents a variable, while the rows
+                     contain observations. Defaults to False.
+      :type rowvar: bool
+      :param bias: Default normalization (False) is by ``(N - 1)``, where ``N`` is the
+                   number of observations given (unbiased estimate). If `bias` is True,
+                   then normalization is by ``N``. These values can be overridden by using
+                   the keyword ``ddof`` in numpy versions >= 1.5. Defaults to False
+      :type bias: bool
+      :param ddof: If not ``None`` the default value implied by `bias` is overridden.
+                   Note that ``ddof=1`` will return the unbiased estimate, even if both
+                   `fweights` and `aweights` are specified, and ``ddof=0`` will return
+                   the simple average. See the notes for the details. The default value
+                   is ``None``.
+      :type ddof: Optional, int
+      :param aweights: 1-D array of observation vector weights. These relative weights are
+                       typically large for observations considered "important" and smaller for
+                       observations considered less "important". If ``ddof=0`` the array of
+                       weights can be used to assign probabilities to observation vectors. (Default value = None)
+      :type aweights: Tensor
+
+      :returns: The covariance matrix of the variables.
+
+
+   .. py:method:: forward(self, embedding: torch.Tensor) -> List[torch.Tensor]
+
+      Calculate multivariate Gaussian distribution.
+
+      :param embedding: CNN features whose dimensionality is reduced via either random sampling or PCA.
+      :type embedding: Tensor
+
+      :returns: mean and inverse covariance of the multi-variate gaussian distribution that fits the features.
+
+
+   .. py:method:: fit(self, embedding: torch.Tensor) -> List[torch.Tensor]
+
+      Fit multi-variate gaussian distribution to the input embedding.
+
+      :param embedding: Embedding vector extracted from CNN.
+      :type embedding: Tensor
+
+      :returns: Mean and the covariance of the embedding.
+
+
+
