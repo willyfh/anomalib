@@ -1,0 +1,95 @@
+:py:mod:`anomalib.utils.sweep.helpers`
+======================================
+
+.. py:module:: anomalib.utils.sweep.helpers
+
+.. autoapi-nested-parse::
+
+   Helpers for benchmarking and hyperparameter optimization.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   callbacks/index.rst
+   inference/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.sweep.helpers.get_sweep_callbacks
+   anomalib.utils.sweep.helpers.get_meta_data
+   anomalib.utils.sweep.helpers.get_openvino_throughput
+   anomalib.utils.sweep.helpers.get_torch_throughput
+
+
+
+.. py:function:: get_sweep_callbacks() -> List[pytorch_lightning.Callback]
+
+   Gets callbacks relevant to sweep.
+
+   :param config: Model config loaded from anomalib
+   :type config: Union[DictConfig, ListConfig]
+
+   :returns: List of callbacks
+   :rtype: List[Callback]
+
+
+.. py:function:: get_meta_data(model: anomalib.models.components.AnomalyModule, input_size: Tuple[int, int]) -> Dict
+
+   Get meta data for inference.
+
+   :param model: Trained model from which the metadata is extracted.
+   :type model: AnomalyModule
+   :param input_size: Input size used to resize the pixel level mean and std.
+   :type input_size: Tuple[int, int]
+
+   :returns: Metadata as dictionary.
+   :rtype: (Dict)
+
+
+.. py:function:: get_openvino_throughput(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model_path: pathlib.Path, test_dataset: torch.utils.data.DataLoader, meta_data: Dict) -> float
+
+   Runs the generated OpenVINO model on a dummy dataset to get throughput.
+
+   :param config: Model config.
+   :type config: Union[DictConfig, ListConfig]
+   :param model_path: Path to folder containing the OpenVINO models. It then searches `model.xml` in the folder.
+   :type model_path: Path
+   :param test_dataset: The test dataset used as a reference for the mock dataset.
+   :type test_dataset: DataLoader
+   :param meta_data: Metadata used for normalization.
+   :type meta_data: Dict
+
+   :returns: Inference throughput
+   :rtype: float
+
+
+.. py:function:: get_torch_throughput(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model: anomalib.models.components.AnomalyModule, test_dataset: torch.utils.data.DataLoader, meta_data: Dict) -> float
+
+   Tests the model on dummy data. Images are passed sequentially to make the comparision with OpenVINO model fair.
+
+   :param config: Model config.
+   :type config: Union[DictConfig, ListConfig]
+   :param model: Model on which inference is called.
+   :type model: Path
+   :param test_dataset: The test dataset used as a reference for the mock dataset.
+   :type test_dataset: DataLoader
+   :param meta_data: Metadata used for normalization.
+   :type meta_data: Dict
+
+   :returns: Inference throughput
+   :rtype: float
+
+

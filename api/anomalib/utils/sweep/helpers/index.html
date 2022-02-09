@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" /><link rel="next" title="anomalib.utils.loggers" href="../../loggers/index.html" /><link rel="prev" title="anomalib.utils.hpo" href="../index.html" />
+<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" /><link rel="next" title="anomalib.utils.sweep.helpers.callbacks" href="callbacks/index.html" /><link rel="prev" title="anomalib.utils.sweep" href="../index.html" />
 
     <meta name="generator" content="sphinx-4.3.1, furo 2021.07.31.beta41"/>
-        <title>anomalib.utils.hpo.config - Anomalib 2021, Anomalib Contributors documentation</title>
+        <title>anomalib.utils.sweep.helpers - Anomalib 2021, Anomalib Contributors documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css" />
@@ -294,22 +294,27 @@
 <li class="toctree-l5"><a class="reference internal" href="../../callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 current has-children"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.hpo</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" role="switch" type="checkbox"/><label for="toctree-checkbox-29"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l5 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.hpo.config</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../../loggers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" role="switch" type="checkbox"/><label for="toctree-checkbox-30"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../loggers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" role="switch" type="checkbox"/><label for="toctree-checkbox-29"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../loggers/base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.base</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../loggers/tensorboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.tensorboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../loggers/wandb/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.wandb</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../../metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" role="switch" type="checkbox"/><label for="toctree-checkbox-31"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" role="switch" type="checkbox"/><label for="toctree-checkbox-30"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../metrics/adaptive_threshold/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.adaptive_threshold</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../metrics/anomaly_score_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.anomaly_score_distribution</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../metrics/auroc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.auroc</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../metrics/min_max/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.min_max</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../metrics/optimal_f1/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.optimal_f1</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4 current has-children"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" role="switch" type="checkbox"/><label for="toctree-checkbox-31"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l5 current has-children current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.helpers</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" role="switch" type="checkbox"/><label for="toctree-checkbox-32"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="callbacks/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.helpers.callbacks</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.helpers.inference</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.config</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -356,11 +361,20 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <section id="module-anomalib.utils.hpo.config">
-<span id="anomalib-utils-hpo-config"></span><h1><a class="reference internal" href="#module-anomalib.utils.hpo.config" title="anomalib.utils.hpo.config"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.hpo.config</span></code></a><a class="headerlink" href="#module-anomalib.utils.hpo.config" title="Permalink to this headline">¶</a></h1>
-<p>Utils to update configuration files.</p>
-<section id="module-contents">
-<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+        <section id="module-anomalib.utils.sweep.helpers">
+<span id="anomalib-utils-sweep-helpers"></span><h1><a class="reference internal" href="#module-anomalib.utils.sweep.helpers" title="anomalib.utils.sweep.helpers"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.helpers</span></code></a><a class="headerlink" href="#module-anomalib.utils.sweep.helpers" title="Permalink to this headline">¶</a></h1>
+<p>Helpers for benchmarking and hyperparameter optimization.</p>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="callbacks/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.helpers.callbacks</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.helpers.inference</span></code></a></li>
+</ul>
+</div>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Permalink to this headline">¶</a></h2>
 <section id="functions">
 <h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
 <div class="table-wrapper"><table class="longtable docutils align-default">
@@ -369,21 +383,94 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.hpo.config.flatten_sweep_params" title="anomalib.utils.hpo.config.flatten_sweep_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flatten_sweep_params</span></code></a>(params_dict: omegaconf.DictConfig) → omegaconf.DictConfig</p></td>
-<td><p>Flatten the nested parameters section of the config object.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.sweep.helpers.get_sweep_callbacks" title="anomalib.utils.sweep.helpers.get_sweep_callbacks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_sweep_callbacks</span></code></a>() → List[pytorch_lightning.Callback]</p></td>
+<td><p>Gets callbacks relevant to sweep.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.utils.sweep.helpers.get_meta_data" title="anomalib.utils.sweep.helpers.get_meta_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_meta_data</span></code></a>(model: anomalib.models.components.AnomalyModule, input_size: Tuple[int, int]) → Dict</p></td>
+<td><p>Get meta data for inference.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.sweep.helpers.get_openvino_throughput" title="anomalib.utils.sweep.helpers.get_openvino_throughput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_openvino_throughput</span></code></a>(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model_path: pathlib.Path, test_dataset: torch.utils.data.DataLoader, meta_data: Dict) → float</p></td>
+<td><p>Runs the generated OpenVINO model on a dummy dataset to get throughput.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.utils.sweep.helpers.get_torch_throughput" title="anomalib.utils.sweep.helpers.get_torch_throughput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_torch_throughput</span></code></a>(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model: anomalib.models.components.AnomalyModule, test_dataset: torch.utils.data.DataLoader, meta_data: Dict) → float</p></td>
+<td><p>Tests the model on dummy data. Images are passed sequentially to make the comparision with OpenVINO model fair.</p></td>
 </tr>
 </tbody>
 </table></div>
 <dl class="py function">
-<dt class="sig sig-object py" id="anomalib.utils.hpo.config.flatten_sweep_params">
-<span class="sig-prename descclassname"><span class="pre">anomalib.utils.hpo.config.</span></span><span class="sig-name descname"><span class="pre">flatten_sweep_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">omegaconf.DictConfig</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">omegaconf.DictConfig</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/utils/hpo/config.html#flatten_sweep_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.hpo.config.flatten_sweep_params" title="Permalink to this definition">¶</a></dt>
-<dd><p>Flatten the nested parameters section of the config object.</p>
+<dt class="sig sig-object py" id="anomalib.utils.sweep.helpers.get_sweep_callbacks">
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.helpers.</span></span><span class="sig-name descname"><span class="pre">get_sweep_callbacks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">pytorch_lightning.Callback</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/utils/sweep/helpers/callbacks.html#get_sweep_callbacks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.sweep.helpers.get_sweep_callbacks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets callbacks relevant to sweep.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>params_dict</strong> – DictConfig: The dictionary containing the hpo parameters in the original, nested, structure.</p>
+<dd class="field-odd"><p><strong>config</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model config loaded from anomalib</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>flattened version of the parameter dictionary.</p>
+<dd class="field-even"><p>List of callbacks</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[Callback]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.utils.sweep.helpers.get_meta_data">
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.helpers.</span></span><span class="sig-name descname"><span class="pre">get_meta_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../../models/components/index.html#anomalib.models.components.AnomalyModule" title="anomalib.models.components.AnomalyModule"><span class="pre">anomalib.models.components.AnomalyModule</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/utils/sweep/helpers/inference.html#get_meta_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.sweep.helpers.get_meta_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get meta data for inference.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<a class="reference internal" href="../../../models/components/base/anomaly_module/index.html#anomalib.models.components.base.anomaly_module.AnomalyModule" title="anomalib.models.components.base.anomaly_module.AnomalyModule"><em>AnomalyModule</em></a>) – Trained model from which the metadata is extracted.</p></li>
+<li><p><strong>input_size</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – Input size used to resize the pixel level mean and std.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Metadata as dictionary.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(Dict)</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.utils.sweep.helpers.get_openvino_throughput">
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.helpers.</span></span><span class="sig-name descname"><span class="pre">get_openvino_throughput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.utils.data.DataLoader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/utils/sweep/helpers/inference.html#get_openvino_throughput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.sweep.helpers.get_openvino_throughput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the generated OpenVINO model on a dummy dataset to get throughput.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model config.</p></li>
+<li><p><strong>model_path</strong> (<em>Path</em>) – Path to folder containing the OpenVINO models. It then searches <cite>model.xml</cite> in the folder.</p></li>
+<li><p><strong>test_dataset</strong> (<em>DataLoader</em>) – The test dataset used as a reference for the mock dataset.</p></li>
+<li><p><strong>meta_data</strong> (<em>Dict</em>) – Metadata used for normalization.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Inference throughput</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.utils.sweep.helpers.get_torch_throughput">
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.helpers.</span></span><span class="sig-name descname"><span class="pre">get_torch_throughput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../../models/components/index.html#anomalib.models.components.AnomalyModule" title="anomalib.models.components.AnomalyModule"><span class="pre">anomalib.models.components.AnomalyModule</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.utils.data.DataLoader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/utils/sweep/helpers/inference.html#get_torch_throughput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.sweep.helpers.get_torch_throughput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests the model on dummy data. Images are passed sequentially to make the comparision with OpenVINO model fair.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model config.</p></li>
+<li><p><strong>model</strong> (<em>Path</em>) – Model on which inference is called.</p></li>
+<li><p><strong>test_dataset</strong> (<em>DataLoader</em>) – The test dataset used as a reference for the mock dataset.</p></li>
+<li><p><strong>meta_data</strong> (<em>Dict</em>) – Metadata used for normalization.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Inference throughput</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -395,12 +482,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../../loggers/index.html">
+          <a class="next-page" href="callbacks/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.helpers.callbacks</span></code></div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -411,7 +498,7 @@
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.hpo</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep</span></code></div>
                 
               </div>
             </a>
@@ -425,7 +512,7 @@
               <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
               <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
             |
-            <a class="muted-link" href="../../../../../_sources/api/anomalib/utils/hpo/config/index.rst.txt"
+            <a class="muted-link" href="../../../../../_sources/api/anomalib/utils/sweep/helpers/index.rst.txt"
                rel="nofollow">
               Show Source
             </a>
@@ -445,10 +532,14 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.hpo.config</span></code></a><ul>
-<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.helpers</span></code></a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#package-contents">Package Contents</a><ul>
 <li><a class="reference internal" href="#functions">Functions</a><ul>
-<li><a class="reference internal" href="#anomalib.utils.hpo.config.flatten_sweep_params">flatten_sweep_params</a></li>
+<li><a class="reference internal" href="#anomalib.utils.sweep.helpers.get_sweep_callbacks">get_sweep_callbacks</a></li>
+<li><a class="reference internal" href="#anomalib.utils.sweep.helpers.get_meta_data">get_meta_data</a></li>
+<li><a class="reference internal" href="#anomalib.utils.sweep.helpers.get_openvino_throughput">get_openvino_throughput</a></li>
+<li><a class="reference internal" href="#anomalib.utils.sweep.helpers.get_torch_throughput">get_torch_throughput</a></li>
 </ul>
 </li>
 </ul>
