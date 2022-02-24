@@ -441,7 +441,8 @@
                 <span class="n">c_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
                     <span class="n">sample_without_replacement</span><span class="p">(</span>
                         <span class="n">n_population</span><span class="o">=</span><span class="n">n_features</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="n">nnz_idx</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span>
-                    <span class="p">)</span>
+                    <span class="p">),</span>
+                    <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Binomial</span><span class="p">(</span><span class="n">total_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">probs</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">sample_shape</span><span class="o">=</span><span class="n">c_idx</span><span class="o">.</span><span class="n">size</span><span class="p">())</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>
                 <span class="c1"># assign data to only those columns</span>
