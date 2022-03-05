@@ -455,6 +455,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">compression_scheduler</span><span class="p">:</span> <span class="n">CompressionScheduler</span>
 
 <div class="viewcode-block" id="NNCFCallback.setup"><a class="viewcode-back" href="../../../../api/anomalib/utils/callbacks/nncf_callback/index.html#anomalib.utils.callbacks.nncf_callback.NNCFCallback.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># pylint: disable=unused-argument</span>
         <span class="sd">"""Call when fit or test begins.</span>
 
 <span class="sd">        Takes the pytorch model and wraps it using the compression controller so that it is ready for nncf fine-tuning.</span>
