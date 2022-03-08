@@ -67,12 +67,14 @@ Classes
 
 
 
-.. py:class:: DFMModel(n_comps: float = 0.97, score_type: str = 'fre')
+.. py:class:: DFMModel(backbone: str, n_comps: float = 0.97, score_type: str = 'fre')
 
    Bases: :py:obj:`torch.nn.Module`
 
    Model for the DFM algorithm.
 
+   :param backbone: Pre-trained model backbone.
+   :type backbone: str
    :param n_comps: Ratio from which number of components for PCA are calculated. Defaults to 0.97.
    :type n_comps: float, optional
    :param score_type: Scoring type. Options are `fre` and `nll`. Defaults to "fre".
@@ -100,14 +102,26 @@ Classes
       :rtype: score (Tensor)
 
 
-   .. py:method:: forward(self, dataset: torch.Tensor) -> None
+   .. py:method:: get_features(self, batch: torch.Tensor) -> torch.Tensor
 
-      Provides the same functionality as `fit`.
+      Extract features from the pretrained network.
 
-      Transforms the input dataset based on singular values calculated earlier.
+      :param batch: Image batch.
+      :type batch: Tensor
 
-      :param dataset: Input dataset
-      :type dataset: Tensor
+      :returns: Tensor containing extracted features.
+      :rtype: Tensor
+
+
+   .. py:method:: forward(self, batch: torch.Tensor) -> torch.Tensor
+
+      Computer score from input images.
+
+      :param batch: Input images
+      :type batch: Tensor
+
+      :returns: Scores
+      :rtype: Tensor
 
 
 

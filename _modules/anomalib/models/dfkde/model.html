@@ -383,15 +383,72 @@
 <span class="kn">import</span> <span class="nn">torchvision</span>
 <span class="kn">from</span> <span class="nn">omegaconf.dictconfig</span> <span class="kn">import</span> <span class="n">DictConfig</span>
 <span class="kn">from</span> <span class="nn">omegaconf.listconfig</span> <span class="kn">import</span> <span class="n">ListConfig</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span><span class="p">,</span> <span class="n">FeatureExtractor</span>
 
 <span class="kn">from</span> <span class="nn">.normality_model</span> <span class="kn">import</span> <span class="n">NormalityModel</span>
 
 
+<div class="viewcode-block" id="DfkdeModel"><a class="viewcode-back" href="../../../../models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeModel">[docs]</a><span class="k">class</span> <span class="nc">DfkdeModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">"""DFKDE model.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        backbone (str): Pre-trained model backbone.</span>
+<span class="sd">        filter_count (int): Number of filters.</span>
+<span class="sd">        threshold_steepness (float): Threshold steepness for normality model.</span>
+<span class="sd">        threshold_offset (float): Threshold offset for normality model.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">filter_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">threshold_steepness</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">threshold_offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="n">backbone</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="s2">"avgpool"</span><span class="p">])</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">normality_model</span> <span class="o">=</span> <span class="n">NormalityModel</span><span class="p">(</span>
+            <span class="n">filter_count</span><span class="o">=</span><span class="n">filter_count</span><span class="p">,</span>
+            <span class="n">threshold_steepness</span><span class="o">=</span><span class="n">threshold_steepness</span><span class="p">,</span>
+            <span class="n">threshold_offset</span><span class="o">=</span><span class="n">threshold_offset</span><span class="p">,</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="DfkdeModel.get_features"><a class="viewcode-back" href="../../../../models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeModel.get_features">[docs]</a>    <span class="k">def</span> <span class="nf">get_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="sd">"""Extract features from the pretrained network.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            batch (Tensor): Image batch.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tensor: Tensor containing extracted features.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="n">layer_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+        <span class="n">layer_outputs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">layer_outputs</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">layer_outputs</span></div>
+
+<div class="viewcode-block" id="DfkdeModel.fit"><a class="viewcode-back" href="../../../../models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeModel.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]):</span>
+        <span class="sd">"""Fit normality model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            embeddings (List[Tensor]): Embeddings to fit.</span>
+<span class="sd">        """</span>
+        <span class="n">_embeddings</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normality_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">_embeddings</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DfkdeModel.forward"><a class="viewcode-back" href="../../../../models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="sd">"""Prediction by normality model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            batch (Tensor): Input images.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tensor: Predictions</span>
+<span class="sd">        """</span>
+        <span class="n">feature_vector</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_features</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">normality_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">feature_vector</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">feature_vector</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]))</span></div></div>
+
+
 <div class="viewcode-block" id="DfkdeLightning"><a class="viewcode-back" href="../../../../models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeLightning">[docs]</a><span class="k">class</span> <span class="nc">DfkdeLightning</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
-    <span class="sd">"""DFKDE: Deep Featured Kernel Density Estimation.</span>
+    <span class="sd">"""DFKDE: Deep Feature Kernel Density Estimation.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        hparams (Union[DictConfig, ListConfig]): Model params</span>
@@ -399,17 +456,13 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">threshold_steepness</span> <span class="o">=</span> <span class="mf">0.05</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">threshold_offset</span> <span class="o">=</span> <span class="mi">12</span>
+        <span class="n">threshold_steepness</span> <span class="o">=</span> <span class="mf">0.05</span>
+        <span class="n">threshold_offset</span> <span class="o">=</span> <span class="mi">12</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="s2">"avgpool"</span><span class="p">])</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">normality_model</span> <span class="o">=</span> <span class="n">NormalityModel</span><span class="p">(</span>
-            <span class="n">filter_count</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">max_training_points</span><span class="p">,</span>
-            <span class="n">threshold_steepness</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">threshold_steepness</span><span class="p">,</span>
-            <span class="n">threshold_offset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">threshold_offset</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span> <span class="n">DfkdeModel</span> <span class="o">=</span> <span class="n">DfkdeModel</span><span class="p">(</span>
+            <span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">,</span> <span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">max_training_points</span><span class="p">,</span> <span class="n">threshold_steepness</span><span class="p">,</span> <span class="n">threshold_offset</span>
         <span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">automatic_optimization</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -429,9 +482,7 @@
 <span class="sd">          Deep CNN features.</span>
 <span class="sd">        """</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-        <span class="n">layer_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">"image"</span><span class="p">])</span>
-        <span class="n">embedding</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">layer_outputs</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+        <span class="n">embedding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_features</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">"image"</span><span class="p">])</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
 
         <span class="c1"># NOTE: `self.embedding` appends each batch embedding to</span>
         <span class="c1">#   store the training set embedding. We manually append these</span>
@@ -444,8 +495,7 @@
         <span class="c1"># NOTE: Previous anomalib versions fit Gaussian at the end of the epoch.</span>
         <span class="c1">#   This is not possible anymore with PyTorch Lightning v1.4.0 since validation</span>
         <span class="c1">#   is run within train epoch.</span>
-        <span class="n">embeddings</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">normality_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DfkdeLightning.validation_step"><a class="viewcode-back" href="../../../../models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeLightning.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
         <span class="sd">"""Validation Step of DFKDE.</span>
@@ -458,11 +508,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">          Dictionary containing probability, prediction and ground truth values.</span>
 <span class="sd">        """</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-        <span class="n">layer_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">"image"</span><span class="p">])</span>
-        <span class="n">feature_vector</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">layer_outputs</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
-        <span class="n">batch</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normality_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">feature_vector</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">feature_vector</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="n">batch</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">"image"</span><span class="p">])</span>
 
         <span class="k">return</span> <span class="n">batch</span></div></div>
 </pre></div>

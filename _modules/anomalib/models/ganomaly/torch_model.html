@@ -376,6 +376,7 @@
 
 <span class="kn">import</span> <span class="nn">math</span>
 
+<span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
 
@@ -606,6 +607,128 @@
         <span class="n">gen_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="p">(</span><span class="n">latent_i</span><span class="p">)</span>
         <span class="n">latent_o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder2</span><span class="p">(</span><span class="n">gen_image</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">gen_image</span><span class="p">,</span> <span class="n">latent_i</span><span class="p">,</span> <span class="n">latent_o</span></div></div>
+
+
+<div class="viewcode-block" id="GanomalyModel"><a class="viewcode-back" href="../../../../models/anomalib.models.ganomaly.torch_model.html#anomalib.models.ganomaly.torch_model.GanomalyModel">[docs]</a><span class="k">class</span> <span class="nc">GanomalyModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">"""Ganomaly Model.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        input_size (int): Input dimension of a square tensor.</span>
+<span class="sd">        num_input_channels (int): Number of input channels.</span>
+<span class="sd">        n_features (int): Number of features layers in the CNNs.</span>
+<span class="sd">        latent_vec_size (int): Size of autoencoder latent vector.</span>
+<span class="sd">        extra_layers (int, optional): Number of extra layers for encoder/decoder. Defaults to 0.</span>
+<span class="sd">        add_final_conv_layer (bool, optional): Add convolution layer at the end. Defaults to True.</span>
+<span class="sd">        wadv (int, optional): Weight for adversarial loss. Defaults to 1.</span>
+<span class="sd">        wcon (int, optional): Image regeneration weight. Defaults to 50.</span>
+<span class="sd">        wenc (int, optional): Latent vector encoder weight. Defaults to 1.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">num_input_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">latent_vec_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">extra_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">add_final_conv_layer</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">wadv</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">wcon</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+        <span class="n">wenc</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="p">:</span> <span class="n">Generator</span> <span class="o">=</span> <span class="n">Generator</span><span class="p">(</span>
+            <span class="n">input_size</span><span class="o">=</span><span class="n">input_size</span><span class="p">,</span>
+            <span class="n">latent_vec_size</span><span class="o">=</span><span class="n">latent_vec_size</span><span class="p">,</span>
+            <span class="n">num_input_channels</span><span class="o">=</span><span class="n">num_input_channels</span><span class="p">,</span>
+            <span class="n">n_features</span><span class="o">=</span><span class="n">n_features</span><span class="p">,</span>
+            <span class="n">extra_layers</span><span class="o">=</span><span class="n">extra_layers</span><span class="p">,</span>
+            <span class="n">add_final_conv_layer</span><span class="o">=</span><span class="n">add_final_conv_layer</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">discriminator</span><span class="p">:</span> <span class="n">Discriminator</span> <span class="o">=</span> <span class="n">Discriminator</span><span class="p">(</span>
+            <span class="n">input_size</span><span class="o">=</span><span class="n">input_size</span><span class="p">,</span>
+            <span class="n">num_input_channels</span><span class="o">=</span><span class="n">num_input_channels</span><span class="p">,</span>
+            <span class="n">n_features</span><span class="o">=</span><span class="n">n_features</span><span class="p">,</span>
+            <span class="n">extra_layers</span><span class="o">=</span><span class="n">extra_layers</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">discriminator</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss_enc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">SmoothL1Loss</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss_adv</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss_con</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">L1Loss</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss_bce</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BCELoss</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wadv</span> <span class="o">=</span> <span class="n">wadv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wcon</span> <span class="o">=</span> <span class="n">wcon</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wenc</span> <span class="o">=</span> <span class="n">wenc</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="GanomalyModel.weights_init"><a class="viewcode-back" href="../../../../models/anomalib.models.ganomaly.torch_model.html#anomalib.models.ganomaly.torch_model.GanomalyModel.weights_init">[docs]</a>    <span class="k">def</span> <span class="nf">weights_init</span><span class="p">(</span><span class="n">module</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+        <span class="sd">"""Initialize DCGAN weights.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            module (nn.Module): [description]</span>
+<span class="sd">        """</span>
+        <span class="n">classname</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">if</span> <span class="n">classname</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">"Conv"</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">normal_</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">classname</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">"BatchNorm"</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">normal_</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">constant_</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GanomalyModel.get_discriminator_loss"><a class="viewcode-back" href="../../../../models/anomalib.models.ganomaly.torch_model.html#anomalib.models.ganomaly.torch_model.GanomalyModel.get_discriminator_loss">[docs]</a>    <span class="k">def</span> <span class="nf">get_discriminator_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="sd">"""Calculates loss for discriminator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            images (Tensor): Input images.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tensor: Discriminator loss.</span>
+<span class="sd">        """</span>
+        <span class="n">fake</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+        <span class="n">pred_real</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">discriminator</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+        <span class="n">pred_fake</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">discriminator</span><span class="p">(</span><span class="n">fake</span><span class="o">.</span><span class="n">detach</span><span class="p">())</span>
+
+        <span class="n">error_discriminator_real</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_bce</span><span class="p">(</span>
+            <span class="n">pred_real</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">pred_real</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">pred_real</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">error_discriminator_fake</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_bce</span><span class="p">(</span>
+            <span class="n">pred_fake</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">pred_fake</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">pred_fake</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">loss_discriminator</span> <span class="o">=</span> <span class="p">(</span><span class="n">error_discriminator_fake</span> <span class="o">+</span> <span class="n">error_discriminator_real</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
+        <span class="k">return</span> <span class="n">loss_discriminator</span></div>
+
+<div class="viewcode-block" id="GanomalyModel.get_generator_loss"><a class="viewcode-back" href="../../../../models/anomalib.models.ganomaly.torch_model.html#anomalib.models.ganomaly.torch_model.GanomalyModel.get_generator_loss">[docs]</a>    <span class="k">def</span> <span class="nf">get_generator_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="sd">"""Calculates loss for generator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            images (Tensor): Input images.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tensor: Generator loss.</span>
+<span class="sd">        """</span>
+        <span class="n">fake</span><span class="p">,</span> <span class="n">latent_i</span><span class="p">,</span> <span class="n">latent_o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+        <span class="n">pred_real</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">discriminator</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+        <span class="n">pred_fake</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">discriminator</span><span class="p">(</span><span class="n">fake</span><span class="p">)</span>
+
+        <span class="n">error_enc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_enc</span><span class="p">(</span><span class="n">latent_i</span><span class="p">,</span> <span class="n">latent_o</span><span class="p">)</span>
+        <span class="n">error_con</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_con</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">fake</span><span class="p">)</span>
+        <span class="n">error_adv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_adv</span><span class="p">(</span><span class="n">pred_real</span><span class="p">,</span> <span class="n">pred_fake</span><span class="p">)</span>
+
+        <span class="n">loss_generator</span> <span class="o">=</span> <span class="n">error_adv</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wadv</span> <span class="o">+</span> <span class="n">error_con</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcon</span> <span class="o">+</span> <span class="n">error_enc</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wenc</span>
+        <span class="k">return</span> <span class="n">loss_generator</span></div>
+
+<div class="viewcode-block" id="GanomalyModel.forward"><a class="viewcode-back" href="../../../../models/anomalib.models.ganomaly.torch_model.html#anomalib.models.ganomaly.torch_model.GanomalyModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="sd">"""Get scores for batch.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            batch (Tensor): Images</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tensor: Regeneration scores.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">latent_i</span><span class="p">,</span> <span class="n">latent_o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">pow</span><span class="p">((</span><span class="n">latent_i</span> <span class="o">-</span> <span class="n">latent_o</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># convert nx1x1 to n</span></div></div>
 </pre></div>
       </article>
       <footer>

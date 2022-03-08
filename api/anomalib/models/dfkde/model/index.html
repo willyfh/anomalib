@@ -374,16 +374,77 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../../../../../models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeLightning" title="anomalib.models.dfkde.model.DfkdeLightning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DfkdeLightning</span></code></a></p></td>
-<td><p>DFKDE: Deep Featured Kernel Density Estimation.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../../../../models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeModel" title="anomalib.models.dfkde.model.DfkdeModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DfkdeModel</span></code></a></p></td>
+<td><p>DFKDE model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../../../../../models/anomalib.models.dfkde.model.html#anomalib.models.dfkde.model.DfkdeLightning" title="anomalib.models.dfkde.model.DfkdeLightning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DfkdeLightning</span></code></a></p></td>
+<td><p>DFKDE: Deep Feature Kernel Density Estimation.</p></td>
 </tr>
 </tbody>
 </table></div>
 <dl class="py class">
+<dt class="sig sig-object py" id="anomalib.models.dfkde.model.DfkdeModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfkde.model.</span></span><span class="sig-name descname"><span class="pre">DfkdeModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backbone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_steepness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/model.html#DfkdeModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.model.DfkdeModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></p>
+<p>DFKDE model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>backbone</strong> (<em>str</em>) – Pre-trained model backbone.</p></li>
+<li><p><strong>filter_count</strong> (<em>int</em>) – Number of filters.</p></li>
+<li><p><strong>threshold_steepness</strong> (<em>float</em>) – Threshold steepness for normality model.</p></li>
+<li><p><strong>threshold_offset</strong> (<em>float</em>) – Threshold offset for normality model.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.dfkde.model.DfkdeModel.get_features">
+<span class="sig-name descname"><span class="pre">get_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/model.html#DfkdeModel.get_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.model.DfkdeModel.get_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract features from the pretrained network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>batch</strong> (<em>Tensor</em>) – Image batch.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tensor containing extracted features.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.dfkde.model.DfkdeModel.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embeddings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/model.html#DfkdeModel.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.model.DfkdeModel.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit normality model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>embeddings</strong> (<em>List</em><em>[</em><em>Tensor</em><em>]</em>) – Embeddings to fit.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.dfkde.model.DfkdeModel.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/model.html#DfkdeModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.model.DfkdeModel.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prediction by normality model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>batch</strong> (<em>Tensor</em>) – Input images.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Predictions</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.dfkde.model.DfkdeLightning">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfkde.model.</span></span><span class="sig-name descname"><span class="pre">DfkdeLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.dictconfig.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/model.html#DfkdeLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.model.DfkdeLightning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../../components/index.html#anomalib.models.components.AnomalyModule" title="anomalib.models.components.AnomalyModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">anomalib.models.components.AnomalyModule</span></code></a></p>
-<p>DFKDE: Deep Featured Kernel Density Estimation.</p>
+<p>DFKDE: Deep Feature Kernel Density Estimation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>hparams</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model params</p>
@@ -491,6 +552,12 @@
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde.model</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#anomalib.models.dfkde.model.DfkdeModel">DfkdeModel</a><ul>
+<li><a class="reference internal" href="#anomalib.models.dfkde.model.DfkdeModel.get_features">get_features</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfkde.model.DfkdeModel.fit">fit</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfkde.model.DfkdeModel.forward">forward</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#anomalib.models.dfkde.model.DfkdeLightning">DfkdeLightning</a><ul>
 <li><a class="reference internal" href="#anomalib.models.dfkde.model.DfkdeLightning.configure_optimizers">configure_optimizers</a></li>
 <li><a class="reference internal" href="#anomalib.models.dfkde.model.DfkdeLightning.training_step">training_step</a></li>

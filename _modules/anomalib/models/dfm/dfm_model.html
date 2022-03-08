@@ -380,9 +380,10 @@
 <span class="kn">import</span> <span class="nn">math</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torchvision</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
-<span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">PCA</span><span class="p">,</span> <span class="n">DynamicBufferModule</span>
+<span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">PCA</span><span class="p">,</span> <span class="n">DynamicBufferModule</span><span class="p">,</span> <span class="n">FeatureExtractor</span>
 
 
 <div class="viewcode-block" id="SingleClassGaussian"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.dfm_model.html#anomalib.models.dfm.dfm_model.SingleClassGaussian">[docs]</a><span class="k">class</span> <span class="nc">SingleClassGaussian</span><span class="p">(</span><span class="n">DynamicBufferModule</span><span class="p">):</span>
@@ -446,16 +447,19 @@
     <span class="sd">"""Model for the DFM algorithm.</span>
 
 <span class="sd">    Args:</span>
+<span class="sd">        backbone (str): Pre-trained model backbone.</span>
 <span class="sd">        n_comps (float, optional): Ratio from which number of components for PCA are calculated. Defaults to 0.97.</span>
 <span class="sd">        score_type (str, optional): Scoring type. Options are `fre` and `nll`. Defaults to "fre".</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_comps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.97</span><span class="p">,</span> <span class="n">score_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"fre"</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">n_comps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.97</span><span class="p">,</span> <span class="n">score_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"fre"</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="n">backbone</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_comps</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pca_model</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span> <span class="o">=</span> <span class="n">SingleClassGaussian</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">score_type</span> <span class="o">=</span> <span class="n">score_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="s2">"avgpool"</span><span class="p">])</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 
 <div class="viewcode-block" id="DFMModel.fit"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.dfm_model.html#anomalib.models.dfm.dfm_model.DFMModel.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Fit a pca transformation and a Gaussian model to dataset.</span>
@@ -491,15 +495,31 @@
 
         <span class="k">return</span> <span class="n">score</span></div>
 
-<div class="viewcode-block" id="DFMModel.forward"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.dfm_model.html#anomalib.models.dfm.dfm_model.DFMModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Provides the same functionality as `fit`.</span>
-
-<span class="sd">        Transforms the input dataset based on singular values calculated earlier.</span>
+<div class="viewcode-block" id="DFMModel.get_features"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.dfm_model.html#anomalib.models.dfm.dfm_model.DFMModel.get_features">[docs]</a>    <span class="k">def</span> <span class="nf">get_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="sd">"""Extract features from the pretrained network.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            dataset (Tensor): Input dataset</span>
+<span class="sd">            batch (Tensor): Image batch.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tensor: Tensor containing extracted features.</span>
 <span class="sd">        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="n">layer_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+        <span class="n">layer_outputs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">layer_outputs</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">layer_outputs</span></div>
+
+<div class="viewcode-block" id="DFMModel.forward"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.dfm_model.html#anomalib.models.dfm.dfm_model.DFMModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="sd">"""Computer score from input images.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            batch (Tensor): Input images</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tensor: Scores</span>
+<span class="sd">        """</span>
+        <span class="n">feature_vector</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_features</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">feature_vector</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">feature_vector</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]))</span></div></div>
 </pre></div>
       </article>
       <footer>

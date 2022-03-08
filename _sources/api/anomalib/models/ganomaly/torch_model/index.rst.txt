@@ -23,6 +23,7 @@ Classes
    anomalib.models.ganomaly.torch_model.Decoder
    anomalib.models.ganomaly.torch_model.Discriminator
    anomalib.models.ganomaly.torch_model.Generator
+   anomalib.models.ganomaly.torch_model.GanomalyModel
 
 
 
@@ -122,6 +123,74 @@ Classes
    .. py:method:: forward(self, input_tensor)
 
       Return generated image and the latent vectors.
+
+
+
+.. py:class:: GanomalyModel(input_size: int, num_input_channels: int, n_features: int, latent_vec_size: int, extra_layers: int = 0, add_final_conv_layer: bool = True, wadv: int = 1, wcon: int = 50, wenc: int = 1)
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   Ganomaly Model.
+
+   :param input_size: Input dimension of a square tensor.
+   :type input_size: int
+   :param num_input_channels: Number of input channels.
+   :type num_input_channels: int
+   :param n_features: Number of features layers in the CNNs.
+   :type n_features: int
+   :param latent_vec_size: Size of autoencoder latent vector.
+   :type latent_vec_size: int
+   :param extra_layers: Number of extra layers for encoder/decoder. Defaults to 0.
+   :type extra_layers: int, optional
+   :param add_final_conv_layer: Add convolution layer at the end. Defaults to True.
+   :type add_final_conv_layer: bool, optional
+   :param wadv: Weight for adversarial loss. Defaults to 1.
+   :type wadv: int, optional
+   :param wcon: Image regeneration weight. Defaults to 50.
+   :type wcon: int, optional
+   :param wenc: Latent vector encoder weight. Defaults to 1.
+   :type wenc: int, optional
+
+   .. py:method:: weights_init(module: torch.nn.Module)
+      :staticmethod:
+
+      Initialize DCGAN weights.
+
+      :param module: [description]
+      :type module: nn.Module
+
+
+   .. py:method:: get_discriminator_loss(self, images: torch.Tensor) -> torch.Tensor
+
+      Calculates loss for discriminator.
+
+      :param images: Input images.
+      :type images: Tensor
+
+      :returns: Discriminator loss.
+      :rtype: Tensor
+
+
+   .. py:method:: get_generator_loss(self, images: torch.Tensor) -> torch.Tensor
+
+      Calculates loss for generator.
+
+      :param images: Input images.
+      :type images: Tensor
+
+      :returns: Generator loss.
+      :rtype: Tensor
+
+
+   .. py:method:: forward(self, batch: torch.Tensor) -> torch.Tensor
+
+      Get scores for batch.
+
+      :param batch: Images
+      :type batch: Tensor
+
+      :returns: Regeneration scores.
+      :rtype: Tensor
 
 
 

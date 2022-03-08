@@ -381,7 +381,10 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Encoder" title="anomalib.models.ganomaly.torch_model.Encoder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Encoder</span></code></a>(input_size, latent_vec_size, ...[, ...])</p></td>
 <td><p>Encoder Network.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Generator" title="anomalib.models.ganomaly.torch_model.Generator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Generator</span></code></a>(input_size, latent_vec_size, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.GanomalyModel" title="anomalib.models.ganomaly.torch_model.GanomalyModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GanomalyModel</span></code></a>(input_size, ...[, ...])</p></td>
+<td><p>Ganomaly Model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Generator" title="anomalib.models.ganomaly.torch_model.Generator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Generator</span></code></a>(input_size, latent_vec_size, ...)</p></td>
 <td><p>Generator model.</p></td>
 </tr>
 </tbody>
@@ -457,6 +460,86 @@ Defaults to 0.</p></li>
 <dt class="sig sig-object py" id="anomalib.models.ganomaly.torch_model.Encoder.forward">
 <span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_tensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/anomalib/models/ganomaly/torch_model.html#Encoder.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.Encoder.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return latent vectors.</p>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.torch_model.GanomalyModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.ganomaly.torch_model.</span></span><span class="sig-name descname"><span class="pre">GanomalyModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_input_channels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_vec_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_final_conv_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wadv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wcon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wenc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/anomalib/models/ganomaly/torch_model.html#GanomalyModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.GanomalyModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>Ganomaly Model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_size</strong> (<em>int</em>) – Input dimension of a square tensor.</p></li>
+<li><p><strong>num_input_channels</strong> (<em>int</em>) – Number of input channels.</p></li>
+<li><p><strong>n_features</strong> (<em>int</em>) – Number of features layers in the CNNs.</p></li>
+<li><p><strong>latent_vec_size</strong> (<em>int</em>) – Size of autoencoder latent vector.</p></li>
+<li><p><strong>extra_layers</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of extra layers for encoder/decoder. Defaults to 0.</p></li>
+<li><p><strong>add_final_conv_layer</strong> (<em>bool</em><em>, </em><em>optional</em>) – Add convolution layer at the end. Defaults to True.</p></li>
+<li><p><strong>wadv</strong> (<em>int</em><em>, </em><em>optional</em>) – Weight for adversarial loss. Defaults to 1.</p></li>
+<li><p><strong>wcon</strong> (<em>int</em><em>, </em><em>optional</em>) – Image regeneration weight. Defaults to 50.</p></li>
+<li><p><strong>wenc</strong> (<em>int</em><em>, </em><em>optional</em>) – Latent vector encoder weight. Defaults to 1.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.torch_model.GanomalyModel.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../_modules/anomalib/models/ganomaly/torch_model.html#GanomalyModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.GanomalyModel.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get scores for batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>batch</strong> (<em>Tensor</em>) – Images</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Regeneration scores.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.torch_model.GanomalyModel.get_discriminator_loss">
+<span class="sig-name descname"><span class="pre">get_discriminator_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../_modules/anomalib/models/ganomaly/torch_model.html#GanomalyModel.get_discriminator_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.GanomalyModel.get_discriminator_loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates loss for discriminator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>images</strong> (<em>Tensor</em>) – Input images.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Discriminator loss.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.torch_model.GanomalyModel.get_generator_loss">
+<span class="sig-name descname"><span class="pre">get_generator_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../_modules/anomalib/models/ganomaly/torch_model.html#GanomalyModel.get_generator_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.GanomalyModel.get_generator_loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates loss for generator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>images</strong> (<em>Tensor</em>) – Input images.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Generator loss.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.torch_model.GanomalyModel.weights_init">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">weights_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.nn.modules.module.Module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/anomalib/models/ganomaly/torch_model.html#GanomalyModel.weights_init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.GanomalyModel.weights_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize DCGAN weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>module</strong> (<em>nn.Module</em>) – [description]</p>
+</dd>
+</dl>
 </dd></dl>
 </dd></dl>
 <dl class="py class">
@@ -551,6 +634,13 @@ Defaults to 0.</p></li>
 </li>
 <li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Encoder">Encoder</a><ul>
 <li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Encoder.forward">forward</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.GanomalyModel">GanomalyModel</a><ul>
+<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.GanomalyModel.forward">forward</a></li>
+<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.GanomalyModel.get_discriminator_loss">get_discriminator_loss</a></li>
+<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.GanomalyModel.get_generator_loss">get_generator_loss</a></li>
+<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.GanomalyModel.weights_init">weights_init</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Generator">Generator</a><ul>
