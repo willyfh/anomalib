@@ -184,10 +184,12 @@
 </li>
 <li class="toctree-l3 current has-children"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l4 has-children"><a class="reference internal" href="../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../utils/download_progress_bar/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.download_progress_bar</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../utils/download/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.download</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../utils/image/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.image</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../utils/split/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.split</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="../btech/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.btech</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.inference</span></code></a></li>
 <li class="toctree-l4 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.mvtec</span></code></a></li>
 </ul>
@@ -386,26 +388,101 @@ extracts the dataset and create PyTorch data objects.</p>
 </tr>
 </tbody>
 </table></div>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<div class="table-wrapper"><table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%"/>
+<col style="width: 90%"/>
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.data.mvtec.make_mvtec_dataset" title="anomalib.data.mvtec.make_mvtec_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_mvtec_dataset</span></code></a>(path: pathlib.Path, split: Optional[str] = None, split_ratio: float = 0.1, seed: int = 0, create_validation_set: bool = False) → pandas.core.frame.DataFrame</p></td>
+<td><p>Create MVTec samples by parsing the MVTec data file structure.</p></td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h3>
+<div class="table-wrapper"><table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%"/>
+<col style="width: 90%"/>
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.data.mvtec.logger" title="anomalib.data.mvtec.logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logger</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table></div>
+<dl class="py data">
+<dt class="sig sig-object py" id="anomalib.data.mvtec.logger">
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.mvtec.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.logger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.data.mvtec.make_mvtec_dataset">
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.mvtec.</span></span><span class="sig-name descname"><span class="pre">make_mvtec_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_validation_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">pandas.core.frame.DataFrame</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#make_mvtec_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.make_mvtec_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create MVTec samples by parsing the MVTec data file structure.</p>
+<dl class="simple">
+<dt>The files are expected to follow the structure:</dt><dd><p>path/to/dataset/split/category/image_filename.png
+path/to/dataset/ground_truth/category/mask_filename.png</p>
+</dd>
+</dl>
+<p>This function creates a dataframe to store the parsed information based on the following format:
+<a href="#id1"><span class="problematic" id="id2">|---|</span></a>—————<a href="#id3"><span class="problematic" id="id4">|-------|</span></a>———<a href="#id5"><span class="problematic" id="id6">|---------------|</span></a>—————————————<a href="#id7"><span class="problematic" id="id8">|-------------|</span></a>
+|   | path          | split | label   | image_path    | mask_path                             | label_index |
+<a href="#id9"><span class="problematic" id="id10">|---|</span></a>—————<a href="#id11"><span class="problematic" id="id12">|-------|</span></a>———<a href="#id13"><span class="problematic" id="id14">|---------------|</span></a>—————————————<a href="#id15"><span class="problematic" id="id16">|-------------|</span></a>
+| 0 | datasets/name |  test |  defect |  filename.png | ground_truth/defect/filename_mask.png | 1           |
+<a href="#id17"><span class="problematic" id="id18">|---|</span></a>—————<a href="#id19"><span class="problematic" id="id20">|-------|</span></a>———<a href="#id21"><span class="problematic" id="id22">|---------------|</span></a>—————————————<a href="#id23"><span class="problematic" id="id24">|-------------|</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>Path</em>) – Path to dataset</p></li>
+<li><p><strong>split</strong> (<em>str</em><em>, </em><em>optional</em>) – Dataset split (ie., either train or test). Defaults to None.</p></li>
+<li><p><strong>split_ratio</strong> (<em>float</em><em>, </em><em>optional</em>) – Ratio to split normal training images and add to the
+test set in case test set doesn’t contain any normal images.
+Defaults to 0.1.</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Random seed to ensure reproducibility when splitting. Defaults to 0.</p></li>
+<li><p><strong>create_validation_set</strong> (<em>bool</em><em>, </em><em>optional</em>) – Boolean to create a validation set from the test set.
+MVTec dataset does not contain a validation set. Those wanting to create a validation set
+could set this flag to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>The following example shows how to get training samples from MVTec bottle category:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">'./MVTec'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">category</span> <span class="o">=</span> <span class="s1">'bottle'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="n">category</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span>
+<span class="go">PosixPath('MVTec/bottle')</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span> <span class="o">=</span> <span class="n">make_mvtec_dataset</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s1">'train'</span><span class="p">,</span> <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="go">   path         split label image_path                           mask_path                   label_index</span>
+<span class="go">0  MVTec/bottle train good MVTec/bottle/train/good/105.png MVTec/bottle/ground_truth/good/105_mask.png 0</span>
+<span class="go">1  MVTec/bottle train good MVTec/bottle/train/good/017.png MVTec/bottle/ground_truth/good/017_mask.png 0</span>
+<span class="go">2  MVTec/bottle train good MVTec/bottle/train/good/137.png MVTec/bottle/ground_truth/good/137_mask.png 0</span>
+<span class="go">3  MVTec/bottle train good MVTec/bottle/train/good/152.png MVTec/bottle/ground_truth/good/152_mask.png 0</span>
+<span class="go">4  MVTec/bottle train good MVTec/bottle/train/good/109.png MVTec/bottle/ground_truth/good/109_mask.png 0</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>an output dataframe containing samples for the requested split (ie., train or test)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.data.mvtec.MVTec">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.data.mvtec.</span></span><span class="sig-name descname"><span class="pre">MVTec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_process</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../pre_processing/index.html#anomalib.pre_processing.PreProcessor" title="anomalib.pre_processing.PreProcessor"><span class="pre">anomalib.pre_processing.PreProcessor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'segmentation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_validation_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#MVTec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.MVTec" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.data.mvtec.</span></span><span class="sig-name descname"><span class="pre">MVTec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_process</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../pre_processing/index.html#anomalib.pre_processing.PreProcessor" title="anomalib.pre_processing.PreProcessor"><span class="pre">anomalib.pre_processing.PreProcessor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'segmentation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_validation_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#MVTec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.MVTec" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torchvision.datasets.folder.VisionDataset</span></code></p>
 <p>MVTec PyTorch Dataset.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.data.mvtec.MVTec._download">
-<span class="sig-name descname"><span class="pre">_download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#MVTec._download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.MVTec._download" title="Permalink to this definition">¶</a></dt>
-<dd><p>Download the MVTec dataset.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.data.mvtec.MVTec._extract">
-<span class="sig-name descname"><span class="pre">_extract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#MVTec._extract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.MVTec._extract" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract MVTec Dataset.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.data.mvtec.MVTec._clean">
-<span class="sig-name descname"><span class="pre">_clean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#MVTec._clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.MVTec._clean" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cleanup MVTec Dataset tar file.</p>
-</dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.data.mvtec.MVTec.__len__">
 <span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#MVTec.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.MVTec.__len__" title="Permalink to this definition">¶</a></dt>
@@ -437,6 +514,11 @@ extracts the dataset and create PyTorch data objects.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.data.mvtec.</span></span><span class="sig-name descname"><span class="pre">MVTecDataModule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_workers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">albumentations.Compose</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_validation_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#MVTecDataModule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.MVTecDataModule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pytorch_lightning.core.datamodule.LightningDataModule</span></code></p>
 <p>MVTec Lightning Data Module.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.data.mvtec.MVTecDataModule.prepare_data">
+<span class="sig-name descname"><span class="pre">prepare_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#MVTecDataModule.prepare_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.MVTecDataModule.prepare_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the dataset if not available.</p>
+</dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.data.mvtec.MVTecDataModule.setup">
 <span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/mvtec.html#MVTecDataModule.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.mvtec.MVTecDataModule.setup" title="Permalink to this definition">¶</a></dt>
@@ -528,16 +610,18 @@ extracts the dataset and create PyTorch data objects.</p>
             <ul>
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.mvtec</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
-<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a><ul>
+<li><a class="reference internal" href="#anomalib.data.mvtec.logger">logger</a></li>
+<li><a class="reference internal" href="#anomalib.data.mvtec.make_mvtec_dataset">make_mvtec_dataset</a></li>
 <li><a class="reference internal" href="#anomalib.data.mvtec.MVTec">MVTec</a><ul>
-<li><a class="reference internal" href="#anomalib.data.mvtec.MVTec._download">_download</a></li>
-<li><a class="reference internal" href="#anomalib.data.mvtec.MVTec._extract">_extract</a></li>
-<li><a class="reference internal" href="#anomalib.data.mvtec.MVTec._clean">_clean</a></li>
 <li><a class="reference internal" href="#anomalib.data.mvtec.MVTec.__len__">__len__</a></li>
 <li><a class="reference internal" href="#anomalib.data.mvtec.MVTec.__getitem__">__getitem__</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#anomalib.data.mvtec.MVTecDataModule">MVTecDataModule</a><ul>
+<li><a class="reference internal" href="#anomalib.data.mvtec.MVTecDataModule.prepare_data">prepare_data</a></li>
 <li><a class="reference internal" href="#anomalib.data.mvtec.MVTecDataModule.setup">setup</a></li>
 <li><a class="reference internal" href="#anomalib.data.mvtec.MVTecDataModule.train_dataloader">train_dataloader</a></li>
 <li><a class="reference internal" href="#anomalib.data.mvtec.MVTecDataModule.val_dataloader">val_dataloader</a></li>

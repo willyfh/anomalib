@@ -183,10 +183,12 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../api/anomalib/data/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../api/anomalib/data/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../../api/anomalib/data/utils/download_progress_bar/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.download_progress_bar</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/anomalib/data/utils/download/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.download</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../api/anomalib/data/utils/image/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.image</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/anomalib/data/utils/split/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.split</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/anomalib/data/btech/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.btech</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/anomalib/data/inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.inference</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/anomalib/data/mvtec/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.mvtec</span></code></a></li>
 </ul>
@@ -382,6 +384,7 @@
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">LightningDataModule</span>
 
+<span class="kn">from</span> <span class="nn">.btech</span> <span class="kn">import</span> <span class="n">BTechDataModule</span>
 <span class="kn">from</span> <span class="nn">.inference</span> <span class="kn">import</span> <span class="n">InferenceDataset</span>
 <span class="kn">from</span> <span class="nn">.mvtec</span> <span class="kn">import</span> <span class="n">MVTecDataModule</span>
 
@@ -397,7 +400,7 @@
 <span class="sd">    """</span>
     <span class="n">datamodule</span><span class="p">:</span> <span class="n">LightningDataModule</span>
 
-    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"mvtec"</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"mvtec"</span><span class="p">:</span>
         <span class="n">datamodule</span> <span class="o">=</span> <span class="n">MVTecDataModule</span><span class="p">(</span>
             <span class="c1"># TODO: Remove config values. IAAALD-211</span>
             <span class="n">root</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
@@ -408,8 +411,23 @@
             <span class="n">num_workers</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">num_workers</span><span class="p">,</span>
             <span class="n">seed</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
         <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"btech"</span><span class="p">:</span>
+        <span class="n">datamodule</span> <span class="o">=</span> <span class="n">BTechDataModule</span><span class="p">(</span>
+            <span class="c1"># TODO: Remove config values. IAAALD-211</span>
+            <span class="n">root</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+            <span class="n">category</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
+            <span class="n">image_size</span><span class="o">=</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">image_size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">image_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="n">train_batch_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">train_batch_size</span><span class="p">,</span>
+            <span class="n">test_batch_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">,</span>
+            <span class="n">num_workers</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">num_workers</span><span class="p">,</span>
+            <span class="n">seed</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Unknown dataset!"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">"Unknown dataset! </span><span class="se">\n</span><span class="s2">"</span>
+            <span class="s2">"If you use a custom dataset make sure you initialize it in"</span>
+            <span class="s2">"`get_datamodule` in `anomalib.data.__init__.py"</span>
+        <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">datamodule</span></div>
 

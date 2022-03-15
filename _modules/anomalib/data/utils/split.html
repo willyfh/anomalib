@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
     <meta name="generator" content="sphinx-4.3.1, furo 2021.07.31.beta41"/>
-        <title>anomalib.data.utils.download_progress_bar - Anomalib 2021, Anomalib Contributors documentation</title>
+        <title>anomalib.data.utils.split - Anomalib 2021, Anomalib Contributors documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
@@ -183,10 +183,12 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/anomalib/data/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../../../api/anomalib/data/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/data/utils/download_progress_bar/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.download_progress_bar</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/data/utils/download/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.download</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/data/utils/image/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.image</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/data/utils/split/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.split</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/data/btech/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.btech</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/data/inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.inference</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/data/mvtec/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.mvtec</span></code></a></li>
 </ul>
@@ -360,10 +362,15 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <h1>Source code for anomalib.data.utils.download_progress_bar</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Helper to show progress bars with `urlretrieve`.</span>
+        <h1>Source code for anomalib.data.utils.split</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Dataset Split Utils.</span>
 
-<span class="sd">Based on https://stackoverflow.com/a/53877507</span>
+<span class="sd">This module contains function in regards to splitting normal images in training set,</span>
+<span class="sd">and creating validation sets from test sets.</span>
+
+<span class="sd">These function are useful</span>
+<span class="sd">    - when the test set does not contain any normal images.</span>
+<span class="sd">    - when the dataset doesn't have a validation set.</span>
 <span class="sd">"""</span>
 
 <span class="c1"># Copyright (C) 2020 Intel Corporation</span>
@@ -380,182 +387,76 @@
 <span class="c1"># See the License for the specific language governing permissions</span>
 <span class="c1"># and limitations under the License.</span>
 
-<span class="kn">import</span> <span class="nn">io</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">import</span> <span class="nn">random</span>
 
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">pandas.core.frame</span> <span class="kn">import</span> <span class="n">DataFrame</span>
 
 
-<div class="viewcode-block" id="DownloadProgressBar"><a class="viewcode-back" href="../../../../api/anomalib/data/utils/index.html#anomalib.data.utils.download_progress_bar.DownloadProgressBar">[docs]</a><span class="k">class</span> <span class="nc">DownloadProgressBar</span><span class="p">(</span><span class="n">tqdm</span><span class="p">):</span>
-    <span class="sd">"""Create progress bar for urlretrieve. Subclasses `tqdm`.</span>
+<div class="viewcode-block" id="split_normal_images_in_train_set"><a class="viewcode-back" href="../../../../api/anomalib/data/utils/split/index.html#anomalib.data.utils.split.split_normal_images_in_train_set">[docs]</a><span class="k">def</span> <span class="nf">split_normal_images_in_train_set</span><span class="p">(</span>
+    <span class="n">samples</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">split_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">normal_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"good"</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">"""Split normal images in train set.</span>
 
-<span class="sd">    For information about the parameters in constructor, refer to `tqdm`'s documentation.</span>
+<span class="sd">        This function splits the normal images in training set and assigns the</span>
+<span class="sd">        values to the test set. This is particularly useful especially when the</span>
+<span class="sd">        test set does not contain any normal images.</span>
+
+<span class="sd">        This is important because when the test set doesn't have any normal images,</span>
+<span class="sd">        AUC computation fails due to having single class.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        iterable (Optional[Iterable]): Iterable to decorate with a progressbar.</span>
-<span class="sd">                            Leave blank to manually manage the updates.</span>
-<span class="sd">        desc (Optional[str]): Prefix for the progressbar.</span>
-<span class="sd">        total (Optional[Union[int, float]]): The number of expected iterations. If unspecified,</span>
-<span class="sd">                                            len(iterable) is used if possible. If float("inf") or as a last</span>
-<span class="sd">                                            resort, only basic progress statistics are displayed</span>
-<span class="sd">                                            (no ETA, no progressbar).</span>
-<span class="sd">                                            If `gui` is True and this parameter needs subsequent updating,</span>
-<span class="sd">                                            specify an initial arbitrary large positive number,</span>
-<span class="sd">                                            e.g. 9e9.</span>
-<span class="sd">        leave (Optional[bool]): upon termination of iteration. If `None`, will leave only if `position` is `0`.</span>
-<span class="sd">        file (Optional[Union[io.TextIOWrapper, io.StringIO]]): Specifies where to output the progress messages</span>
-<span class="sd">                                                            (default: sys.stderr). Uses `file.write(str)` and</span>
-<span class="sd">                                                            `file.flush()` methods.  For encoding, see</span>
-<span class="sd">                                                            `write_bytes`.</span>
-<span class="sd">        ncols (Optional[int]): The width of the entire output message. If specified,</span>
-<span class="sd">                            dynamically resizes the progressbar to stay within this bound.</span>
-<span class="sd">                            If unspecified, attempts to use environment width. The</span>
-<span class="sd">                            fallback is a meter width of 10 and no limit for the counter and</span>
-<span class="sd">                            statistics. If 0, will not print any meter (only stats).</span>
-<span class="sd">        mininterval (Optional[float]): Minimum progress display update interval [default: 0.1] seconds.</span>
-<span class="sd">        maxinterval (Optional[float]): Maximum progress display update interval [default: 10] seconds.</span>
-<span class="sd">                                    Automatically adjusts `miniters` to correspond to `mininterval`</span>
-<span class="sd">                                    after long display update lag. Only works if `dynamic_miniters`</span>
-<span class="sd">                                    or monitor thread is enabled.</span>
-<span class="sd">        miniters (Optional[Union[int, float]]): Minimum progress display update interval, in iterations.</span>
-<span class="sd">                                            If 0 and `dynamic_miniters`, will automatically adjust to equal</span>
-<span class="sd">                                            `mininterval` (more CPU efficient, good for tight loops).</span>
-<span class="sd">                                            If &gt; 0, will skip display of specified number of iterations.</span>
-<span class="sd">                                            Tweak this and `mininterval` to get very efficient loops.</span>
-<span class="sd">                                            If your progress is erratic with both fast and slow iterations</span>
-<span class="sd">                                            (network, skipping items, etc) you should set miniters=1.</span>
-<span class="sd">        use_ascii (Optional[Union[bool, str]]): If unspecified or False, use unicode (smooth blocks) to fill</span>
-<span class="sd">                                        the meter. The fallback is to use ASCII characters " 123456789#".</span>
-<span class="sd">        disable (Optional[bool]): Whether to disable the entire progressbar wrapper</span>
-<span class="sd">                                    [default: False]. If set to None, disable on non-TTY.</span>
-<span class="sd">        unit (Optional[str]): String that will be used to define the unit of each iteration</span>
-<span class="sd">                            [default: it].</span>
-<span class="sd">        unit_scale (Union[bool, int, float]): If 1 or True, the number of iterations will be reduced/scaled</span>
-<span class="sd">                            automatically and a metric prefix following the</span>
-<span class="sd">                            International System of Units standard will be added</span>
-<span class="sd">                            (kilo, mega, etc.) [default: False]. If any other non-zero</span>
-<span class="sd">                            number, will scale `total` and `n`.</span>
-<span class="sd">        dynamic_ncols (Optional[bool]): If set, constantly alters `ncols` and `nrows` to the</span>
-<span class="sd">                                        environment (allowing for window resizes) [default: False].</span>
-<span class="sd">        smoothing (Optional[float]): Exponential moving average smoothing factor for speed estimates</span>
-<span class="sd">                                    (ignored in GUI mode). Ranges from 0 (average speed) to 1</span>
-<span class="sd">                                    (current/instantaneous speed) [default: 0.3].</span>
-<span class="sd">        bar_format (Optional[str]):  Specify a custom bar string formatting. May impact performance.</span>
-<span class="sd">                                    [default: '{l_bar}{bar}{r_bar}'], where</span>
-<span class="sd">                                    l_bar='{desc}: {percentage:3.0f}%|' and</span>
-<span class="sd">                                    r_bar='| {n_fmt}/{total_fmt} [{elapsed}&lt;{remaining}, '</span>
-<span class="sd">                                    '{rate_fmt}{postfix}]'</span>
-<span class="sd">                                    Possible vars: l_bar, bar, r_bar, n, n_fmt, total, total_fmt,</span>
-<span class="sd">                                    percentage, elapsed, elapsed_s, ncols, nrows, desc, unit,</span>
-<span class="sd">                                    rate, rate_fmt, rate_noinv, rate_noinv_fmt,</span>
-<span class="sd">                                    rate_inv, rate_inv_fmt, postfix, unit_divisor,</span>
-<span class="sd">                                    remaining, remaining_s, eta.</span>
-<span class="sd">                                    Note that a trailing ": " is automatically removed after {desc}</span>
-<span class="sd">                                    if the latter is empty.</span>
-<span class="sd">        initial (Optional[Union[int, float]]): The initial counter value. Useful when restarting a progress</span>
-<span class="sd">                                            bar [default: 0]. If using float, consider specifying `{n:.3f}`</span>
-<span class="sd">                                            or similar in `bar_format`, or specifying `unit_scale`.</span>
-<span class="sd">        position (Optional[int]): Specify the line offset to print this bar (starting from 0)</span>
-<span class="sd">                                    Automatic if unspecified.</span>
-<span class="sd">                                    Useful to manage multiple bars at once (eg, from threads).</span>
-<span class="sd">        postfix (Optional[Dict]): Specify additional stats to display at the end of the bar.</span>
-<span class="sd">                                    Calls `set_postfix(**postfix)` if possible (dict).</span>
-<span class="sd">        unit_divisor (Optional[float]): [default: 1000], ignored unless `unit_scale` is True.</span>
-<span class="sd">        write_bytes (Optional[bool]): If (default: None) and `file` is unspecified,</span>
-<span class="sd">                                    bytes will be written in Python 2. If `True` will also write</span>
-<span class="sd">                                    bytes. In all other cases will default to unicode.</span>
-<span class="sd">        lock_args (Optional[tuple]): Passed to `refresh` for intermediate output</span>
-<span class="sd">                                    (initialisation, iterating, and updating).</span>
-<span class="sd">                                    nrows (Optional[int]): The screen height. If specified, hides nested bars</span>
-<span class="sd">                                    outside this bound. If unspecified, attempts to use environment height.</span>
-<span class="sd">                                    The fallback is 20.</span>
-<span class="sd">        colour (Optional[str]): Bar colour (e.g. 'green', '#00ff00').</span>
-<span class="sd">        delay (Optional[float]): Don't display until [default: 0] seconds have elapsed.</span>
-<span class="sd">        gui (Optional[bool]): WARNING: internal parameter - do not use.</span>
-<span class="sd">                                Use tqdm.gui.tqdm(...) instead. If set, will attempt to use</span>
-<span class="sd">                                matplotlib animations for a graphical output [default: False].</span>
+<span class="sd">        samples (DataFrame): Dataframe containing dataset info such as filenames, splits etc.</span>
+<span class="sd">        split_ratio (float, optional): Train-Test normal image split ratio. Defaults to 0.1.</span>
+<span class="sd">        seed (int, optional): Random seed to ensure reproducibility. Defaults to 0.</span>
+<span class="sd">        normal_label (str): Name of the normal label. For MVTec, for instance, this is normal_label.</span>
 
-
-<span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; with DownloadProgressBar(unit='B', unit_scale=True, miniters=1, desc=url.split('/')[-1]) as p_bar:</span>
-<span class="sd">        &gt;&gt;&gt;         urllib.request.urlretrieve(url, filename=output_path, reporthook=p_bar.update_to)</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        DataFrame: Output dataframe where the part of the training set is assigned to test set.</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">iterable</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Iterable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">desc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">total</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">leave</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">TextIOWrapper</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">ncols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">mininterval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
-        <span class="n">maxinterval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
-        <span class="n">miniters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">use_ascii</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">disable</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">unit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"it"</span><span class="p">,</span>
-        <span class="n">unit_scale</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">dynamic_ncols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">smoothing</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span>
-        <span class="n">bar_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">initial</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="n">position</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">postfix</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">unit_divisor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
-        <span class="n">write_bytes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">lock_args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">nrows</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">colour</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">delay</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="n">gui</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span>
-    <span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">iterable</span><span class="o">=</span><span class="n">iterable</span><span class="p">,</span>
-            <span class="n">desc</span><span class="o">=</span><span class="n">desc</span><span class="p">,</span>
-            <span class="n">total</span><span class="o">=</span><span class="n">total</span><span class="p">,</span>
-            <span class="n">leave</span><span class="o">=</span><span class="n">leave</span><span class="p">,</span>
-            <span class="n">file</span><span class="o">=</span><span class="n">file</span><span class="p">,</span>
-            <span class="n">ncols</span><span class="o">=</span><span class="n">ncols</span><span class="p">,</span>
-            <span class="n">mininterval</span><span class="o">=</span><span class="n">mininterval</span><span class="p">,</span>
-            <span class="n">maxinterval</span><span class="o">=</span><span class="n">maxinterval</span><span class="p">,</span>
-            <span class="n">miniters</span><span class="o">=</span><span class="n">miniters</span><span class="p">,</span>
-            <span class="n">ascii</span><span class="o">=</span><span class="n">use_ascii</span><span class="p">,</span>
-            <span class="n">disable</span><span class="o">=</span><span class="n">disable</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span>
-            <span class="n">unit_scale</span><span class="o">=</span><span class="n">unit_scale</span><span class="p">,</span>
-            <span class="n">dynamic_ncols</span><span class="o">=</span><span class="n">dynamic_ncols</span><span class="p">,</span>
-            <span class="n">smoothing</span><span class="o">=</span><span class="n">smoothing</span><span class="p">,</span>
-            <span class="n">bar_format</span><span class="o">=</span><span class="n">bar_format</span><span class="p">,</span>
-            <span class="n">initial</span><span class="o">=</span><span class="n">initial</span><span class="p">,</span>
-            <span class="n">position</span><span class="o">=</span><span class="n">position</span><span class="p">,</span>
-            <span class="n">postfix</span><span class="o">=</span><span class="n">postfix</span><span class="p">,</span>
-            <span class="n">unit_divisor</span><span class="o">=</span><span class="n">unit_divisor</span><span class="p">,</span>
-            <span class="n">write_bytes</span><span class="o">=</span><span class="n">write_bytes</span><span class="p">,</span>
-            <span class="n">lock_args</span><span class="o">=</span><span class="n">lock_args</span><span class="p">,</span>
-            <span class="n">nrows</span><span class="o">=</span><span class="n">nrows</span><span class="p">,</span>
-            <span class="n">colour</span><span class="o">=</span><span class="n">colour</span><span class="p">,</span>
-            <span class="n">delay</span><span class="o">=</span><span class="n">delay</span><span class="p">,</span>
-            <span class="n">gui</span><span class="o">=</span><span class="n">gui</span><span class="p">,</span>
-            <span class="o">**</span><span class="n">kwargs</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span>
+    <span class="k">if</span> <span class="n">seed</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DownloadProgressBar.update_to"><a class="viewcode-back" href="../../../../api/anomalib/data/utils/download_progress_bar/index.html#anomalib.data.utils.download_progress_bar.DownloadProgressBar.update_to">[docs]</a>    <span class="k">def</span> <span class="nf">update_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chunk_number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">max_chunk_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">total_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">"""Progress bar hook for tqdm.</span>
+    <span class="n">normal_train_image_indices</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">index</span><span class="p">[(</span><span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="s2">"train"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">label</span> <span class="o">==</span> <span class="n">normal_label</span><span class="p">)]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+    <span class="n">num_normal_train_images</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">normal_train_image_indices</span><span class="p">)</span>
+    <span class="n">num_normal_valid_images</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_normal_train_images</span> <span class="o">*</span> <span class="n">split_ratio</span><span class="p">)</span>
 
-<span class="sd">        The implementor does not have to bother about passing parameters to this as it gets them from urlretrieve.</span>
-<span class="sd">        However the context needs a few parameters. Refer to the example.</span>
+    <span class="n">indices_to_split_from_train_set</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">population</span><span class="o">=</span><span class="n">normal_train_image_indices</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">num_normal_valid_images</span><span class="p">)</span>
+    <span class="n">samples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">indices_to_split_from_train_set</span><span class="p">,</span> <span class="s2">"split"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"test"</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            chunk_number (int, optional): The current chunk being processed. Defaults to 1.</span>
-<span class="sd">            max_chunk_size (int, optional): Maximum size of each chunk. Defaults to 1.</span>
-<span class="sd">            total_size ([type], optional): Total download size. Defaults to None.</span>
-<span class="sd">        """</span>
-        <span class="k">if</span> <span class="n">total_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="n">total_size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chunk_number</span> <span class="o">*</span> <span class="n">max_chunk_size</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span></div></div>
+    <span class="k">return</span> <span class="n">samples</span></div>
+
+
+<div class="viewcode-block" id="create_validation_set_from_test_set"><a class="viewcode-back" href="../../../../api/anomalib/data/utils/split/index.html#anomalib.data.utils.split.create_validation_set_from_test_set">[docs]</a><span class="k">def</span> <span class="nf">create_validation_set_from_test_set</span><span class="p">(</span><span class="n">samples</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">normal_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"good"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">"""Craete Validation Set from Test Set.</span>
+
+<span class="sd">    This function creates a validation set from test set by splitting both</span>
+<span class="sd">    normal and abnormal samples to two.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        samples (DataFrame): Dataframe containing dataset info such as filenames, splits etc.</span>
+<span class="sd">        seed (int, optional): Random seed to ensure reproducibility. Defaults to 0.</span>
+<span class="sd">        normal_label (str): Name of the normal label. For MVTec, for instance, this is normal_label.</span>
+<span class="sd">    """</span>
+
+    <span class="k">if</span> <span class="n">seed</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="c1"># Split normal images.</span>
+    <span class="n">normal_test_image_indices</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">index</span><span class="p">[(</span><span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="s2">"test"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">label</span> <span class="o">==</span> <span class="n">normal_label</span><span class="p">)]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+    <span class="n">num_normal_valid_images</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">normal_test_image_indices</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+
+    <span class="n">indices_to_sample</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">population</span><span class="o">=</span><span class="n">normal_test_image_indices</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">num_normal_valid_images</span><span class="p">)</span>
+    <span class="n">samples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">indices_to_sample</span><span class="p">,</span> <span class="s2">"split"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"val"</span>
+
+    <span class="c1"># Split abnormal images.</span>
+    <span class="n">abnormal_test_image_indices</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">index</span><span class="p">[(</span><span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="s2">"test"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">label</span> <span class="o">!=</span> <span class="n">normal_label</span><span class="p">)]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+    <span class="n">num_abnormal_valid_images</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">abnormal_test_image_indices</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+
+    <span class="n">indices_to_sample</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">population</span><span class="o">=</span><span class="n">abnormal_test_image_indices</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">num_abnormal_valid_images</span><span class="p">)</span>
+    <span class="n">samples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">indices_to_sample</span><span class="p">,</span> <span class="s2">"split"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"val"</span>
+
+    <span class="k">return</span> <span class="n">samples</span></div>
 </pre></div>
       </article>
       <footer>

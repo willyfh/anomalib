@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" /><link rel="next" title="anomalib.data.utils.image" href="../image/index.html" /><link rel="prev" title="anomalib.data.utils" href="../index.html" />
+<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" /><link rel="next" title="anomalib.data.btech" href="../../btech/index.html" /><link rel="prev" title="anomalib.data.utils.image" href="../image/index.html" />
 
     <meta name="generator" content="sphinx-4.3.1, furo 2021.07.31.beta41"/>
-        <title>anomalib.data.utils.download_progress_bar - Anomalib 2021, Anomalib Contributors documentation</title>
+        <title>anomalib.data.utils.split - Anomalib 2021, Anomalib Contributors documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css" />
@@ -184,10 +184,12 @@
 </li>
 <li class="toctree-l3 current has-children"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l4 current has-children"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l5 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.download_progress_bar</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../download/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.download</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../image/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.image</span></code></a></li>
+<li class="toctree-l5 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.split</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="../../btech/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.btech</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.inference</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../mvtec/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.mvtec</span></code></a></li>
 </ul>
@@ -361,140 +363,79 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <section id="module-anomalib.data.utils.download_progress_bar">
-<span id="anomalib-data-utils-download-progress-bar"></span><h1><a class="reference internal" href="#module-anomalib.data.utils.download_progress_bar" title="anomalib.data.utils.download_progress_bar"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.download_progress_bar</span></code></a><a class="headerlink" href="#module-anomalib.data.utils.download_progress_bar" title="Permalink to this headline">¶</a></h1>
-<p>Helper to show progress bars with <cite>urlretrieve</cite>.</p>
-<p>Based on <a class="reference external" href="https://stackoverflow.com/a/53877507">https://stackoverflow.com/a/53877507</a></p>
+        <section id="module-anomalib.data.utils.split">
+<span id="anomalib-data-utils-split"></span><h1><a class="reference internal" href="#module-anomalib.data.utils.split" title="anomalib.data.utils.split"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.split</span></code></a><a class="headerlink" href="#module-anomalib.data.utils.split" title="Permalink to this headline">¶</a></h1>
+<p>Dataset Split Utils.</p>
+<p>This module contains function in regards to splitting normal images in training set,
+and creating validation sets from test sets.</p>
+<dl class="simple">
+<dt>These function are useful</dt><dd><ul class="simple">
+<li><p>when the test set does not contain any normal images.</p></li>
+<li><p>when the dataset doesn’t have a validation set.</p></li>
+</ul>
+</dd>
+</dl>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
-<section id="classes">
-<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
 <div class="table-wrapper"><table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%"/>
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.data.utils.download_progress_bar.DownloadProgressBar" title="anomalib.data.utils.download_progress_bar.DownloadProgressBar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DownloadProgressBar</span></code></a></p></td>
-<td><p>Create progress bar for urlretrieve. Subclasses <cite>tqdm</cite>.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.data.utils.split.split_normal_images_in_train_set" title="anomalib.data.utils.split.split_normal_images_in_train_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split_normal_images_in_train_set</span></code></a>(samples: pandas.core.frame.DataFrame, split_ratio: float = 0.1, seed: int = 0, normal_label: str = 'good') → pandas.core.frame.DataFrame</p></td>
+<td><p>Split normal images in train set.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.data.utils.split.create_validation_set_from_test_set" title="anomalib.data.utils.split.create_validation_set_from_test_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_validation_set_from_test_set</span></code></a>(samples: pandas.core.frame.DataFrame, seed: int = 0, normal_label: str = 'good') → pandas.core.frame.DataFrame</p></td>
+<td><p>Craete Validation Set from Test Set.</p></td>
 </tr>
 </tbody>
 </table></div>
-<dl class="py class">
-<dt class="sig sig-object py" id="anomalib.data.utils.download_progress_bar.DownloadProgressBar">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.download_progress_bar.</span></span><span class="sig-name descname"><span class="pre">DownloadProgressBar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Iterable</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leave</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">io.TextIOWrapper</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">io.StringIO</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mininterval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxinterval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">miniters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ascii</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'it'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit_scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dynamic_ncols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smoothing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bar_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">postfix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit_divisor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_bytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lock_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nrows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gui</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/data/utils/download_progress_bar.html#DownloadProgressBar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.download_progress_bar.DownloadProgressBar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">tqdm.tqdm</span></code></p>
-<p>Create progress bar for urlretrieve. Subclasses <cite>tqdm</cite>.</p>
-<p>For information about the parameters in constructor, refer to <cite>tqdm</cite>’s documentation.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.data.utils.split.split_normal_images_in_train_set">
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.split.</span></span><span class="sig-name descname"><span class="pre">split_normal_images_in_train_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'good'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">pandas.core.frame.DataFrame</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/data/utils/split.html#split_normal_images_in_train_set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.split.split_normal_images_in_train_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split normal images in train set.</p>
+<blockquote>
+<div><p>This function splits the normal images in training set and assigns the
+values to the test set. This is particularly useful especially when the
+test set does not contain any normal images.</p>
+<p>This is important because when the test set doesn’t have any normal images,
+AUC computation fails due to having single class.</p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>iterable</strong> (<em>Optional</em><em>[</em><em>Iterable</em><em>]</em>) – Iterable to decorate with a progressbar.
-Leave blank to manually manage the updates.</p></li>
-<li><p><strong>desc</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Prefix for the progressbar.</p></li>
-<li><p><strong>total</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>]</em>) – The number of expected iterations. If unspecified,
-len(iterable) is used if possible. If float(“inf”) or as a last
-resort, only basic progress statistics are displayed
-(no ETA, no progressbar).
-If <cite>gui</cite> is True and this parameter needs subsequent updating,
-specify an initial arbitrary large positive number,
-e.g. 9e9.</p></li>
-<li><p><strong>leave</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – upon termination of iteration. If <cite>None</cite>, will leave only if <cite>position</cite> is <cite>0</cite>.</p></li>
-<li><p><strong>file</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>io.TextIOWrapper</em><em>, </em><em>io.StringIO</em><em>]</em><em>]</em>) – Specifies where to output the progress messages
-(default: sys.stderr). Uses <cite>file.write(str)</cite> and
-<cite>file.flush()</cite> methods.  For encoding, see
-<cite>write_bytes</cite>.</p></li>
-<li><p><strong>ncols</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – The width of the entire output message. If specified,
-dynamically resizes the progressbar to stay within this bound.
-If unspecified, attempts to use environment width. The
-fallback is a meter width of 10 and no limit for the counter and
-statistics. If 0, will not print any meter (only stats).</p></li>
-<li><p><strong>mininterval</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – Minimum progress display update interval [default: 0.1] seconds.</p></li>
-<li><p><strong>maxinterval</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – Maximum progress display update interval [default: 10] seconds.
-Automatically adjusts <cite>miniters</cite> to correspond to <cite>mininterval</cite>
-after long display update lag. Only works if <cite>dynamic_miniters</cite>
-or monitor thread is enabled.</p></li>
-<li><p><strong>miniters</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>]</em>) – Minimum progress display update interval, in iterations.
-If 0 and <cite>dynamic_miniters</cite>, will automatically adjust to equal
-<cite>mininterval</cite> (more CPU efficient, good for tight loops).
-If &gt; 0, will skip display of specified number of iterations.
-Tweak this and <cite>mininterval</cite> to get very efficient loops.
-If your progress is erratic with both fast and slow iterations
-(network, skipping items, etc) you should set miniters=1.</p></li>
-<li><p><strong>use_ascii</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bool</em><em>, </em><em>str</em><em>]</em><em>]</em>) – If unspecified or False, use unicode (smooth blocks) to fill
-the meter. The fallback is to use ASCII characters ” 123456789#”.</p></li>
-<li><p><strong>disable</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – Whether to disable the entire progressbar wrapper
-[default: False]. If set to None, disable on non-TTY.</p></li>
-<li><p><strong>unit</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – String that will be used to define the unit of each iteration
-[default: it].</p></li>
-<li><p><strong>unit_scale</strong> (<em>Union</em><em>[</em><em>bool</em><em>, </em><em>int</em><em>, </em><em>float</em><em>]</em>) – If 1 or True, the number of iterations will be reduced/scaled
-automatically and a metric prefix following the
-International System of Units standard will be added
-(kilo, mega, etc.) [default: False]. If any other non-zero
-number, will scale <cite>total</cite> and <cite>n</cite>.</p></li>
-<li><p><strong>dynamic_ncols</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – If set, constantly alters <cite>ncols</cite> and <cite>nrows</cite> to the
-environment (allowing for window resizes) [default: False].</p></li>
-<li><p><strong>smoothing</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – Exponential moving average smoothing factor for speed estimates
-(ignored in GUI mode). Ranges from 0 (average speed) to 1
-(current/instantaneous speed) [default: 0.3].</p></li>
-<li><p><strong>bar_format</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Specify a custom bar string formatting. May impact performance.
-[default: ‘{l_bar}{bar}{r_bar}’], where
-l_bar=’{desc}: {percentage:3.0f}%|’ and
-r_bar=’| {n_fmt}/{total_fmt} [{elapsed}&lt;{remaining}, ‘
-‘{rate_fmt}{postfix}]’
-Possible vars: l_bar, bar, r_bar, n, n_fmt, total, total_fmt,
-percentage, elapsed, elapsed_s, ncols, nrows, desc, unit,
-rate, rate_fmt, rate_noinv, rate_noinv_fmt,
-rate_inv, rate_inv_fmt, postfix, unit_divisor,
-remaining, remaining_s, eta.
-Note that a trailing “: ” is automatically removed after {desc}
-if the latter is empty.</p></li>
-<li><p><strong>initial</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>]</em>) – The initial counter value. Useful when restarting a progress
-bar [default: 0]. If using float, consider specifying <cite>{n:.3f}</cite>
-or similar in <cite>bar_format</cite>, or specifying <cite>unit_scale</cite>.</p></li>
-<li><p><strong>position</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Specify the line offset to print this bar (starting from 0)
-Automatic if unspecified.
-Useful to manage multiple bars at once (eg, from threads).</p></li>
-<li><p><strong>postfix</strong> (<em>Optional</em><em>[</em><em>Dict</em><em>]</em>) – Specify additional stats to display at the end of the bar.
-Calls <cite>set_postfix(**postfix)</cite> if possible (dict).</p></li>
-<li><p><strong>unit_divisor</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – [default: 1000], ignored unless <cite>unit_scale</cite> is True.</p></li>
-<li><p><strong>write_bytes</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – If (default: None) and <cite>file</cite> is unspecified,
-bytes will be written in Python 2. If <cite>True</cite> will also write
-bytes. In all other cases will default to unicode.</p></li>
-<li><p><strong>lock_args</strong> (<em>Optional</em><em>[</em><em>tuple</em><em>]</em>) – Passed to <cite>refresh</cite> for intermediate output
-(initialisation, iterating, and updating).
-nrows (Optional[int]): The screen height. If specified, hides nested bars
-outside this bound. If unspecified, attempts to use environment height.
-The fallback is 20.</p></li>
-<li><p><strong>colour</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Bar colour (e.g. ‘green’, ‘#00ff00’).</p></li>
-<li><p><strong>delay</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – Don’t display until [default: 0] seconds have elapsed.</p></li>
-<li><p><strong>gui</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – WARNING: internal parameter - do not use.
-Use tqdm.gui.tqdm(…) instead. If set, will attempt to use
-matplotlib animations for a graphical output [default: False].</p></li>
+<li><p><strong>samples</strong> (<em>DataFrame</em>) – Dataframe containing dataset info such as filenames, splits etc.</p></li>
+<li><p><strong>split_ratio</strong> (<em>float</em><em>, </em><em>optional</em>) – Train-Test normal image split ratio. Defaults to 0.1.</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Random seed to ensure reproducibility. Defaults to 0.</p></li>
+<li><p><strong>normal_label</strong> (<em>str</em>) – Name of the normal label. For MVTec, for instance, this is normal_label.</p></li>
 </ul>
 </dd>
-</dl>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">DownloadProgressBar</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="s1">'B'</span><span class="p">,</span> <span class="n">unit_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">miniters</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">as</span> <span class="n">p_bar</span><span class="p">:</span>
-<span class="gp">&gt;&gt;&gt; </span>        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="n">reporthook</span><span class="o">=</span><span class="n">p_bar</span><span class="o">.</span><span class="n">update_to</span><span class="p">)</span>
-</pre></div>
-</div>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.data.utils.download_progress_bar.DownloadProgressBar.update_to">
-<span class="sig-name descname"><span class="pre">update_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_chunk_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/data/utils/download_progress_bar.html#DownloadProgressBar.update_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.download_progress_bar.DownloadProgressBar.update_to" title="Permalink to this definition">¶</a></dt>
-<dd><p>Progress bar hook for tqdm.</p>
-<p>The implementor does not have to bother about passing parameters to this as it gets them from urlretrieve.
-However the context needs a few parameters. Refer to the example.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>chunk_number</strong> (<em>int</em><em>, </em><em>optional</em>) – The current chunk being processed. Defaults to 1.</p></li>
-<li><p><strong>max_chunk_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum size of each chunk. Defaults to 1.</p></li>
-<li><p><strong>total_size</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – Total download size. Defaults to None.</p></li>
-</ul>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Output dataframe where the part of the training set is assigned to test set.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.data.utils.split.create_validation_set_from_test_set">
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.split.</span></span><span class="sig-name descname"><span class="pre">create_validation_set_from_test_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'good'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">pandas.core.frame.DataFrame</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/data/utils/split.html#create_validation_set_from_test_set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.split.create_validation_set_from_test_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Craete Validation Set from Test Set.</p>
+<p>This function creates a validation set from test set by splitting both
+normal and abnormal samples to two.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samples</strong> (<em>DataFrame</em>) – Dataframe containing dataset info such as filenames, splits etc.</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Random seed to ensure reproducibility. Defaults to 0.</p></li>
+<li><p><strong>normal_label</strong> (<em>str</em>) – Name of the normal label. For MVTec, for instance, this is normal_label.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 </section>
 </section>
@@ -504,23 +445,23 @@ However the context needs a few parameters. Refer to the example.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../image/index.html">
+          <a class="next-page" href="../../btech/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.image</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.btech</span></code></div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../index.html">
+          <a class="prev-page" href="../image/index.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.image</span></code></div>
                 
               </div>
             </a>
@@ -534,7 +475,7 @@ However the context needs a few parameters. Refer to the example.</p>
               <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
               <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
             |
-            <a class="muted-link" href="../../../../../_sources/api/anomalib/data/utils/download_progress_bar/index.rst.txt"
+            <a class="muted-link" href="../../../../../_sources/api/anomalib/data/utils/split/index.rst.txt"
                rel="nofollow">
               Show Source
             </a>
@@ -554,13 +495,11 @@ However the context needs a few parameters. Refer to the example.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.download_progress_bar</span></code></a><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.split</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
-<li><a class="reference internal" href="#classes">Classes</a><ul>
-<li><a class="reference internal" href="#anomalib.data.utils.download_progress_bar.DownloadProgressBar">DownloadProgressBar</a><ul>
-<li><a class="reference internal" href="#anomalib.data.utils.download_progress_bar.DownloadProgressBar.update_to">update_to</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#functions">Functions</a><ul>
+<li><a class="reference internal" href="#anomalib.data.utils.split.split_normal_images_in_train_set">split_normal_images_in_train_set</a></li>
+<li><a class="reference internal" href="#anomalib.data.utils.split.create_validation_set_from_test_set">create_validation_set_from_test_set</a></li>
 </ul>
 </li>
 </ul>

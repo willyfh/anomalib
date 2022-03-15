@@ -1,0 +1,71 @@
+:py:mod:`anomalib.data.utils.split`
+===================================
+
+.. py:module:: anomalib.data.utils.split
+
+.. autoapi-nested-parse::
+
+   Dataset Split Utils.
+
+   This module contains function in regards to splitting normal images in training set,
+   and creating validation sets from test sets.
+
+   These function are useful
+       - when the test set does not contain any normal images.
+       - when the dataset doesn't have a validation set.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.data.utils.split.split_normal_images_in_train_set
+   anomalib.data.utils.split.create_validation_set_from_test_set
+
+
+
+.. py:function:: split_normal_images_in_train_set(samples: pandas.core.frame.DataFrame, split_ratio: float = 0.1, seed: int = 0, normal_label: str = 'good') -> pandas.core.frame.DataFrame
+
+   Split normal images in train set.
+
+       This function splits the normal images in training set and assigns the
+       values to the test set. This is particularly useful especially when the
+       test set does not contain any normal images.
+
+       This is important because when the test set doesn't have any normal images,
+       AUC computation fails due to having single class.
+
+   :param samples: Dataframe containing dataset info such as filenames, splits etc.
+   :type samples: DataFrame
+   :param split_ratio: Train-Test normal image split ratio. Defaults to 0.1.
+   :type split_ratio: float, optional
+   :param seed: Random seed to ensure reproducibility. Defaults to 0.
+   :type seed: int, optional
+   :param normal_label: Name of the normal label. For MVTec, for instance, this is normal_label.
+   :type normal_label: str
+
+   :returns: Output dataframe where the part of the training set is assigned to test set.
+   :rtype: DataFrame
+
+
+.. py:function:: create_validation_set_from_test_set(samples: pandas.core.frame.DataFrame, seed: int = 0, normal_label: str = 'good') -> pandas.core.frame.DataFrame
+
+   Craete Validation Set from Test Set.
+
+   This function creates a validation set from test set by splitting both
+   normal and abnormal samples to two.
+
+   :param samples: Dataframe containing dataset info such as filenames, splits etc.
+   :type samples: DataFrame
+   :param seed: Random seed to ensure reproducibility. Defaults to 0.
+   :type seed: int, optional
+   :param normal_label: Name of the normal label. For MVTec, for instance, this is normal_label.
+   :type normal_label: str
+
+

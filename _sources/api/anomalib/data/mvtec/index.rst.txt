@@ -28,27 +28,86 @@ Classes
 
 
 
+Functions
+~~~~~~~~~
 
-.. py:class:: MVTec(root: Union[pathlib.Path, str], category: str, pre_process: anomalib.pre_processing.PreProcessor, split: str, task: str = 'segmentation', download: bool = False, seed: int = 0, create_validation_set: bool = False)
+.. autoapisummary::
+
+   anomalib.data.mvtec.make_mvtec_dataset
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.data.mvtec.logger
+
+
+.. py:data:: logger
+   
+
+   
+
+.. py:function:: make_mvtec_dataset(path: pathlib.Path, split: Optional[str] = None, split_ratio: float = 0.1, seed: int = 0, create_validation_set: bool = False) -> pandas.core.frame.DataFrame
+
+   Create MVTec samples by parsing the MVTec data file structure.
+
+   The files are expected to follow the structure:
+       path/to/dataset/split/category/image_filename.png
+       path/to/dataset/ground_truth/category/mask_filename.png
+
+   This function creates a dataframe to store the parsed information based on the following format:
+   |---|---------------|-------|---------|---------------|---------------------------------------|-------------|
+   |   | path          | split | label   | image_path    | mask_path                             | label_index |
+   |---|---------------|-------|---------|---------------|---------------------------------------|-------------|
+   | 0 | datasets/name |  test |  defect |  filename.png | ground_truth/defect/filename_mask.png | 1           |
+   |---|---------------|-------|---------|---------------|---------------------------------------|-------------|
+
+   :param path: Path to dataset
+   :type path: Path
+   :param split: Dataset split (ie., either train or test). Defaults to None.
+   :type split: str, optional
+   :param split_ratio: Ratio to split normal training images and add to the
+                       test set in case test set doesn't contain any normal images.
+                       Defaults to 0.1.
+   :type split_ratio: float, optional
+   :param seed: Random seed to ensure reproducibility when splitting. Defaults to 0.
+   :type seed: int, optional
+   :param create_validation_set: Boolean to create a validation set from the test set.
+                                 MVTec dataset does not contain a validation set. Those wanting to create a validation set
+                                 could set this flag to ``True``.
+   :type create_validation_set: bool, optional
+
+   .. rubric:: Example
+
+   The following example shows how to get training samples from MVTec bottle category:
+
+   >>> root = Path('./MVTec')
+   >>> category = 'bottle'
+   >>> path = root / category
+   >>> path
+   PosixPath('MVTec/bottle')
+
+   >>> samples = make_mvtec_dataset(path, split='train', split_ratio=0.1, seed=0)
+   >>> samples.head()
+      path         split label image_path                           mask_path                   label_index
+   0  MVTec/bottle train good MVTec/bottle/train/good/105.png MVTec/bottle/ground_truth/good/105_mask.png 0
+   1  MVTec/bottle train good MVTec/bottle/train/good/017.png MVTec/bottle/ground_truth/good/017_mask.png 0
+   2  MVTec/bottle train good MVTec/bottle/train/good/137.png MVTec/bottle/ground_truth/good/137_mask.png 0
+   3  MVTec/bottle train good MVTec/bottle/train/good/152.png MVTec/bottle/ground_truth/good/152_mask.png 0
+   4  MVTec/bottle train good MVTec/bottle/train/good/109.png MVTec/bottle/ground_truth/good/109_mask.png 0
+
+   :returns: an output dataframe containing samples for the requested split (ie., train or test)
+   :rtype: DataFrame
+
+
+.. py:class:: MVTec(root: Union[pathlib.Path, str], category: str, pre_process: anomalib.pre_processing.PreProcessor, split: str, task: str = 'segmentation', seed: int = 0, create_validation_set: bool = False)
 
    Bases: :py:obj:`torchvision.datasets.folder.VisionDataset`
 
    MVTec PyTorch Dataset.
-
-   .. py:method:: _download(self) -> None
-
-      Download the MVTec dataset.
-
-
-   .. py:method:: _extract(self) -> None
-
-      Extract MVTec Dataset.
-
-
-   .. py:method:: _clean(self) -> None
-
-      Cleanup MVTec Dataset tar file.
-
 
    .. py:method:: __len__(self) -> int
 
@@ -75,6 +134,11 @@ Classes
    Bases: :py:obj:`pytorch_lightning.core.datamodule.LightningDataModule`
 
    MVTec Lightning Data Module.
+
+   .. py:method:: prepare_data(self) -> None
+
+      Download the dataset if not available.
+
 
    .. py:method:: setup(self, stage: Optional[str] = None) -> None
 
