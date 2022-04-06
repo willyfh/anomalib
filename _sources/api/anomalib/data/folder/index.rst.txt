@@ -1,0 +1,150 @@
+:py:mod:`anomalib.data.folder`
+==============================
+
+.. py:module:: anomalib.data.folder
+
+.. autoapi-nested-parse::
+
+   Custom Folder Dataset.
+
+   This script creates a custom dataset from a folder.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.data.folder.FolderDataset
+   anomalib.data.folder.FolderDataModule
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.data.folder._check_and_convert_path
+   anomalib.data.folder.make_dataset
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.data.folder.logger
+
+
+.. py:data:: logger
+   
+
+   
+
+.. py:function:: _check_and_convert_path(path: Union[str, pathlib.Path]) -> pathlib.Path
+
+   Check an input path, and convert to Pathlib object.
+
+   :param path: Input path.
+   :type path: Union[str, Path]
+
+   :returns: Output path converted to pathlib object.
+   :rtype: Path
+
+
+.. py:function:: make_dataset(normal_dir: Union[str, pathlib.Path], abnormal_dir: Union[str, pathlib.Path], mask_dir: Optional[Union[str, pathlib.Path]] = None, split: Optional[str] = None, split_ratio: float = 0.2, seed: int = 0, create_validation_set: bool = True, extensions: Optional[Tuple[str, Ellipsis]] = None)
+
+   Make Folder Dataset.
+
+   :param normal_dir: Path to the directory containing normal images.
+   :type normal_dir: Union[str, Path]
+   :param abnormal_dir: Path to the directory containing abnormal images.
+   :type abnormal_dir: Union[str, Path]
+   :param mask_dir: Path to the directory containing
+                    the mask annotations. Defaults to None.
+   :type mask_dir: Optional[Union[str, Path]], optional
+   :param split: Dataset split (ie., either train or test). Defaults to None.
+   :type split: Optional[str], optional
+   :param split_ratio: Ratio to split normal training images and add to the
+                       test set in case test set doesn't contain any normal images.
+                       Defaults to 0.2.
+   :type split_ratio: float, optional
+   :param seed: Random seed to ensure reproducibility when splitting. Defaults to 0.
+   :type seed: int, optional
+   :param create_validation_set: Boolean to create a validation set from the test set.
+                                 Those wanting to create a validation set could set this flag to ``True``.
+   :type create_validation_set: bool, optional
+   :param extensions: Type of the image extensions to read from the
+                      directory.
+   :type extensions: Optional[Tuple[str, ...]], optional
+
+   :returns: an output dataframe containing samples for the requested split (ie., train or test)
+   :rtype: DataFrame
+
+
+.. py:class:: FolderDataset(normal_dir: Union[pathlib.Path, str], abnormal_dir: Union[pathlib.Path, str], split: str, pre_process: anomalib.pre_processing.PreProcessor, split_ratio: float = 0.2, mask_dir: Optional[Union[pathlib.Path, str]] = None, extensions: Optional[Tuple[str, Ellipsis]] = None, task: Optional[str] = None, seed: int = 0, create_validation_set: bool = False)
+
+   Bases: :py:obj:`torch.utils.data.Dataset`
+
+   Folder Dataset.
+
+   .. py:method:: __len__(self) -> int
+
+      Get length of the dataset.
+
+
+   .. py:method:: __getitem__(self, index: int) -> Dict[str, Union[str, torch.Tensor]]
+
+      Get dataset item for the index ``index``.
+
+      :param index: Index to get the item.
+      :type index: int
+
+      :returns:
+
+                Dict of image tensor during training.
+                    Otherwise, Dict containing image path, target path, image tensor, label and transformed bounding box.
+      :rtype: Union[Dict[str, Tensor], Dict[str, Union[str, Tensor]]]
+
+
+
+.. py:class:: FolderDataModule(root: Union[str, pathlib.Path], normal: str = 'normal', abnormal: str = 'abnormal', task: str = 'classification', mask_dir: Optional[Union[pathlib.Path, str]] = None, extensions: Optional[Tuple[str, Ellipsis]] = None, split_ratio: float = 0.2, seed: int = 0, image_size: Optional[Union[int, Tuple[int, int]]] = None, train_batch_size: int = 32, test_batch_size: int = 32, num_workers: int = 8, transform_config: Optional[Union[str, albumentations.Compose]] = None, create_validation_set: bool = False)
+
+   Bases: :py:obj:`pytorch_lightning.core.datamodule.LightningDataModule`
+
+   Folder Lightning Data Module.
+
+   .. py:method:: setup(self, stage: Optional[str] = None) -> None
+
+      Setup train, validation and test data.
+
+      :param stage: Optional[str]:  Train/Val/Test stages. (Default value = None)
+
+
+   .. py:method:: train_dataloader(self) -> pytorch_lightning.utilities.types.TRAIN_DATALOADERS
+
+      Get train dataloader.
+
+
+   .. py:method:: val_dataloader(self) -> pytorch_lightning.utilities.types.EVAL_DATALOADERS
+
+      Get validation dataloader.
+
+
+   .. py:method:: test_dataloader(self) -> pytorch_lightning.utilities.types.EVAL_DATALOADERS
+
+      Get test dataloader.
+
+
+   .. py:method:: predict_dataloader(self) -> pytorch_lightning.utilities.types.EVAL_DATALOADERS
+
+      Get predict dataloader.
+
+
+

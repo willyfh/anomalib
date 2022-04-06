@@ -9,6 +9,15 @@
 
 
 
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   nncf/index.rst
+
+
 Submodules
 ----------
 .. toctree::
@@ -16,11 +25,9 @@ Submodules
    :maxdepth: 1
 
    cdf_normalization/index.rst
-   compress/index.rst
    min_max_normalization/index.rst
    model_loader/index.rst
-   nncf_callback/index.rst
-   save_to_csv/index.rst
+   openvino/index.rst
    timer/index.rst
    visualizer_callback/index.rst
 
@@ -33,36 +40,10 @@ Classes
 
 .. autoapisummary::
 
-   anomalib.utils.callbacks.CompressModelCallback
    anomalib.utils.callbacks.LoadModelCallback
-   anomalib.utils.callbacks.SaveToCSVCallback
    anomalib.utils.callbacks.TimerCallback
    anomalib.utils.callbacks.VisualizerCallback
 
-
-
-
-.. py:class:: CompressModelCallback(input_size: Tuple[int, int], dirpath: str, filename: str)
-
-   Bases: :py:obj:`pytorch_lightning.Callback`
-
-   Callback to compresses a trained model.
-
-   Model is first exported to ``.onnx`` format, and then converted to OpenVINO IR.
-
-   :param input_size: Tuple of image height, width
-   :type input_size: Tuple[int, int]
-   :param dirpath: Path for model output
-   :type dirpath: str
-   :param filename: Name of output model
-   :type filename: str
-
-   .. py:method:: on_train_end(self, trainer, pl_module: pytorch_lightning.LightningModule) -> None
-
-      Call when the train ends.
-
-      Converts the model to ``onnx`` format and then calls OpenVINO's model optimizer to get the
-      ``.xml`` and ``.bin`` IR files.
 
 
 
@@ -77,25 +58,6 @@ Classes
       Call when the test begins.
 
       Loads the model weights from ``weights_path`` into the PyTorch module.
-
-
-
-.. py:class:: SaveToCSVCallback
-
-   Bases: :py:obj:`pytorch_lightning.Callback`
-
-   Callback that saves the inference results of a model.
-
-   The callback generates a csv file that saves the predicted label, the true label and the image name.
-
-   .. py:method:: on_test_epoch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule) -> None
-
-      Save Results at the end of testing.
-
-      :param _trainer: Pytorch lightning trainer object (unused)
-      :type _trainer: Trainer
-      :param pl_module: Lightning modules derived from BaseAnomalyLightning object.
-      :type pl_module: LightningModule
 
 
 

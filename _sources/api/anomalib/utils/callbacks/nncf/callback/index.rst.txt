@@ -1,0 +1,69 @@
+:py:mod:`anomalib.utils.callbacks.nncf.callback`
+================================================
+
+.. py:module:: anomalib.utils.callbacks.nncf.callback
+
+.. autoapi-nested-parse::
+
+   Callbacks for NNCF optimization.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.callbacks.nncf.callback.NNCFCallback
+
+
+
+
+.. py:class:: NNCFCallback(nncf_config: Dict, export_dir: str = None)
+
+   Bases: :py:obj:`pytorch_lightning.Callback`
+
+   Callback for NNCF compression.
+
+   Assumes that the pl module contains a 'model' attribute, which is
+   the PyTorch module that must be compressed.
+
+   :param config: NNCF Configuration
+   :type config: Dict
+   :param export_dir: Path where the export `onnx` and the OpenVINO `xml` and `bin` IR are saved.
+                      If None model will not be exported.
+   :type export_dir: Str
+
+   .. py:method:: setup(self, trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, stage: Optional[str] = None) -> None
+
+      Call when fit or test begins.
+
+      Takes the pytorch model and wraps it using the compression controller
+      so that it is ready for nncf fine-tuning.
+
+
+   .. py:method:: on_train_batch_start(self, trainer: pytorch_lightning.Trainer, _pl_module: pytorch_lightning.LightningModule, _batch: Any, _batch_idx: int, _unused: Optional[int] = 0) -> None
+
+      Call when the train batch begins.
+
+      Prepare compression method to continue training the model in the next step.
+
+
+   .. py:method:: on_train_epoch_start(self, _trainer: pytorch_lightning.Trainer, _pl_module: pytorch_lightning.LightningModule) -> None
+
+      Call when the train epoch starts.
+
+      Prepare compression method to continue training the model in the next epoch.
+
+
+   .. py:method:: on_train_end(self, _trainer: pytorch_lightning.Trainer, _pl_module: pytorch_lightning.LightningModule) -> None
+
+      Call when the train ends.
+
+      Exports onnx model and if compression controller is not None, uses the onnx model to generate the OpenVINO IR.
+
+
+

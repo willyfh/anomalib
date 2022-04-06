@@ -25,6 +25,7 @@ Submodules
    :maxdepth: 1
 
    btech/index.rst
+   folder/index.rst
    inference/index.rst
    mvtec/index.rst
 
@@ -37,7 +38,10 @@ Classes
 
 .. autoapisummary::
 
+   anomalib.data.BTechDataModule
+   anomalib.data.FolderDataModule
    anomalib.data.InferenceDataset
+   anomalib.data.MVTecDataModule
 
 
 
@@ -47,6 +51,82 @@ Functions
 .. autoapisummary::
 
    anomalib.data.get_datamodule
+
+
+
+.. py:class:: BTechDataModule(root: str, category: str, image_size: Optional[Union[int, Tuple[int, int]]] = None, train_batch_size: int = 32, test_batch_size: int = 32, num_workers: int = 8, transform_config: Optional[Union[str, albumentations.Compose]] = None, seed: int = 0, create_validation_set: bool = False)
+
+   Bases: :py:obj:`pytorch_lightning.core.datamodule.LightningDataModule`
+
+   BTechDataModule Lightning Data Module.
+
+   .. py:method:: prepare_data(self) -> None
+
+      Download the dataset if not available.
+
+
+   .. py:method:: setup(self, stage: Optional[str] = None) -> None
+
+      Setup train, validation and test data.
+
+      BTech dataset uses BTech dataset structure, which is the reason for
+      using `anomalib.data.btech.BTech` class to get the dataset items.
+
+      :param stage: Optional[str]:  Train/Val/Test stages. (Default value = None)
+
+
+   .. py:method:: train_dataloader(self) -> pytorch_lightning.utilities.types.TRAIN_DATALOADERS
+
+      Get train dataloader.
+
+
+   .. py:method:: val_dataloader(self) -> pytorch_lightning.utilities.types.EVAL_DATALOADERS
+
+      Get validation dataloader.
+
+
+   .. py:method:: test_dataloader(self) -> pytorch_lightning.utilities.types.EVAL_DATALOADERS
+
+      Get test dataloader.
+
+
+   .. py:method:: predict_dataloader(self) -> pytorch_lightning.utilities.types.EVAL_DATALOADERS
+
+      Get predict dataloader.
+
+
+
+.. py:class:: FolderDataModule(root: Union[str, pathlib.Path], normal: str = 'normal', abnormal: str = 'abnormal', task: str = 'classification', mask_dir: Optional[Union[pathlib.Path, str]] = None, extensions: Optional[Tuple[str, Ellipsis]] = None, split_ratio: float = 0.2, seed: int = 0, image_size: Optional[Union[int, Tuple[int, int]]] = None, train_batch_size: int = 32, test_batch_size: int = 32, num_workers: int = 8, transform_config: Optional[Union[str, albumentations.Compose]] = None, create_validation_set: bool = False)
+
+   Bases: :py:obj:`pytorch_lightning.core.datamodule.LightningDataModule`
+
+   Folder Lightning Data Module.
+
+   .. py:method:: setup(self, stage: Optional[str] = None) -> None
+
+      Setup train, validation and test data.
+
+      :param stage: Optional[str]:  Train/Val/Test stages. (Default value = None)
+
+
+   .. py:method:: train_dataloader(self) -> pytorch_lightning.utilities.types.TRAIN_DATALOADERS
+
+      Get train dataloader.
+
+
+   .. py:method:: val_dataloader(self) -> pytorch_lightning.utilities.types.EVAL_DATALOADERS
+
+      Get validation dataloader.
+
+
+   .. py:method:: test_dataloader(self) -> pytorch_lightning.utilities.types.EVAL_DATALOADERS
+
+      Get test dataloader.
+
+
+   .. py:method:: predict_dataloader(self) -> pytorch_lightning.utilities.types.EVAL_DATALOADERS
+
+      Get predict dataloader.
 
 
 
@@ -64,6 +144,45 @@ Functions
    .. py:method:: __getitem__(self, index: int) -> Any
 
       Get the image based on the `index`.
+
+
+
+.. py:class:: MVTecDataModule(root: str, category: str, image_size: Optional[Union[int, Tuple[int, int]]] = None, train_batch_size: int = 32, test_batch_size: int = 32, num_workers: int = 8, transform_config: Optional[Union[str, albumentations.Compose]] = None, seed: int = 0, create_validation_set: bool = False)
+
+   Bases: :py:obj:`pytorch_lightning.core.datamodule.LightningDataModule`
+
+   MVTec AD Lightning Data Module.
+
+   .. py:method:: prepare_data(self) -> None
+
+      Download the dataset if not available.
+
+
+   .. py:method:: setup(self, stage: Optional[str] = None) -> None
+
+      Setup train, validation and test data.
+
+      :param stage: Optional[str]:  Train/Val/Test stages. (Default value = None)
+
+
+   .. py:method:: train_dataloader(self) -> pytorch_lightning.utilities.types.TRAIN_DATALOADERS
+
+      Get train dataloader.
+
+
+   .. py:method:: val_dataloader(self) -> pytorch_lightning.utilities.types.EVAL_DATALOADERS
+
+      Get validation dataloader.
+
+
+   .. py:method:: test_dataloader(self) -> pytorch_lightning.utilities.types.EVAL_DATALOADERS
+
+      Get test dataloader.
+
+
+   .. py:method:: predict_dataloader(self) -> pytorch_lightning.utilities.types.EVAL_DATALOADERS
+
+      Get predict dataloader.
 
 
 

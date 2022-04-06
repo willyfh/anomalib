@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" /><link rel="next" title="anomalib.utils.callbacks.save_to_csv" href="../save_to_csv/index.html" /><link rel="prev" title="anomalib.utils.callbacks.model_loader" href="../model_loader/index.html" />
+<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" /><link rel="next" title="anomalib.utils.callbacks.nncf.callback" href="callback/index.html" /><link rel="prev" title="anomalib.utils.callbacks" href="../index.html" />
 
-    <meta name="generator" content="sphinx-4.3.1, furo 2021.07.31.beta41"/>
-        <title>anomalib.utils.callbacks.nncf_callback - Anomalib 2021, Anomalib Contributors documentation</title>
+    <meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
+        <title>anomalib.utils.callbacks.nncf - Anomalib 2021, Anomalib Contributors documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css" />
@@ -190,6 +190,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../../data/btech/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.btech</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../data/folder/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.folder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../data/inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.inference</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../data/mvtec/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.mvtec</span></code></a></li>
 </ul>
@@ -286,23 +287,26 @@
 </li>
 <li class="toctree-l3 current has-children"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l4 current has-children"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" role="switch" type="checkbox"/><label for="toctree-checkbox-28"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l5 current has-children current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.nncf</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" role="switch" type="checkbox"/><label for="toctree-checkbox-29"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.nncf.callback</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.nncf.utils</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l5"><a class="reference internal" href="../cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../compress/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.compress</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
-<li class="toctree-l5 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.nncf_callback</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../save_to_csv/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.save_to_csv</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../../loggers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" role="switch" type="checkbox"/><label for="toctree-checkbox-29"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../loggers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" role="switch" type="checkbox"/><label for="toctree-checkbox-30"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../loggers/base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.base</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../loggers/tensorboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.tensorboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../loggers/wandb/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.wandb</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../../metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" role="switch" type="checkbox"/><label for="toctree-checkbox-30"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" role="switch" type="checkbox"/><label for="toctree-checkbox-31"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../metrics/adaptive_threshold/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.adaptive_threshold</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../metrics/anomaly_score_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.anomaly_score_distribution</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../metrics/auroc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.auroc</span></code></a></li>
@@ -310,8 +314,8 @@
 <li class="toctree-l5"><a class="reference internal" href="../../metrics/optimal_f1/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.optimal_f1</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../../sweep/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" role="switch" type="checkbox"/><label for="toctree-checkbox-31"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5 has-children"><a class="reference internal" href="../../sweep/helpers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.helpers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" role="switch" type="checkbox"/><label for="toctree-checkbox-32"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../sweep/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" role="switch" type="checkbox"/><label for="toctree-checkbox-32"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../sweep/helpers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.helpers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" role="switch" type="checkbox"/><label for="toctree-checkbox-33"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l6"><a class="reference internal" href="../../sweep/helpers/callbacks/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.helpers.callbacks</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="../../sweep/helpers/inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.helpers.inference</span></code></a></li>
 </ul>
@@ -363,129 +367,17 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <section id="module-anomalib.utils.callbacks.nncf_callback">
-<span id="anomalib-utils-callbacks-nncf-callback"></span><h1><a class="reference internal" href="#module-anomalib.utils.callbacks.nncf_callback" title="anomalib.utils.callbacks.nncf_callback"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.nncf_callback</span></code></a><a class="headerlink" href="#module-anomalib.utils.callbacks.nncf_callback" title="Permalink to this headline">¶</a></h1>
-<p>NNCF Callback.</p>
-<section id="module-contents">
-<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
-<section id="classes">
-<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
-<div class="table-wrapper"><table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%"/>
-<col style="width: 90%"/>
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.callbacks.nncf_callback.InitLoader" title="anomalib.utils.callbacks.nncf_callback.InitLoader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InitLoader</span></code></a></p></td>
-<td><p>Initializing data loader for NNCF to be used with unsupervised training algorithms.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.utils.callbacks.nncf_callback.NNCFCallback" title="anomalib.utils.callbacks.nncf_callback.NNCFCallback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NNCFCallback</span></code></a></p></td>
-<td><p>Callback for NNCF compression.</p></td>
-</tr>
-</tbody>
-</table></div>
-</section>
-<section id="functions">
-<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
-<div class="table-wrapper"><table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%"/>
-<col style="width: 90%"/>
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.callbacks.nncf_callback.criterion_fn" title="anomalib.utils.callbacks.nncf_callback.criterion_fn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">criterion_fn</span></code></a>(outputs, criterion)</p></td>
-<td><p>Calls the criterion function on outputs.</p></td>
-</tr>
-</tbody>
-</table></div>
-<dl class="py function">
-<dt class="sig sig-object py" id="anomalib.utils.callbacks.nncf_callback.criterion_fn">
-<span class="sig-prename descclassname"><span class="pre">anomalib.utils.callbacks.nncf_callback.</span></span><span class="sig-name descname"><span class="pre">criterion_fn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criterion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/nncf_callback.html#criterion_fn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.nncf_callback.criterion_fn" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calls the criterion function on outputs.</p>
-</dd></dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="anomalib.utils.callbacks.nncf_callback.InitLoader">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.callbacks.nncf_callback.</span></span><span class="sig-name descname"><span class="pre">InitLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.utils.data.dataloader.DataLoader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/nncf_callback.html#InitLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.nncf_callback.InitLoader" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">nncf.torch.initialization.PTInitializingDataLoader</span></code></p>
-<p>Initializing data loader for NNCF to be used with unsupervised training algorithms.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.utils.callbacks.nncf_callback.InitLoader.__iter__">
-<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/nncf_callback.html#InitLoader.__iter__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.nncf_callback.InitLoader.__iter__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create iterator for dataloader.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.utils.callbacks.nncf_callback.InitLoader.__next__">
-<span class="sig-name descname"><span class="pre">__next__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/nncf_callback.html#InitLoader.__next__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.nncf_callback.InitLoader.__next__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return next item from dataloader iterator.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.utils.callbacks.nncf_callback.InitLoader.get_inputs">
-<span class="sig-name descname"><span class="pre">get_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataloader_output</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/nncf_callback.html#InitLoader.get_inputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.nncf_callback.InitLoader.get_inputs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get input to model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Tuple[Tuple, Dict]: The current model call to be made during
-the initialization process</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>(dataloader_output,), {}</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.utils.callbacks.nncf_callback.InitLoader.get_target">
-<span class="sig-name descname"><span class="pre">get_target</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/nncf_callback.html#InitLoader.get_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.nncf_callback.InitLoader.get_target" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return structure for ground truth in loss criterion based on dataloader output.</p>
-<p>This implementation does not do anything and is a placeholder.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-</dd></dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="anomalib.utils.callbacks.nncf_callback.NNCFCallback">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.callbacks.nncf_callback.</span></span><span class="sig-name descname"><span class="pre">NNCFCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.ListConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/nncf_callback.html#NNCFCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.nncf_callback.NNCFCallback" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pytorch_lightning.Callback</span></code></p>
-<p>Callback for NNCF compression.</p>
-<p>Assumes that the pl module contains a ‘model’ attribute, which is
-the PyTorch module that must be compressed.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>config</strong> (<em>Union</em><em>[</em><em>ListConfig</em><em>, </em><em>DictConfig</em><em>]</em>) – NNCF Configuration</p></li>
-<li><p><strong>dirpath</strong> (<em>str</em>) – Path where the export <cite>onnx</cite> and the OpenVINO <cite>xml</cite> and <cite>bin</cite> IR are saved.</p></li>
-<li><p><strong>filename</strong> (<em>str</em>) – Name of the generated model files.</p></li>
+        <section id="module-anomalib.utils.callbacks.nncf">
+<span id="anomalib-utils-callbacks-nncf"></span><h1><a class="reference internal" href="#module-anomalib.utils.callbacks.nncf" title="anomalib.utils.callbacks.nncf"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.nncf</span></code></a><a class="headerlink" href="#module-anomalib.utils.callbacks.nncf" title="Permalink to this headline">¶</a></h1>
+<p>Integration NNCF.</p>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.nncf.callback</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.nncf.utils</span></code></a></li>
 </ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.utils.callbacks.nncf_callback.NNCFCallback.setup">
-<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.Trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.LightningModule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/nncf_callback.html#NNCFCallback.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.nncf_callback.NNCFCallback.setup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Call when fit or test begins.</p>
-<p>Takes the pytorch model and wraps it using the compression controller so that it is ready for nncf fine-tuning.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.utils.callbacks.nncf_callback.NNCFCallback.on_train_batch_start">
-<span class="sig-name descname"><span class="pre">on_train_batch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.Trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_pl_module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.LightningModule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_batch_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_unused</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/nncf_callback.html#NNCFCallback.on_train_batch_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.nncf_callback.NNCFCallback.on_train_batch_start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Call when the train batch begins.</p>
-<p>Prepare compression method to continue training the model in the next step.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.utils.callbacks.nncf_callback.NNCFCallback.on_train_end">
-<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_trainer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.Trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_pl_module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.LightningModule</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/nncf_callback.html#NNCFCallback.on_train_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.nncf_callback.NNCFCallback.on_train_end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Call when the train ends.</p>
-<p>Exports onnx model and if compression controller is not None, uses the onnx model to generate the OpenVINO IR.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.utils.callbacks.nncf_callback.NNCFCallback.on_train_epoch_start">
-<span class="sig-name descname"><span class="pre">on_train_epoch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_trainer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.Trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_pl_module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.LightningModule</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/nncf_callback.html#NNCFCallback.on_train_epoch_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.nncf_callback.NNCFCallback.on_train_epoch_start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Call when the train epoch starts.</p>
-<p>Prepare compression method to continue training the model in the next epoch.</p>
-</dd></dl>
-</dd></dl>
-</section>
+</div>
 </section>
 </section>
 
@@ -493,23 +385,23 @@ the PyTorch module that must be compressed.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../save_to_csv/index.html">
+          <a class="next-page" href="callback/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.save_to_csv</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.nncf.callback</span></code></div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../model_loader/index.html">
+          <a class="prev-page" href="../index.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks</span></code></div>
                 
               </div>
             </a>
@@ -523,7 +415,7 @@ the PyTorch module that must be compressed.</p>
               <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
               <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
             |
-            <a class="muted-link" href="../../../../../_sources/api/anomalib/utils/callbacks/nncf_callback/index.rst.txt"
+            <a class="muted-link" href="../../../../../_sources/api/anomalib/utils/callbacks/nncf/index.rst.txt"
                rel="nofollow">
               Show Source
             </a>
@@ -543,29 +435,8 @@ the PyTorch module that must be compressed.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.nncf_callback</span></code></a><ul>
-<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
-<li><a class="reference internal" href="#classes">Classes</a></li>
-<li><a class="reference internal" href="#functions">Functions</a><ul>
-<li><a class="reference internal" href="#anomalib.utils.callbacks.nncf_callback.criterion_fn">criterion_fn</a></li>
-<li><a class="reference internal" href="#anomalib.utils.callbacks.nncf_callback.InitLoader">InitLoader</a><ul>
-<li><a class="reference internal" href="#anomalib.utils.callbacks.nncf_callback.InitLoader.__iter__">__iter__</a></li>
-<li><a class="reference internal" href="#anomalib.utils.callbacks.nncf_callback.InitLoader.__next__">__next__</a></li>
-<li><a class="reference internal" href="#anomalib.utils.callbacks.nncf_callback.InitLoader.get_inputs">get_inputs</a></li>
-<li><a class="reference internal" href="#anomalib.utils.callbacks.nncf_callback.InitLoader.get_target">get_target</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#anomalib.utils.callbacks.nncf_callback.NNCFCallback">NNCFCallback</a><ul>
-<li><a class="reference internal" href="#anomalib.utils.callbacks.nncf_callback.NNCFCallback.setup">setup</a></li>
-<li><a class="reference internal" href="#anomalib.utils.callbacks.nncf_callback.NNCFCallback.on_train_batch_start">on_train_batch_start</a></li>
-<li><a class="reference internal" href="#anomalib.utils.callbacks.nncf_callback.NNCFCallback.on_train_end">on_train_end</a></li>
-<li><a class="reference internal" href="#anomalib.utils.callbacks.nncf_callback.NNCFCallback.on_train_epoch_start">on_train_epoch_start</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.nncf</span></code></a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
 </ul>
 </li>
 </ul>

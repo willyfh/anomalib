@@ -164,7 +164,7 @@ Functions
 
 
 
-.. py:function:: get_logger(config: Union[omegaconf.dictconfig.DictConfig, omegaconf.listconfig.ListConfig]) -> Union[pytorch_lightning.loggers.base.LightningLoggerBase, bool]
+.. py:function:: get_logger(config: Union[omegaconf.dictconfig.DictConfig, omegaconf.listconfig.ListConfig]) -> Union[pytorch_lightning.loggers.LightningLoggerBase, Iterable[pytorch_lightning.loggers.LightningLoggerBase], bool]
 
    Return a logger based on the choice of logger in the config file.
 

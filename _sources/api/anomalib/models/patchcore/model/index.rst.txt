@@ -30,12 +30,14 @@ Classes
 
    Generate Anomaly Heatmap.
 
-   .. py:method:: compute_anomaly_map(self, patch_scores: torch.Tensor) -> torch.Tensor
+   .. py:method:: compute_anomaly_map(self, patch_scores: torch.Tensor, feature_map_shape: torch.Size) -> torch.Tensor
 
       Pixel Level Anomaly Heatmap.
 
       :param patch_scores: Patch-level anomaly scores
       :type patch_scores: torch.Tensor
+      :param feature_map_shape: 2-D feature map shape (width, height)
+      :type feature_map_shape: torch.Size
 
       :returns: Map of the pixel-level anomaly scores
       :rtype: torch.Tensor
@@ -58,10 +60,11 @@ Classes
       Returns anomaly_map and anomaly_score.
 
       Expects `patch_scores` keyword to be passed explicitly
+      Expects `feature_map_shape` keyword to be passed explicitly
 
       Example
       >>> anomaly_map_generator = AnomalyMapGenerator(input_size=input_size)
-      >>> map, score = anomaly_map_generator(patch_scores=numpy_array)
+      >>> map, score = anomaly_map_generator(patch_scores=numpy_array, feature_map_shape=feature_map_shape)
 
       :raises ValueError: If `patch_scores` key is not found
 
