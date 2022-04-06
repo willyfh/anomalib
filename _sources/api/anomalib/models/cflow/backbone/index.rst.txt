@@ -54,7 +54,7 @@ Functions
    :rtype: nn.Sequential
 
 
-.. py:function:: cflow_head(condition_vector: int, coupling_blocks: int, clamp_alpha: float, n_features: int) -> FrEIA.framework.sequence_inn.SequenceINN
+.. py:function:: cflow_head(condition_vector: int, coupling_blocks: int, clamp_alpha: float, n_features: int, permute_soft: bool = False) -> FrEIA.framework.sequence_inn.SequenceINN
 
    Create invertible decoder network.
 
@@ -66,6 +66,10 @@ Functions
    :type clamp_alpha: float
    :param n_features: number of decoder features
    :type n_features: int
+   :param permute_soft: Whether to sample the permutation matrix :math:`R` from :math:`SO(N)`,
+                        or to use hard permutations instead. Note, ``permute_soft=True`` is very slow
+                        when working with >512 dimensions.
+   :type permute_soft: bool
 
    :returns: decoder network block
    :rtype: SequenceINN

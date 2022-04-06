@@ -442,7 +442,9 @@
     <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">dims_in</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">dims_in</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dims_in</span><span class="p">,</span> <span class="n">dims_out</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="cflow_head"><a class="viewcode-back" href="../../../../api/anomalib/models/cflow/backbone/index.html#anomalib.models.cflow.backbone.cflow_head">[docs]</a><span class="k">def</span> <span class="nf">cflow_head</span><span class="p">(</span><span class="n">condition_vector</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">coupling_blocks</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">clamp_alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SequenceINN</span><span class="p">:</span>
+<div class="viewcode-block" id="cflow_head"><a class="viewcode-back" href="../../../../api/anomalib/models/cflow/backbone/index.html#anomalib.models.cflow.backbone.cflow_head">[docs]</a><span class="k">def</span> <span class="nf">cflow_head</span><span class="p">(</span>
+    <span class="n">condition_vector</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">coupling_blocks</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">clamp_alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">permute_soft</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SequenceINN</span><span class="p">:</span>
     <span class="sd">"""Create invertible decoder network.</span>
 
 <span class="sd">    Args:</span>
@@ -450,6 +452,9 @@
 <span class="sd">        coupling_blocks (int): number of coupling blocks to build the decoder</span>
 <span class="sd">        clamp_alpha (float): clamping value to avoid exploding values</span>
 <span class="sd">        n_features (int): number of decoder features</span>
+<span class="sd">        permute_soft (bool): Whether to sample the permutation matrix :math:`R` from :math:`SO(N)`,</span>
+<span class="sd">            or to use hard permutations instead. Note, ``permute_soft=True`` is very slow</span>
+<span class="sd">            when working with &gt;512 dimensions.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        SequenceINN: decoder network block</span>
@@ -464,7 +469,7 @@
             <span class="n">subnet_constructor</span><span class="o">=</span><span class="n">subnet_fc</span><span class="p">,</span>
             <span class="n">affine_clamping</span><span class="o">=</span><span class="n">clamp_alpha</span><span class="p">,</span>
             <span class="n">global_affine_type</span><span class="o">=</span><span class="s2">"SOFTPLUS"</span><span class="p">,</span>
-            <span class="n">permute_soft</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">permute_soft</span><span class="o">=</span><span class="n">permute_soft</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="k">return</span> <span class="n">coder</span></div>
 </pre></div>

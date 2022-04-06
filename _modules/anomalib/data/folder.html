@@ -648,7 +648,8 @@
         <span class="n">train_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
         <span class="n">test_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
         <span class="n">num_workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
-        <span class="n">transform_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">transform_config_train</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">transform_config_val</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">create_validation_set</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Folder Dataset PL Datamodule.</span>
@@ -674,7 +675,11 @@
 <span class="sd">            train_batch_size (int, optional): Training batch size. Defaults to 32.</span>
 <span class="sd">            test_batch_size (int, optional): Test batch size. Defaults to 32.</span>
 <span class="sd">            num_workers (int, optional): Number of workers. Defaults to 8.</span>
-<span class="sd">            transform_config (Optional[Union[str, A.Compose]], optional): Config for pre-processing.</span>
+<span class="sd">            transform_config_train (Optional[Union[str, A.Compose]], optional): Config for pre-processing</span>
+<span class="sd">                during training.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            transform_config_val (Optional[Union[str, A.Compose]], optional): Config for pre-processing</span>
+<span class="sd">                during validation.</span>
 <span class="sd">                Defaults to None.</span>
 <span class="sd">            create_validation_set (bool, optional):Boolean to create a validation set from the test set.</span>
 <span class="sd">                Those wanting to create a validation set could set this flag to ``True``.</span>
@@ -759,10 +764,15 @@
                 <span class="s2">"Check your configuration."</span>
             <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">task</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transform_config</span> <span class="o">=</span> <span class="n">transform_config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform_config_train</span> <span class="o">=</span> <span class="n">transform_config_train</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform_config_val</span> <span class="o">=</span> <span class="n">transform_config_val</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_size</span> <span class="o">=</span> <span class="n">image_size</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span> <span class="o">=</span> <span class="n">PreProcessor</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_config</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_config_train</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_config_val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transform_config_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_config_train</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pre_process_train</span> <span class="o">=</span> <span class="n">PreProcessor</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_config_train</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pre_process_val</span> <span class="o">=</span> <span class="n">PreProcessor</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_config_val</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">train_batch_size</span> <span class="o">=</span> <span class="n">train_batch_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span> <span class="o">=</span> <span class="n">test_batch_size</span>
@@ -791,7 +801,7 @@
                 <span class="n">split</span><span class="o">=</span><span class="s2">"train"</span><span class="p">,</span>
                 <span class="n">split_ratio</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">split_ratio</span><span class="p">,</span>
                 <span class="n">mask_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mask_dir</span><span class="p">,</span>
-                <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">,</span>
+                <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process_train</span><span class="p">,</span>
                 <span class="n">extensions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">extensions</span><span class="p">,</span>
                 <span class="n">task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">,</span>
                 <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
@@ -805,7 +815,7 @@
                 <span class="n">split</span><span class="o">=</span><span class="s2">"val"</span><span class="p">,</span>
                 <span class="n">split_ratio</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">split_ratio</span><span class="p">,</span>
                 <span class="n">mask_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mask_dir</span><span class="p">,</span>
-                <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">,</span>
+                <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process_val</span><span class="p">,</span>
                 <span class="n">extensions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">extensions</span><span class="p">,</span>
                 <span class="n">task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">,</span>
                 <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
@@ -818,7 +828,7 @@
             <span class="n">split</span><span class="o">=</span><span class="s2">"test"</span><span class="p">,</span>
             <span class="n">split_ratio</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">split_ratio</span><span class="p">,</span>
             <span class="n">mask_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mask_dir</span><span class="p">,</span>
-            <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">,</span>
+            <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process_val</span><span class="p">,</span>
             <span class="n">extensions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">extensions</span><span class="p">,</span>
             <span class="n">task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">,</span>
             <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
@@ -827,7 +837,7 @@
 
         <span class="k">if</span> <span class="n">stage</span> <span class="o">==</span> <span class="s2">"predict"</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inference_data</span> <span class="o">=</span> <span class="n">InferenceDataset</span><span class="p">(</span>
-                <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span> <span class="n">transform_config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_config</span>
+                <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span> <span class="n">transform_config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_config_val</span>
             <span class="p">)</span></div>
 
 <div class="viewcode-block" id="FolderDataModule.train_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/folder/index.html#anomalib.data.folder.FolderDataModule.train_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TRAIN_DATALOADERS</span><span class="p">:</span>

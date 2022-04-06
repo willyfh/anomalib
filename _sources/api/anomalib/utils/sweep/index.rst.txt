@@ -36,6 +36,7 @@ Functions
 
 .. autoapisummary::
 
+   anomalib.utils.sweep.flatten_sweep_params
    anomalib.utils.sweep.get_run_config
    anomalib.utils.sweep.set_in_nested_config
    anomalib.utils.sweep.get_meta_data
@@ -43,6 +44,21 @@ Functions
    anomalib.utils.sweep.get_sweep_callbacks
    anomalib.utils.sweep.get_torch_throughput
 
+
+
+.. py:function:: flatten_sweep_params(params_dict: omegaconf.DictConfig) -> omegaconf.DictConfig
+
+   Flatten the nested parameters section of the config object.
+
+   We need to flatten the params so that all the nested keys are concatenated into a single string.
+   This is useful when
+   - We need to do a cartesian product of all the combinations of the configuration for grid search.
+   - Save keys as headers for csv
+   - Add the config to `wandb` sweep.
+
+   :param params_dict: DictConfig: The dictionary containing the hpo parameters in the original, nested, structure.
+
+   :returns: flattened version of the parameter dictionary.
 
 
 .. py:function:: get_run_config(params_dict: omegaconf.DictConfig) -> Generator[omegaconf.DictConfig, None, None]

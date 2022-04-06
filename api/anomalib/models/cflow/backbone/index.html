@@ -386,7 +386,7 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#anomalib.models.cflow.backbone.subnet_fc" title="anomalib.models.cflow.backbone.subnet_fc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subnet_fc</span></code></a>(dims_in: int, dims_out: int)</p></td>
 <td><p>Subnetwork which predicts the affine coefficients.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.cflow.backbone.cflow_head" title="anomalib.models.cflow.backbone.cflow_head"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cflow_head</span></code></a>(condition_vector: int, coupling_blocks: int, clamp_alpha: float, n_features: int) → FrEIA.framework.sequence_inn.SequenceINN</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.cflow.backbone.cflow_head" title="anomalib.models.cflow.backbone.cflow_head"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cflow_head</span></code></a>(condition_vector: int, coupling_blocks: int, clamp_alpha: float, n_features: int, permute_soft: bool = False) → FrEIA.framework.sequence_inn.SequenceINN</p></td>
 <td><p>Create invertible decoder network.</p></td>
 </tr>
 </tbody>
@@ -435,7 +435,7 @@
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="anomalib.models.cflow.backbone.cflow_head">
-<span class="sig-prename descclassname"><span class="pre">anomalib.models.cflow.backbone.</span></span><span class="sig-name descname"><span class="pre">cflow_head</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition_vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupling_blocks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clamp_alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">FrEIA.framework.sequence_inn.SequenceINN</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/cflow/backbone.html#cflow_head"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.backbone.cflow_head" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anomalib.models.cflow.backbone.</span></span><span class="sig-name descname"><span class="pre">cflow_head</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition_vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupling_blocks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clamp_alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permute_soft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">FrEIA.framework.sequence_inn.SequenceINN</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/cflow/backbone.html#cflow_head"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.backbone.cflow_head" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create invertible decoder network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -444,6 +444,9 @@
 <li><p><strong>coupling_blocks</strong> (<em>int</em>) – number of coupling blocks to build the decoder</p></li>
 <li><p><strong>clamp_alpha</strong> (<em>float</em>) – clamping value to avoid exploding values</p></li>
 <li><p><strong>n_features</strong> (<em>int</em>) – number of decoder features</p></li>
+<li><p><strong>permute_soft</strong> (<em>bool</em>) – Whether to sample the permutation matrix <span class="math notranslate nohighlight">\(R\)</span> from <span class="math notranslate nohighlight">\(SO(N)\)</span>,
+or to use hard permutations instead. Note, <code class="docutils literal notranslate"><span class="pre">permute_soft=True</span></code> is very slow
+when working with &gt;512 dimensions.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -538,5 +541,6 @@
     <script src="../../../../../_static/underscore.js"></script>
     <script src="../../../../../_static/doctools.js"></script>
     <script src="../../../../../_static/scripts/main.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>

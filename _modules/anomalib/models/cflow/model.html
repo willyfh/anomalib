@@ -510,7 +510,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pool_dims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">out_dims</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">decoders</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">(</span>
             <span class="p">[</span>
-                <span class="n">cflow_head</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">condition_vector</span><span class="p">,</span> <span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">coupling_blocks</span><span class="p">,</span> <span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">clamp_alpha</span><span class="p">,</span> <span class="n">pool_dim</span><span class="p">)</span>
+                <span class="n">cflow_head</span><span class="p">(</span>
+                    <span class="n">condition_vector</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">condition_vector</span><span class="p">,</span>
+                    <span class="n">coupling_blocks</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">coupling_blocks</span><span class="p">,</span>
+                    <span class="n">clamp_alpha</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">clamp_alpha</span><span class="p">,</span>
+                    <span class="n">n_features</span><span class="o">=</span><span class="n">pool_dim</span><span class="p">,</span>
+                    <span class="n">permute_soft</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">soft_permutation</span><span class="p">,</span>
+                <span class="p">)</span>
                 <span class="k">for</span> <span class="n">pool_dim</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pool_dims</span>
             <span class="p">]</span>
         <span class="p">)</span>

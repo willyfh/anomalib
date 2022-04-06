@@ -400,26 +400,47 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_run_config" title="anomalib.utils.sweep.get_run_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_run_config</span></code></a>(params_dict: omegaconf.DictConfig) → Generator[omegaconf.DictConfig, None, None]</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.sweep.flatten_sweep_params" title="anomalib.utils.sweep.flatten_sweep_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flatten_sweep_params</span></code></a>(params_dict: omegaconf.DictConfig) → omegaconf.DictConfig</p></td>
+<td><p>Flatten the nested parameters section of the config object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_run_config" title="anomalib.utils.sweep.get_run_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_run_config</span></code></a>(params_dict: omegaconf.DictConfig) → Generator[omegaconf.DictConfig, None, None]</p></td>
 <td><p>Yields configuration for a single run.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.utils.sweep.set_in_nested_config" title="anomalib.utils.sweep.set_in_nested_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_in_nested_config</span></code></a>(config: omegaconf.DictConfig, keymap: List, value: Any)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.sweep.set_in_nested_config" title="anomalib.utils.sweep.set_in_nested_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_in_nested_config</span></code></a>(config: omegaconf.DictConfig, keymap: List, value: Any)</p></td>
 <td><p>Set an item in a nested config object using a list of keys.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_meta_data" title="anomalib.utils.sweep.get_meta_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_meta_data</span></code></a>(model: anomalib.models.components.AnomalyModule, input_size: Tuple[int, int]) → Dict</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_meta_data" title="anomalib.utils.sweep.get_meta_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_meta_data</span></code></a>(model: anomalib.models.components.AnomalyModule, input_size: Tuple[int, int]) → Dict</p></td>
 <td><p>Get meta data for inference.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_openvino_throughput" title="anomalib.utils.sweep.get_openvino_throughput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_openvino_throughput</span></code></a>(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model_path: pathlib.Path, test_dataset: torch.utils.data.DataLoader, meta_data: Dict) → float</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_openvino_throughput" title="anomalib.utils.sweep.get_openvino_throughput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_openvino_throughput</span></code></a>(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model_path: pathlib.Path, test_dataset: torch.utils.data.DataLoader, meta_data: Dict) → float</p></td>
 <td><p>Runs the generated OpenVINO model on a dummy dataset to get throughput.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_sweep_callbacks" title="anomalib.utils.sweep.get_sweep_callbacks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_sweep_callbacks</span></code></a>() → List[pytorch_lightning.Callback]</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_sweep_callbacks" title="anomalib.utils.sweep.get_sweep_callbacks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_sweep_callbacks</span></code></a>() → List[pytorch_lightning.Callback]</p></td>
 <td><p>Gets callbacks relevant to sweep.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_torch_throughput" title="anomalib.utils.sweep.get_torch_throughput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_torch_throughput</span></code></a>(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model: anomalib.models.components.AnomalyModule, test_dataset: torch.utils.data.DataLoader, meta_data: Dict) → float</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_torch_throughput" title="anomalib.utils.sweep.get_torch_throughput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_torch_throughput</span></code></a>(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model: anomalib.models.components.AnomalyModule, test_dataset: torch.utils.data.DataLoader, meta_data: Dict) → float</p></td>
 <td><p>Tests the model on dummy data. Images are passed sequentially to make the comparision with OpenVINO model fair.</p></td>
 </tr>
 </tbody>
 </table></div>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.utils.sweep.flatten_sweep_params">
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.</span></span><span class="sig-name descname"><span class="pre">flatten_sweep_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">omegaconf.DictConfig</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">omegaconf.DictConfig</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/utils/sweep/config.html#flatten_sweep_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.sweep.flatten_sweep_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flatten the nested parameters section of the config object.</p>
+<p>We need to flatten the params so that all the nested keys are concatenated into a single string.
+This is useful when
+- We need to do a cartesian product of all the combinations of the configuration for grid search.
+- Save keys as headers for csv
+- Add the config to <cite>wandb</cite> sweep.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>params_dict</strong> – DictConfig: The dictionary containing the hpo parameters in the original, nested, structure.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>flattened version of the parameter dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="anomalib.utils.sweep.get_run_config">
 <span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.</span></span><span class="sig-name descname"><span class="pre">get_run_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">omegaconf.DictConfig</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="../../../../models/anomalib.models.ganomaly.torch_model.html#anomalib.models.ganomaly.torch_model.Generator" title="anomalib.models.ganomaly.torch_model.Generator"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/anomalib/utils/sweep/config.html#get_run_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.sweep.get_run_config" title="Permalink to this definition">¶</a></dt>
@@ -633,6 +654,7 @@ and values for current run.</p>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#package-contents">Package Contents</a><ul>
 <li><a class="reference internal" href="#functions">Functions</a><ul>
+<li><a class="reference internal" href="#anomalib.utils.sweep.flatten_sweep_params">flatten_sweep_params</a></li>
 <li><a class="reference internal" href="#anomalib.utils.sweep.get_run_config">get_run_config</a></li>
 <li><a class="reference internal" href="#anomalib.utils.sweep.set_in_nested_config">set_in_nested_config</a></li>
 <li><a class="reference internal" href="#anomalib.utils.sweep.get_meta_data">get_meta_data</a></li>
