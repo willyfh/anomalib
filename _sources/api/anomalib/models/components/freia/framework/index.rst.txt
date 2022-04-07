@@ -1,0 +1,100 @@
+:py:mod:`anomalib.models.components.freia.framework`
+====================================================
+
+.. py:module:: anomalib.models.components.freia.framework
+
+.. autoapi-nested-parse::
+
+   Framework.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   sequence_inn/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.components.freia.framework.SequenceINN
+
+
+
+
+.. py:class:: SequenceINN(*dims: int, force_tuple_output=False)
+
+   Bases: :py:obj:`anomalib.models.components.freia.modules.base.InvertibleModule`
+
+   Simpler than FrEIA.framework.GraphINN.
+
+   Only supports a sequential series of modules (no splitting, merging,
+   branching off).
+   Has an append() method, to add new blocks in a more simple way than the
+   computation-graph based approach of GraphINN. For example:
+   .. code-block:: python
+      inn = SequenceINN(channels, dims_H, dims_W)
+      for i in range(n_blocks):
+          inn.append(FrEIA.modules.AllInOneBlock, clamp=2.0, permute_soft=True)
+      inn.append(FrEIA.modules.HaarDownsampling)
+      # and so on
+
+   .. py:method:: append(self, module_class, cond=None, cond_shape=None, **kwargs)
+
+      Append a reversible block from FrEIA.modules to the network.
+
+      :param module_class: Class from FrEIA.modules.
+      :param cond: index of which condition to use (conditions will be passed as list to forward()).
+                   Conditioning nodes are not needed for SequenceINN.
+      :type cond: int
+      :param cond_shape: the shape of the condition tensor.
+      :type cond_shape: tuple[int]
+      :param \*\*kwargs: Further keyword arguments that are passed to the constructor of module_class (see example).
+
+
+   .. py:method:: __getitem__(self, item)
+
+      Get item.
+
+
+   .. py:method:: __len__(self)
+
+      Get length.
+
+
+   .. py:method:: __iter__(self)
+
+      Iter.
+
+
+   .. py:method:: output_dims(self, input_dims: List[Tuple[int]]) -> List[Tuple[int]]
+
+      Output Dims.
+
+
+   .. py:method:: forward(self, x_or_z: torch.Tensor, c: Iterable[torch.Tensor] = None, rev: bool = False, jac: bool = True) -> Tuple[torch.Tensor, torch.Tensor]
+
+      Execute the sequential INN in forward or inverse (rev=True) direction.
+
+      :param x_or_z: input tensor (in contrast to GraphINN, a list of
+                     tensors is not supported, as SequenceINN only has
+                     one input).
+      :param c: list of conditions.
+      :param rev: whether to compute the network forward or reversed.
+      :param jac: whether to compute the log jacobian
+
+      :returns: network output.
+                jac (Tensor): log-jacobian-determinant.
+      :rtype: z_or_x (Tensor)
+
+
+
