@@ -409,6 +409,7 @@
 <span class="kn">from</span> <span class="nn">anomalib.pre_processing.transforms</span> <span class="kn">import</span> <span class="n">Denormalize</span>
 <span class="kn">from</span> <span class="nn">anomalib.utils</span> <span class="kn">import</span> <span class="n">loggers</span>
 <span class="kn">from</span> <span class="nn">anomalib.utils.loggers</span> <span class="kn">import</span> <span class="n">AnomalibWandbLogger</span>
+<span class="kn">from</span> <span class="nn">anomalib.utils.loggers.base</span> <span class="kn">import</span> <span class="n">ImageLoggerBase</span>
 
 
 <div class="viewcode-block" id="VisualizerCallback"><a class="viewcode-back" href="../../../../api/anomalib/utils/callbacks/visualizer_callback/index.html#anomalib.utils.callbacks.VisualizerCallback">[docs]</a><span class="k">class</span> <span class="nc">VisualizerCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
@@ -450,7 +451,7 @@
         <span class="k">for</span> <span class="n">log_to</span> <span class="ow">in</span> <span class="n">module</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">log_images_to</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">log_to</span> <span class="ow">in</span> <span class="n">loggers</span><span class="o">.</span><span class="n">AVAILABLE_LOGGERS</span><span class="p">:</span>
                 <span class="c1"># check if logger object is same as the requested object</span>
-                <span class="k">if</span> <span class="n">log_to</span> <span class="ow">in</span> <span class="n">logger_type</span> <span class="ow">and</span> <span class="n">module</span><span class="o">.</span><span class="n">logger</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">log_to</span> <span class="ow">in</span> <span class="n">logger_type</span> <span class="ow">and</span> <span class="n">module</span><span class="o">.</span><span class="n">logger</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">logger</span><span class="p">,</span> <span class="n">ImageLoggerBase</span><span class="p">):</span>
                     <span class="n">module</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span>
                         <span class="n">image</span><span class="o">=</span><span class="n">visualizer</span><span class="o">.</span><span class="n">figure</span><span class="p">,</span>
                         <span class="n">name</span><span class="o">=</span><span class="n">filename</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">"_"</span> <span class="o">+</span> <span class="n">filename</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
