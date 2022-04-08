@@ -136,6 +136,21 @@ Functions
       :type index: Optional[int]
 
 
+   .. py:method:: add_text(self, image: numpy.ndarray, text: str, font: int = cv2.FONT_HERSHEY_PLAIN)
+
+      Puts text on an image.
+
+      :param image: Input image.
+      :type image: np.ndarray
+      :param text: Text to add.
+      :type text: str
+      :param font: cv2 font type. Defaults to 0.
+      :type font: Optional[int]
+
+      :returns: Image with text.
+      :rtype: np.ndarray
+
+
    .. py:method:: show(self)
 
       Show image on a matplotlib figure.

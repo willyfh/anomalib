@@ -434,6 +434,26 @@ either be logged by accessing the <cite>figure</cite> attribute or can be saved 
 </dl>
 </dd></dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="anomalib.post_processing.visualizer.Visualizer.add_text">
+<span class="sig-name descname"><span class="pre">add_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">cv2.FONT_HERSHEY_PLAIN</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/post_processing/visualizer.html#Visualizer.add_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.post_processing.visualizer.Visualizer.add_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Puts text on an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>np.ndarray</em>) – Input image.</p></li>
+<li><p><strong>text</strong> (<em>str</em>) – Text to add.</p></li>
+<li><p><strong>font</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – cv2 font type. Defaults to 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Image with text.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
 <dt class="sig sig-object py" id="anomalib.post_processing.visualizer.Visualizer.show">
 <span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/post_processing/visualizer.html#Visualizer.show"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.post_processing.visualizer.Visualizer.show" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show image on a matplotlib figure.</p>
@@ -517,6 +537,7 @@ either be logged by accessing the <cite>figure</cite> attribute or can be saved 
 <li><a class="reference internal" href="#classes">Classes</a><ul>
 <li><a class="reference internal" href="#anomalib.post_processing.visualizer.Visualizer">Visualizer</a><ul>
 <li><a class="reference internal" href="#anomalib.post_processing.visualizer.Visualizer.add_image">add_image</a></li>
+<li><a class="reference internal" href="#anomalib.post_processing.visualizer.Visualizer.add_text">add_text</a></li>
 <li><a class="reference internal" href="#anomalib.post_processing.visualizer.Visualizer.show">show</a></li>
 <li><a class="reference internal" href="#anomalib.post_processing.visualizer.Visualizer.save">save</a></li>
 <li><a class="reference internal" href="#anomalib.post_processing.visualizer.Visualizer.close">close</a></li>
