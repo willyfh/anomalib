@@ -17,55 +17,8 @@ Classes
 
 .. autoapisummary::
 
-   anomalib.models.dfkde.model.DfkdeModel
    anomalib.models.dfkde.model.DfkdeLightning
 
-
-
-
-.. py:class:: DfkdeModel(backbone: str, filter_count: int, threshold_steepness: float, threshold_offset: float)
-
-   Bases: :py:obj:`torch.nn.Module`
-
-   DFKDE model.
-
-   :param backbone: Pre-trained model backbone.
-   :type backbone: str
-   :param filter_count: Number of filters.
-   :type filter_count: int
-   :param threshold_steepness: Threshold steepness for normality model.
-   :type threshold_steepness: float
-   :param threshold_offset: Threshold offset for normality model.
-   :type threshold_offset: float
-
-   .. py:method:: get_features(self, batch: torch.Tensor) -> torch.Tensor
-
-      Extract features from the pretrained network.
-
-      :param batch: Image batch.
-      :type batch: Tensor
-
-      :returns: Tensor containing extracted features.
-      :rtype: Tensor
-
-
-   .. py:method:: fit(self, embeddings: List[torch.Tensor])
-
-      Fit normality model.
-
-      :param embeddings: Embeddings to fit.
-      :type embeddings: List[Tensor]
-
-
-   .. py:method:: forward(self, batch: torch.Tensor) -> torch.Tensor
-
-      Prediction by normality model.
-
-      :param batch: Input images.
-      :type batch: Tensor
-
-      :returns: Predictions
-      :rtype: Tensor
 
 
 

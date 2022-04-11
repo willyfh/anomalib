@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="anomalib.models.dfkde.normality_model" href="anomalib.models.dfkde.normality_model.html" /><link rel="prev" title="Models Reference" href="../models.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="anomalib.models.dfm.model" href="anomalib.models.dfm.model.html" /><link rel="prev" title="Models Reference" href="../models.html" />
 
     <meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
         <title>anomalib.models.dfkde.model - Anomalib 2021, Anomalib Contributors documentation</title>
@@ -163,7 +163,6 @@
 <ul class="current">
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../models.html">Models Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">anomalib.models.dfkde.model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.dfkde.normality_model.html">anomalib.models.dfkde.normality_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="anomalib.models.dfm.model.html">anomalib.models.dfm.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="anomalib.models.dfm.dfm_model.html">anomalib.models.dfm.dfm_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="anomalib.models.ganomaly.model.html">anomalib.models.ganomaly.model</a></li>
@@ -251,7 +250,7 @@
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/dfkde/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/dfkde/model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde.model</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/dfkde/normality_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde.normality_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/dfkde/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde.torch_model</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/dfm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfm</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -392,9 +391,6 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.dfkde.model.DfkdeLightning" title="anomalib.models.dfkde.model.DfkdeLightning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DfkdeLightning</span></code></a>(hparams)</p></td>
 <td><p>DFKDE: Deep Feature Kernel Density Estimation.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.models.dfkde.model.DfkdeModel" title="anomalib.models.dfkde.model.DfkdeModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DfkdeModel</span></code></a>(backbone, filter_count, ...)</p></td>
-<td><p>DFKDE model.</p></td>
-</tr>
 </tbody>
 </table></div>
 <dl class="py class">
@@ -448,77 +444,18 @@
 </dl>
 </dd></dl>
 </dd></dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.model.DfkdeModel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfkde.model.</span></span><span class="sig-name descname"><span class="pre">DfkdeModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backbone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_steepness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/anomalib/models/dfkde/model.html#DfkdeModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.model.DfkdeModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
-<p>DFKDE model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>backbone</strong> (<em>str</em>) – Pre-trained model backbone.</p></li>
-<li><p><strong>filter_count</strong> (<em>int</em>) – Number of filters.</p></li>
-<li><p><strong>threshold_steepness</strong> (<em>float</em>) – Threshold steepness for normality model.</p></li>
-<li><p><strong>threshold_offset</strong> (<em>float</em>) – Threshold offset for normality model.</p></li>
-</ul>
-</dd>
-</dl>
-<p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.model.DfkdeModel.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embeddings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/anomalib/models/dfkde/model.html#DfkdeModel.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.model.DfkdeModel.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fit normality model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>embeddings</strong> (<em>List</em><em>[</em><em>Tensor</em><em>]</em>) – Embeddings to fit.</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.model.DfkdeModel.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../_modules/anomalib/models/dfkde/model.html#DfkdeModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.model.DfkdeModel.forward" title="Permalink to this definition">¶</a></dt>
-<dd><p>Prediction by normality model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>batch</strong> (<em>Tensor</em>) – Input images.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Predictions</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Tensor</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.model.DfkdeModel.get_features">
-<span class="sig-name descname"><span class="pre">get_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../_modules/anomalib/models/dfkde/model.html#DfkdeModel.get_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.model.DfkdeModel.get_features" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract features from the pretrained network.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>batch</strong> (<em>Tensor</em>) – Image batch.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Tensor containing extracted features.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Tensor</p>
-</dd>
-</dl>
-</dd></dl>
-</dd></dl>
 </section>
 
       </article>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="anomalib.models.dfkde.normality_model.html">
+          <a class="next-page" href="anomalib.models.dfm.model.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">anomalib.models.dfkde.normality_model</div>
+                <div class="title">anomalib.models.dfm.model</div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -569,12 +506,6 @@
 <li><a class="reference internal" href="#anomalib.models.dfkde.model.DfkdeLightning.on_validation_start">on_validation_start</a></li>
 <li><a class="reference internal" href="#anomalib.models.dfkde.model.DfkdeLightning.training_step">training_step</a></li>
 <li><a class="reference internal" href="#anomalib.models.dfkde.model.DfkdeLightning.validation_step">validation_step</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.model.DfkdeModel">DfkdeModel</a><ul>
-<li><a class="reference internal" href="#anomalib.models.dfkde.model.DfkdeModel.fit">fit</a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.model.DfkdeModel.forward">forward</a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.model.DfkdeModel.get_features">get_features</a></li>
 </ul>
 </li>
 </ul>

@@ -1,7 +1,7 @@
-:py:mod:`anomalib.models.dfkde.normality_model`
-===============================================
+:py:mod:`anomalib.models.dfkde.torch_model`
+===========================================
 
-.. py:module:: anomalib.models.dfkde.normality_model
+.. py:module:: anomalib.models.dfkde.torch_model
 
 .. autoapi-nested-parse::
 
@@ -17,17 +17,19 @@ Classes
 
 .. autoapisummary::
 
-   anomalib.models.dfkde.normality_model.NormalityModel
+   anomalib.models.dfkde.torch_model.DfkdeModel
 
 
 
 
-.. py:class:: NormalityModel(n_comps: int = 16, pre_processing: str = 'scale', filter_count: int = 40000, threshold_steepness: float = 0.05, threshold_offset: float = 12.0)
+.. py:class:: DfkdeModel(backbone: str, n_comps: int = 16, pre_processing: str = 'scale', filter_count: int = 40000, threshold_steepness: float = 0.05, threshold_offset: float = 12.0)
 
    Bases: :py:obj:`torch.nn.Module`
 
    Normality Model for the DFKDE algorithm.
 
+   :param backbone: Pre-trained model backbone.
+   :type backbone: str
    :param n_comps: Number of PCA components. Defaults to 16.
    :type n_comps: int, optional
    :param pre_processing: Preprocess features before passing to KDE.
@@ -40,12 +42,23 @@ Classes
    :param threshold_offset: Offset of the density function from 0. Defaults to 12.0.
    :type threshold_offset: float, optional
 
-   .. py:method:: fit(self, dataset: torch.Tensor) -> bool
+   .. py:method:: get_features(self, batch: torch.Tensor) -> torch.Tensor
 
-      Fit a kde model to dataset.
+      Extract features from the pretrained network.
 
-      :param dataset: Input dataset to fit the model.
-      :type dataset: Tensor
+      :param batch: Image batch.
+      :type batch: Tensor
+
+      :returns: Tensor containing extracted features.
+      :rtype: Tensor
+
+
+   .. py:method:: fit(self, embeddings: List[torch.Tensor]) -> bool
+
+      Fit a kde model to embeddings.
+
+      :param embeddings: Input embeddings to fit the model.
+      :type embeddings: Tensor
 
       :returns: Boolean confirming whether the training is successful.
 
@@ -100,9 +113,15 @@ Classes
       :returns: probability that image with {density} is anomalous
 
 
-   .. py:method:: forward(self, features: torch.Tensor) -> torch.Tensor
+   .. py:method:: forward(self, batch: torch.Tensor) -> torch.Tensor
 
-      Make module callable.
+      Prediction by normality model.
+
+      :param batch: Input images.
+      :type batch: Tensor
+
+      :returns: Predictions
+      :rtype: Tensor
 
 
 
