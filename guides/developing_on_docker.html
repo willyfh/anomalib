@@ -133,7 +133,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -344,6 +344,9 @@
 <p class="caption" role="heading"><span class="caption-text">Guides</span></p>
 <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Developing on Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#build-the-docker-image">Build the Docker Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#run-the-docker-image">Run the Docker Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#using-vscode">Using VSCode</a></li>
 <li class="toctree-l1"><a class="reference internal" href="structure_of_documentation.html">Structure of the Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_tox.html">Using Tox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_pre_commit.html">Pre-commit Hooks</a></li>
@@ -373,7 +376,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -382,20 +385,47 @@
 <span id="id1"></span><h1>Developing on Docker<a class="headerlink" href="#developing-on-docker" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Assumes you have GPU on your system with the correct drivers installed</p>
+<p>You need a CUDA-capable GPU with suitable drivers installed</p>
 </div>
 <ol class="arabic simple">
-<li><p>Install <a class="reference external" href="https://code.visualstudio.com/download">VSCode</a></p></li>
 <li><p>Install <a class="reference external" href="https://docs.docker.com/engine/install/">Docker</a></p></li>
 <li><p>Install <a class="reference external" href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html">NVIDIA Container Toolkit</a></p></li>
 </ol>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Make sure your user is added to the docker group. First check by typing <code class="docutils literal notranslate"><span class="pre">groups</span></code> in terminal. If     <code class="docutils literal notranslate"><span class="pre">docker</span></code> is not listed, then use the command <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">usermod</span> <span class="pre">-aG</span> <span class="pre">docker</span> <span class="pre">$USER</span></code>.</p>
+</section>
+<section id="build-the-docker-image">
+<h1>Build the Docker Image<a class="headerlink" href="#build-the-docker-image" title="Permalink to this headline">¶</a></h1>
+<p>To use anomalib with Docker, you can build a Docker image containing anomalib all its dependencies from the provided Dockerfile. To this end, navigate to the anomalib root directory (the one containing the Dockerfile) and build the Docker image with</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker build . --tag=anomalib</span>
+</pre></div>
 </div>
-<ol class="arabic simple" start="4">
-<li><p>Logout and log back in to ensure that user group is evaluated.</p></li>
-<li><p>Open VSCode.</p></li>
+</section>
+<section id="run-the-docker-image">
+<h1>Run the Docker Image<a class="headerlink" href="#run-the-docker-image" title="Permalink to this headline">¶</a></h1>
+<p>After building the image, you can run it as follows</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run \</span>
+<span class="go">-it --rm \</span>
+<span class="go">--ipc=host \</span>
+<span class="go">--env="DISPLAY" \</span>
+<span class="go">--gpus=all \</span>
+<span class="go">-w /anomalib \</span>
+<span class="go">-v /tmp/.X11-unix:/tmp/.X11-unix:rw \</span>
+<span class="go">-v "$(pwd)":/anomalib \</span>
+<span class="go">anomalib \</span>
+<span class="go">/bin/bash</span>
+</pre></div>
+</div>
+<p>This creates an interactive bash session inside the Docker container, in which you can run all anomalib commands as described in the <a class="reference external" href="https://github.com/openvinotoolkit/anomalib/blob/development/README.md">readme</a>.</p>
+<p>The source code is mapped into the running container by means of the <cite>-v “$(pwd)”:/anomalib</cite> parameter. This facilitates changes to the source code without having to rebuild the Docker image.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To forward graphical output of the Docker container to the host operating system, you have to disable access control of the host’s X11 server. To this end, execute the shell command <cite>xhost +</cite> on the host.</p>
+</div>
+</section>
+<section id="using-vscode">
+<h1>Using VSCode<a class="headerlink" href="#using-vscode" title="Permalink to this headline">¶</a></h1>
+<p>You may also use the Remote-Containers extension for VSCode for deployment with Docker, which can be set up as follows:</p>
+<ol class="arabic simple">
+<li><p>Install and run <a class="reference external" href="https://code.visualstudio.com/download">VSCode</a></p></li>
 <li><p>Install the Remote-Containers extension by Microsoft in VSCode.</p></li>
 <li><p>Open command panel by pressing <code class="docutils literal notranslate"><span class="pre">CTRL</span> <span class="pre">+</span> <span class="pre">SHIFT</span> <span class="pre">+</span> <span class="pre">P</span></code>.</p></li>
 <li><p>Type <code class="docutils literal notranslate"><span class="pre">Remote-Containers:</span> <span class="pre">Open</span> <span class="pre">Folder</span> <span class="pre">in</span> <span class="pre">Container</span></code> and press Enter.</p></li>
@@ -451,8 +481,27 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Developing on Docker</a></li>
+<li><a class="reference internal" href="#build-the-docker-image">Build the Docker Image</a></li>
+<li><a class="reference internal" href="#run-the-docker-image">Run the Docker Image</a></li>
+<li><a class="reference internal" href="#using-vscode">Using VSCode</a></li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
