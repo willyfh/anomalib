@@ -382,13 +382,15 @@
 <span id="id1"></span><h1>Pre-commit Hooks<a class="headerlink" href="#pre-commit-hooks" title="Permalink to this headline">¶</a></h1>
 <p>First of all, you will need to install development requirements. This will also install the pre-commit pip package
 in your python environment</p>
-<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements_dev.txt</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements/dev.txt</span></code></p>
 <p>Then, install pre-commit hooks using the following command:</p>
 <p><code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">install</span></code></p>
 <p>Pre-commit hooks will run several formatters, linters and type checkers each time you commit some changes to a branch. Some tools like black and isort will automatically format your files to enforce consistent formatting within the repo. Other tools will provide a list of errors and warnings which you will be required to address before being able to make the commit.</p>
 <p>In some cases it might be desired to commit your changes even though some of the checks are failing. For example when you want to address the pre-commit issues at a later time, or when you want to commit a work-in-progress. In these cases, you can skip the pre-commit hooks by adding the <code class="docutils literal notranslate"><span class="pre">--no-verify</span></code> parameter to the commit command.</p>
 <p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span> <span class="pre">'WIP</span> <span class="pre">commit'</span> <span class="pre">--no-verify</span></code></p>
 <p>When doing so, please make sure to revisit the issues at a later time. A good way to check if all issues have been addressed before making an MR is to run tox.</p>
+<p>Apart from tox, you can also run <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> on all the files to check formatting and style issues. To do this you can use</p>
+<p><code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">run</span> <span class="pre">--all</span></code></p>
 </section>
 
       </article>
