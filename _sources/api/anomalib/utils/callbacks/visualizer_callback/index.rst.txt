@@ -49,7 +49,7 @@ Classes
       :type filename: Path
 
 
-   .. py:method:: on_test_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, outputs: Optional[pytorch_lightning.utilities.types.STEP_OUTPUT], _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+   .. py:method:: on_test_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule, outputs: Optional[pytorch_lightning.utilities.types.STEP_OUTPUT], _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
 
       Log images at the end of every batch.
 
@@ -68,7 +68,7 @@ Classes
       :type _dataloader_idx: int
 
 
-   .. py:method:: on_test_end(self, _trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule) -> None
+   .. py:method:: on_test_end(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule) -> None
 
       Sync logs.
 
@@ -78,7 +78,7 @@ Classes
       :param _trainer: Pytorch Lightning trainer (unused)
       :type _trainer: pl.Trainer
       :param pl_module: Anomaly module
-      :type pl_module: pl.LightningModule
+      :type pl_module: AnomalyModule
 
 
 
