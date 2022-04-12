@@ -20,6 +20,7 @@ Functions
 
    anomalib.data.utils.image.get_image_filenames
    anomalib.data.utils.image.read_image
+   anomalib.data.utils.image.pad_nextpow2
 
 
 
@@ -46,5 +47,19 @@ Functions
    >>> image = read_image("test_image.jpg")
 
    :returns: image as numpy array
+
+
+.. py:function:: pad_nextpow2(batch: torch.Tensor) -> torch.Tensor
+
+   Compute required padding from input size and return padded images.
+
+   Finds the largest dimension and computes a square image of dimensions that are of the power of 2.
+   In case the image dimension is odd, it returns the image with an extra padding on one side.
+
+   :param batch: Input images
+   :type batch: Tensor
+
+   :returns: Padded batch
+   :rtype: batch
 
 

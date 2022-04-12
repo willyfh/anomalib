@@ -395,16 +395,19 @@
 
 
 <span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
+
+<span class="kn">from</span> <span class="nn">anomalib.data.utils.image</span> <span class="kn">import</span> <span class="n">pad_nextpow2</span>
 
 
 <div class="viewcode-block" id="Encoder"><a class="viewcode-back" href="../../../../models/anomalib.models.ganomaly.torch_model.html#anomalib.models.ganomaly.torch_model.Encoder">[docs]</a><span class="k">class</span> <span class="nc">Encoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">"""Encoder Network.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        input_size (int): Size of input image</span>
+<span class="sd">        input_size (Tuple[int, int]): Size of input image</span>
 <span class="sd">        latent_vec_size (int): Size of latent vector z</span>
 <span class="sd">        num_input_channels (int): Number of input channels in the image</span>
 <span class="sd">        n_features (int): Number of features per convolution layer</span>
@@ -414,7 +417,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">input_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
         <span class="n">latent_vec_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">num_input_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -423,13 +426,10 @@
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-        <span class="k">assert</span> <span class="n">input_size</span> <span class="o">%</span> <span class="mi">16</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"Input size should be a multiple of 16"</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">input_layers</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">input_layers</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">"initial-conv-</span><span class="si">{</span><span class="n">num_input_channels</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">n_features</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
-            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">num_input_channels</span><span class="p">,</span> <span class="n">n_features</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">num_input_channels</span><span class="p">,</span> <span class="n">n_features</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input_layers</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">"initial-relu-</span><span class="si">{</span><span class="n">n_features</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 
@@ -446,8 +446,8 @@
 
         <span class="c1"># Create pyramid features to reach latent vector</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pyramid_features</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
-        <span class="n">input_size</span> <span class="o">=</span> <span class="n">input_size</span> <span class="o">//</span> <span class="mi">2</span>
-        <span class="k">while</span> <span class="n">input_size</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">pyramid_dim</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="o">*</span><span class="n">input_size</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># Use the smaller dimension to create pyramid.</span>
+        <span class="k">while</span> <span class="n">pyramid_dim</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
             <span class="n">in_features</span> <span class="o">=</span> <span class="n">n_features</span>
             <span class="n">out_features</span> <span class="o">=</span> <span class="n">n_features</span> <span class="o">*</span> <span class="mi">2</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pyramid_features</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span>
@@ -457,12 +457,17 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">pyramid_features</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">"pyramid-</span><span class="si">{</span><span class="n">out_features</span><span class="si">}</span><span class="s2">-batchnorm"</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">out_features</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pyramid_features</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">"pyramid-</span><span class="si">{</span><span class="n">out_features</span><span class="si">}</span><span class="s2">-relu"</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
             <span class="n">n_features</span> <span class="o">=</span> <span class="n">out_features</span>
-            <span class="n">input_size</span> <span class="o">=</span> <span class="n">input_size</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="n">pyramid_dim</span> <span class="o">=</span> <span class="n">pyramid_dim</span> <span class="o">//</span> <span class="mi">2</span>
 
         <span class="c1"># Final conv</span>
         <span class="k">if</span> <span class="n">add_final_conv_layer</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">final_conv_layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span>
-                <span class="n">n_features</span><span class="p">,</span> <span class="n">latent_vec_size</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span>
+                <span class="n">n_features</span><span class="p">,</span>
+                <span class="n">latent_vec_size</span><span class="p">,</span>
+                <span class="n">kernel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="p">)</span>
 
 <div class="viewcode-block" id="Encoder.forward"><a class="viewcode-back" href="../../../../models/anomalib.models.ganomaly.torch_model.html#anomalib.models.ganomaly.torch_model.Encoder.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">):</span>
@@ -481,7 +486,7 @@
     <span class="sd">"""Decoder Network.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        input_size (int): Size of input image</span>
+<span class="sd">        input_size (Tuple[int, int]): Size of input image</span>
 <span class="sd">        latent_vec_size (int): Size of latent vector z</span>
 <span class="sd">        num_input_channels (int): Number of input channels in the image</span>
 <span class="sd">        n_features (int): Number of features per convolution layer</span>
@@ -490,39 +495,57 @@
 <span class="sd">    """</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">input_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">latent_vec_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_input_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">extra_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">latent_vec_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">num_input_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">extra_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="k">assert</span> <span class="n">input_size</span> <span class="o">%</span> <span class="mi">16</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"Input size should be a multiple of 16"</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">latent_input</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
 
         <span class="c1"># Calculate input channel size to recreate inverse pyramid</span>
-        <span class="n">exp_factor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">input_size</span> <span class="o">//</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">exp_factor</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">input_size</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">-</span> <span class="mi">2</span>
         <span class="n">n_input_features</span> <span class="o">=</span> <span class="n">n_features</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">exp_factor</span><span class="p">)</span>
 
         <span class="c1"># CNN layer for latent vector input</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">latent_input</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">"initial-</span><span class="si">{</span><span class="n">latent_vec_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">n_input_features</span><span class="si">}</span><span class="s2">-convt"</span><span class="p">,</span>
-            <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">latent_vec_size</span><span class="p">,</span> <span class="n">n_input_features</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span>
+                <span class="n">latent_vec_size</span><span class="p">,</span>
+                <span class="n">n_input_features</span><span class="p">,</span>
+                <span class="n">kernel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">),</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">latent_input</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">"initial-</span><span class="si">{</span><span class="n">n_input_features</span><span class="si">}</span><span class="s2">-batchnorm"</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">n_input_features</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">latent_input</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">"initial-</span><span class="si">{</span><span class="n">n_input_features</span><span class="si">}</span><span class="s2">-relu"</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="kc">True</span><span class="p">))</span>
 
         <span class="c1"># Create inverse pyramid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inverse_pyramid</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
-        <span class="n">input_size</span> <span class="o">=</span> <span class="n">input_size</span> <span class="o">//</span> <span class="mi">2</span>
-        <span class="k">while</span> <span class="n">input_size</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">pyramid_dim</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="o">*</span><span class="n">input_size</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># Use the smaller dimension to create pyramid.</span>
+        <span class="k">while</span> <span class="n">pyramid_dim</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
             <span class="n">in_features</span> <span class="o">=</span> <span class="n">n_input_features</span>
             <span class="n">out_features</span> <span class="o">=</span> <span class="n">n_input_features</span> <span class="o">//</span> <span class="mi">2</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inverse_pyramid</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">"pyramid-</span><span class="si">{</span><span class="n">in_features</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">out_features</span><span class="si">}</span><span class="s2">-convt"</span><span class="p">,</span>
-                <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">in_features</span><span class="p">,</span> <span class="n">out_features</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span>
+                    <span class="n">in_features</span><span class="p">,</span>
+                    <span class="n">out_features</span><span class="p">,</span>
+                    <span class="n">kernel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                    <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                    <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="p">),</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inverse_pyramid</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">"pyramid-</span><span class="si">{</span><span class="n">out_features</span><span class="si">}</span><span class="s2">-batchnorm"</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">out_features</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inverse_pyramid</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">"pyramid-</span><span class="si">{</span><span class="n">out_features</span><span class="si">}</span><span class="s2">-relu"</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="kc">True</span><span class="p">))</span>
             <span class="n">n_input_features</span> <span class="o">=</span> <span class="n">out_features</span>
-            <span class="n">input_size</span> <span class="o">=</span> <span class="n">input_size</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="n">pyramid_dim</span> <span class="o">=</span> <span class="n">pyramid_dim</span> <span class="o">//</span> <span class="mi">2</span>
 
         <span class="c1"># Extra Layers</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">extra_layers</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
@@ -542,7 +565,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">final_layers</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">final_layers</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">"final-</span><span class="si">{</span><span class="n">n_input_features</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">num_input_channels</span><span class="si">}</span><span class="s2">-convt"</span><span class="p">,</span>
-            <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">n_input_features</span><span class="p">,</span> <span class="n">num_input_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span>
+                <span class="n">n_input_features</span><span class="p">,</span>
+                <span class="n">num_input_channels</span><span class="p">,</span>
+                <span class="n">kernel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">),</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">final_layers</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">"final-</span><span class="si">{</span><span class="n">num_input_channels</span><span class="si">}</span><span class="s2">-tanh"</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">())</span>
 
@@ -561,13 +591,13 @@
 <span class="sd">        Made of only one encoder layer which takes x and x_hat to produce a score.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        input_size (int): Input image size.</span>
+<span class="sd">        input_size (Tuple[int,int]): Input image size.</span>
 <span class="sd">        num_input_channels (int): Number of image channels.</span>
 <span class="sd">        n_features (int): Number of feature maps in each convolution layer.</span>
 <span class="sd">        extra_layers (int, optional): Add extra intermediate layers. Defaults to 0.</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_input_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">extra_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">num_input_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">extra_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="n">encoder</span> <span class="o">=</span> <span class="n">Encoder</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_input_channels</span><span class="p">,</span> <span class="n">n_features</span><span class="p">,</span> <span class="n">extra_layers</span><span class="p">)</span>
         <span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
@@ -595,7 +625,7 @@
 <span class="sd">    Made of an encoder-decoder-encoder architecture.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        input_size (int): Size of input data.</span>
+<span class="sd">        input_size (Tuple[int,int]): Size of input data.</span>
 <span class="sd">        latent_vec_size (int): Dimension of latent vector produced between the first encoder-decoder.</span>
 <span class="sd">        num_input_channels (int): Number of channels in input image.</span>
 <span class="sd">        n_features (int): Number of feature maps in each convolution layer.</span>
@@ -605,7 +635,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">input_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
         <span class="n">latent_vec_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">num_input_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -633,7 +663,7 @@
     <span class="sd">"""Ganomaly Model.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        input_size (int): Input dimension of a square tensor.</span>
+<span class="sd">        input_size (Tuple[int,int]): Input dimension.</span>
 <span class="sd">        num_input_channels (int): Number of input channels.</span>
 <span class="sd">        n_features (int): Number of features layers in the CNNs.</span>
 <span class="sd">        latent_vec_size (int): Size of autoencoder latent vector.</span>
@@ -646,7 +676,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">input_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
         <span class="n">num_input_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">latent_vec_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -731,7 +761,9 @@
         <span class="n">pred_fake</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">discriminator</span><span class="p">(</span><span class="n">fake</span><span class="p">)</span>
 
         <span class="n">error_enc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_enc</span><span class="p">(</span><span class="n">latent_i</span><span class="p">,</span> <span class="n">latent_o</span><span class="p">)</span>
+
         <span class="n">error_con</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_con</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">fake</span><span class="p">)</span>
+
         <span class="n">error_adv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_adv</span><span class="p">(</span><span class="n">pred_real</span><span class="p">,</span> <span class="n">pred_fake</span><span class="p">)</span>
 
         <span class="n">loss_generator</span> <span class="o">=</span> <span class="n">error_adv</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wadv</span> <span class="o">+</span> <span class="n">error_con</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcon</span> <span class="o">+</span> <span class="n">error_enc</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wenc</span>
@@ -746,8 +778,9 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Tensor: Regeneration scores.</span>
 <span class="sd">        """</span>
+        <span class="n">padded_batch</span> <span class="o">=</span> <span class="n">pad_nextpow2</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-        <span class="n">_</span><span class="p">,</span> <span class="n">latent_i</span><span class="p">,</span> <span class="n">latent_o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">latent_i</span><span class="p">,</span> <span class="n">latent_o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="p">(</span><span class="n">padded_batch</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">pow</span><span class="p">((</span><span class="n">latent_i</span> <span class="o">-</span> <span class="n">latent_o</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># convert nx1x1 to n</span></div></div>
 </pre></div>
       </article>

@@ -397,11 +397,14 @@
 <span class="c1"># See the License for the specific language governing permissions</span>
 <span class="c1"># and limitations under the License.</span>
 
+<span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 <span class="kn">from</span> <span class="nn">torchvision.datasets.folder</span> <span class="kn">import</span> <span class="n">IMG_EXTENSIONS</span>
 
 
@@ -449,6 +452,26 @@
     <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">image</span></div>
+
+
+<div class="viewcode-block" id="pad_nextpow2"><a class="viewcode-back" href="../../../../api/anomalib/data/utils/image/index.html#anomalib.data.utils.image.pad_nextpow2">[docs]</a><span class="k">def</span> <span class="nf">pad_nextpow2</span><span class="p">(</span><span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="sd">"""Compute required padding from input size and return padded images.</span>
+
+<span class="sd">    Finds the largest dimension and computes a square image of dimensions that are of the power of 2.</span>
+<span class="sd">    In case the image dimension is odd, it returns the image with an extra padding on one side.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        batch (Tensor): Input images</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        batch: Padded batch</span>
+<span class="sd">    """</span>
+    <span class="c1"># find the largest dimension</span>
+    <span class="n">l_dim</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="o">*</span><span class="n">batch</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]),</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">padding_w</span> <span class="o">=</span> <span class="p">[</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">l_dim</span> <span class="o">-</span> <span class="n">batch</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">l_dim</span> <span class="o">-</span> <span class="n">batch</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]</span>
+    <span class="n">padding_h</span> <span class="o">=</span> <span class="p">[</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">l_dim</span> <span class="o">-</span> <span class="n">batch</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">l_dim</span> <span class="o">-</span> <span class="n">batch</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]</span>
+    <span class="n">padded_batch</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="p">[</span><span class="o">*</span><span class="n">padding_h</span><span class="p">,</span> <span class="o">*</span><span class="n">padding_w</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">padded_batch</span></div>
 </pre></div>
       </article>
       <footer>

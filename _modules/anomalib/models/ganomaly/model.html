@@ -407,6 +407,7 @@
 <span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">EarlyStopping</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">optim</span>
 
+<span class="kn">from</span> <span class="nn">anomalib.data.utils.image</span> <span class="kn">import</span> <span class="n">pad_nextpow2</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
 
 <span class="kn">from</span> <span class="nn">.torch_model</span> <span class="kn">import</span> <span class="n">GanomalyModel</span>
@@ -421,8 +422,9 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span> <span class="n">GanomalyModel</span> <span class="o">=</span> <span class="n">GanomalyModel</span><span class="p">(</span>
-            <span class="n">input_size</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">input_size</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_size</span><span class="p">,</span>
             <span class="n">num_input_channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
             <span class="n">n_features</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">n_features</span><span class="p">,</span>
             <span class="n">latent_vec_size</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">latent_vec_size</span><span class="p">,</span>
@@ -482,18 +484,19 @@
 <span class="sd">            Dict[str, Tensor]: Loss</span>
 <span class="sd">        """</span>
         <span class="n">images</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span>
+        <span class="n">padded_images</span> <span class="o">=</span> <span class="n">pad_nextpow2</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
         <span class="n">loss</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]</span>
 
         <span class="c1"># Discriminator</span>
         <span class="k">if</span> <span class="n">optimizer_idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="c1"># forward pass</span>
-            <span class="n">loss_discriminator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_discriminator_loss</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+            <span class="n">loss_discriminator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_discriminator_loss</span><span class="p">(</span><span class="n">padded_images</span><span class="p">)</span>
             <span class="n">loss</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"loss"</span><span class="p">:</span> <span class="n">loss_discriminator</span><span class="p">}</span>
 
         <span class="c1"># Generator</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># forward pass</span>
-            <span class="n">loss_generator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_generator_loss</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+            <span class="n">loss_generator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_generator_loss</span><span class="p">(</span><span class="n">padded_images</span><span class="p">)</span>
 
             <span class="n">loss</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"loss"</span><span class="p">:</span> <span class="n">loss_generator</span><span class="p">}</span>
 

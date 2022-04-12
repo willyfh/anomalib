@@ -67,7 +67,7 @@ Classes
 
 
 
-.. py:class:: DFMModel(backbone: str, n_comps: float = 0.97, score_type: str = 'fre')
+.. py:class:: DFMModel(backbone: str, layer: str, pooling_kernel_size: int, n_comps: float = 0.97, score_type: str = 'fre')
 
    Bases: :py:obj:`torch.nn.Module`
 
@@ -75,6 +75,10 @@ Classes
 
    :param backbone: Pre-trained model backbone.
    :type backbone: str
+   :param layer: Layer from which to extract features.
+   :type layer: str
+   :param pool: _description_
+   :type pool: int
    :param n_comps: Ratio from which number of components for PCA are calculated. Defaults to 0.97.
    :type n_comps: float, optional
    :param score_type: Scoring type. Options are `fre` and `nll`. Defaults to "fre".
