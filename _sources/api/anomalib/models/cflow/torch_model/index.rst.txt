@@ -1,0 +1,40 @@
+:py:mod:`anomalib.models.cflow.torch_model`
+===========================================
+
+.. py:module:: anomalib.models.cflow.torch_model
+
+.. autoapi-nested-parse::
+
+   PyTorch model for CFlow model implementation.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.cflow.torch_model.CflowModel
+
+
+
+
+.. py:class:: CflowModel(hparams: Union[omegaconf.DictConfig, omegaconf.ListConfig])
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   CFLOW: Conditional Normalizing Flows.
+
+   .. py:method:: forward(self, images)
+
+      Forward-pass images into the network to extract encoder features and compute probability.
+
+      :param images: Batch of images.
+
+      :returns: Predicted anomaly maps.
+
+
+

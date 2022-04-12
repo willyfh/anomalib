@@ -30,6 +30,7 @@ Functions
 .. autoapisummary::
 
    anomalib.data.folder._check_and_convert_path
+   anomalib.data.folder._prepare_files_labels
    anomalib.data.folder.make_dataset
 
 
@@ -58,7 +59,23 @@ Attributes
    :rtype: Path
 
 
-.. py:function:: make_dataset(normal_dir: Union[str, pathlib.Path], abnormal_dir: Union[str, pathlib.Path], mask_dir: Optional[Union[str, pathlib.Path]] = None, split: Optional[str] = None, split_ratio: float = 0.2, seed: int = 0, create_validation_set: bool = True, extensions: Optional[Tuple[str, Ellipsis]] = None)
+.. py:function:: _prepare_files_labels(path: Union[str, pathlib.Path], path_type: str, extensions: Optional[Tuple[str, Ellipsis]] = None) -> Tuple[list, list]
+
+   Return a list of filenames and list corresponding labels.
+
+   :param path: Path to the directory containing images.
+   :type path: Union[str, Path]
+   :param path_type: Type of images in the provided path ("normal", "abnormal", "normal_test")
+   :type path_type: str
+   :param extensions: Type of the image extensions to read from the
+                      directory.
+   :type extensions: Optional[Tuple[str, ...]], optional
+
+   :returns: Filenames of the images provided in the paths, labels of the images provided in the paths
+   :rtype: List, List
+
+
+.. py:function:: make_dataset(normal_dir: Union[str, pathlib.Path], abnormal_dir: Union[str, pathlib.Path], normal_test_dir: Optional[Union[str, pathlib.Path]] = None, mask_dir: Optional[Union[str, pathlib.Path]] = None, split: Optional[str] = None, split_ratio: float = 0.2, seed: int = 0, create_validation_set: bool = True, extensions: Optional[Tuple[str, Ellipsis]] = None)
 
    Make Folder Dataset.
 
@@ -66,6 +83,10 @@ Attributes
    :type normal_dir: Union[str, Path]
    :param abnormal_dir: Path to the directory containing abnormal images.
    :type abnormal_dir: Union[str, Path]
+   :param normal_test_dir: Path to the directory containing
+                           normal images for the test dataset. Normal test images will be a split of `normal_dir`
+                           if `None`. Defaults to None.
+   :type normal_test_dir: Optional[Union[str, Path]], optional
    :param mask_dir: Path to the directory containing
                     the mask annotations. Defaults to None.
    :type mask_dir: Optional[Union[str, Path]], optional
@@ -88,7 +109,7 @@ Attributes
    :rtype: DataFrame
 
 
-.. py:class:: FolderDataset(normal_dir: Union[pathlib.Path, str], abnormal_dir: Union[pathlib.Path, str], split: str, pre_process: anomalib.pre_processing.PreProcessor, split_ratio: float = 0.2, mask_dir: Optional[Union[pathlib.Path, str]] = None, extensions: Optional[Tuple[str, Ellipsis]] = None, task: Optional[str] = None, seed: int = 0, create_validation_set: bool = False)
+.. py:class:: FolderDataset(normal_dir: Union[pathlib.Path, str], abnormal_dir: Union[pathlib.Path, str], split: str, pre_process: anomalib.pre_processing.PreProcessor, normal_test_dir: Optional[Union[pathlib.Path, str]] = None, split_ratio: float = 0.2, mask_dir: Optional[Union[pathlib.Path, str]] = None, extensions: Optional[Tuple[str, Ellipsis]] = None, task: Optional[str] = None, seed: int = 0, create_validation_set: bool = False)
 
    Bases: :py:obj:`torch.utils.data.Dataset`
 
@@ -114,7 +135,7 @@ Attributes
 
 
 
-.. py:class:: FolderDataModule(root: Union[str, pathlib.Path], normal: str = 'normal', abnormal: str = 'abnormal', task: str = 'classification', mask_dir: Optional[Union[pathlib.Path, str]] = None, extensions: Optional[Tuple[str, Ellipsis]] = None, split_ratio: float = 0.2, seed: int = 0, image_size: Optional[Union[int, Tuple[int, int]]] = None, train_batch_size: int = 32, test_batch_size: int = 32, num_workers: int = 8, transform_config_train: Optional[Union[str, albumentations.Compose]] = None, transform_config_val: Optional[Union[str, albumentations.Compose]] = None, create_validation_set: bool = False)
+.. py:class:: FolderDataModule(root: Union[str, pathlib.Path], normal_dir: str = 'normal', abnormal_dir: str = 'abnormal', task: str = 'classification', normal_test_dir: Optional[Union[pathlib.Path, str]] = None, mask_dir: Optional[Union[pathlib.Path, str]] = None, extensions: Optional[Tuple[str, Ellipsis]] = None, split_ratio: float = 0.2, seed: int = 0, image_size: Optional[Union[int, Tuple[int, int]]] = None, train_batch_size: int = 32, test_batch_size: int = 32, num_workers: int = 8, transform_config_train: Optional[Union[str, albumentations.Compose]] = None, transform_config_val: Optional[Union[str, albumentations.Compose]] = None, create_validation_set: bool = False)
 
    Bases: :py:obj:`pytorch_lightning.core.datamodule.LightningDataModule`
 

@@ -1,0 +1,98 @@
+:py:mod:`anomalib.models.patchcore.torch_model`
+===============================================
+
+.. py:module:: anomalib.models.patchcore.torch_model
+
+.. autoapi-nested-parse::
+
+   PyTorch model for the PatchCore model implementation.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.patchcore.torch_model.PatchcoreModel
+
+
+
+
+.. py:class:: PatchcoreModel(layers: List[str], input_size: Tuple[int, int], backbone: str = 'wide_resnet50_2', apply_tiling: bool = False, tile_size: Optional[Tuple[int, int]] = None, tile_stride: Optional[int] = None)
+
+   Bases: :py:obj:`anomalib.models.components.DynamicBufferModule`, :py:obj:`torch.nn.Module`
+
+   Patchcore Module.
+
+   .. py:method:: forward(self, input_tensor: torch.Tensor) -> Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]
+
+      Return Embedding during training, or a tuple of anomaly map and anomaly score during testing.
+
+      Steps performed:
+      1. Get features from a CNN.
+      2. Generate embedding based on the features.
+      3. Compute anomaly map in test mode.
+
+      :param input_tensor: Input tensor
+      :type input_tensor: Tensor
+
+      :returns:
+
+                Embedding for training,
+                    anomaly map and anomaly score for testing.
+      :rtype: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]
+
+
+   .. py:method:: generate_embedding(self, features: Dict[str, torch.Tensor]) -> torch.Tensor
+
+      Generate embedding from hierarchical feature map.
+
+      :param features: Hierarchical feature map from a CNN (ResNet18 or WideResnet)
+      :param features: Dict[str:Tensor]:
+
+      :returns: Embedding vector
+
+
+   .. py:method:: reshape_embedding(embedding: torch.Tensor) -> torch.Tensor
+      :staticmethod:
+
+      Reshape Embedding.
+
+      Reshapes Embedding to the following format:
+      [Batch, Embedding, Patch, Patch] to [Batch*Patch*Patch, Embedding]
+
+      :param embedding: Embedding tensor extracted from CNN features.
+      :type embedding: Tensor
+
+      :returns: Reshaped embedding tensor.
+      :rtype: Tensor
+
+
+   .. py:method:: subsample_embedding(self, embedding: torch.Tensor, sampling_ratio: float) -> None
+
+      Subsample embedding based on coreset sampling and store to memory.
+
+      :param embedding: Embedding tensor from the CNN
+      :type embedding: np.ndarray
+      :param sampling_ratio: Coreset sampling ratio
+      :type sampling_ratio: float
+
+
+   .. py:method:: nearest_neighbors(self, embedding: torch.Tensor, n_neighbors: int = 9) -> torch.Tensor
+
+      Nearest Neighbours using brute force method and euclidean norm.
+
+      :param embedding: Features to compare the distance with the memory bank.
+      :type embedding: Tensor
+      :param n_neighbors: Number of neighbors to look at
+      :type n_neighbors: int
+
+      :returns: Patch scores.
+      :rtype: Tensor
+
+
+

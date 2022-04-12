@@ -1,0 +1,71 @@
+:py:mod:`anomalib.models.patchcore.anomaly_map`
+===============================================
+
+.. py:module:: anomalib.models.patchcore.anomaly_map
+
+.. autoapi-nested-parse::
+
+   Anomaly Map Generator for the PatchCore model implementation.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator
+
+
+
+
+.. py:class:: AnomalyMapGenerator(input_size: Union[omegaconf.ListConfig, Tuple], sigma: int = 4)
+
+   Generate Anomaly Heatmap.
+
+   .. py:method:: compute_anomaly_map(self, patch_scores: torch.Tensor, feature_map_shape: torch.Size) -> torch.Tensor
+
+      Pixel Level Anomaly Heatmap.
+
+      :param patch_scores: Patch-level anomaly scores
+      :type patch_scores: torch.Tensor
+      :param feature_map_shape: 2-D feature map shape (width, height)
+      :type feature_map_shape: torch.Size
+
+      :returns: Map of the pixel-level anomaly scores
+      :rtype: torch.Tensor
+
+
+   .. py:method:: compute_anomaly_score(patch_scores: torch.Tensor) -> torch.Tensor
+      :staticmethod:
+
+      Compute Image-Level Anomaly Score.
+
+      :param patch_scores: Patch-level anomaly scores
+      :type patch_scores: torch.Tensor
+
+      :returns: Image-level anomaly scores
+      :rtype: torch.Tensor
+
+
+   .. py:method:: __call__(self, **kwargs: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]
+
+      Returns anomaly_map and anomaly_score.
+
+      Expects `patch_scores` keyword to be passed explicitly
+      Expects `feature_map_shape` keyword to be passed explicitly
+
+      Example
+      >>> anomaly_map_generator = AnomalyMapGenerator(input_size=input_size)
+      >>> map, score = anomaly_map_generator(patch_scores=numpy_array, feature_map_shape=feature_map_shape)
+
+      :raises ValueError: If `patch_scores` key is not found
+
+      :returns: anomaly_map, anomaly_score
+      :rtype: Tuple[torch.Tensor, torch.Tensor]
+
+
+

@@ -15,7 +15,9 @@ Submodules
    :titlesonly:
    :maxdepth: 1
 
-   model/index.rst
+   anomaly_map/index.rst
+   lightning_model/index.rst
+   torch_model/index.rst
 
 
 Package Contents
@@ -26,108 +28,8 @@ Classes
 
 .. autoapisummary::
 
-   anomalib.models.stfpm.AnomalyMapGenerator
-   anomalib.models.stfpm.Loss
    anomalib.models.stfpm.StfpmLightning
-   anomalib.models.stfpm.STFPMModel
 
-
-
-
-.. py:class:: AnomalyMapGenerator(image_size: Union[omegaconf.ListConfig, Tuple])
-
-   Generate Anomaly Heatmap.
-
-   .. py:method:: compute_layer_map(self, teacher_features: torch.Tensor, student_features: torch.Tensor) -> torch.Tensor
-
-      Compute the layer map based on cosine similarity.
-
-      :param teacher_features: Teacher features
-      :type teacher_features: Tensor
-      :param student_features: Student features
-      :type student_features: Tensor
-
-      :returns: Anomaly score based on cosine similarity.
-
-
-   .. py:method:: compute_anomaly_map(self, teacher_features: Dict[str, torch.Tensor], student_features: Dict[str, torch.Tensor]) -> torch.Tensor
-
-      Compute the overall anomaly map via element-wise production the interpolated anomaly maps.
-
-      :param teacher_features: Teacher features
-      :type teacher_features: Dict[str, Tensor]
-      :param student_features: Student features
-      :type student_features: Dict[str, Tensor]
-
-      :returns: Final anomaly map
-
-
-   .. py:method:: __call__(self, **kwds: Dict[str, torch.Tensor]) -> torch.Tensor
-
-      Returns anomaly map.
-
-      Expects `teach_features` and `student_features` keywords to be passed explicitly.
-
-      .. rubric:: Example
-
-      >>> anomaly_map_generator = AnomalyMapGenerator(image_size=tuple(hparams.model.input_size))
-      >>> output = self.anomaly_map_generator(
-              teacher_features=teacher_features,
-              student_features=student_features
-          )
-
-      :raises ValueError: `teach_features` and `student_features` keys are not found
-
-      :returns: anomaly map
-      :rtype: torch.Tensor
-
-
-
-.. py:class:: Loss
-
-   Bases: :py:obj:`torch.nn.Module`
-
-   Feature Pyramid Loss This class implmenents the feature pyramid loss function proposed in STFPM paper.
-
-   .. rubric:: Example
-
-   >>> from anomalib.core.model.feature_extractor import FeatureExtractor
-   >>> from anomalib.models.stfpm.model import Loss
-   >>> from torchvision.models import resnet18
-
-   >>> layers = ['layer1', 'layer2', 'layer3']
-   >>> teacher_model = FeatureExtractor(model=resnet18(pretrained=True), layers=layers)
-   >>> student_model = FeatureExtractor(model=resnet18(pretrained=False), layers=layers)
-   >>> loss = Loss()
-
-   >>> inp = torch.rand((4, 3, 256, 256))
-   >>> teacher_features = teacher_model(inp)
-   >>> student_features = student_model(inp)
-   >>> loss(student_features, teacher_features)
-       tensor(51.2015, grad_fn=<SumBackward0>)
-
-   .. py:method:: compute_layer_loss(self, teacher_feats: torch.Tensor, student_feats: torch.Tensor) -> torch.Tensor
-
-      Compute layer loss based on Equation (1) in Section 3.2 of the paper.
-
-      :param teacher_feats: Teacher features
-      :type teacher_feats: Tensor
-      :param student_feats: Student features
-      :type student_feats: Tensor
-
-      :returns: L2 distance between teacher and student features.
-
-
-   .. py:method:: forward(self, teacher_features: Dict[str, torch.Tensor], student_features: Dict[str, torch.Tensor]) -> torch.Tensor
-
-      Compute the overall loss via the weighted average of the layer losses computed by the cosine similarity.
-
-      :param teacher_features: Teacher features
-      :type teacher_features: Dict[str, Tensor]
-      :param student_features: Student features
-      :type student_features: Dict[str, Tensor]
-
-      :returns: Total loss, which is the weighted average of the layer losses.
 
 
 
@@ -176,39 +78,6 @@ Classes
 
       :returns: Dictionary containing images, anomaly maps, true labels and masks.
                 These are required in `validation_epoch_end` for feature concatenation.
-
-
-
-.. py:class:: STFPMModel(layers: List[str], input_size: Tuple[int, int], backbone: str = 'resnet18', apply_tiling: bool = False, tile_size: Optional[Tuple[int, int]] = None, tile_stride: Optional[int] = None)
-
-   Bases: :py:obj:`torch.nn.Module`
-
-   STFPM: Student-Teacher Feature Pyramid Matching for Unsupervised Anomaly Detection.
-
-   :param layers: Layers used for feature extraction
-   :type layers: List[str]
-   :param input_size: Input size for the model.
-   :type input_size: Tuple[int, int]
-   :param tile_size: Tile size
-   :type tile_size: Tuple[int, int]
-   :param tile_stride: Stride for tiling
-   :type tile_stride: int
-   :param backbone: Pre-trained model backbone. Defaults to "resnet18".
-   :type backbone: str, optional
-   :param apply_tiling: Apply tiling. Defaults to False.
-   :type apply_tiling: bool, optional
-
-   .. py:method:: forward(self, images)
-
-      Forward-pass images into the network.
-
-      During the training mode the model extracts the features from the teacher and student networks.
-      During the evaluation mode, it returns the predicted anomaly map.
-
-      :param images: Batch of images.
-      :type images: Tensor
-
-      :returns: Teacher and student features when in training mode, otherwise the predicted anomaly maps.
 
 
 

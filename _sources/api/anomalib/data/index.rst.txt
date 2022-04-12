@@ -96,7 +96,7 @@ Functions
 
 
 
-.. py:class:: FolderDataModule(root: Union[str, pathlib.Path], normal: str = 'normal', abnormal: str = 'abnormal', task: str = 'classification', mask_dir: Optional[Union[pathlib.Path, str]] = None, extensions: Optional[Tuple[str, Ellipsis]] = None, split_ratio: float = 0.2, seed: int = 0, image_size: Optional[Union[int, Tuple[int, int]]] = None, train_batch_size: int = 32, test_batch_size: int = 32, num_workers: int = 8, transform_config_train: Optional[Union[str, albumentations.Compose]] = None, transform_config_val: Optional[Union[str, albumentations.Compose]] = None, create_validation_set: bool = False)
+.. py:class:: FolderDataModule(root: Union[str, pathlib.Path], normal_dir: str = 'normal', abnormal_dir: str = 'abnormal', task: str = 'classification', normal_test_dir: Optional[Union[pathlib.Path, str]] = None, mask_dir: Optional[Union[pathlib.Path, str]] = None, extensions: Optional[Tuple[str, Ellipsis]] = None, split_ratio: float = 0.2, seed: int = 0, image_size: Optional[Union[int, Tuple[int, int]]] = None, train_batch_size: int = 32, test_batch_size: int = 32, num_workers: int = 8, transform_config_train: Optional[Union[str, albumentations.Compose]] = None, transform_config_val: Optional[Union[str, albumentations.Compose]] = None, create_validation_set: bool = False)
 
    Bases: :py:obj:`pytorch_lightning.core.datamodule.LightningDataModule`
 

@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="anomalib.models.dfkde.model" href="model/index.html" /><link rel="prev" title="anomalib.models.components.stats.multi_variate_gaussian" href="../components/stats/multi_variate_gaussian/index.html" />
+<link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="anomalib.models.dfkde.lightning_model" href="lightning_model/index.html" /><link rel="prev" title="anomalib.models.components.stats.multi_variate_gaussian" href="../components/stats/multi_variate_gaussian/index.html" />
 
     <meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
         <title>anomalib.models.dfkde - Anomalib 2021, Anomalib Contributors documentation</title>
@@ -162,14 +162,7 @@
 <p class="caption" role="heading"><span class="caption-text">Models</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../models.html">Models Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfkde.model.html">anomalib.models.dfkde.model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfm.model.html">anomalib.models.dfm.model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfm.dfm_model.html">anomalib.models.dfm.dfm_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.ganomaly.model.html">anomalib.models.ganomaly.model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.ganomaly.torch_model.html">anomalib.models.ganomaly.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.padim.model.html">anomalib.models.padim.model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.model.html">anomalib.models.patchcore.model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.stfpm.model.html">anomalib.models.stfpm.model</a></li>
 </ul>
 </li>
 </ul>
@@ -206,8 +199,10 @@
 </li>
 <li class="toctree-l3 current has-children"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l4 has-children"><a class="reference internal" href="../cflow/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.cflow</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../cflow/backbone/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.cflow.backbone</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../cflow/model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.cflow.model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../cflow/anomaly_map/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.cflow.anomaly_map</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../cflow/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.cflow.lightning_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../cflow/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.cflow.torch_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../cflow/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.cflow.utils</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../components/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -249,30 +244,36 @@
 </ul>
 </li>
 <li class="toctree-l4 current has-children current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde.model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde.lightning_model</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde.torch_model</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../dfm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfm</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../dfm/dfm_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfm.dfm_model</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../dfm/model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfm.model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dfm/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfm.lightning_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dfm/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfm.torch_model</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../ganomaly/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../ganomaly/model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly.model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../ganomaly/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly.lightning_model</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../ganomaly/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly.torch_model</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../padim/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.padim</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../padim/model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.padim.model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../padim/anomaly_map/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.padim.anomaly_map</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../padim/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.padim.lightning_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../padim/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.padim.torch_model</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../patchcore/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../patchcore/model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../patchcore/anomaly_map/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.anomaly_map</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../patchcore/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.lightning_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../patchcore/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.torch_model</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../stfpm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../stfpm/model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../stfpm/anomaly_map/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.anomaly_map</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../stfpm/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.lightning_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../stfpm/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.torch_model</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -388,10 +389,78 @@
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde.model</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde.lightning_model</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde.torch_model</span></code></a></li>
 </ul>
 </div>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Permalink to this headline">¶</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<div class="table-wrapper"><table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%"/>
+<col style="width: 90%"/>
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.dfkde.DfkdeLightning" title="anomalib.models.dfkde.DfkdeLightning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DfkdeLightning</span></code></a></p></td>
+<td><p>DFKDE: Deep Feature Kernel Density Estimation.</p></td>
+</tr>
+</tbody>
+</table></div>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.models.dfkde.DfkdeLightning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfkde.</span></span><span class="sig-name descname"><span class="pre">DfkdeLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.dictconfig.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/models/dfkde/lightning_model.html#DfkdeLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.DfkdeLightning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../components/index.html#anomalib.models.components.AnomalyModule" title="anomalib.models.components.AnomalyModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">anomalib.models.components.AnomalyModule</span></code></a></p>
+<p>DFKDE: Deep Feature Kernel Density Estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hparams</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model params</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.dfkde.DfkdeLightning.configure_optimizers">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.dfkde.DfkdeLightning.configure_optimizers" title="Permalink to this definition">¶</a></dt>
+<dd><p>DFKDE doesn’t require optimization, therefore returns no optimizers.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.dfkde.DfkdeLightning.training_step">
+<span class="sig-name descname"><span class="pre">training_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_batch_idx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.dfkde.DfkdeLightning.training_step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Training Step of DFKDE. For each batch, features are extracted from the CNN.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Batch containing image filename, image, label and mask</p></li>
+<li><p><strong>_batch_idx</strong> – Index of the batch.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Deep CNN features.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.dfkde.DfkdeLightning.on_validation_start">
+<span class="sig-name descname"><span class="pre">on_validation_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#anomalib.models.dfkde.DfkdeLightning.on_validation_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a KDE Model to the embedding collected from the training set.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.dfkde.DfkdeLightning.validation_step">
+<span class="sig-name descname"><span class="pre">validation_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.dfkde.DfkdeLightning.validation_step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validation Step of DFKDE.</p>
+<p>Similar to the training step, features are extracted from the CNN for each batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>batch</strong> – Input batch</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary containing probability, prediction and ground truth values.</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+</section>
 </section>
 </section>
 
@@ -399,12 +468,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="model/index.html">
+          <a class="next-page" href="lightning_model/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde.model</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde.lightning_model</span></code></div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -451,6 +520,19 @@
             <ul>
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde</span></code></a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#package-contents">Package Contents</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#anomalib.models.dfkde.DfkdeLightning">DfkdeLightning</a><ul>
+<li><a class="reference internal" href="#anomalib.models.dfkde.DfkdeLightning.configure_optimizers">configure_optimizers</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfkde.DfkdeLightning.training_step">training_step</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfkde.DfkdeLightning.on_validation_start">on_validation_start</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfkde.DfkdeLightning.validation_step">validation_step</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

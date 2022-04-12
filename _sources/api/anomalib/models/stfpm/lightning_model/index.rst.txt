@@ -1,0 +1,74 @@
+:py:mod:`anomalib.models.stfpm.lightning_model`
+===============================================
+
+.. py:module:: anomalib.models.stfpm.lightning_model
+
+.. autoapi-nested-parse::
+
+   STFPM: Student-Teacher Feature Pyramid Matching for Unsupervised Anomaly Detection.
+
+   https://arxiv.org/abs/2103.04257
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.stfpm.lightning_model.StfpmLightning
+
+
+
+
+.. py:class:: StfpmLightning(hparams)
+
+   Bases: :py:obj:`anomalib.models.components.AnomalyModule`
+
+   PL Lightning Module for the STFPM algorithm.
+
+   .. py:method:: configure_callbacks(self)
+
+      Configure model-specific callbacks.
+
+
+   .. py:method:: configure_optimizers(self) -> torch.optim.Optimizer
+
+      Configure optimizers by creating an SGD optimizer.
+
+      :returns: SGD optimizer
+      :rtype: (Optimizer)
+
+
+   .. py:method:: training_step(self, batch, _)
+
+      Training Step of STFPM.
+
+      For each batch, teacher and student and teacher features are extracted from the CNN.
+
+      :param batch: Input batch
+      :type batch: Tensor
+      :param _: Index of the batch.
+
+      :returns: Hierarchical feature map
+
+
+   .. py:method:: validation_step(self, batch, _)
+
+      Validation Step of STFPM.
+
+      Similar to the training step, student/teacher features are extracted from the CNN for each batch, and
+      anomaly map is computed.
+
+      :param batch: Input batch
+      :type batch: Tensor
+      :param _: Index of the batch.
+
+      :returns: Dictionary containing images, anomaly maps, true labels and masks.
+                These are required in `validation_epoch_end` for feature concatenation.
+
+
+
