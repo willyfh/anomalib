@@ -22,7 +22,7 @@ Classes
 
 
 
-.. py:class:: AUROC(num_classes: Optional[int] = None, pos_label: Optional[int] = None, compute_on_step: bool = True, dist_sync_on_step: bool = False, process_group: Optional[Any] = None, dist_sync_fn: Callable = None)
+.. py:class:: AUROC(num_classes: Optional[int] = None, pos_label: Optional[int] = None, compute_on_step: Optional[bool] = None, **kwargs: Dict[str, Any])
 
    Bases: :py:obj:`torchmetrics.ROC`
 

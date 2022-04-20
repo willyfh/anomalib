@@ -34,7 +34,7 @@ Classes
    To save the images to the filesystem, add the 'local' keyword to the `project.log_images_to` parameter in the
    config.yaml file.
 
-   .. py:method:: _add_images(self, visualizer: anomalib.post_processing.Visualizer, module: anomalib.models.components.AnomalyModule, filename: pathlib.Path)
+   .. py:method:: _add_images(self, visualizer: anomalib.post_processing.Visualizer, module: anomalib.models.components.AnomalyModule, trainer: pytorch_lightning.Trainer, filename: pathlib.Path)
 
       Save image to logger/local storage.
 
@@ -43,18 +43,20 @@ Classes
 
       :param visualizer: Visualizer object from which the `figure` is saved/logged.
       :type visualizer: Visualizer
-      :param module: Anomaly module which holds reference to `hparams` and `logger`.
+      :param module: Anomaly module which holds reference to `hparams`.
       :type module: AnomalyModule
+      :param trainer: Pytorch Lightning trainer which holds reference to `logger`
+      :type trainer: Trainer
       :param filename: Path of the input image. This name is used as name for the generated image.
       :type filename: Path
 
 
-   .. py:method:: on_test_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule, outputs: Optional[pytorch_lightning.utilities.types.STEP_OUTPUT], _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+   .. py:method:: on_test_batch_end(self, trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule, outputs: Optional[pytorch_lightning.utilities.types.STEP_OUTPUT], _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
 
       Log images at the end of every batch.
 
-      :param _trainer: Pytorch lightning trainer object (unused).
-      :type _trainer: Trainer
+      :param trainer: Pytorch lightning trainer object (unused).
+      :type trainer: Trainer
       :param pl_module: Lightning modules derived from BaseAnomalyLightning object as
       :type pl_module: LightningModule
       :param currently only they support logging images.:

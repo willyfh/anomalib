@@ -1,0 +1,53 @@
+:py:mod:`anomalib.utils.metrics.collection`
+===========================================
+
+.. py:module:: anomalib.utils.metrics.collection
+
+.. autoapi-nested-parse::
+
+   Anomalib Metric Collection.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.metrics.collection.AnomalibMetricCollection
+
+
+
+
+.. py:class:: AnomalibMetricCollection(*args, **kwargs)
+
+   Bases: :py:obj:`torchmetrics.MetricCollection`
+
+   Extends the MetricCollection class for use in the Anomalib pipeline.
+
+   .. py:method:: set_threshold(self, threshold_value)
+
+      Update the threshold value for all metrics that have the threshold attribute.
+
+
+   .. py:method:: update(self, *args, **kwargs) -> None
+
+      Add data to the metrics.
+
+
+   .. py:method:: update_called(self) -> bool
+      :property:
+
+      Returns a boolean indicating if the update method has been called at least once.
+
+
+   .. py:method:: threshold(self) -> float
+      :property:
+
+      Return the value of the anomaly threshold.
+
+
+
