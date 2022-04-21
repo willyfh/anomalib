@@ -498,7 +498,7 @@
 
 <div class="viewcode-block" id="get_configurable_parameters"><a class="viewcode-back" href="../../../api/anomalib/config/index.html#anomalib.config.config.get_configurable_parameters">[docs]</a><span class="k">def</span> <span class="nf">get_configurable_parameters</span><span class="p">(</span>
     <span class="n">model_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">config_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">model_config_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">weight_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">config_filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"config"</span><span class="p">,</span>
     <span class="n">config_file_extension</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"yaml"</span><span class="p">,</span>
@@ -507,7 +507,7 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        model_name: Optional[str]:  (Default value = None)</span>
-<span class="sd">        config_path: Optional[Union[Path, str]]:  (Default value = None)</span>
+<span class="sd">        model_config_path: Optional[Union[Path, str]]:  (Default value = None)</span>
 <span class="sd">        weight_file: Path to the weight file</span>
 <span class="sd">        config_filename: Optional[str]:  (Default value = "config")</span>
 <span class="sd">        config_file_extension: Optional[str]:  (Default value = "yaml")</span>
@@ -515,16 +515,16 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        Union[DictConfig, ListConfig]: Configurable parameters in DictConfig object.</span>
 <span class="sd">    """</span>
-    <span class="k">if</span> <span class="n">model_name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">config_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">model_name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">model_config_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="s2">"Both model_name and model config path cannot be None! "</span>
             <span class="s2">"Please provide a model name or path to a config file!"</span>
         <span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">config_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">config_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">"anomalib/models/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">config_filename</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">config_file_extension</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">model_config_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">model_config_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">"anomalib/models/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">config_filename</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">config_file_extension</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-    <span class="n">config</span> <span class="o">=</span> <span class="n">OmegaConf</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">config_path</span><span class="p">)</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">OmegaConf</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_config_path</span><span class="p">)</span>
 
     <span class="c1"># Dataset Configs</span>
     <span class="k">if</span> <span class="s2">"format"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>

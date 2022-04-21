@@ -65,12 +65,12 @@ Functions
    :rtype: Union[DictConfig, ListConfig]
 
 
-.. py:function:: get_configurable_parameters(model_name: Optional[str] = None, config_path: Optional[Union[pathlib.Path, str]] = None, weight_file: Optional[str] = None, config_filename: Optional[str] = 'config', config_file_extension: Optional[str] = 'yaml') -> Union[omegaconf.DictConfig, omegaconf.ListConfig]
+.. py:function:: get_configurable_parameters(model_name: Optional[str] = None, model_config_path: Optional[Union[pathlib.Path, str]] = None, weight_file: Optional[str] = None, config_filename: Optional[str] = 'config', config_file_extension: Optional[str] = 'yaml') -> Union[omegaconf.DictConfig, omegaconf.ListConfig]
 
    Get configurable parameters.
 
    :param model_name: Optional[str]:  (Default value = None)
-   :param config_path: Optional[Union[Path, str]]:  (Default value = None)
+   :param model_config_path: Optional[Union[Path, str]]:  (Default value = None)
    :param weight_file: Path to the weight file
    :param config_filename: Optional[str]:  (Default value = "config")
    :param config_file_extension: Optional[str]:  (Default value = "yaml")
