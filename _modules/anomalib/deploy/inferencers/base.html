@@ -403,12 +403,15 @@
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">cast</span>
 
+<span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">OmegaConf</span>
+<span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="n">dilation</span>
+<span class="kn">from</span> <span class="nn">skimage.segmentation</span> <span class="kn">import</span> <span class="n">find_boundaries</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.data.utils</span> <span class="kn">import</span> <span class="n">read_image</span>
-<span class="kn">from</span> <span class="nn">anomalib.post_processing</span> <span class="kn">import</span> <span class="n">superimpose_anomaly_map</span>
+<span class="kn">from</span> <span class="nn">anomalib.post_processing</span> <span class="kn">import</span> <span class="n">compute_mask</span><span class="p">,</span> <span class="n">superimpose_anomaly_map</span>
 <span class="kn">from</span> <span class="nn">anomalib.post_processing.normalization.cdf</span> <span class="kn">import</span> <span class="n">normalize</span> <span class="k">as</span> <span class="n">normalize_cdf</span>
 <span class="kn">from</span> <span class="nn">anomalib.post_processing.normalization.cdf</span> <span class="kn">import</span> <span class="n">standardize</span>
 <span class="kn">from</span> <span class="nn">anomalib.post_processing.normalization.min_max</span> <span class="kn">import</span> <span class="p">(</span>
@@ -445,7 +448,11 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 <div class="viewcode-block" id="Inferencer.predict"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/base/index.html#anomalib.deploy.inferencers.base.Inferencer.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">superimpose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">meta_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+        <span class="n">superimpose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">meta_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">overlay_mask</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
         <span class="sd">"""Perform a prediction for a given input image.</span>
 
@@ -459,6 +466,8 @@
 <span class="sd">                will be superimposed onto the original image. If false, `predict`</span>
 <span class="sd">                method will return the raw heatmap.</span>
 
+<span class="sd">            overlay_mask (bool): If this is set to True, output segmentation mask on top of image.</span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            np.ndarray: Output predictions to be visualized.</span>
 <span class="sd">        """</span>
@@ -468,17 +477,43 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">meta_data</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
-            <span class="n">image</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-        <span class="n">meta_data</span><span class="p">[</span><span class="s2">"image_shape"</span><span class="p">]</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">image_arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># image is already a numpy array. Kept for mypy compatibility.</span>
+            <span class="n">image_arr</span> <span class="o">=</span> <span class="n">image</span>
+        <span class="n">meta_data</span><span class="p">[</span><span class="s2">"image_shape"</span><span class="p">]</span> <span class="o">=</span> <span class="n">image_arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
 
-        <span class="n">processed_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">processed_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">(</span><span class="n">image_arr</span><span class="p">)</span>
         <span class="n">predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">processed_image</span><span class="p">)</span>
         <span class="n">anomaly_map</span><span class="p">,</span> <span class="n">pred_scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_process</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">meta_data</span><span class="o">=</span><span class="n">meta_data</span><span class="p">)</span>
 
+        <span class="c1"># Overlay segmentation mask using raw predictions</span>
+        <span class="k">if</span> <span class="n">overlay_mask</span> <span class="ow">and</span> <span class="n">meta_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">image_arr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_superimpose_segmentation_mask</span><span class="p">(</span><span class="n">meta_data</span><span class="p">,</span> <span class="n">anomaly_map</span><span class="p">,</span> <span class="n">image_arr</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">superimpose</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">superimpose_anomaly_map</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+            <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">superimpose_anomaly_map</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">,</span> <span class="n">image_arr</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">anomaly_map</span><span class="p">,</span> <span class="n">pred_scores</span></div>
+
+<div class="viewcode-block" id="Inferencer._superimpose_segmentation_mask"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/base/index.html#anomalib.deploy.inferencers.base.Inferencer._superimpose_segmentation_mask">[docs]</a>    <span class="k">def</span> <span class="nf">_superimpose_segmentation_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meta_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">anomaly_map</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="sd">"""Superimpose segmentation mask on top of image.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            meta_data (dict): Metadata of the image which contains the image size.</span>
+<span class="sd">            anomaly_map (np.ndarray): Anomaly map which is used to extract segmentation mask.</span>
+<span class="sd">            image (np.ndarray): Image on which segmentation mask is to be superimposed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Image with segmentation mask superimposed.</span>
+<span class="sd">        """</span>
+        <span class="n">pred_mask</span> <span class="o">=</span> <span class="n">compute_mask</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># assumes predictions are normalized.</span>
+        <span class="n">image_height</span> <span class="o">=</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"image_shape"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">image_width</span> <span class="o">=</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"image_shape"</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">pred_mask</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">pred_mask</span><span class="p">,</span> <span class="p">(</span><span class="n">image_width</span><span class="p">,</span> <span class="n">image_height</span><span class="p">))</span>
+        <span class="n">boundaries</span> <span class="o">=</span> <span class="n">find_boundaries</span><span class="p">(</span><span class="n">pred_mask</span><span class="p">)</span>
+        <span class="n">outlines</span> <span class="o">=</span> <span class="n">dilation</span><span class="p">(</span><span class="n">boundaries</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">)))</span>
+        <span class="n">image</span><span class="p">[</span><span class="n">outlines</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">image</span></div>
 
 <div class="viewcode-block" id="Inferencer.__call__"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/base/index.html#anomalib.deploy.inferencers.base.Inferencer.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
         <span class="sd">"""Call predict on the Image.</span>

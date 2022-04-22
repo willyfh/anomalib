@@ -429,7 +429,7 @@
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.deploy.inferencers.base.Inferencer.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">superimpose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/deploy/inferencers/base.html#Inferencer.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.deploy.inferencers.base.Inferencer.predict" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">superimpose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlay_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/deploy/inferencers/base.html#Inferencer.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.deploy.inferencers.base.Inferencer.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform a prediction for a given input image.</p>
 <p>The main workflow is (i) pre-processing, (ii) forward-pass, (iii) post-process.</p>
 <dl class="field-list simple">
@@ -440,10 +440,31 @@ It could be either a path to image or numpy array itself.</p></li>
 <li><p><strong>superimpose</strong> (<em>bool</em>) – If this is set to True, output predictions
 will be superimposed onto the original image. If false, <cite>predict</cite>
 method will return the raw heatmap.</p></li>
+<li><p><strong>overlay_mask</strong> (<em>bool</em>) – If this is set to True, output segmentation mask on top of image.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Output predictions to be visualized.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.deploy.inferencers.base.Inferencer._superimpose_segmentation_mask">
+<span class="sig-name descname"><span class="pre">_superimpose_segmentation_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anomaly_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/deploy/inferencers/base.html#Inferencer._superimpose_segmentation_mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.deploy.inferencers.base.Inferencer._superimpose_segmentation_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Superimpose segmentation mask on top of image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>meta_data</strong> (<em>dict</em>) – Metadata of the image which contains the image size.</p></li>
+<li><p><strong>anomaly_map</strong> (<em>np.ndarray</em>) – Anomaly map which is used to extract segmentation mask.</p></li>
+<li><p><strong>image</strong> (<em>np.ndarray</em>) – Image on which segmentation mask is to be superimposed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Image with segmentation mask superimposed.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>np.ndarray</p>
@@ -576,6 +597,7 @@ If no path is provided, it returns an empty dict. Defaults to None.</p>
 <li><a class="reference internal" href="#anomalib.deploy.inferencers.base.Inferencer.forward">forward</a></li>
 <li><a class="reference internal" href="#anomalib.deploy.inferencers.base.Inferencer.post_process">post_process</a></li>
 <li><a class="reference internal" href="#anomalib.deploy.inferencers.base.Inferencer.predict">predict</a></li>
+<li><a class="reference internal" href="#anomalib.deploy.inferencers.base.Inferencer._superimpose_segmentation_mask">_superimpose_segmentation_mask</a></li>
 <li><a class="reference internal" href="#anomalib.deploy.inferencers.base.Inferencer.__call__">__call__</a></li>
 <li><a class="reference internal" href="#anomalib.deploy.inferencers.base.Inferencer._normalize">_normalize</a></li>
 <li><a class="reference internal" href="#anomalib.deploy.inferencers.base.Inferencer._load_meta_data">_load_meta_data</a></li>

@@ -54,7 +54,7 @@ Classes
       Post-Process.
 
 
-   .. py:method:: predict(self, image: Union[str, numpy.ndarray, pathlib.Path], superimpose: bool = True, meta_data: Optional[dict] = None) -> Tuple[numpy.ndarray, float]
+   .. py:method:: predict(self, image: Union[str, numpy.ndarray, pathlib.Path], superimpose: bool = True, meta_data: Optional[dict] = None, overlay_mask: bool = False) -> Tuple[numpy.ndarray, float]
 
       Perform a prediction for a given input image.
 
@@ -67,8 +67,25 @@ Classes
                           will be superimposed onto the original image. If false, `predict`
                           method will return the raw heatmap.
       :type superimpose: bool
+      :param overlay_mask: If this is set to True, output segmentation mask on top of image.
+      :type overlay_mask: bool
 
       :returns: Output predictions to be visualized.
+      :rtype: np.ndarray
+
+
+   .. py:method:: _superimpose_segmentation_mask(self, meta_data: dict, anomaly_map: numpy.ndarray, image: numpy.ndarray)
+
+      Superimpose segmentation mask on top of image.
+
+      :param meta_data: Metadata of the image which contains the image size.
+      :type meta_data: dict
+      :param anomaly_map: Anomaly map which is used to extract segmentation mask.
+      :type anomaly_map: np.ndarray
+      :param image: Image on which segmentation mask is to be superimposed.
+      :type image: np.ndarray
+
+      :returns: Image with segmentation mask superimposed.
       :rtype: np.ndarray
 
 
