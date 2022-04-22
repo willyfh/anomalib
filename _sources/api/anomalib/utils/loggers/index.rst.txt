@@ -38,7 +38,8 @@ Functions
 
 .. autoapisummary::
 
-   anomalib.utils.loggers.get_logger
+   anomalib.utils.loggers.configure_logger
+   anomalib.utils.loggers.get_experiment_logger
 
 
 
@@ -164,7 +165,18 @@ Functions
 
 
 
-.. py:function:: get_logger(config: Union[omegaconf.dictconfig.DictConfig, omegaconf.listconfig.ListConfig]) -> Union[pytorch_lightning.loggers.LightningLoggerBase, Iterable[pytorch_lightning.loggers.LightningLoggerBase], bool]
+.. py:function:: configure_logger(level: Union[int, str] = logging.INFO)
+
+   Get console logger by name.
+
+   :param level: Logger Level. Defaults to logging.INFO.
+   :type level: Union[int, str], optional
+
+   :returns: The expected logger.
+   :rtype: Logger
+
+
+.. py:function:: get_experiment_logger(config: Union[omegaconf.dictconfig.DictConfig, omegaconf.listconfig.ListConfig]) -> Union[pytorch_lightning.loggers.LightningLoggerBase, Iterable[pytorch_lightning.loggers.LightningLoggerBase], bool]
 
    Return a logger based on the choice of logger in the config file.
 

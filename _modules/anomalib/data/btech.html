@@ -433,8 +433,7 @@
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">anomalib.pre_processing</span> <span class="kn">import</span> <span class="n">PreProcessor</span>
 
-<div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Dataset: BTech"</span><span class="p">)</span></div>
-<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="make_btech_dataset"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.make_btech_dataset">[docs]</a><span class="k">def</span> <span class="nf">make_btech_dataset</span><span class="p">(</span>
@@ -734,11 +733,11 @@
 <div class="viewcode-block" id="BTechDataModule.prepare_data"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTechDataModule.prepare_data">[docs]</a>    <span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Download the dataset if not available."""</span>
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Found the dataset."</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Found the dataset."</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">zip_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">"btad.zip"</span>
 
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Downloading the BTech dataset."</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Downloading the BTech dataset."</span><span class="p">)</span>
             <span class="k">with</span> <span class="n">DownloadProgressBar</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="s2">"B"</span><span class="p">,</span> <span class="n">unit_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">miniters</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">"BTech"</span><span class="p">)</span> <span class="k">as</span> <span class="n">progress_bar</span><span class="p">:</span>
                 <span class="n">urlretrieve</span><span class="p">(</span>
                     <span class="n">url</span><span class="o">=</span><span class="s2">"https://avires.dimi.uniud.it/papers/btad/btad.zip"</span><span class="p">,</span>
@@ -746,11 +745,11 @@
                     <span class="n">reporthook</span><span class="o">=</span><span class="n">progress_bar</span><span class="o">.</span><span class="n">update_to</span><span class="p">,</span>
                 <span class="p">)</span>  <span class="c1"># nosec</span>
 
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Extracting the dataset."</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Extracting the dataset."</span><span class="p">)</span>
             <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">zip_filename</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_file</span><span class="p">:</span>
                 <span class="n">zip_file</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
 
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Renaming the dataset directory"</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Renaming the dataset directory"</span><span class="p">)</span>
             <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">"BTech_Dataset_transformed"</span><span class="p">),</span> <span class="n">dst</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">))</span>
 
             <span class="c1"># NOTE: Each BTech category has different image extension as follows</span>
@@ -762,13 +761,13 @@
             <span class="c1"># To avoid any conflict, the following script converts all the extensions to png.</span>
             <span class="c1"># This solution works fine, but it's also possible to properly ready the bmp and</span>
             <span class="c1"># png filenames from categories in `make_btech_dataset` function.</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Convert the bmp formats to png to have consistent image extensions"</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Convert the bmp formats to png to have consistent image extensions"</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"**/*.bmp"</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="s2">"Converting bmp to png"</span><span class="p">):</span>
                 <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
                 <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".png"</span><span class="p">)),</span> <span class="n">image</span><span class="p">)</span>
                 <span class="n">filename</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
 
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Cleaning the tar file"</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Cleaning the tar file"</span><span class="p">)</span>
             <span class="n">zip_filename</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="BTechDataModule.setup"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTechDataModule.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -781,6 +780,7 @@
 <span class="sd">          stage: Optional[str]:  Train/Val/Test stages. (Default value = None)</span>
 
 <span class="sd">        """</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Setting up train, validation, test and prediction datasets."</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">stage</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">"fit"</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span> <span class="o">=</span> <span class="n">BTech</span><span class="p">(</span>
                 <span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>

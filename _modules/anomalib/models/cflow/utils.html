@@ -399,6 +399,7 @@
 <span class="c1"># See the License for the specific language governing permissions</span>
 <span class="c1"># and limitations under the License.</span>
 
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">math</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -407,6 +408,8 @@
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components.freia.framework</span> <span class="kn">import</span> <span class="n">SequenceINN</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.components.freia.modules</span> <span class="kn">import</span> <span class="n">AllInOneBlock</span>
+
+<div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../../api/anomalib/models/cflow/utils/index.html#anomalib.models.cflow.utils.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_logp"><a class="viewcode-back" href="../../../../api/anomalib/models/cflow/utils/index.html#anomalib.models.cflow.utils.get_logp">[docs]</a><span class="k">def</span> <span class="nf">get_logp</span><span class="p">(</span><span class="n">dim_feature_vector</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">p_u</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">logdet_j</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
@@ -493,7 +496,7 @@
 <span class="sd">        SequenceINN: decoder network block</span>
 <span class="sd">    """</span>
     <span class="n">coder</span> <span class="o">=</span> <span class="n">SequenceINN</span><span class="p">(</span><span class="n">n_features</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"CNF coder:"</span><span class="p">,</span> <span class="n">n_features</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"CNF coder: </span><span class="si">%d</span><span class="s2">"</span><span class="p">,</span> <span class="n">n_features</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">coupling_blocks</span><span class="p">):</span>
         <span class="n">coder</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
             <span class="n">AllInOneBlock</span><span class="p">,</span>

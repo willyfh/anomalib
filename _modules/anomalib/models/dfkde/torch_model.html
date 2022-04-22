@@ -399,6 +399,7 @@
 <span class="c1"># See the License for the specific language governing permissions</span>
 <span class="c1"># and limitations under the License.</span>
 
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
@@ -407,6 +408,8 @@
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">PCA</span><span class="p">,</span> <span class="n">FeatureExtractor</span><span class="p">,</span> <span class="n">GaussianKDE</span>
+
+<div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../../api/anomalib/models/dfkde/torch_model/index.html#anomalib.models.dfkde.torch_model.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="DfkdeModel"><a class="viewcode-back" href="../../../../api/anomalib/models/dfkde/torch_model/index.html#anomalib.models.dfkde.torch_model.DfkdeModel">[docs]</a><span class="k">class</span> <span class="nc">DfkdeModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -473,7 +476,7 @@
         <span class="n">_embeddings</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">_embeddings</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Not enough features to commit. Not making a model."</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Not enough features to commit. Not making a model."</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
 
         <span class="c1"># if max training points is non-zero and smaller than number of staged features, select random subset</span>

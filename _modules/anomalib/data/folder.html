@@ -424,8 +424,7 @@
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">anomalib.pre_processing</span> <span class="kn">import</span> <span class="n">PreProcessor</span>
 
-<div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../api/anomalib/data/folder/index.html#anomalib.data.folder.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Dataset: Folder Dataset"</span><span class="p">)</span></div>
-<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../api/anomalib/data/folder/index.html#anomalib.data.folder.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="_check_and_convert_path"><a class="viewcode-back" href="../../../api/anomalib/data/folder/index.html#anomalib.data.folder._check_and_convert_path">[docs]</a><span class="k">def</span> <span class="nf">_check_and_convert_path</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
@@ -844,6 +843,7 @@
 <span class="sd">          stage: Optional[str]:  Train/Val/Test stages. (Default value = None)</span>
 
 <span class="sd">        """</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Setting up train, validation, test and prediction datasets."</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">stage</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">"fit"</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span> <span class="o">=</span> <span class="n">FolderDataset</span><span class="p">(</span>
                 <span class="n">normal_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">normal_dir</span><span class="p">,</span>

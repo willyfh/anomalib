@@ -22,6 +22,19 @@ Classes
 
 
 
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.dfm.lightning_model.logger
+
+
+.. py:data:: logger
+   
+
+   
+
 .. py:class:: DfmLightning(hparams: Union[omegaconf.DictConfig, omegaconf.ListConfig])
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
@@ -49,7 +62,7 @@ Classes
 
    .. py:method:: on_validation_start(self) -> None
 
-      Fit a KDE Model to the embedding collected from the training set.
+      Fit a PCA transformation and a Gaussian model to dataset.
 
 
    .. py:method:: validation_step(self, batch, _)

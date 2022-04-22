@@ -532,11 +532,8 @@
 <span class="sd">        """</span>
 
         <span class="c1"># Coreset Subsampling</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Creating CoreSet Sampler via k-Center Greedy"</span><span class="p">)</span>
         <span class="n">sampler</span> <span class="o">=</span> <span class="n">KCenterGreedy</span><span class="p">(</span><span class="n">embedding</span><span class="o">=</span><span class="n">embedding</span><span class="p">,</span> <span class="n">sampling_ratio</span><span class="o">=</span><span class="n">sampling_ratio</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Getting the coreset from the main embedding."</span><span class="p">)</span>
         <span class="n">coreset</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">sample_coreset</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Assigning the coreset as the memory bank."</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">memory_bank</span> <span class="o">=</span> <span class="n">coreset</span></div>
 
 <div class="viewcode-block" id="PatchcoreModel.nearest_neighbors"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/torch_model/index.html#anomalib.models.patchcore.torch_model.PatchcoreModel.nearest_neighbors">[docs]</a>    <span class="k">def</span> <span class="nf">nearest_neighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedding</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">9</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>

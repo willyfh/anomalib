@@ -402,6 +402,7 @@
 <span class="c1"># See the License for the specific language governing permissions</span>
 <span class="c1"># and limitations under the License.</span>
 
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
@@ -409,6 +410,8 @@
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.patchcore.torch_model</span> <span class="kn">import</span> <span class="n">PatchcoreModel</span>
+
+<div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PatchcoreLightning"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.PatchcoreLightning">[docs]</a><span class="k">class</span> <span class="nc">PatchcoreLightning</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
@@ -425,6 +428,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Initializing Patchcore Lightning model."</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span> <span class="n">PatchcoreModel</span> <span class="o">=</span> <span class="n">PatchcoreModel</span><span class="p">(</span>
             <span class="n">layers</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">,</span>
@@ -468,9 +472,10 @@
         <span class="c1"># NOTE: Previous anomalib versions fit subsampling at the end of the epoch.</span>
         <span class="c1">#   This is not possible anymore with PyTorch Lightning v1.4.0 since validation</span>
         <span class="c1">#   is run within train epoch.</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Aggregating the embedding extracted from the training set."</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Aggregating the embedding extracted from the training set."</span><span class="p">)</span>
         <span class="n">embeddings</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">)</span>
 
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Applying core-set subsampling to get the embedding."</span><span class="p">)</span>
         <span class="n">sampling_ratio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">coreset_sampling_ratio</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">subsample_embedding</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="n">sampling_ratio</span><span class="p">)</span></div>
 

@@ -401,6 +401,24 @@
 </tr>
 </tbody>
 </table></div>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h3>
+<div class="table-wrapper"><table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%"/>
+<col style="width: 90%"/>
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.dfm.lightning_model.logger" title="anomalib.models.dfm.lightning_model.logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logger</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table></div>
+<dl class="py data">
+<dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.logger">
+<span class="sig-prename descclassname"><span class="pre">anomalib.models.dfm.lightning_model.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfm/lightning_model.html#logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.logger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.DfmLightning">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfm.lightning_model.</span></span><span class="sig-name descname"><span class="pre">DfmLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfm/lightning_model.html#DfmLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.DfmLightning" title="Permalink to this definition">¶</a></dt>
@@ -431,7 +449,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.DfmLightning.on_validation_start">
 <span class="sig-name descname"><span class="pre">on_validation_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfm/lightning_model.html#DfmLightning.on_validation_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.DfmLightning.on_validation_start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fit a KDE Model to the embedding collected from the training set.</p>
+<dd><p>Fit a PCA transformation and a Gaussian model to dataset.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.DfmLightning.validation_step">
@@ -508,7 +526,9 @@
             <ul>
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfm.lightning_model</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
-<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a><ul>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.logger">logger</a></li>
 <li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning">DfmLightning</a><ul>
 <li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.configure_optimizers">configure_optimizers</a></li>
 <li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.training_step">training_step</a></li>

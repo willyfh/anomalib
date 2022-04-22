@@ -399,6 +399,7 @@
 <span class="c1"># See the License for the specific language governing permissions</span>
 <span class="c1"># and limitations under the License.</span>
 
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
 
@@ -406,6 +407,8 @@
 
 <span class="kn">from</span> <span class="nn">anomalib.deploy</span> <span class="kn">import</span> <span class="n">export_convert</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
+
+<div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../../api/anomalib/utils/callbacks/openvino/index.html#anomalib.utils.callbacks.openvino.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="OpenVINOCallback"><a class="viewcode-back" href="../../../../api/anomalib/utils/callbacks/openvino/index.html#anomalib.utils.callbacks.openvino.OpenVINOCallback">[docs]</a><span class="k">class</span> <span class="nc">OpenVINOCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
@@ -430,6 +433,7 @@
 <span class="sd">        Converts the model to ``onnx`` format and then calls OpenVINO's model optimizer to get the</span>
 <span class="sd">        ``.xml`` and ``.bin`` IR files.</span>
 <span class="sd">        """</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Exporting the model to OpenVINO"</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">onnx_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dirpath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span> <span class="s2">".onnx"</span><span class="p">)</span>
         <span class="n">export_convert</span><span class="p">(</span>

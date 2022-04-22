@@ -423,7 +423,10 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.loggers.get_logger" title="anomalib.utils.loggers.get_logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_logger</span></code></a>(config: Union[omegaconf.dictconfig.DictConfig, omegaconf.listconfig.ListConfig]) → Union[pytorch_lightning.loggers.LightningLoggerBase, Iterable[pytorch_lightning.loggers.LightningLoggerBase], bool]</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.loggers.configure_logger" title="anomalib.utils.loggers.configure_logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">configure_logger</span></code></a>(level: Union[int, str] = logging.INFO)</p></td>
+<td><p>Get console logger by name.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.utils.loggers.get_experiment_logger" title="anomalib.utils.loggers.get_experiment_logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_experiment_logger</span></code></a>(config: Union[omegaconf.dictconfig.DictConfig, omegaconf.listconfig.ListConfig]) → Union[pytorch_lightning.loggers.LightningLoggerBase, Iterable[pytorch_lightning.loggers.LightningLoggerBase], bool]</p></td>
 <td><p>Return a logger based on the choice of logger in the config file.</p></td>
 </tr>
 </tbody>
@@ -563,8 +566,24 @@ on how to use W&amp;B with PyTorch Lightning</p></li>
 </dd></dl>
 </dd></dl>
 <dl class="py function">
-<dt class="sig sig-object py" id="anomalib.utils.loggers.get_logger">
-<span class="sig-prename descclassname"><span class="pre">anomalib.utils.loggers.</span></span><span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.dictconfig.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pytorch_lightning.loggers.LightningLoggerBase</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">pytorch_lightning.loggers.LightningLoggerBase</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/anomalib/utils/loggers.html#get_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.loggers.get_logger" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.utils.loggers.configure_logger">
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.loggers.</span></span><span class="sig-name descname"><span class="pre">configure_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">logging.INFO</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/utils/loggers.html#configure_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.loggers.configure_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get console logger by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>level</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Logger Level. Defaults to logging.INFO.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The expected logger.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Logger</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.utils.loggers.get_experiment_logger">
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.loggers.</span></span><span class="sig-name descname"><span class="pre">get_experiment_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.dictconfig.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pytorch_lightning.loggers.LightningLoggerBase</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">pytorch_lightning.loggers.LightningLoggerBase</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/anomalib/utils/loggers.html#get_experiment_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.loggers.get_experiment_logger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a logger based on the choice of logger in the config file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -653,7 +672,8 @@ on how to use W&amp;B with PyTorch Lightning</p></li>
 <li><a class="reference internal" href="#anomalib.utils.loggers.AnomalibWandbLogger.save">save</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#anomalib.utils.loggers.get_logger">get_logger</a></li>
+<li><a class="reference internal" href="#anomalib.utils.loggers.configure_logger">configure_logger</a></li>
+<li><a class="reference internal" href="#anomalib.utils.loggers.get_experiment_logger">get_experiment_logger</a></li>
 </ul>
 </li>
 </ul>
