@@ -759,12 +759,13 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Found the dataset."</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">dataset_name</span> <span class="o">=</span> <span class="s2">"mvtec_anomaly_detection.tar.xz"</span>
 
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Downloading the Mvtec AD dataset."</span><span class="p">)</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="s2">"https://www.mydrive.ch/shares/38536/3830184030e49fe74747669442f0f282/download/420938113-1629952094"</span>
+            <span class="n">dataset_name</span> <span class="o">=</span> <span class="s2">"mvtec_anomaly_detection.tar.xz"</span>
             <span class="k">with</span> <span class="n">DownloadProgressBar</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="s2">"B"</span><span class="p">,</span> <span class="n">unit_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">miniters</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">"MVTec AD"</span><span class="p">)</span> <span class="k">as</span> <span class="n">progress_bar</span><span class="p">:</span>
                 <span class="n">urlretrieve</span><span class="p">(</span>
-                    <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">"ftp://guest:GU.205dldo@ftp.softronics.ch/mvtec_anomaly_detection/</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                    <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
                     <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="n">dataset_name</span><span class="p">,</span>
                     <span class="n">reporthook</span><span class="o">=</span><span class="n">progress_bar</span><span class="o">.</span><span class="n">update_to</span><span class="p">,</span>
                 <span class="p">)</span>
