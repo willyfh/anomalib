@@ -403,6 +403,7 @@
 <span class="c1"># and limitations under the License.</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
@@ -606,11 +607,20 @@
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="n">split</span>
 
+        <span class="k">if</span> <span class="n">task</span> <span class="o">==</span> <span class="s2">"segmentation"</span> <span class="ow">and</span> <span class="n">mask_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">"Segmentation task is requested, but mask directory is not provided. "</span>
+                <span class="s2">"Classification is to be chosen if mask directory is not provided."</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="s2">"classification"</span>
+
         <span class="k">if</span> <span class="n">task</span> <span class="o">==</span> <span class="s2">"classification"</span> <span class="ow">and</span> <span class="n">mask_dir</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="s2">"Classification task is requested, but mask directory is provided. "</span>
                 <span class="s2">"Segmentation task is to be chosen if mask directory is provided."</span>
             <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="s2">"segmentation"</span>
+
         <span class="k">if</span> <span class="n">task</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">mask_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="s2">"classification"</span>
         <span class="k">else</span><span class="p">:</span>
