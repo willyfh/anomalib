@@ -161,7 +161,25 @@
 <p class="caption" role="heading"><span class="caption-text">Models</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../models.html">Models Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfkde.lightning_model.html">anomalib.models.dfkde.lightning_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfkde.torch_model.html">anomalib.models.dfkde.torch_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfm.lightning_model.html">anomalib.models.dfm.lightning_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfm.torch_model.html">anomalib.models.dfm.torch_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.ganomaly.lightning_model.html">anomalib.models.ganomaly.lightning_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.ganomaly.torch_model.html">anomalib.models.ganomaly.torch_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.padim.anomaly_map.html">anomalib.models.padim.anomaly_map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.padim.lightning_model.html">anomalib.models.padim.lightning_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.padim.torch_model.html">anomalib.models.padim.torch_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.anomaly_map.html">anomalib.models.patchcore.anomaly_map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.lightning_model.html">anomalib.models.patchcore.lightning_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.torch_model.html">anomalib.models.patchcore.torch_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.stfpm.anomaly_map.html">anomalib.models.stfpm.anomaly_map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.stfpm.lightning_model.html">anomalib.models.stfpm.lightning_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.stfpm.torch_model.html">anomalib.models.stfpm.torch_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.cflow.anomaly_map.html">anomalib.models.cflow.anomaly_map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.cflow.lightning_model.html">anomalib.models.cflow.lightning_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.cflow.torch_model.html">anomalib.models.cflow.torch_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.cflow.utils.html">anomalib.models.cflow.utils</a></li>
 </ul>
 </li>
 </ul>
@@ -351,6 +369,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/structure_of_documentation.html">Structure of the Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/using_tox.html">Using Tox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/using_pre_commit.html">Pre-commit Hooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/hyperparameter_optimization.html">Hyperparameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/logging.html">Logging</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Research</span></p>
 <ul>
@@ -409,7 +430,7 @@
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">PCA</span><span class="p">,</span> <span class="n">DynamicBufferModule</span><span class="p">,</span> <span class="n">FeatureExtractor</span>
 
 
-<div class="viewcode-block" id="SingleClassGaussian"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/torch_model/index.html#anomalib.models.dfm.torch_model.SingleClassGaussian">[docs]</a><span class="k">class</span> <span class="nc">SingleClassGaussian</span><span class="p">(</span><span class="n">DynamicBufferModule</span><span class="p">):</span>
+<div class="viewcode-block" id="SingleClassGaussian"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.torch_model.html#anomalib.models.dfm.torch_model.SingleClassGaussian">[docs]</a><span class="k">class</span> <span class="nc">SingleClassGaussian</span><span class="p">(</span><span class="n">DynamicBufferModule</span><span class="p">):</span>
     <span class="sd">"""Model Gaussian distribution over a set of points."""</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -422,7 +443,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">u_mat</span><span class="p">:</span> <span class="n">Tensor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sigma_mat</span><span class="p">:</span> <span class="n">Tensor</span>
 
-<div class="viewcode-block" id="SingleClassGaussian.fit"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/torch_model/index.html#anomalib.models.dfm.torch_model.SingleClassGaussian.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="SingleClassGaussian.fit"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.torch_model.html#anomalib.models.dfm.torch_model.SingleClassGaussian.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Fit a Gaussian model to dataset X.</span>
 
 <span class="sd">        Covariance matrix is not calculated directly using:</span>
@@ -442,7 +463,7 @@
         <span class="n">data_centered</span> <span class="o">=</span> <span class="p">(</span><span class="n">dataset</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_vec</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">u_mat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma_mat</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">data_centered</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SingleClassGaussian.score_samples"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/torch_model/index.html#anomalib.models.dfm.torch_model.SingleClassGaussian.score_samples">[docs]</a>    <span class="k">def</span> <span class="nf">score_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="SingleClassGaussian.score_samples"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.torch_model.html#anomalib.models.dfm.torch_model.SingleClassGaussian.score_samples">[docs]</a>    <span class="k">def</span> <span class="nf">score_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Compute the NLL (negative log likelihood) scores.</span>
 
 <span class="sd">        Args:</span>
@@ -455,7 +476,7 @@
         <span class="n">nll</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">features_transformed</span> <span class="o">*</span> <span class="n">features_transformed</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma_mat</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">nll</span></div>
 
-<div class="viewcode-block" id="SingleClassGaussian.forward"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/torch_model/index.html#anomalib.models.dfm.torch_model.SingleClassGaussian.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="SingleClassGaussian.forward"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.torch_model.html#anomalib.models.dfm.torch_model.SingleClassGaussian.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Provides the same functionality as `fit`.</span>
 
 <span class="sd">        Transforms the input dataset based on singular values calculated earlier.</span>
@@ -466,7 +487,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="DFMModel"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/torch_model/index.html#anomalib.models.dfm.torch_model.DFMModel">[docs]</a><span class="k">class</span> <span class="nc">DFMModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="viewcode-block" id="DFMModel"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.torch_model.html#anomalib.models.dfm.torch_model.DFMModel">[docs]</a><span class="k">class</span> <span class="nc">DFMModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">"""Model for the DFM algorithm.</span>
 
 <span class="sd">    Args:</span>
@@ -489,7 +510,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">score_type</span> <span class="o">=</span> <span class="n">score_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="n">layer</span><span class="p">])</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 
-<div class="viewcode-block" id="DFMModel.fit"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/torch_model/index.html#anomalib.models.dfm.torch_model.DFMModel.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="DFMModel.fit"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.torch_model.html#anomalib.models.dfm.torch_model.DFMModel.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Fit a pca transformation and a Gaussian model to dataset.</span>
 
 <span class="sd">        Args:</span>
@@ -500,7 +521,7 @@
         <span class="n">features_reduced</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pca_model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">features_reduced</span><span class="o">.</span><span class="n">T</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DFMModel.score"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/torch_model/index.html#anomalib.models.dfm.torch_model.DFMModel.score">[docs]</a>    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="DFMModel.score"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.torch_model.html#anomalib.models.dfm.torch_model.DFMModel.score">[docs]</a>    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Compute scores.</span>
 
 <span class="sd">        Scores are either PCA-based feature reconstruction error (FRE) scores or</span>
@@ -523,7 +544,7 @@
 
         <span class="k">return</span> <span class="n">score</span></div>
 
-<div class="viewcode-block" id="DFMModel.get_features"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/torch_model/index.html#anomalib.models.dfm.torch_model.DFMModel.get_features">[docs]</a>    <span class="k">def</span> <span class="nf">get_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="DFMModel.get_features"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.torch_model.html#anomalib.models.dfm.torch_model.DFMModel.get_features">[docs]</a>    <span class="k">def</span> <span class="nf">get_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Extract features from the pretrained network.</span>
 
 <span class="sd">        Args:</span>
@@ -543,7 +564,7 @@
         <span class="n">features</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">features</span></div>
 
-<div class="viewcode-block" id="DFMModel.forward"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/torch_model/index.html#anomalib.models.dfm.torch_model.DFMModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="DFMModel.forward"><a class="viewcode-back" href="../../../../models/anomalib.models.dfm.torch_model.html#anomalib.models.dfm.torch_model.DFMModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Computer score from input images.</span>
 
 <span class="sd">        Args:</span>

@@ -161,7 +161,25 @@
 <p class="caption" role="heading"><span class="caption-text">Models</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../models.html">Models Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfkde.lightning_model.html">anomalib.models.dfkde.lightning_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfkde.torch_model.html">anomalib.models.dfkde.torch_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfm.lightning_model.html">anomalib.models.dfm.lightning_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfm.torch_model.html">anomalib.models.dfm.torch_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.ganomaly.lightning_model.html">anomalib.models.ganomaly.lightning_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.ganomaly.torch_model.html">anomalib.models.ganomaly.torch_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.padim.anomaly_map.html">anomalib.models.padim.anomaly_map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.padim.lightning_model.html">anomalib.models.padim.lightning_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.padim.torch_model.html">anomalib.models.padim.torch_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.anomaly_map.html">anomalib.models.patchcore.anomaly_map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.lightning_model.html">anomalib.models.patchcore.lightning_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.torch_model.html">anomalib.models.patchcore.torch_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.stfpm.anomaly_map.html">anomalib.models.stfpm.anomaly_map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.stfpm.lightning_model.html">anomalib.models.stfpm.lightning_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.stfpm.torch_model.html">anomalib.models.stfpm.torch_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.cflow.anomaly_map.html">anomalib.models.cflow.anomaly_map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.cflow.lightning_model.html">anomalib.models.cflow.lightning_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.cflow.torch_model.html">anomalib.models.cflow.torch_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.cflow.utils.html">anomalib.models.cflow.utils</a></li>
 </ul>
 </li>
 </ul>
@@ -351,6 +369,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/structure_of_documentation.html">Structure of the Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/using_tox.html">Using Tox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/using_pre_commit.html">Pre-commit Hooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/hyperparameter_optimization.html">Hyperparameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/logging.html">Logging</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Research</span></p>
 <ul>
@@ -411,7 +432,7 @@
 <span class="kn">from</span> <span class="nn">anomalib.pre_processing</span> <span class="kn">import</span> <span class="n">Tiler</span>
 
 
-<div class="viewcode-block" id="Loss"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/torch_model/index.html#anomalib.models.stfpm.torch_model.Loss">[docs]</a><span class="k">class</span> <span class="nc">Loss</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="viewcode-block" id="Loss"><a class="viewcode-back" href="../../../../models/anomalib.models.stfpm.torch_model.html#anomalib.models.stfpm.torch_model.Loss">[docs]</a><span class="k">class</span> <span class="nc">Loss</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">"""Feature Pyramid Loss This class implmenents the feature pyramid loss function proposed in STFPM paper.</span>
 
 <span class="sd">    Example:</span>
@@ -435,7 +456,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mse_loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s2">"sum"</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Loss.compute_layer_loss"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/torch_model/index.html#anomalib.models.stfpm.torch_model.Loss.compute_layer_loss">[docs]</a>    <span class="k">def</span> <span class="nf">compute_layer_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">teacher_feats</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">student_feats</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="Loss.compute_layer_loss"><a class="viewcode-back" href="../../../../models/anomalib.models.stfpm.torch_model.html#anomalib.models.stfpm.torch_model.Loss.compute_layer_loss">[docs]</a>    <span class="k">def</span> <span class="nf">compute_layer_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">teacher_feats</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">student_feats</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Compute layer loss based on Equation (1) in Section 3.2 of the paper.</span>
 
 <span class="sd">        Args:</span>
@@ -454,7 +475,7 @@
 
         <span class="k">return</span> <span class="n">layer_loss</span></div>
 
-<div class="viewcode-block" id="Loss.forward"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/torch_model/index.html#anomalib.models.stfpm.torch_model.Loss.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">teacher_features</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">],</span> <span class="n">student_features</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="Loss.forward"><a class="viewcode-back" href="../../../../models/anomalib.models.stfpm.torch_model.html#anomalib.models.stfpm.torch_model.Loss.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">teacher_features</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">],</span> <span class="n">student_features</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Compute the overall loss via the weighted average of the layer losses computed by the cosine similarity.</span>
 
 <span class="sd">        Args:</span>
@@ -475,7 +496,7 @@
         <span class="k">return</span> <span class="n">total_loss</span></div></div>
 
 
-<div class="viewcode-block" id="STFPMModel"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/torch_model/index.html#anomalib.models.stfpm.torch_model.STFPMModel">[docs]</a><span class="k">class</span> <span class="nc">STFPMModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="viewcode-block" id="STFPMModel"><a class="viewcode-back" href="../../../../models/anomalib.models.stfpm.torch_model.html#anomalib.models.stfpm.torch_model.STFPMModel">[docs]</a><span class="k">class</span> <span class="nc">STFPMModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">"""STFPM: Student-Teacher Feature Pyramid Matching for Unsupervised Anomaly Detection.</span>
 
 <span class="sd">    Args:</span>
@@ -515,7 +536,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">anomaly_map_generator</span> <span class="o">=</span> <span class="n">AnomalyMapGenerator</span><span class="p">(</span><span class="n">image_size</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">input_size</span><span class="p">))</span>
 
-<div class="viewcode-block" id="STFPMModel.forward"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/torch_model/index.html#anomalib.models.stfpm.torch_model.STFPMModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span><span class="p">):</span>
+<div class="viewcode-block" id="STFPMModel.forward"><a class="viewcode-back" href="../../../../models/anomalib.models.stfpm.torch_model.html#anomalib.models.stfpm.torch_model.STFPMModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span><span class="p">):</span>
         <span class="sd">"""Forward-pass images into the network.</span>
 
 <span class="sd">        During the training mode the model extracts the features from the teacher and student networks.</span>
