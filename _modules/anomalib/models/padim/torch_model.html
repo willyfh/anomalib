@@ -161,25 +161,7 @@
 <p class="caption" role="heading"><span class="caption-text">Models</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../models.html">Models Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfkde.lightning_model.html">anomalib.models.dfkde.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfkde.torch_model.html">anomalib.models.dfkde.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfm.lightning_model.html">anomalib.models.dfm.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.dfm.torch_model.html">anomalib.models.dfm.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.ganomaly.lightning_model.html">anomalib.models.ganomaly.lightning_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.ganomaly.torch_model.html">anomalib.models.ganomaly.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.padim.anomaly_map.html">anomalib.models.padim.anomaly_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.padim.lightning_model.html">anomalib.models.padim.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.padim.torch_model.html">anomalib.models.padim.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.anomaly_map.html">anomalib.models.patchcore.anomaly_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.lightning_model.html">anomalib.models.patchcore.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.patchcore.torch_model.html">anomalib.models.patchcore.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.stfpm.anomaly_map.html">anomalib.models.stfpm.anomaly_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.stfpm.lightning_model.html">anomalib.models.stfpm.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.stfpm.torch_model.html">anomalib.models.stfpm.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.cflow.anomaly_map.html">anomalib.models.cflow.anomaly_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.cflow.lightning_model.html">anomalib.models.cflow.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.cflow.torch_model.html">anomalib.models.cflow.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../models/anomalib.models.cflow.utils.html">anomalib.models.cflow.utils</a></li>
 </ul>
 </li>
 </ul>
@@ -369,9 +351,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/structure_of_documentation.html">Structure of the Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/using_tox.html">Using Tox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../guides/using_pre_commit.html">Pre-commit Hooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../guides/benchmarking.html">Benchmarking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../guides/hyperparameter_optimization.html">Hyperparameter Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../guides/logging.html">Logging</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Research</span></p>
 <ul>
@@ -438,7 +417,7 @@
 <span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="PadimModel"><a class="viewcode-back" href="../../../../models/anomalib.models.padim.torch_model.html#anomalib.models.padim.torch_model.PadimModel">[docs]</a><span class="k">class</span> <span class="nc">PadimModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="viewcode-block" id="PadimModel"><a class="viewcode-back" href="../../../../api/anomalib/models/padim/torch_model/index.html#anomalib.models.padim.torch_model.PadimModel">[docs]</a><span class="k">class</span> <span class="nc">PadimModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">"""Padim Module.</span>
 
 <span class="sd">    Args:</span>
@@ -485,7 +464,7 @@
             <span class="k">assert</span> <span class="n">tile_stride</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tiler</span> <span class="o">=</span> <span class="n">Tiler</span><span class="p">(</span><span class="n">tile_size</span><span class="p">,</span> <span class="n">tile_stride</span><span class="p">)</span>
 
-<div class="viewcode-block" id="PadimModel.forward"><a class="viewcode-back" href="../../../../models/anomalib.models.padim.torch_model.html#anomalib.models.padim.torch_model.PadimModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="PadimModel.forward"><a class="viewcode-back" href="../../../../api/anomalib/models/padim/torch_model/index.html#anomalib.models.padim.torch_model.PadimModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Forward-pass image-batch (N, C, H, W) into model to extract features.</span>
 
 <span class="sd">        Args:</span>
@@ -524,7 +503,7 @@
 
         <span class="k">return</span> <span class="n">output</span></div>
 
-<div class="viewcode-block" id="PadimModel.generate_embedding"><a class="viewcode-back" href="../../../../models/anomalib.models.padim.torch_model.html#anomalib.models.padim.torch_model.PadimModel.generate_embedding">[docs]</a>    <span class="k">def</span> <span class="nf">generate_embedding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="PadimModel.generate_embedding"><a class="viewcode-back" href="../../../../api/anomalib/models/padim/torch_model/index.html#anomalib.models.padim.torch_model.PadimModel.generate_embedding">[docs]</a>    <span class="k">def</span> <span class="nf">generate_embedding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Generate embedding from hierarchical feature map.</span>
 
 <span class="sd">        Args:</span>

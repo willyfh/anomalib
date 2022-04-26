@@ -161,25 +161,7 @@
 <p class="caption" role="heading"><span class="caption-text">Models</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../models.html">Models Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.dfkde.lightning_model.html">anomalib.models.dfkde.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.dfkde.torch_model.html">anomalib.models.dfkde.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.dfm.lightning_model.html">anomalib.models.dfm.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.dfm.torch_model.html">anomalib.models.dfm.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.ganomaly.lightning_model.html">anomalib.models.ganomaly.lightning_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.ganomaly.torch_model.html">anomalib.models.ganomaly.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.padim.anomaly_map.html">anomalib.models.padim.anomaly_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.padim.lightning_model.html">anomalib.models.padim.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.padim.torch_model.html">anomalib.models.padim.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.patchcore.anomaly_map.html">anomalib.models.patchcore.anomaly_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.patchcore.lightning_model.html">anomalib.models.patchcore.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.patchcore.torch_model.html">anomalib.models.patchcore.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.stfpm.anomaly_map.html">anomalib.models.stfpm.anomaly_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.stfpm.lightning_model.html">anomalib.models.stfpm.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.stfpm.torch_model.html">anomalib.models.stfpm.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.cflow.anomaly_map.html">anomalib.models.cflow.anomaly_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.cflow.lightning_model.html">anomalib.models.cflow.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.cflow.torch_model.html">anomalib.models.cflow.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../models/anomalib.models.cflow.utils.html">anomalib.models.cflow.utils</a></li>
 </ul>
 </li>
 </ul>
@@ -369,9 +351,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/structure_of_documentation.html">Structure of the Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/using_tox.html">Using Tox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/using_pre_commit.html">Pre-commit Hooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../guides/benchmarking.html">Benchmarking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../guides/hyperparameter_optimization.html">Hyperparameter Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../guides/logging.html">Logging</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Research</span></p>
 <ul>
@@ -424,6 +403,7 @@
 <span class="c1"># and limitations under the License.</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
@@ -552,7 +532,7 @@
         <span class="n">samples</span><span class="p">[</span><span class="s2">"mask_path"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">""</span>
         <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">samples</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">label_index</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">samples</span><span class="p">[</span><span class="s2">"mask_path"</span><span class="p">][</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">mask_dir</span> <span class="o">/</span> <span class="n">row</span><span class="o">.</span><span class="n">image_path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">samples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s2">"mask_path"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">mask_dir</span> <span class="o">/</span> <span class="n">row</span><span class="o">.</span><span class="n">image_path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
     <span class="c1"># Ensure the pathlib objects are converted to str.</span>
     <span class="c1"># This is because torch dataloader doesn't like pathlib.</span>
@@ -627,11 +607,20 @@
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="n">split</span>
 
+        <span class="k">if</span> <span class="n">task</span> <span class="o">==</span> <span class="s2">"segmentation"</span> <span class="ow">and</span> <span class="n">mask_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">"Segmentation task is requested, but mask directory is not provided. "</span>
+                <span class="s2">"Classification is to be chosen if mask directory is not provided."</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="s2">"classification"</span>
+
         <span class="k">if</span> <span class="n">task</span> <span class="o">==</span> <span class="s2">"classification"</span> <span class="ow">and</span> <span class="n">mask_dir</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="s2">"Classification task is requested, but mask directory is provided. "</span>
                 <span class="s2">"Segmentation task is to be chosen if mask directory is provided."</span>
             <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="s2">"segmentation"</span>
+
         <span class="k">if</span> <span class="n">task</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">mask_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="s2">"classification"</span>
         <span class="k">else</span><span class="p">:</span>
