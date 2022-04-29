@@ -420,10 +420,13 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.data.utils.get_image_filenames" title="anomalib.data.utils.get_image_filenames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_image_filenames</span></code></a>(path: Union[str, pathlib.Path]) → List[str]</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.data.utils.hash_check" title="anomalib.data.utils.hash_check"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hash_check</span></code></a>(file_path: pathlib.Path, expected_hash: str)</p></td>
+<td><p>Raise assert error if hash does not match the calculated hash of the file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.data.utils.get_image_filenames" title="anomalib.data.utils.get_image_filenames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_image_filenames</span></code></a>(path: Union[str, pathlib.Path]) → List[str]</p></td>
 <td><p>Get image filenames.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.data.utils.read_image" title="anomalib.data.utils.read_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_image</span></code></a>(path: Union[str, pathlib.Path]) → numpy.ndarray</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.data.utils.read_image" title="anomalib.data.utils.read_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_image</span></code></a>(path: Union[str, pathlib.Path]) → numpy.ndarray</p></td>
 <td><p>Read image from disk in RGB format.</p></td>
 </tr>
 </tbody>
@@ -531,7 +534,8 @@ matplotlib animations for a graphical output [default: False].</p></li>
 <dt class="sig sig-object py" id="anomalib.data.utils.DownloadProgressBar.update_to">
 <span class="sig-name descname"><span class="pre">update_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_chunk_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.data.utils.DownloadProgressBar.update_to" title="Permalink to this definition">¶</a></dt>
 <dd><p>Progress bar hook for tqdm.</p>
-<p>The implementor does not have to bother about passing parameters to this as it gets them from urlretrieve.
+<p>Based on <a class="reference external" href="https://stackoverflow.com/a/53877507">https://stackoverflow.com/a/53877507</a>
+The implementor does not have to bother about passing parameters to this as it gets them from urlretrieve.
 However the context needs a few parameters. Refer to the example.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -543,6 +547,19 @@ However the context needs a few parameters. Refer to the example.</p>
 </dd>
 </dl>
 </dd></dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.data.utils.hash_check">
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">hash_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/data/utils/download.html#hash_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.hash_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise assert error if hash does not match the calculated hash of the file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> (<em>Path</em>) – Path to file.</p></li>
+<li><p><strong>expected_hash</strong> (<em>str</em>) – Expected hash of the file.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="anomalib.data.utils.get_image_filenames">
@@ -646,6 +663,7 @@ However the context needs a few parameters. Refer to the example.</p>
 <li><a class="reference internal" href="#anomalib.data.utils.DownloadProgressBar.update_to">update_to</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#anomalib.data.utils.hash_check">hash_check</a></li>
 <li><a class="reference internal" href="#anomalib.data.utils.get_image_filenames">get_image_filenames</a></li>
 <li><a class="reference internal" href="#anomalib.data.utils.read_image">read_image</a></li>
 </ul>

@@ -37,6 +37,7 @@ Functions
 
 .. autoapisummary::
 
+   anomalib.data.utils.hash_check
    anomalib.data.utils.get_image_filenames
    anomalib.data.utils.read_image
 
@@ -167,6 +168,7 @@ Functions
 
       Progress bar hook for tqdm.
 
+      Based on https://stackoverflow.com/a/53877507
       The implementor does not have to bother about passing parameters to this as it gets them from urlretrieve.
       However the context needs a few parameters. Refer to the example.
 
@@ -177,6 +179,16 @@ Functions
       :param total_size: Total download size. Defaults to None.
       :type total_size: [type], optional
 
+
+
+.. py:function:: hash_check(file_path: pathlib.Path, expected_hash: str)
+
+   Raise assert error if hash does not match the calculated hash of the file.
+
+   :param file_path: Path to file.
+   :type file_path: Path
+   :param expected_hash: Expected hash of the file.
+   :type expected_hash: str
 
 
 .. py:function:: get_image_filenames(path: Union[str, pathlib.Path]) -> List[str]

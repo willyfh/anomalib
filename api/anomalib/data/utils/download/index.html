@@ -385,8 +385,7 @@
         </div>
         <section id="module-anomalib.data.utils.download">
 <span id="anomalib-data-utils-download"></span><h1><a class="reference internal" href="#module-anomalib.data.utils.download" title="anomalib.data.utils.download"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.download</span></code></a><a class="headerlink" href="#module-anomalib.data.utils.download" title="Permalink to this headline">¶</a></h1>
-<p>Helper to show progress bars with <cite>urlretrieve</cite>.</p>
-<p>Based on <a class="reference external" href="https://stackoverflow.com/a/53877507">https://stackoverflow.com/a/53877507</a></p>
+<p>Helper to show progress bars with <cite>urlretrieve</cite>, check hash of file.</p>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 <section id="classes">
@@ -399,6 +398,20 @@
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.data.utils.download.DownloadProgressBar" title="anomalib.data.utils.download.DownloadProgressBar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DownloadProgressBar</span></code></a></p></td>
 <td><p>Create progress bar for urlretrieve. Subclasses <cite>tqdm</cite>.</p></td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<div class="table-wrapper"><table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%"/>
+<col style="width: 90%"/>
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.data.utils.download.hash_check" title="anomalib.data.utils.download.hash_check"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hash_check</span></code></a>(file_path: pathlib.Path, expected_hash: str)</p></td>
+<td><p>Raise assert error if hash does not match the calculated hash of the file.</p></td>
 </tr>
 </tbody>
 </table></div>
@@ -505,7 +518,8 @@ matplotlib animations for a graphical output [default: False].</p></li>
 <dt class="sig sig-object py" id="anomalib.data.utils.download.DownloadProgressBar.update_to">
 <span class="sig-name descname"><span class="pre">update_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_chunk_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/data/utils/download.html#DownloadProgressBar.update_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.download.DownloadProgressBar.update_to" title="Permalink to this definition">¶</a></dt>
 <dd><p>Progress bar hook for tqdm.</p>
-<p>The implementor does not have to bother about passing parameters to this as it gets them from urlretrieve.
+<p>Based on <a class="reference external" href="https://stackoverflow.com/a/53877507">https://stackoverflow.com/a/53877507</a>
+The implementor does not have to bother about passing parameters to this as it gets them from urlretrieve.
 However the context needs a few parameters. Refer to the example.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -517,6 +531,19 @@ However the context needs a few parameters. Refer to the example.</p>
 </dd>
 </dl>
 </dd></dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.data.utils.download.hash_check">
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.download.</span></span><span class="sig-name descname"><span class="pre">hash_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/data/utils/download.html#hash_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.download.hash_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise assert error if hash does not match the calculated hash of the file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> (<em>Path</em>) – Path to file.</p></li>
+<li><p><strong>expected_hash</strong> (<em>str</em>) – Expected hash of the file.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 </section>
 </section>
@@ -578,11 +605,13 @@ However the context needs a few parameters. Refer to the example.</p>
             <ul>
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.download</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
-<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+<li><a class="reference internal" href="#functions">Functions</a><ul>
 <li><a class="reference internal" href="#anomalib.data.utils.download.DownloadProgressBar">DownloadProgressBar</a><ul>
 <li><a class="reference internal" href="#anomalib.data.utils.download.DownloadProgressBar.update_to">update_to</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#anomalib.data.utils.download.hash_check">hash_check</a></li>
 </ul>
 </li>
 </ul>

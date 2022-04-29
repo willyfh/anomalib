@@ -442,7 +442,7 @@
 <span class="kn">from</span> <span class="nn">torchvision.datasets.folder</span> <span class="kn">import</span> <span class="n">VisionDataset</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.data.inference</span> <span class="kn">import</span> <span class="n">InferenceDataset</span>
-<span class="kn">from</span> <span class="nn">anomalib.data.utils</span> <span class="kn">import</span> <span class="n">DownloadProgressBar</span><span class="p">,</span> <span class="n">read_image</span>
+<span class="kn">from</span> <span class="nn">anomalib.data.utils</span> <span class="kn">import</span> <span class="n">DownloadProgressBar</span><span class="p">,</span> <span class="n">hash_check</span><span class="p">,</span> <span class="n">read_image</span>
 <span class="kn">from</span> <span class="nn">anomalib.data.utils.split</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">create_validation_set_from_test_set</span><span class="p">,</span>
     <span class="n">split_normal_images_in_train_set</span><span class="p">,</span>
@@ -763,19 +763,22 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Downloading the Mvtec AD dataset."</span><span class="p">)</span>
             <span class="n">url</span> <span class="o">=</span> <span class="s2">"https://www.mydrive.ch/shares/38536/3830184030e49fe74747669442f0f282/download/420938113-1629952094"</span>
             <span class="n">dataset_name</span> <span class="o">=</span> <span class="s2">"mvtec_anomaly_detection.tar.xz"</span>
+            <span class="n">zip_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="n">dataset_name</span>
             <span class="k">with</span> <span class="n">DownloadProgressBar</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="s2">"B"</span><span class="p">,</span> <span class="n">unit_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">miniters</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">"MVTec AD"</span><span class="p">)</span> <span class="k">as</span> <span class="n">progress_bar</span><span class="p">:</span>
                 <span class="n">urlretrieve</span><span class="p">(</span>
                     <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
-                    <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="n">dataset_name</span><span class="p">,</span>
+                    <span class="n">filename</span><span class="o">=</span><span class="n">zip_filename</span><span class="p">,</span>
                     <span class="n">reporthook</span><span class="o">=</span><span class="n">progress_bar</span><span class="o">.</span><span class="n">update_to</span><span class="p">,</span>
                 <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Checking hash"</span><span class="p">)</span>
+            <span class="n">hash_check</span><span class="p">(</span><span class="n">zip_filename</span><span class="p">,</span> <span class="s2">"eefca59f2cede9c3fc5b6befbfec275e"</span><span class="p">)</span>
 
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Extracting the dataset."</span><span class="p">)</span>
-            <span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="n">dataset_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">tar_file</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">zip_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">tar_file</span><span class="p">:</span>
                 <span class="n">tar_file</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
 
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Cleaning the tar file"</span><span class="p">)</span>
-            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="n">dataset_name</span><span class="p">)</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span></div>
+            <span class="p">(</span><span class="n">zip_filename</span><span class="p">)</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="MVTecDataModule.setup"><a class="viewcode-back" href="../../../api/anomalib/data/mvtec/index.html#anomalib.data.MVTecDataModule.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Setup train, validation and test data.</span>

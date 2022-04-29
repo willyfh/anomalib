@@ -426,7 +426,7 @@
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.data.inference</span> <span class="kn">import</span> <span class="n">InferenceDataset</span>
-<span class="kn">from</span> <span class="nn">anomalib.data.utils</span> <span class="kn">import</span> <span class="n">DownloadProgressBar</span><span class="p">,</span> <span class="n">read_image</span>
+<span class="kn">from</span> <span class="nn">anomalib.data.utils</span> <span class="kn">import</span> <span class="n">DownloadProgressBar</span><span class="p">,</span> <span class="n">hash_check</span><span class="p">,</span> <span class="n">read_image</span>
 <span class="kn">from</span> <span class="nn">anomalib.data.utils.split</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">create_validation_set_from_test_set</span><span class="p">,</span>
     <span class="n">split_normal_images_in_train_set</span><span class="p">,</span>
@@ -744,7 +744,8 @@
                     <span class="n">filename</span><span class="o">=</span><span class="n">zip_filename</span><span class="p">,</span>
                     <span class="n">reporthook</span><span class="o">=</span><span class="n">progress_bar</span><span class="o">.</span><span class="n">update_to</span><span class="p">,</span>
                 <span class="p">)</span>  <span class="c1"># nosec</span>
-
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Checking hash"</span><span class="p">)</span>
+            <span class="n">hash_check</span><span class="p">(</span><span class="n">zip_filename</span><span class="p">,</span> <span class="s2">"c1fa4d56ac50dd50908ce04e81037a8e"</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Extracting the dataset."</span><span class="p">)</span>
             <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">zip_filename</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_file</span><span class="p">:</span>
                 <span class="n">zip_file</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
