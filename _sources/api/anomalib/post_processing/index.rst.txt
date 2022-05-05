@@ -45,10 +45,22 @@ Functions
 
 .. autoapisummary::
 
+   anomalib.post_processing.add_anomalous_label
+   anomalib.post_processing.add_normal_label
    anomalib.post_processing.anomaly_map_to_color_map
    anomalib.post_processing.compute_mask
    anomalib.post_processing.superimpose_anomaly_map
 
+
+
+.. py:function:: add_anomalous_label(image: numpy.ndarray, confidence: Optional[float] = None)
+
+   Adds the anomalous label to the image.
+
+
+.. py:function:: add_normal_label(image: numpy.ndarray, confidence: Optional[float] = None)
+
+   Adds the normal label to the image.
 
 
 .. py:function:: anomaly_map_to_color_map(anomaly_map: numpy.ndarray, normalize: bool = True) -> numpy.ndarray
@@ -102,7 +114,7 @@ Functions
    :rtype: np.ndarray
 
 
-.. py:class:: Visualizer(num_rows: int, num_cols: int, figure_size: Tuple[int, int])
+.. py:class:: Visualizer
 
    Anomaly Visualization.
 
@@ -111,18 +123,11 @@ Functions
 
    .. rubric:: Example
 
-   >>> visualizer = Visualizer(num_rows=1, num_cols=5, figure_size=(12, 3))
+   >>> visualizer = Visualizer()
    >>> visualizer.add_image(image=image, title="Image")
    >>> visualizer.close()
 
-   :param num_rows: Number of rows of images in the figure.
-   :type num_rows: int
-   :param num_cols: Number of columns/images in each row.
-   :type num_cols: int
-   :param figure_size: Size of output figure
-   :type figure_size: Tuple[int, int]
-
-   .. py:method:: add_image(self, image: numpy.ndarray, title: str, color_map: Optional[str] = None, index: Optional[int] = None)
+   .. py:method:: add_image(self, image: numpy.ndarray, title: str, color_map: Optional[str] = None)
 
       Add image to figure.
 
@@ -132,23 +137,11 @@ Functions
       :type title: str
       :param color_map: Name of matplotlib color map used to map scalar data to colours. Defaults to None.
       :type color_map: Optional[str]
-      :param index: Figure index. Defaults to None.
-      :type index: Optional[int]
 
 
-   .. py:method:: add_text(self, image: numpy.ndarray, text: str, font: int = cv2.FONT_HERSHEY_PLAIN)
+   .. py:method:: generate(self)
 
-      Puts text on an image.
-
-      :param image: Input image.
-      :type image: np.ndarray
-      :param text: Text to add.
-      :type text: str
-      :param font: cv2 font type. Defaults to 0.
-      :type font: Optional[int]
-
-      :returns: Image with text.
-      :rtype: np.ndarray
+      Generate the image.
 
 
    .. py:method:: show(self)

@@ -18,10 +18,44 @@ Functions
 
 .. autoapisummary::
 
+   anomalib.post_processing.post_process.add_label
+   anomalib.post_processing.post_process.add_normal_label
+   anomalib.post_processing.post_process.add_anomalous_label
    anomalib.post_processing.post_process.anomaly_map_to_color_map
    anomalib.post_processing.post_process.superimpose_anomaly_map
    anomalib.post_processing.post_process.compute_mask
 
+
+
+.. py:function:: add_label(image: numpy.ndarray, label_name: str, color: Tuple[int, int, int], confidence: Optional[float] = None, font_scale: float = 0.005, thickness_scale=0.001)
+
+   Adds a label to an image.
+
+   :param image: Input image.
+   :type image: np.ndarray
+   :param label_name: Name of the label that will be displayed on the image.
+   :type label_name: str
+   :param color: RGB values for background color of label.
+   :type color: Tuple[int, int, int]
+   :param confidence: confidence score of the label.
+   :type confidence: Optional[float]
+   :param font_scale: scale of the font size relative to image size. Increase for bigger font.
+   :type font_scale: float
+   :param thickness_scale: scale of the font thickness. Increase for thicker font.
+   :type thickness_scale: float
+
+   :returns: Image with label.
+   :rtype: np.ndarray
+
+
+.. py:function:: add_normal_label(image: numpy.ndarray, confidence: Optional[float] = None)
+
+   Adds the normal label to the image.
+
+
+.. py:function:: add_anomalous_label(image: numpy.ndarray, confidence: Optional[float] = None)
+
+   Adds the anomalous label to the image.
 
 
 .. py:function:: anomaly_map_to_color_map(anomaly_map: numpy.ndarray, normalize: bool = True) -> numpy.ndarray

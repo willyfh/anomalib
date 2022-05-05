@@ -400,9 +400,73 @@
 <span class="c1"># and limitations under the License.</span>
 
 
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
 <span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">skimage</span> <span class="kn">import</span> <span class="n">morphology</span>
+
+
+<div class="viewcode-block" id="add_label"><a class="viewcode-back" href="../../../api/anomalib/post_processing/post_process/index.html#anomalib.post_processing.add_label">[docs]</a><span class="k">def</span> <span class="nf">add_label</span><span class="p">(</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">label_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">color</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+    <span class="n">confidence</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">font_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5e-3</span><span class="p">,</span>
+    <span class="n">thickness_scale</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">"""Adds a label to an image.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        image (np.ndarray): Input image.</span>
+<span class="sd">        label_name (str): Name of the label that will be displayed on the image.</span>
+<span class="sd">        color (Tuple[int, int, int]): RGB values for background color of label.</span>
+<span class="sd">        confidence (Optional[float]): confidence score of the label.</span>
+<span class="sd">        font_scale (float): scale of the font size relative to image size. Increase for bigger font.</span>
+<span class="sd">        thickness_scale (float): scale of the font thickness. Increase for thicker font.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: Image with label.</span>
+<span class="sd">    """</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">img_height</span><span class="p">,</span> <span class="n">img_width</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="n">font</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_PLAIN</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">label_name</span> <span class="k">if</span> <span class="n">confidence</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">label_name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">confidence</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">%)"</span>
+
+    <span class="c1"># get font sizing</span>
+    <span class="n">font_scale</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">)</span> <span class="o">*</span> <span class="n">font_scale</span>
+    <span class="n">thickness</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">)</span> <span class="o">*</span> <span class="n">thickness_scale</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="n">baseline</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getTextSize</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">font</span><span class="p">,</span> <span class="n">fontScale</span><span class="o">=</span><span class="n">font_scale</span><span class="p">,</span> <span class="n">thickness</span><span class="o">=</span><span class="n">thickness</span><span class="p">)</span>
+
+    <span class="c1"># create label</span>
+    <span class="n">label_patch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">height</span> <span class="o">+</span> <span class="n">baseline</span><span class="p">,</span> <span class="n">width</span> <span class="o">+</span> <span class="n">baseline</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="n">label_patch</span><span class="p">[:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">color</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span>
+        <span class="n">label_patch</span><span class="p">,</span>
+        <span class="n">text</span><span class="p">,</span>
+        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">baseline</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">height</span><span class="p">),</span>
+        <span class="n">font</span><span class="p">,</span>
+        <span class="n">fontScale</span><span class="o">=</span><span class="n">font_scale</span><span class="p">,</span>
+        <span class="n">thickness</span><span class="o">=</span><span class="n">thickness</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">lineType</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">LINE_AA</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># add label to image</span>
+    <span class="n">image</span><span class="p">[:</span> <span class="n">baseline</span> <span class="o">+</span> <span class="n">height</span><span class="p">,</span> <span class="p">:</span> <span class="n">baseline</span> <span class="o">+</span> <span class="n">width</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_patch</span>
+    <span class="k">return</span> <span class="n">image</span></div>
+
+
+<div class="viewcode-block" id="add_normal_label"><a class="viewcode-back" href="../../../api/anomalib/post_processing/post_process/index.html#anomalib.post_processing.add_normal_label">[docs]</a><span class="k">def</span> <span class="nf">add_normal_label</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">confidence</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">"""Adds the normal label to the image."""</span>
+    <span class="k">return</span> <span class="n">add_label</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="s2">"normal"</span><span class="p">,</span> <span class="p">(</span><span class="mi">225</span><span class="p">,</span> <span class="mi">252</span><span class="p">,</span> <span class="mi">134</span><span class="p">),</span> <span class="n">confidence</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="add_anomalous_label"><a class="viewcode-back" href="../../../api/anomalib/post_processing/post_process/index.html#anomalib.post_processing.add_anomalous_label">[docs]</a><span class="k">def</span> <span class="nf">add_anomalous_label</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">confidence</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">"""Adds the anomalous label to the image."""</span>
+    <span class="k">return</span> <span class="n">add_label</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="s2">"anomalous"</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">confidence</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="anomaly_map_to_color_map"><a class="viewcode-back" href="../../../api/anomalib/post_processing/post_process/index.html#anomalib.post_processing.anomaly_map_to_color_map">[docs]</a><span class="k">def</span> <span class="nf">anomaly_map_to_color_map</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">normalize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
