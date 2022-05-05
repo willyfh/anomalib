@@ -423,9 +423,9 @@
 <span class="sd">                          If None model will not be exported.</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nncf_config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">export_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">export_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">export_dir</span> <span class="o">=</span> <span class="n">export_dir</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">nncf_config</span> <span class="o">=</span> <span class="n">NNCFConfig</span><span class="p">(</span><span class="n">nncf_config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">NNCFConfig</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nncf_ctrl</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CompressionAlgorithmController</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># pylint: disable=unused-argument</span>
@@ -439,10 +439,10 @@
             <span class="k">return</span>
 
         <span class="n">init_loader</span> <span class="o">=</span> <span class="n">InitLoader</span><span class="p">(</span><span class="n">trainer</span><span class="o">.</span><span class="n">datamodule</span><span class="o">.</span><span class="n">train_dataloader</span><span class="p">())</span>  <span class="c1"># type: ignore</span>
-        <span class="n">nncf_config</span> <span class="o">=</span> <span class="n">register_default_init_args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nncf_config</span><span class="p">,</span> <span class="n">init_loader</span><span class="p">)</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">register_default_init_args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">init_loader</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">nncf_ctrl</span><span class="p">,</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">wrap_nncf_model</span><span class="p">(</span>
-            <span class="n">model</span><span class="o">=</span><span class="n">pl_module</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">nncf_config</span><span class="p">,</span> <span class="n">dataloader</span><span class="o">=</span><span class="n">trainer</span><span class="o">.</span><span class="n">datamodule</span><span class="o">.</span><span class="n">train_dataloader</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
+            <span class="n">model</span><span class="o">=</span><span class="n">pl_module</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">dataloader</span><span class="o">=</span><span class="n">trainer</span><span class="o">.</span><span class="n">datamodule</span><span class="o">.</span><span class="n">train_dataloader</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="NNCFCallback.on_train_batch_start"><a class="viewcode-back" href="../../../../../api/anomalib/utils/callbacks/nncf/callback/index.html#anomalib.utils.callbacks.nncf.callback.NNCFCallback.on_train_batch_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_train_batch_start</span><span class="p">(</span>
