@@ -304,9 +304,11 @@
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
 </ul>
@@ -403,11 +405,12 @@
 <span class="c1"># and limitations under the License.</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">EarlyStopping</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">MODEL_REGISTRY</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">optim</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.data.utils.image</span> <span class="kn">import</span> <span class="n">pad_nextpow2</span>
@@ -418,68 +421,62 @@
 <div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="GanomalyLightning"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.GanomalyLightning">[docs]</a><span class="k">class</span> <span class="nc">GanomalyLightning</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
+<span class="nd">@MODEL_REGISTRY</span>
+<div class="viewcode-block" id="Ganomaly"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.Ganomaly">[docs]</a><span class="k">class</span> <span class="nc">Ganomaly</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
     <span class="sd">"""PL Lightning Module for the GANomaly Algorithm.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        hparams (Union[DictConfig, ListConfig]): Model parameters</span>
+<span class="sd">        batch_size (int): Batch size.</span>
+<span class="sd">        input_size (Tuple[int,int]): Input dimension.</span>
+<span class="sd">        n_features (int): Number of features layers in the CNNs.</span>
+<span class="sd">        latent_vec_size (int): Size of autoencoder latent vector.</span>
+<span class="sd">        extra_layers (int, optional): Number of extra layers for encoder/decoder. Defaults to 0.</span>
+<span class="sd">        add_final_conv_layer (bool, optional): Add convolution layer at the end. Defaults to True.</span>
+<span class="sd">        wadv (int, optional): Weight for adversarial loss. Defaults to 1.</span>
+<span class="sd">        wcon (int, optional): Image regeneration weight. Defaults to 50.</span>
+<span class="sd">        wenc (int, optional): Latent vector encoder weight. Defaults to 1.</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">latent_vec_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">extra_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">add_final_conv_layer</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">wadv</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">wcon</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+        <span class="n">wenc</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">):</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Initializing Ganomaly Lightning model."</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span> <span class="n">GanomalyModel</span> <span class="o">=</span> <span class="n">GanomalyModel</span><span class="p">(</span>
-            <span class="n">input_size</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_size</span><span class="p">,</span>
+            <span class="n">input_size</span><span class="o">=</span><span class="n">input_size</span><span class="p">,</span>
             <span class="n">num_input_channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-            <span class="n">n_features</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">n_features</span><span class="p">,</span>
-            <span class="n">latent_vec_size</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">latent_vec_size</span><span class="p">,</span>
-            <span class="n">extra_layers</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">extra_layers</span><span class="p">,</span>
-            <span class="n">add_final_conv_layer</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_final_conv</span><span class="p">,</span>
-            <span class="n">wadv</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">wadv</span><span class="p">,</span>
-            <span class="n">wcon</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">wcon</span><span class="p">,</span>
-            <span class="n">wenc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">wenc</span><span class="p">,</span>
+            <span class="n">n_features</span><span class="o">=</span><span class="n">n_features</span><span class="p">,</span>
+            <span class="n">latent_vec_size</span><span class="o">=</span><span class="n">latent_vec_size</span><span class="p">,</span>
+            <span class="n">extra_layers</span><span class="o">=</span><span class="n">extra_layers</span><span class="p">,</span>
+            <span class="n">add_final_conv_layer</span><span class="o">=</span><span class="n">add_final_conv_layer</span><span class="p">,</span>
+            <span class="n">wadv</span><span class="o">=</span><span class="n">wadv</span><span class="p">,</span>
+            <span class="n">wcon</span><span class="o">=</span><span class="n">wcon</span><span class="p">,</span>
+            <span class="n">wenc</span><span class="o">=</span><span class="n">wenc</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">real_label</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">train_batch_size</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fake_label</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">train_batch_size</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">real_label</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fake_label</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">min_scores</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s2">"inf"</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># pylint: disable=not-callable</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_scores</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s2">"-inf"</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># pylint: disable=not-callable</span>
 
-<div class="viewcode-block" id="GanomalyLightning._reset_min_max"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.GanomalyLightning._reset_min_max">[docs]</a>    <span class="k">def</span> <span class="nf">_reset_min_max</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Ganomaly._reset_min_max"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.Ganomaly._reset_min_max">[docs]</a>    <span class="k">def</span> <span class="nf">_reset_min_max</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">"""Resets min_max scores."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_scores</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s2">"inf"</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># pylint: disable=not-callable</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_scores</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s2">"-inf"</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># pylint: disable=not-callable</span></div>
 
-<div class="viewcode-block" id="GanomalyLightning.configure_callbacks"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.GanomalyLightning.configure_callbacks">[docs]</a>    <span class="k">def</span> <span class="nf">configure_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">"""Configure model-specific callbacks."""</span>
-        <span class="n">early_stopping</span> <span class="o">=</span> <span class="n">EarlyStopping</span><span class="p">(</span>
-            <span class="n">monitor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">early_stopping</span><span class="o">.</span><span class="n">metric</span><span class="p">,</span>
-            <span class="n">patience</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">early_stopping</span><span class="o">.</span><span class="n">patience</span><span class="p">,</span>
-            <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">early_stopping</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">early_stopping</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="GanomalyLightning.configure_optimizers"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.GanomalyLightning.configure_optimizers">[docs]</a>    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">]:</span>
-        <span class="sd">"""Configure optimizers for generator and discriminator.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            List[optim.Optimizer]: Adam optimizers for discriminator and generator.</span>
-<span class="sd">        """</span>
-        <span class="n">optimizer_d</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">discriminator</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
-            <span class="n">lr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">lr</span><span class="p">,</span>
-            <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">beta1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">beta2</span><span class="p">),</span>
-        <span class="p">)</span>
-        <span class="n">optimizer_g</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">generator</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
-            <span class="n">lr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">lr</span><span class="p">,</span>
-            <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">beta1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">beta2</span><span class="p">),</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">optimizer_d</span><span class="p">,</span> <span class="n">optimizer_g</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="GanomalyLightning.training_step"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.GanomalyLightning.training_step">[docs]</a>    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">optimizer_idx</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
+<div class="viewcode-block" id="Ganomaly.training_step"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.Ganomaly.training_step">[docs]</a>    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">optimizer_idx</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
         <span class="sd">"""Training step.</span>
 
 <span class="sd">        Args:</span>
@@ -508,12 +505,12 @@
 
         <span class="k">return</span> <span class="n">loss</span></div>
 
-<div class="viewcode-block" id="GanomalyLightning.on_validation_start"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.GanomalyLightning.on_validation_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Ganomaly.on_validation_start"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.Ganomaly.on_validation_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Reset min and max values for current validation epoch."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reset_min_max</span><span class="p">()</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_validation_start</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="GanomalyLightning.validation_step"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.GanomalyLightning.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>  <span class="c1"># type: ignore # pylint: disable=arguments-differ</span>
+<div class="viewcode-block" id="Ganomaly.validation_step"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.Ganomaly.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>  <span class="c1"># type: ignore # pylint: disable=arguments-differ</span>
         <span class="sd">"""Update min and max scores from the current step.</span>
 
 <span class="sd">        Args:</span>
@@ -527,7 +524,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">min_scores</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_scores</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">]))</span>
         <span class="k">return</span> <span class="n">batch</span></div>
 
-<div class="viewcode-block" id="GanomalyLightning.validation_epoch_end"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.GanomalyLightning.validation_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">validation_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+<div class="viewcode-block" id="Ganomaly.validation_epoch_end"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.Ganomaly.validation_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">validation_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
         <span class="sd">"""Normalize outputs based on min/max values."""</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Normalizing validation outputs based on min/max values."</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">prediction</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
@@ -535,19 +532,19 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">validation_epoch_end</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">outputs</span></div>
 
-<div class="viewcode-block" id="GanomalyLightning.on_test_start"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.GanomalyLightning.on_test_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_test_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Ganomaly.on_test_start"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.Ganomaly.on_test_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_test_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Reset min max values before test batch starts."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reset_min_max</span><span class="p">()</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_test_start</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="GanomalyLightning.test_step"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.GanomalyLightning.test_step">[docs]</a>    <span class="k">def</span> <span class="nf">test_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
+<div class="viewcode-block" id="Ganomaly.test_step"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.Ganomaly.test_step">[docs]</a>    <span class="k">def</span> <span class="nf">test_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
         <span class="sd">"""Update min and max scores from the current step."""</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">test_step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_scores</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_scores</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">]))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_scores</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_scores</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">]))</span>
         <span class="k">return</span> <span class="n">batch</span></div>
 
-<div class="viewcode-block" id="GanomalyLightning.test_epoch_end"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.GanomalyLightning.test_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">test_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+<div class="viewcode-block" id="Ganomaly.test_epoch_end"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.Ganomaly.test_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">test_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
         <span class="sd">"""Normalize outputs based on min/max values."""</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Normalizing test outputs based on min/max values."</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">prediction</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
@@ -555,7 +552,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">test_epoch_end</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">outputs</span></div>
 
-<div class="viewcode-block" id="GanomalyLightning._normalize"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.GanomalyLightning._normalize">[docs]</a>    <span class="k">def</span> <span class="nf">_normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scores</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="Ganomaly._normalize"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.Ganomaly._normalize">[docs]</a>    <span class="k">def</span> <span class="nf">_normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scores</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Normalize the scores based on min/max of entire dataset.</span>
 
 <span class="sd">        Args:</span>
@@ -568,6 +565,70 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">max_scores</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_scores</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">scores</span></div></div>
+
+
+<div class="viewcode-block" id="GanomalyLightning"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.GanomalyLightning">[docs]</a><span class="k">class</span> <span class="nc">GanomalyLightning</span><span class="p">(</span><span class="n">Ganomaly</span><span class="p">):</span>
+    <span class="sd">"""PL Lightning Module for the GANomaly Algorithm.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        hparams (Union[DictConfig, ListConfig]): Model params</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">batch_size</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">train_batch_size</span><span class="p">,</span>
+            <span class="n">input_size</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_size</span><span class="p">,</span>
+            <span class="n">n_features</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">n_features</span><span class="p">,</span>
+            <span class="n">latent_vec_size</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">latent_vec_size</span><span class="p">,</span>
+            <span class="n">extra_layers</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">extra_layers</span><span class="p">,</span>
+            <span class="n">add_final_conv_layer</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_final_conv</span><span class="p">,</span>
+            <span class="n">wadv</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">wadv</span><span class="p">,</span>
+            <span class="n">wcon</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">wcon</span><span class="p">,</span>
+            <span class="n">wenc</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">wenc</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GanomalyLightning.configure_callbacks"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.GanomalyLightning.configure_callbacks">[docs]</a>    <span class="k">def</span> <span class="nf">configure_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""Configure model-specific callbacks.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This method is used for the existing CLI.</span>
+<span class="sd">            When PL CLI is introduced, configure callback method will be</span>
+<span class="sd">                deprecated, and callbacks will be configured from either</span>
+<span class="sd">                config.yaml file or from CLI.</span>
+<span class="sd">        """</span>
+        <span class="n">early_stopping</span> <span class="o">=</span> <span class="n">EarlyStopping</span><span class="p">(</span>
+            <span class="n">monitor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">early_stopping</span><span class="o">.</span><span class="n">metric</span><span class="p">,</span>
+            <span class="n">patience</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">early_stopping</span><span class="o">.</span><span class="n">patience</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">early_stopping</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">early_stopping</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="GanomalyLightning.configure_optimizers"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.GanomalyLightning.configure_optimizers">[docs]</a>    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">]:</span>
+        <span class="sd">"""Configures optimizers for each decoder.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This method is used for the existing CLI.</span>
+<span class="sd">            When PL CLI is introduced, configure optimizers method will be</span>
+<span class="sd">                deprecated, and optimizers will be configured from either</span>
+<span class="sd">                config.yaml file or from CLI.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Optimizer: Adam optimizer for each decoder</span>
+<span class="sd">        """</span>
+        <span class="n">optimizer_d</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">discriminator</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
+            <span class="n">lr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">lr</span><span class="p">,</span>
+            <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">beta1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">beta2</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">optimizer_g</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">generator</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
+            <span class="n">lr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">lr</span><span class="p">,</span>
+            <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">beta1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">beta2</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">optimizer_d</span><span class="p">,</span> <span class="n">optimizer_g</span><span class="p">]</span></div></div>
 </pre></div>
       </article>
       <footer>

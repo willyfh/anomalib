@@ -304,9 +304,11 @@
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
 </ul>
@@ -403,9 +405,11 @@
 <span class="c1"># and limitations under the License.</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">MODEL_REGISTRY</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
@@ -414,33 +418,41 @@
 <div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="PatchcoreLightning"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.PatchcoreLightning">[docs]</a><span class="k">class</span> <span class="nc">PatchcoreLightning</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
+<span class="nd">@MODEL_REGISTRY</span>
+<div class="viewcode-block" id="Patchcore"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.Patchcore">[docs]</a><span class="k">class</span> <span class="nc">Patchcore</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
     <span class="sd">"""PatchcoreLightning Module to train PatchCore algorithm.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        layers (List[str]): Layers used for feature extraction</span>
-<span class="sd">        input_size (Tuple[int, int]): Input size for the model.</span>
-<span class="sd">        tile_size (Tuple[int, int]): Tile size</span>
-<span class="sd">        tile_stride (int): Stride for tiling</span>
-<span class="sd">        backbone (str, optional): Pre-trained model backbone. Defaults to "resnet18".</span>
-<span class="sd">        apply_tiling (bool, optional): Apply tiling. Defaults to False.</span>
+<span class="sd">        input_size (Tuple[int, int]): Size of the model input.</span>
+<span class="sd">        backbone (str): Backbone CNN network</span>
+<span class="sd">        layers (List[str]): Layers to extract features from the backbone CNN</span>
+<span class="sd">        coreset_sampling_ratio (float, optional): Coreset sampling ratio to subsample embedding.</span>
+<span class="sd">            Defaults to 0.1.</span>
+<span class="sd">        num_neighbors (int, optional): Number of nearest neighbors. Defaults to 9.</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">layers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">coreset_sampling_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">num_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Initializing Patchcore Lightning model."</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span> <span class="n">PatchcoreModel</span> <span class="o">=</span> <span class="n">PatchcoreModel</span><span class="p">(</span>
-            <span class="n">layers</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">,</span>
-            <span class="n">input_size</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_size</span><span class="p">,</span>
-            <span class="n">tile_size</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">tiling</span><span class="o">.</span><span class="n">tile_size</span><span class="p">,</span>
-            <span class="n">tile_stride</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">tiling</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
-            <span class="n">backbone</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">,</span>
-            <span class="n">apply_tiling</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">tiling</span><span class="o">.</span><span class="n">apply</span><span class="p">,</span>
+            <span class="n">input_size</span><span class="o">=</span><span class="n">input_size</span><span class="p">,</span>
+            <span class="n">backbone</span><span class="o">=</span><span class="n">backbone</span><span class="p">,</span>
+            <span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">,</span>
+            <span class="n">num_neighbors</span><span class="o">=</span><span class="n">num_neighbors</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coreset_sampling_ratio</span> <span class="o">=</span> <span class="n">coreset_sampling_ratio</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
-<div class="viewcode-block" id="PatchcoreLightning.configure_optimizers"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.PatchcoreLightning.configure_optimizers">[docs]</a>    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Patchcore.configure_optimizers"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.Patchcore.configure_optimizers">[docs]</a>    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Configure optimizers.</span>
 
 <span class="sd">        Returns:</span>
@@ -448,7 +460,7 @@
 <span class="sd">        """</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="PatchcoreLightning.training_step"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.PatchcoreLightning.training_step">[docs]</a>    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_batch_idx</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
+<div class="viewcode-block" id="Patchcore.training_step"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.Patchcore.training_step">[docs]</a>    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_batch_idx</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
         <span class="sd">"""Generate feature embedding of the batch.</span>
 
 <span class="sd">        Args:</span>
@@ -467,7 +479,7 @@
         <span class="c1">#   https://github.com/PyTorchLightning/pytorch-lightning/pull/7357</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">embedding</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PatchcoreLightning.on_validation_start"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.PatchcoreLightning.on_validation_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Patchcore.on_validation_start"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.Patchcore.on_validation_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Apply subsampling to the embedding collected from the training set."""</span>
         <span class="c1"># NOTE: Previous anomalib versions fit subsampling at the end of the epoch.</span>
         <span class="c1">#   This is not possible anymore with PyTorch Lightning v1.4.0 since validation</span>
@@ -476,10 +488,9 @@
         <span class="n">embeddings</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Applying core-set subsampling to get the embedding."</span><span class="p">)</span>
-        <span class="n">sampling_ratio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">coreset_sampling_ratio</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">subsample_embedding</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="n">sampling_ratio</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">subsample_embedding</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">coreset_sampling_ratio</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PatchcoreLightning.validation_step"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.PatchcoreLightning.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
+<div class="viewcode-block" id="Patchcore.validation_step"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.Patchcore.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
         <span class="sd">"""Get batch of anomaly maps from input image batch.</span>
 
 <span class="sd">        Args:</span>
@@ -496,6 +507,25 @@
         <span class="n">batch</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">]</span> <span class="o">=</span> <span class="n">anomaly_score</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">batch</span></div></div>
+
+
+<div class="viewcode-block" id="PatchcoreLightning"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.PatchcoreLightning">[docs]</a><span class="k">class</span> <span class="nc">PatchcoreLightning</span><span class="p">(</span><span class="n">Patchcore</span><span class="p">):</span>
+    <span class="sd">"""PatchcoreLightning Module to train PatchCore algorithm.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        hparams (Union[DictConfig, ListConfig]): Model params</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">input_size</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_size</span><span class="p">,</span>
+            <span class="n">backbone</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">,</span>
+            <span class="n">layers</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">,</span>
+            <span class="n">coreset_sampling_ratio</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">coreset_sampling_ratio</span><span class="p">,</span>
+            <span class="n">num_neighbors</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">num_neighbors</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span></div>
 </pre></div>
       </article>
       <footer>

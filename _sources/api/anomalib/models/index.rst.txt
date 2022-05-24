@@ -34,7 +34,6 @@ Classes
 .. autoapisummary::
 
    anomalib.models.AnomalyModule
-   anomalib.models.PadimLightning
 
 
 
@@ -47,16 +46,13 @@ Functions
 
 
 
-.. py:class:: AnomalyModule(params: Union[omegaconf.DictConfig, omegaconf.ListConfig])
+.. py:class:: AnomalyModule
 
    Bases: :py:obj:`pytorch_lightning.LightningModule`, :py:obj:`abc.ABC`
 
    AnomalyModule to train, validate, predict and test images.
 
    Acts as a base class for all the Anomaly Modules in the library.
-
-   :param params: Configuration
-   :type params: Union[DictConfig, ListConfig]
 
    .. py:method:: forward(self, batch)
 
@@ -148,51 +144,6 @@ Functions
 
 
 
-.. py:class:: PadimLightning(hparams: Union[omegaconf.DictConfig, omegaconf.ListConfig])
-
-   Bases: :py:obj:`anomalib.models.components.AnomalyModule`
-
-   PaDiM: a Patch Distribution Modeling Framework for Anomaly Detection and Localization.
-
-   :param hparams: Model params
-   :type hparams: Union[DictConfig, ListConfig]
-
-   .. py:method:: configure_optimizers()
-      :staticmethod:
-
-      PADIM doesn't require optimization, therefore returns no optimizers.
-
-
-   .. py:method:: training_step(self, batch, _batch_idx)
-
-      Training Step of PADIM. For each batch, hierarchical features are extracted from the CNN.
-
-      :param batch: Batch containing image filename, image, label and mask
-      :type batch: Dict[str, Any]
-      :param _batch_idx: Index of the batch.
-
-      :returns: Hierarchical feature map
-
-
-   .. py:method:: on_validation_start(self) -> None
-
-      Fit a Gaussian to the embedding collected from the training set.
-
-
-   .. py:method:: validation_step(self, batch, _)
-
-      Validation Step of PADIM.
-
-      Similar to the training step, hierarchical features are extracted from the CNN for each batch.
-
-      :param batch: Input batch
-      :param _: Index of the batch.
-
-      :returns: Dictionary containing images, features, true labels and masks.
-                These are required in `validation_epoch_end` for feature concatenation.
-
-
-
 .. py:function:: get_model(config: Union[omegaconf.DictConfig, omegaconf.ListConfig]) -> components.AnomalyModule
 
    Load model from the configuration file.
@@ -202,10 +153,6 @@ Functions
    The convention for writing model classes is
    `anomalib.models.<model_name>.model.<Model_name>Lightning`
    `anomalib.models.stfpm.model.StfpmLightning`
-
-   and for OpenVINO
-   `anomalib.models.<model-name>.model.<Model_name>OpenVINO`
-   `anomalib.models.stfpm.model.StfpmOpenVINO`
 
    :param config: Config.yaml loaded using OmegaConf
    :type config: Union[DictConfig, ListConfig]

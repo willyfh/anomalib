@@ -22,7 +22,7 @@ Classes
 
 
 
-.. py:class:: VisualizerCallback(task: str, inputs_are_normalized: bool = True)
+.. py:class:: VisualizerCallback(task: str, log_images_to: Optional[List[str]] = None, inputs_are_normalized: bool = True)
 
    Bases: :py:obj:`pytorch_lightning.Callback`
 
@@ -43,7 +43,7 @@ Classes
 
       :param visualizer: Visualizer object from which the `figure` is saved/logged.
       :type visualizer: Visualizer
-      :param module: Anomaly module which holds reference to `hparams`.
+      :param module: Anomaly module.
       :type module: AnomalyModule
       :param trainer: Pytorch Lightning trainer which holds reference to `logger`
       :type trainer: Trainer

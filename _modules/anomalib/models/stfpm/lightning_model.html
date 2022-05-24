@@ -304,9 +304,11 @@
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
 </ul>
@@ -403,9 +405,12 @@
 <span class="c1"># and limitations under the License.</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">EarlyStopping</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">MODEL_REGISTRY</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">optim</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
@@ -416,46 +421,34 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"StfpmLightning"</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="StfpmLightning"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/lightning_model/index.html#anomalib.models.stfpm.StfpmLightning">[docs]</a><span class="k">class</span> <span class="nc">StfpmLightning</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
-    <span class="sd">"""PL Lightning Module for the STFPM algorithm."""</span>
+<span class="nd">@MODEL_REGISTRY</span>
+<span class="k">class</span> <span class="nc">Stfpm</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
+    <span class="sd">"""PL Lightning Module for the STFPM algorithm.</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
+<span class="sd">    Args:</span>
+<span class="sd">        input_size (Tuple[int, int]): Size of the model input.</span>
+<span class="sd">        backbone (str): Backbone CNN network</span>
+<span class="sd">        layers (List[str]): Layers to extract features from the backbone CNN</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">layers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="p">):</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Initializing Stfpm Lightning model."</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">STFPMModel</span><span class="p">(</span>
-            <span class="n">layers</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">,</span>
-            <span class="n">input_size</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_size</span><span class="p">,</span>
-            <span class="n">tile_size</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">tiling</span><span class="o">.</span><span class="n">tile_size</span><span class="p">,</span>
-            <span class="n">tile_stride</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">tiling</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
-            <span class="n">backbone</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">,</span>
-            <span class="n">apply_tiling</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">tiling</span><span class="o">.</span><span class="n">apply</span><span class="p">,</span>
+            <span class="n">input_size</span><span class="o">=</span><span class="n">input_size</span><span class="p">,</span>
+            <span class="n">backbone</span><span class="o">=</span><span class="n">backbone</span><span class="p">,</span>
+            <span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loss_val</span> <span class="o">=</span> <span class="mi">0</span>
 
-<div class="viewcode-block" id="StfpmLightning.configure_callbacks"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/lightning_model/index.html#anomalib.models.stfpm.StfpmLightning.configure_callbacks">[docs]</a>    <span class="k">def</span> <span class="nf">configure_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">"""Configure model-specific callbacks."""</span>
-        <span class="n">early_stopping</span> <span class="o">=</span> <span class="n">EarlyStopping</span><span class="p">(</span>
-            <span class="n">monitor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">early_stopping</span><span class="o">.</span><span class="n">metric</span><span class="p">,</span>
-            <span class="n">patience</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">early_stopping</span><span class="o">.</span><span class="n">patience</span><span class="p">,</span>
-            <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">early_stopping</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">early_stopping</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="StfpmLightning.configure_optimizers"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/lightning_model/index.html#anomalib.models.stfpm.StfpmLightning.configure_optimizers">[docs]</a>    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">:</span>
-        <span class="sd">"""Configure optimizers by creating an SGD optimizer.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            (Optimizer): SGD optimizer</span>
-<span class="sd">        """</span>
-        <span class="k">return</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span>
-            <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">student_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
-            <span class="n">lr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">lr</span><span class="p">,</span>
-            <span class="n">momentum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">momentum</span><span class="p">,</span>
-            <span class="n">weight_decay</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">weight_decay</span><span class="p">,</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="StfpmLightning.training_step"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/lightning_model/index.html#anomalib.models.stfpm.StfpmLightning.training_step">[docs]</a>    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
+    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
         <span class="sd">"""Training Step of STFPM.</span>
 
 <span class="sd">        For each batch, teacher and student and teacher features are extracted from the CNN.</span>
@@ -471,9 +464,9 @@
         <span class="n">teacher_features</span><span class="p">,</span> <span class="n">student_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">"image"</span><span class="p">])</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_val</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">teacher_features</span><span class="p">,</span> <span class="n">student_features</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loss_val</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">"loss"</span><span class="p">:</span> <span class="n">loss</span><span class="p">}</span></div>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"loss"</span><span class="p">:</span> <span class="n">loss</span><span class="p">}</span>
 
-<div class="viewcode-block" id="StfpmLightning.validation_step"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/lightning_model/index.html#anomalib.models.stfpm.StfpmLightning.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
+    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
         <span class="sd">"""Validation Step of STFPM.</span>
 
 <span class="sd">        Similar to the training step, student/teacher features are extracted from the CNN for each batch, and</span>
@@ -489,7 +482,59 @@
 <span class="sd">        """</span>
         <span class="n">batch</span><span class="p">[</span><span class="s2">"anomaly_maps"</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">"image"</span><span class="p">])</span>
 
-        <span class="k">return</span> <span class="n">batch</span></div></div>
+        <span class="k">return</span> <span class="n">batch</span>
+
+
+<div class="viewcode-block" id="StfpmLightning"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/lightning_model/index.html#anomalib.models.stfpm.StfpmLightning">[docs]</a><span class="k">class</span> <span class="nc">StfpmLightning</span><span class="p">(</span><span class="n">Stfpm</span><span class="p">):</span>
+    <span class="sd">"""PL Lightning Module for the STFPM algorithm.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        hparams (Union[DictConfig, ListConfig]): Model params</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">input_size</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_size</span><span class="p">,</span>
+            <span class="n">backbone</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">,</span>
+            <span class="n">layers</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
+
+<div class="viewcode-block" id="StfpmLightning.configure_callbacks"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/lightning_model/index.html#anomalib.models.stfpm.StfpmLightning.configure_callbacks">[docs]</a>    <span class="k">def</span> <span class="nf">configure_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""Configure model-specific callbacks.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This method is used for the existing CLI.</span>
+<span class="sd">            When PL CLI is introduced, configure callback method will be</span>
+<span class="sd">                deprecated, and callbacks will be configured from either</span>
+<span class="sd">                config.yaml file or from CLI.</span>
+<span class="sd">        """</span>
+        <span class="n">early_stopping</span> <span class="o">=</span> <span class="n">EarlyStopping</span><span class="p">(</span>
+            <span class="n">monitor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">early_stopping</span><span class="o">.</span><span class="n">metric</span><span class="p">,</span>
+            <span class="n">patience</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">early_stopping</span><span class="o">.</span><span class="n">patience</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">early_stopping</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">early_stopping</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="StfpmLightning.configure_optimizers"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/lightning_model/index.html#anomalib.models.stfpm.StfpmLightning.configure_optimizers">[docs]</a>    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">:</span>
+        <span class="sd">"""Configures optimizers for each decoder.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This method is used for the existing CLI.</span>
+<span class="sd">            When PL CLI is introduced, configure optimizers method will be</span>
+<span class="sd">                deprecated, and optimizers will be configured from either</span>
+<span class="sd">                config.yaml file or from CLI.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Optimizer: Adam optimizer for each decoder</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span>
+            <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">student_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
+            <span class="n">lr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">lr</span><span class="p">,</span>
+            <span class="n">momentum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">momentum</span><span class="p">,</span>
+            <span class="n">weight_decay</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">weight_decay</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
 </pre></div>
       </article>
       <footer>

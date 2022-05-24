@@ -305,9 +305,11 @@
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
 </ul>
@@ -396,7 +398,10 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning" title="anomalib.models.dfkde.lightning_model.DfkdeLightning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DfkdeLightning</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.Dfkde" title="anomalib.models.dfkde.lightning_model.Dfkde"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dfkde</span></code></a></p></td>
+<td><p>DFKDE: Deep Feature Kernel Density Estimation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning" title="anomalib.models.dfkde.lightning_model.DfkdeLightning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DfkdeLightning</span></code></a></p></td>
 <td><p>DFKDE: Deep Feature Kernel Density Estimation.</p></td>
 </tr>
 </tbody>
@@ -420,23 +425,33 @@
 <span class="sig-prename descclassname"><span class="pre">anomalib.models.dfkde.lightning_model.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/lightning_model.html#logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.logger" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 <dl class="py class">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfkde.lightning_model.</span></span><span class="sig-name descname"><span class="pre">DfkdeLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.dictconfig.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/lightning_model.html#DfkdeLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.Dfkde">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfkde.lightning_model.</span></span><span class="sig-name descname"><span class="pre">Dfkde</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backbone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_training_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">40000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_processing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'scale'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_steepness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">12</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/lightning_model.html#Dfkde"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.Dfkde" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../../components/index.html#anomalib.models.components.AnomalyModule" title="anomalib.models.components.AnomalyModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">anomalib.models.components.AnomalyModule</span></code></a></p>
 <p>DFKDE: Deep Feature Kernel Density Estimation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>hparams</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model params</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>backbone</strong> (<em>str</em>) – Pre-trained model backbone.</p></li>
+<li><p><strong>max_training_points</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of training points to fit the KDE model.
+Defaults to 40000.</p></li>
+<li><p><strong>pre_processing</strong> (<em>str</em><em>, </em><em>optional</em>) – Preprocess features before passing to KDE.
+Options are between <cite>norm</cite> and <cite>scale</cite>. Defaults to “scale”.</p></li>
+<li><p><strong>n_components</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of PCA components. Defaults to 16.</p></li>
+<li><p><strong>threshold_steepness</strong> (<em>float</em><em>, </em><em>optional</em>) – Controls how quickly the value saturates around zero.
+Defaults to 0.05.</p></li>
+<li><p><strong>threshold_offset</strong> (<em>float</em><em>, </em><em>optional</em>) – Offset of the density function from 0. Defaults to 12.0.</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.configure_optimizers">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/lightning_model.html#DfkdeLightning.configure_optimizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.configure_optimizers" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.Dfkde.configure_optimizers">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/lightning_model.html#Dfkde.configure_optimizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.Dfkde.configure_optimizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>DFKDE doesn’t require optimization, therefore returns no optimizers.</p>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.training_step">
-<span class="sig-name descname"><span class="pre">training_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_batch_idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/lightning_model.html#DfkdeLightning.training_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.training_step" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.Dfkde.training_step">
+<span class="sig-name descname"><span class="pre">training_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_batch_idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/lightning_model.html#Dfkde.training_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.Dfkde.training_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Training Step of DFKDE. For each batch, features are extracted from the CNN.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -451,13 +466,13 @@
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.on_validation_start">
-<span class="sig-name descname"><span class="pre">on_validation_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/lightning_model.html#DfkdeLightning.on_validation_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.on_validation_start" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.Dfkde.on_validation_start">
+<span class="sig-name descname"><span class="pre">on_validation_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/lightning_model.html#Dfkde.on_validation_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.Dfkde.on_validation_start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit a KDE Model to the embedding collected from the training set.</p>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.validation_step">
-<span class="sig-name descname"><span class="pre">validation_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/lightning_model.html#DfkdeLightning.validation_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.validation_step" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.Dfkde.validation_step">
+<span class="sig-name descname"><span class="pre">validation_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/lightning_model.html#Dfkde.validation_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.Dfkde.validation_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validation Step of DFKDE.</p>
 <p>Similar to the training step, features are extracted from the CNN for each batch.</p>
 <dl class="field-list simple">
@@ -469,6 +484,17 @@
 </dd>
 </dl>
 </dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfkde.lightning_model.</span></span><span class="sig-name descname"><span class="pre">DfkdeLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/lightning_model.html#DfkdeLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anomalib.models.dfkde.lightning_model.Dfkde" title="anomalib.models.dfkde.lightning_model.Dfkde"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dfkde</span></code></a></p>
+<p>DFKDE: Deep Feature Kernel Density Estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hparams</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model params</p>
+</dd>
+</dl>
 </dd></dl>
 </section>
 </section>
@@ -533,13 +559,14 @@
 <li><a class="reference internal" href="#classes">Classes</a></li>
 <li><a class="reference internal" href="#attributes">Attributes</a><ul>
 <li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.logger">logger</a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning">DfkdeLightning</a><ul>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.configure_optimizers">configure_optimizers</a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.training_step">training_step</a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.on_validation_start">on_validation_start</a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.validation_step">validation_step</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.Dfkde">Dfkde</a><ul>
+<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.Dfkde.configure_optimizers">configure_optimizers</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.Dfkde.training_step">training_step</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.Dfkde.on_validation_start">on_validation_start</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.Dfkde.validation_step">validation_step</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning">DfkdeLightning</a></li>
 </ul>
 </li>
 </ul>

@@ -305,9 +305,11 @@
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
 </ul>
@@ -397,37 +399,22 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning" title="anomalib.models.cflow.lightning_model.CflowLightning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CflowLightning</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.cflow.lightning_model.Cflow" title="anomalib.models.cflow.lightning_model.Cflow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cflow</span></code></a></p></td>
+<td><p>PL Lightning Module for the CFLOW algorithm.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning" title="anomalib.models.cflow.lightning_model.CflowLightning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CflowLightning</span></code></a></p></td>
 <td><p>PL Lightning Module for the CFLOW algorithm.</p></td>
 </tr>
 </tbody>
 </table></div>
 <dl class="py class">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.cflow.lightning_model.</span></span><span class="sig-name descname"><span class="pre">CflowLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/cflow/lightning_model.html#CflowLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.Cflow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.cflow.lightning_model.</span></span><span class="sig-name descname"><span class="pre">Cflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backbone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber_batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'freia-cflow'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition_vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupling_blocks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clamp_alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permute_soft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/cflow/lightning_model.html#Cflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.lightning_model.Cflow" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../../components/index.html#anomalib.models.components.AnomalyModule" title="anomalib.models.components.AnomalyModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">anomalib.models.components.AnomalyModule</span></code></a></p>
 <p>PL Lightning Module for the CFLOW algorithm.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.configure_callbacks">
-<span class="sig-name descname"><span class="pre">configure_callbacks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/cflow/lightning_model.html#CflowLightning.configure_callbacks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.configure_callbacks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Configure model-specific callbacks.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.configure_optimizers">
-<span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.optim.Optimizer</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/cflow/lightning_model.html#CflowLightning.configure_optimizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.configure_optimizers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Configures optimizers for each decoder.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Adam optimizer for each decoder</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>Optimizer</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.training_step">
-<span class="sig-name descname"><span class="pre">training_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/cflow/lightning_model.html#CflowLightning.training_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.training_step" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.Cflow.training_step">
+<span class="sig-name descname"><span class="pre">training_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/cflow/lightning_model.html#Cflow.training_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.lightning_model.Cflow.training_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Training Step of CFLOW.</p>
 <p>For each batch, decoder layers are trained with a dynamic fiber batch size.
 Training step is performed manually as multiple training steps are involved</p>
@@ -447,8 +434,8 @@ Training step is performed manually as multiple training steps are involved</p>
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.validation_step">
-<span class="sig-name descname"><span class="pre">validation_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/cflow/lightning_model.html#CflowLightning.validation_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.validation_step" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.Cflow.validation_step">
+<span class="sig-name descname"><span class="pre">validation_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/cflow/lightning_model.html#Cflow.validation_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.lightning_model.Cflow.validation_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validation Step of CFLOW.</p>
 <blockquote>
 <div><p>Similar to the training step, encoder features
@@ -465,6 +452,53 @@ map is computed.</p>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Dictionary containing images, anomaly maps, true labels and masks.
 These are required in <cite>validation_epoch_end</cite> for feature concatenation.</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.cflow.lightning_model.</span></span><span class="sig-name descname"><span class="pre">CflowLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/cflow/lightning_model.html#CflowLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anomalib.models.cflow.lightning_model.Cflow" title="anomalib.models.cflow.lightning_model.Cflow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cflow</span></code></a></p>
+<p>PL Lightning Module for the CFLOW algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hparams</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model params</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.configure_callbacks">
+<span class="sig-name descname"><span class="pre">configure_callbacks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/cflow/lightning_model.html#CflowLightning.configure_callbacks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.configure_callbacks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure model-specific callbacks.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is used for the existing CLI.
+When PL CLI is introduced, configure callback method will be</p>
+<blockquote>
+<div><p>deprecated, and callbacks will be configured from either
+config.yaml file or from CLI.</p>
+</div></blockquote>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.configure_optimizers">
+<span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.optim.Optimizer</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/cflow/lightning_model.html#CflowLightning.configure_optimizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.configure_optimizers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configures optimizers for each decoder.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is used for the existing CLI.
+When PL CLI is introduced, configure optimizers method will be</p>
+<blockquote>
+<div><p>deprecated, and optimizers will be configured from either
+config.yaml file or from CLI.</p>
+</div></blockquote>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Adam optimizer for each decoder</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Optimizer</p>
 </dd>
 </dl>
 </dd></dl>
@@ -530,11 +564,14 @@ These are required in <cite>validation_epoch_end</cite> for feature concatenatio
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.cflow.lightning_model</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.Cflow">Cflow</a><ul>
+<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.Cflow.training_step">training_step</a></li>
+<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.Cflow.validation_step">validation_step</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning">CflowLightning</a><ul>
 <li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.configure_callbacks">configure_callbacks</a></li>
 <li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.configure_optimizers">configure_optimizers</a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.training_step">training_step</a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.validation_step">validation_step</a></li>
 </ul>
 </li>
 </ul>

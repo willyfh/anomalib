@@ -305,9 +305,11 @@
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
 </ul>
@@ -396,7 +398,10 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning" title="anomalib.models.dfm.lightning_model.DfmLightning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DfmLightning</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.dfm.lightning_model.Dfm" title="anomalib.models.dfm.lightning_model.Dfm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dfm</span></code></a></p></td>
+<td><p>DFM: Deep Featured Kernel Density Estimation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning" title="anomalib.models.dfm.lightning_model.DfmLightning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DfmLightning</span></code></a></p></td>
 <td><p>DFM: Deep Featured Kernel Density Estimation.</p></td>
 </tr>
 </tbody>
@@ -420,18 +425,32 @@
 <span class="sig-prename descclassname"><span class="pre">anomalib.models.dfm.lightning_model.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfm/lightning_model.html#logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.logger" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 <dl class="py class">
-<dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.DfmLightning">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfm.lightning_model.</span></span><span class="sig-name descname"><span class="pre">DfmLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfm/lightning_model.html#DfmLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.DfmLightning" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.Dfm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfm.lightning_model.</span></span><span class="sig-name descname"><span class="pre">Dfm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backbone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pooling_kernel_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pca_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.97</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'fre'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfm/lightning_model.html#Dfm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.Dfm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../../components/index.html#anomalib.models.components.AnomalyModule" title="anomalib.models.components.AnomalyModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">anomalib.models.components.AnomalyModule</span></code></a></p>
 <p>DFM: Deep Featured Kernel Density Estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>backbone</strong> (<em>str</em>) – Backbone CNN network</p></li>
+<li><p><strong>layer</strong> (<em>str</em>) – Layer to extract features from the backbone CNN</p></li>
+<li><p><strong>pooling_kernel_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Kernel size to pool features extracted from the CNN.
+Defaults to 4.</p></li>
+<li><p><strong>pca_level</strong> (<em>float</em><em>, </em><em>optional</em>) – Ratio from which number of components for PCA are calculated.
+Defaults to 0.97.</p></li>
+<li><p><strong>score_type</strong> (<em>str</em><em>, </em><em>optional</em>) – Scoring type. Options are <cite>fre</cite> and <cite>nll</cite>. Defaults to “fre”.</p></li>
+<li><p><strong>nll</strong> – for Gaussian modeling, fre: pca feature reconstruction error</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.DfmLightning.configure_optimizers">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfm/lightning_model.html#DfmLightning.configure_optimizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.DfmLightning.configure_optimizers" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.Dfm.configure_optimizers">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfm/lightning_model.html#Dfm.configure_optimizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.Dfm.configure_optimizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>DFM doesn’t require optimization, therefore returns no optimizers.</p>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.DfmLightning.training_step">
-<span class="sig-name descname"><span class="pre">training_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfm/lightning_model.html#DfmLightning.training_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.DfmLightning.training_step" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.Dfm.training_step">
+<span class="sig-name descname"><span class="pre">training_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfm/lightning_model.html#Dfm.training_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.Dfm.training_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Training Step of DFM.</p>
 <p>For each batch, features are extracted from the CNN.</p>
 <dl class="field-list simple">
@@ -447,13 +466,13 @@
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.DfmLightning.on_validation_start">
-<span class="sig-name descname"><span class="pre">on_validation_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfm/lightning_model.html#DfmLightning.on_validation_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.DfmLightning.on_validation_start" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.Dfm.on_validation_start">
+<span class="sig-name descname"><span class="pre">on_validation_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfm/lightning_model.html#Dfm.on_validation_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.Dfm.on_validation_start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit a PCA transformation and a Gaussian model to dataset.</p>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.DfmLightning.validation_step">
-<span class="sig-name descname"><span class="pre">validation_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfm/lightning_model.html#DfmLightning.validation_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.DfmLightning.validation_step" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.Dfm.validation_step">
+<span class="sig-name descname"><span class="pre">validation_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfm/lightning_model.html#Dfm.validation_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.Dfm.validation_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validation Step of DFM.</p>
 <p>Similar to the training step, features are extracted from the CNN for each batch.</p>
 <dl class="field-list simple">
@@ -465,6 +484,17 @@
 </dd>
 </dl>
 </dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.DfmLightning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfm.lightning_model.</span></span><span class="sig-name descname"><span class="pre">DfmLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfm/lightning_model.html#DfmLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.DfmLightning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anomalib.models.dfm.lightning_model.Dfm" title="anomalib.models.dfm.lightning_model.Dfm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dfm</span></code></a></p>
+<p>DFM: Deep Featured Kernel Density Estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hparams</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model params</p>
+</dd>
+</dl>
 </dd></dl>
 </section>
 </section>
@@ -529,13 +559,14 @@
 <li><a class="reference internal" href="#classes">Classes</a></li>
 <li><a class="reference internal" href="#attributes">Attributes</a><ul>
 <li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.logger">logger</a></li>
-<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning">DfmLightning</a><ul>
-<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.configure_optimizers">configure_optimizers</a></li>
-<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.training_step">training_step</a></li>
-<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.on_validation_start">on_validation_start</a></li>
-<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.validation_step">validation_step</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.Dfm">Dfm</a><ul>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.Dfm.configure_optimizers">configure_optimizers</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.Dfm.training_step">training_step</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.Dfm.on_validation_start">on_validation_start</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.Dfm.validation_step">validation_step</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning">DfmLightning</a></li>
 </ul>
 </li>
 </ul>

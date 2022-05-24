@@ -304,9 +304,11 @@
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../api/anomalib/utils/callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../api/anomalib/utils/callbacks/metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../api/anomalib/utils/callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../api/anomalib/utils/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../api/anomalib/utils/callbacks/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../api/anomalib/utils/callbacks/tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../api/anomalib/utils/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../api/anomalib/utils/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
 </ul>
@@ -551,8 +553,9 @@
     <span class="n">config</span> <span class="o">=</span> <span class="n">update_nncf_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 
     <span class="c1"># thresholding</span>
-    <span class="k">if</span> <span class="s2">"pixel_default"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">pixel_default</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">image_default</span>
+    <span class="k">if</span> <span class="s2">"metrics"</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="s2">"pixel_default"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">pixel_default</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">image_default</span>
 
     <span class="k">return</span> <span class="n">config</span></div>
 </pre></div>

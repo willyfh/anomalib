@@ -19,6 +19,7 @@ Classes
 
 .. autoapisummary::
 
+   anomalib.models.ganomaly.lightning_model.Ganomaly
    anomalib.models.ganomaly.lightning_model.GanomalyLightning
 
 
@@ -37,31 +38,34 @@ Attributes
 
    
 
-.. py:class:: GanomalyLightning(hparams: Union[omegaconf.DictConfig, omegaconf.ListConfig])
+.. py:class:: Ganomaly(batch_size: int, input_size: Tuple[int, int], n_features: int, latent_vec_size: int, extra_layers: int = 0, add_final_conv_layer: bool = True, wadv: int = 1, wcon: int = 50, wenc: int = 1)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
    PL Lightning Module for the GANomaly Algorithm.
 
-   :param hparams: Model parameters
-   :type hparams: Union[DictConfig, ListConfig]
+   :param batch_size: Batch size.
+   :type batch_size: int
+   :param input_size: Input dimension.
+   :type input_size: Tuple[int,int]
+   :param n_features: Number of features layers in the CNNs.
+   :type n_features: int
+   :param latent_vec_size: Size of autoencoder latent vector.
+   :type latent_vec_size: int
+   :param extra_layers: Number of extra layers for encoder/decoder. Defaults to 0.
+   :type extra_layers: int, optional
+   :param add_final_conv_layer: Add convolution layer at the end. Defaults to True.
+   :type add_final_conv_layer: bool, optional
+   :param wadv: Weight for adversarial loss. Defaults to 1.
+   :type wadv: int, optional
+   :param wcon: Image regeneration weight. Defaults to 50.
+   :type wcon: int, optional
+   :param wenc: Latent vector encoder weight. Defaults to 1.
+   :type wenc: int, optional
 
    .. py:method:: _reset_min_max(self)
 
       Resets min_max scores.
-
-
-   .. py:method:: configure_callbacks(self)
-
-      Configure model-specific callbacks.
-
-
-   .. py:method:: configure_optimizers(self) -> List[torch.optim.Optimizer]
-
-      Configure optimizers for generator and discriminator.
-
-      :returns: Adam optimizers for discriminator and generator.
-      :rtype: List[optim.Optimizer]
 
 
    .. py:method:: training_step(self, batch, _, optimizer_idx)
@@ -122,6 +126,43 @@ Attributes
 
       :returns: Normalized scores.
       :rtype: Tensor
+
+
+
+.. py:class:: GanomalyLightning(hparams: Union[omegaconf.DictConfig, omegaconf.ListConfig])
+
+   Bases: :py:obj:`Ganomaly`
+
+   PL Lightning Module for the GANomaly Algorithm.
+
+   :param hparams: Model params
+   :type hparams: Union[DictConfig, ListConfig]
+
+   .. py:method:: configure_callbacks(self)
+
+      Configure model-specific callbacks.
+
+      .. note::
+
+         This method is used for the existing CLI.
+         When PL CLI is introduced, configure callback method will be
+             deprecated, and callbacks will be configured from either
+             config.yaml file or from CLI.
+
+
+   .. py:method:: configure_optimizers(self) -> List[torch.optim.Optimizer]
+
+      Configures optimizers for each decoder.
+
+      .. note::
+
+         This method is used for the existing CLI.
+         When PL CLI is introduced, configure optimizers method will be
+             deprecated, and optimizers will be configured from either
+             config.yaml file or from CLI.
+
+      :returns: Adam optimizer for each decoder
+      :rtype: Optimizer
 
 
 

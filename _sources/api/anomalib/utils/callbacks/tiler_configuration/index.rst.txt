@@ -1,0 +1,46 @@
+:py:mod:`anomalib.utils.callbacks.tiler_configuration`
+======================================================
+
+.. py:module:: anomalib.utils.callbacks.tiler_configuration
+
+.. autoapi-nested-parse::
+
+   Tiler Callback.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.callbacks.tiler_configuration.TilerConfigurationCallback
+
+
+
+
+.. py:class:: TilerConfigurationCallback(enable: bool = False, tile_size: Union[int, Sequence] = 256, stride: Optional[Union[int, Sequence]] = None, remove_border_count: int = 0, mode: str = 'padding', tile_count: int = 4)
+
+   Bases: :py:obj:`pytorch_lightning.callbacks.Callback`
+
+   Tiler Configuration Callback.
+
+   .. py:method:: setup(self, _trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, stage: Optional[str] = None) -> None
+
+      Setup Tiler object within Anomalib Model.
+
+      :param _trainer: PyTorch Lightning Trainer
+      :type _trainer: pl.Trainer
+      :param pl_module: Anomalib Model that inherits pl LightningModule.
+      :type pl_module: pl.LightningModule
+      :param stage: fit, validate, test or predict. Defaults to None.
+      :type stage: Optional[str], optional
+
+      :raises ValueError: When Anomalib Model doesn't contain ``Tiler`` object, it means the model
+          doesn not support tiling operation.
+
+
+

@@ -305,9 +305,11 @@
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
 </ul>
@@ -397,7 +399,10 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning" title="anomalib.models.ganomaly.lightning_model.GanomalyLightning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GanomalyLightning</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly" title="anomalib.models.ganomaly.lightning_model.Ganomaly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ganomaly</span></code></a></p></td>
+<td><p>PL Lightning Module for the GANomaly Algorithm.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning" title="anomalib.models.ganomaly.lightning_model.GanomalyLightning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GanomalyLightning</span></code></a></p></td>
 <td><p>PL Lightning Module for the GANomaly Algorithm.</p></td>
 </tr>
 </tbody>
@@ -421,41 +426,33 @@
 <span class="sig-prename descclassname"><span class="pre">anomalib.models.ganomaly.lightning_model.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.logger" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 <dl class="py class">
-<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.GanomalyLightning">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.ganomaly.lightning_model.</span></span><span class="sig-name descname"><span class="pre">GanomalyLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.Ganomaly">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.ganomaly.lightning_model.</span></span><span class="sig-name descname"><span class="pre">Ganomaly</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_vec_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_final_conv_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wadv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wcon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wenc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#Ganomaly"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.Ganomaly" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../../components/index.html#anomalib.models.components.AnomalyModule" title="anomalib.models.components.AnomalyModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">anomalib.models.components.AnomalyModule</span></code></a></p>
 <p>PL Lightning Module for the GANomaly Algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>hparams</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model parameters</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size.</p></li>
+<li><p><strong>input_size</strong> (<em>Tuple</em><em>[</em><em>int</em><em>,</em><em>int</em><em>]</em>) – Input dimension.</p></li>
+<li><p><strong>n_features</strong> (<em>int</em>) – Number of features layers in the CNNs.</p></li>
+<li><p><strong>latent_vec_size</strong> (<em>int</em>) – Size of autoencoder latent vector.</p></li>
+<li><p><strong>extra_layers</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of extra layers for encoder/decoder. Defaults to 0.</p></li>
+<li><p><strong>add_final_conv_layer</strong> (<em>bool</em><em>, </em><em>optional</em>) – Add convolution layer at the end. Defaults to True.</p></li>
+<li><p><strong>wadv</strong> (<em>int</em><em>, </em><em>optional</em>) – Weight for adversarial loss. Defaults to 1.</p></li>
+<li><p><strong>wcon</strong> (<em>int</em><em>, </em><em>optional</em>) – Image regeneration weight. Defaults to 50.</p></li>
+<li><p><strong>wenc</strong> (<em>int</em><em>, </em><em>optional</em>) – Latent vector encoder weight. Defaults to 1.</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.GanomalyLightning._reset_min_max">
-<span class="sig-name descname"><span class="pre">_reset_min_max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning._reset_min_max"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning._reset_min_max" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.Ganomaly._reset_min_max">
+<span class="sig-name descname"><span class="pre">_reset_min_max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#Ganomaly._reset_min_max"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.Ganomaly._reset_min_max" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets min_max scores.</p>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.GanomalyLightning.configure_callbacks">
-<span class="sig-name descname"><span class="pre">configure_callbacks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning.configure_callbacks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.configure_callbacks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Configure model-specific callbacks.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.GanomalyLightning.configure_optimizers">
-<span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.optim.Optimizer</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning.configure_optimizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.configure_optimizers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Configure optimizers for generator and discriminator.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Adam optimizers for discriminator and generator.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>List[optim.Optimizer]</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.GanomalyLightning.training_step">
-<span class="sig-name descname"><span class="pre">training_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer_idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning.training_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.training_step" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.Ganomaly.training_step">
+<span class="sig-name descname"><span class="pre">training_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer_idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#Ganomaly.training_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.training_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Training step.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -473,13 +470,13 @@
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.GanomalyLightning.on_validation_start">
-<span class="sig-name descname"><span class="pre">on_validation_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning.on_validation_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.on_validation_start" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.Ganomaly.on_validation_start">
+<span class="sig-name descname"><span class="pre">on_validation_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#Ganomaly.on_validation_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.on_validation_start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reset min and max values for current validation epoch.</p>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.GanomalyLightning.validation_step">
-<span class="sig-name descname"><span class="pre">validation_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning.validation_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.validation_step" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.Ganomaly.validation_step">
+<span class="sig-name descname"><span class="pre">validation_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#Ganomaly.validation_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.validation_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update min and max scores from the current step.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -494,28 +491,28 @@
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.GanomalyLightning.validation_epoch_end">
-<span class="sig-name descname"><span class="pre">validation_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning.validation_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.validation_epoch_end" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.Ganomaly.validation_epoch_end">
+<span class="sig-name descname"><span class="pre">validation_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#Ganomaly.validation_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.validation_epoch_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Normalize outputs based on min/max values.</p>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.GanomalyLightning.on_test_start">
-<span class="sig-name descname"><span class="pre">on_test_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning.on_test_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.on_test_start" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.Ganomaly.on_test_start">
+<span class="sig-name descname"><span class="pre">on_test_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#Ganomaly.on_test_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.on_test_start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reset min max values before test batch starts.</p>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.GanomalyLightning.test_step">
-<span class="sig-name descname"><span class="pre">test_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning.test_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.test_step" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.Ganomaly.test_step">
+<span class="sig-name descname"><span class="pre">test_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#Ganomaly.test_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.test_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update min and max scores from the current step.</p>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.GanomalyLightning.test_epoch_end">
-<span class="sig-name descname"><span class="pre">test_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning.test_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.test_epoch_end" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.Ganomaly.test_epoch_end">
+<span class="sig-name descname"><span class="pre">test_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#Ganomaly.test_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.test_epoch_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Normalize outputs based on min/max values.</p>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.GanomalyLightning._normalize">
-<span class="sig-name descname"><span class="pre">_normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning._normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning._normalize" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.Ganomaly._normalize">
+<span class="sig-name descname"><span class="pre">_normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#Ganomaly._normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.Ganomaly._normalize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Normalize the scores based on min/max of entire dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -526,6 +523,53 @@
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.GanomalyLightning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.ganomaly.lightning_model.</span></span><span class="sig-name descname"><span class="pre">GanomalyLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly" title="anomalib.models.ganomaly.lightning_model.Ganomaly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ganomaly</span></code></a></p>
+<p>PL Lightning Module for the GANomaly Algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hparams</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model params</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.GanomalyLightning.configure_callbacks">
+<span class="sig-name descname"><span class="pre">configure_callbacks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning.configure_callbacks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.configure_callbacks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure model-specific callbacks.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is used for the existing CLI.
+When PL CLI is introduced, configure callback method will be</p>
+<blockquote>
+<div><p>deprecated, and callbacks will be configured from either
+config.yaml file or from CLI.</p>
+</div></blockquote>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.GanomalyLightning.configure_optimizers">
+<span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.optim.Optimizer</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning.configure_optimizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.configure_optimizers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configures optimizers for each decoder.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is used for the existing CLI.
+When PL CLI is introduced, configure optimizers method will be</p>
+<blockquote>
+<div><p>deprecated, and optimizers will be configured from either
+config.yaml file or from CLI.</p>
+</div></blockquote>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Adam optimizer for each decoder</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Optimizer</p>
 </dd>
 </dl>
 </dd></dl>
@@ -593,18 +637,21 @@
 <li><a class="reference internal" href="#classes">Classes</a></li>
 <li><a class="reference internal" href="#attributes">Attributes</a><ul>
 <li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.logger">logger</a></li>
+<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly">Ganomaly</a><ul>
+<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly._reset_min_max">_reset_min_max</a></li>
+<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.training_step">training_step</a></li>
+<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.on_validation_start">on_validation_start</a></li>
+<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.validation_step">validation_step</a></li>
+<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.validation_epoch_end">validation_epoch_end</a></li>
+<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.on_test_start">on_test_start</a></li>
+<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.test_step">test_step</a></li>
+<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.test_epoch_end">test_epoch_end</a></li>
+<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly._normalize">_normalize</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning">GanomalyLightning</a><ul>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning._reset_min_max">_reset_min_max</a></li>
 <li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.configure_callbacks">configure_callbacks</a></li>
 <li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.configure_optimizers">configure_optimizers</a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.training_step">training_step</a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.on_validation_start">on_validation_start</a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.validation_step">validation_step</a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.validation_epoch_end">validation_epoch_end</a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.on_test_start">on_test_start</a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.test_step">test_step</a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.test_epoch_end">test_epoch_end</a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning._normalize">_normalize</a></li>
 </ul>
 </li>
 </ul>

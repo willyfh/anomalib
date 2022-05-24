@@ -17,6 +17,7 @@ Classes
 
 .. autoapisummary::
 
+   anomalib.models.dfm.lightning_model.Dfm
    anomalib.models.dfm.lightning_model.DfmLightning
 
 
@@ -35,11 +36,25 @@ Attributes
 
    
 
-.. py:class:: DfmLightning(hparams: Union[omegaconf.DictConfig, omegaconf.ListConfig])
+.. py:class:: Dfm(backbone: str, layer: str, pooling_kernel_size: int = 4, pca_level: float = 0.97, score_type: str = 'fre')
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
    DFM: Deep Featured Kernel Density Estimation.
+
+   :param backbone: Backbone CNN network
+   :type backbone: str
+   :param layer: Layer to extract features from the backbone CNN
+   :type layer: str
+   :param pooling_kernel_size: Kernel size to pool features extracted from the CNN.
+                               Defaults to 4.
+   :type pooling_kernel_size: int, optional
+   :param pca_level: Ratio from which number of components for PCA are calculated.
+                     Defaults to 0.97.
+   :type pca_level: float, optional
+   :param score_type: Scoring type. Options are `fre` and `nll`. Defaults to "fre".
+   :type score_type: str, optional
+   :param nll: for Gaussian modeling, fre: pca feature reconstruction error
 
    .. py:method:: configure_optimizers() -> None
       :staticmethod:
@@ -76,5 +91,15 @@ Attributes
 
       :returns: Dictionary containing FRE anomaly scores and ground-truth.
 
+
+
+.. py:class:: DfmLightning(hparams: Union[omegaconf.DictConfig, omegaconf.ListConfig])
+
+   Bases: :py:obj:`Dfm`
+
+   DFM: Deep Featured Kernel Density Estimation.
+
+   :param hparams: Model params
+   :type hparams: Union[DictConfig, ListConfig]
 
 

@@ -35,22 +35,16 @@ Attributes
 
    
 
-.. py:class:: PadimModel(layers: List[str], input_size: Tuple[int, int], backbone: str = 'resnet18', apply_tiling: bool = False, tile_size: Optional[Tuple[int, int]] = None, tile_stride: Optional[int] = None)
+.. py:class:: PadimModel(input_size: Tuple[int, int], layers: List[str], backbone: str = 'resnet18')
 
    Bases: :py:obj:`torch.nn.Module`
 
    Padim Module.
 
-   :param layers: Layers used for feature extraction
-   :type layers: List[str]
    :param input_size: Input size for the model.
    :type input_size: Tuple[int, int]
-   :param tile_size: Tile size
-   :type tile_size: Tuple[int, int]
-   :param tile_stride: Stride for tiling
-   :type tile_stride: int
-   :param apply_tiling: Apply tiling. Defaults to False.
-   :type apply_tiling: bool, optional
+   :param layers: Layers used for feature extraction
+   :type layers: List[str]
    :param backbone: Pre-trained model backbone. Defaults to "resnet18".
    :type backbone: str, optional
 

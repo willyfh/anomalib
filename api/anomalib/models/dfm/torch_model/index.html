@@ -305,9 +305,11 @@
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../utils/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
 </ul>
@@ -464,7 +466,7 @@ This simplifies the calculation of the log-likelihood without requiring full mat
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>backbone</strong> (<em>str</em>) – Pre-trained model backbone.</p></li>
 <li><p><strong>layer</strong> (<em>str</em>) – Layer from which to extract features.</p></li>
-<li><p><strong>pool</strong> (<em>int</em>) – _description_</p></li>
+<li><p><strong>pooling_kernel_size</strong> (<em>int</em>) – Kernel size to pool features extracted from the CNN.</p></li>
 <li><p><strong>n_comps</strong> (<em>float</em><em>, </em><em>optional</em>) – Ratio from which number of components for PCA are calculated. Defaults to 0.97.</p></li>
 <li><p><strong>score_type</strong> (<em>str</em><em>, </em><em>optional</em>) – Scoring type. Options are <cite>fre</cite> and <cite>nll</cite>. Defaults to “fre”.</p></li>
 </ul>

@@ -25,9 +25,11 @@ Submodules
    :maxdepth: 1
 
    cdf_normalization/index.rst
+   metrics_configuration/index.rst
    min_max_normalization/index.rst
    model_loader/index.rst
    openvino/index.rst
+   tiler_configuration/index.rst
    timer/index.rst
    visualizer_callback/index.rst
 
@@ -40,10 +42,124 @@ Classes
 
 .. autoapisummary::
 
+   anomalib.utils.callbacks.CdfNormalizationCallback
+   anomalib.utils.callbacks.MetricsConfigurationCallback
+   anomalib.utils.callbacks.MinMaxNormalizationCallback
    anomalib.utils.callbacks.LoadModelCallback
    anomalib.utils.callbacks.TimerCallback
    anomalib.utils.callbacks.VisualizerCallback
 
+
+
+
+.. py:class:: CdfNormalizationCallback
+
+   Bases: :py:obj:`pytorch_lightning.Callback`
+
+   Callback that standardizes the image-level and pixel-level anomaly scores.
+
+   .. py:method:: on_test_start(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule) -> None
+
+      Called when the test begins.
+
+
+   .. py:method:: on_validation_epoch_start(self, trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule) -> None
+
+      Called when the validation starts after training.
+
+      Use the current model to compute the anomaly score distributions
+      of the normal training data. This is needed after every epoch, because the statistics must be
+      stored in the state dict of the checkpoint file.
+
+
+   .. py:method:: on_validation_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule, outputs: Optional[pytorch_lightning.utilities.types.STEP_OUTPUT], _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+
+      Called when the validation batch ends, standardizes the predicted scores and anomaly maps.
+
+
+   .. py:method:: on_test_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule, outputs: Optional[pytorch_lightning.utilities.types.STEP_OUTPUT], _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+
+      Called when the test batch ends, normalizes the predicted scores and anomaly maps.
+
+
+   .. py:method:: on_predict_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule, outputs: Dict, _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+
+      Called when the predict batch ends, normalizes the predicted scores and anomaly maps.
+
+
+   .. py:method:: _collect_stats(self, trainer, pl_module)
+
+      Collect the statistics of the normal training data.
+
+      Create a trainer and use it to predict the anomaly maps and scores of the normal training data. Then
+       estimate the distribution of anomaly scores for normal data at the image and pixel level by computing
+       the mean and standard deviations. A dictionary containing the computed statistics is stored in self.stats.
+
+
+   .. py:method:: _create_inference_model(pl_module)
+      :staticmethod:
+
+      Create a duplicate of the PL module that can be used to perform inference on the training set.
+
+
+   .. py:method:: _standardize_batch(outputs: pytorch_lightning.utilities.types.STEP_OUTPUT, pl_module) -> None
+      :staticmethod:
+
+
+   .. py:method:: _normalize_batch(outputs: pytorch_lightning.utilities.types.STEP_OUTPUT, pl_module: anomalib.models.components.AnomalyModule) -> None
+      :staticmethod:
+
+
+
+.. py:class:: MetricsConfigurationCallback(adaptive_threshold: bool, default_image_threshold: Optional[float] = None, default_pixel_threshold: Optional[float] = None, image_metric_names: Optional[List[str]] = None, pixel_metric_names: Optional[List[str]] = None)
+
+   Bases: :py:obj:`pytorch_lightning.callbacks.Callback`
+
+   Metrics Configuration Callback.
+
+   .. py:method:: setup(self, _trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule, stage: Optional[str] = None) -> None
+
+      Setup image and pixel-level AnomalibMetricsCollection within Anomalib Model.
+
+      :param _trainer: PyTorch Lightning Trainer
+      :type _trainer: pl.Trainer
+      :param pl_module: Anomalib Model that inherits pl LightningModule.
+      :type pl_module: pl.LightningModule
+      :param stage: fit, validate, test or predict. Defaults to None.
+      :type stage: Optional[str], optional
+
+
+
+.. py:class:: MinMaxNormalizationCallback
+
+   Bases: :py:obj:`pytorch_lightning.Callback`
+
+   Callback that normalizes the image-level and pixel-level anomaly scores using min-max normalization.
+
+   .. py:method:: on_test_start(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule) -> None
+
+      Called when the test begins.
+
+
+   .. py:method:: on_validation_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule, outputs: pytorch_lightning.utilities.types.STEP_OUTPUT, _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+
+      Called when the validation batch ends, update the min and max observed values.
+
+
+   .. py:method:: on_test_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule, outputs: pytorch_lightning.utilities.types.STEP_OUTPUT, _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+
+      Called when the test batch ends, normalizes the predicted scores and anomaly maps.
+
+
+   .. py:method:: on_predict_batch_end(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule, outputs: Dict, _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+
+      Called when the predict batch ends, normalizes the predicted scores and anomaly maps.
+
+
+   .. py:method:: _normalize_batch(outputs, pl_module)
+      :staticmethod:
+
+      Normalize a batch of predictions.
 
 
 
@@ -125,7 +241,7 @@ Classes
 
 
 
-.. py:class:: VisualizerCallback(task: str, inputs_are_normalized: bool = True)
+.. py:class:: VisualizerCallback(task: str, log_images_to: Optional[List[str]] = None, inputs_are_normalized: bool = True)
 
    Bases: :py:obj:`pytorch_lightning.Callback`
 
@@ -146,7 +262,7 @@ Classes
 
       :param visualizer: Visualizer object from which the `figure` is saved/logged.
       :type visualizer: Visualizer
-      :param module: Anomaly module which holds reference to `hparams`.
+      :param module: Anomaly module.
       :type module: AnomalyModule
       :param trainer: Pytorch Lightning trainer which holds reference to `logger`
       :type trainer: Trainer

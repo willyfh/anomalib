@@ -35,61 +35,11 @@ Classes
 
 .. py:class:: PatchcoreLightning(hparams)
 
-   Bases: :py:obj:`anomalib.models.components.AnomalyModule`
+   Bases: :py:obj:`Patchcore`
 
    PatchcoreLightning Module to train PatchCore algorithm.
 
-   :param layers: Layers used for feature extraction
-   :type layers: List[str]
-   :param input_size: Input size for the model.
-   :type input_size: Tuple[int, int]
-   :param tile_size: Tile size
-   :type tile_size: Tuple[int, int]
-   :param tile_stride: Stride for tiling
-   :type tile_stride: int
-   :param backbone: Pre-trained model backbone. Defaults to "resnet18".
-   :type backbone: str, optional
-   :param apply_tiling: Apply tiling. Defaults to False.
-   :type apply_tiling: bool, optional
-
-   .. py:method:: configure_optimizers(self) -> None
-
-      Configure optimizers.
-
-      :returns: Do not set optimizers by returning None.
-      :rtype: None
-
-
-   .. py:method:: training_step(self, batch, _batch_idx)
-
-      Generate feature embedding of the batch.
-
-      :param batch: Batch containing image filename, image, label and mask
-      :type batch: Dict[str, Any]
-      :param _batch_idx: Batch Index
-      :type _batch_idx: int
-
-      :returns: Embedding Vector
-      :rtype: Dict[str, np.ndarray]
-
-
-   .. py:method:: on_validation_start(self) -> None
-
-      Apply subsampling to the embedding collected from the training set.
-
-
-   .. py:method:: validation_step(self, batch, _)
-
-      Get batch of anomaly maps from input image batch.
-
-      :param batch: Batch containing image filename,
-                    image, label and mask
-      :type batch: Dict[str, Any]
-      :param _: Batch Index
-      :type _: int
-
-      :returns: Image filenames, test images, GT and predicted label/masks
-      :rtype: Dict[str, Any]
-
+   :param hparams: Model params
+   :type hparams: Union[DictConfig, ListConfig]
 
 

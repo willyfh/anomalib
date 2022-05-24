@@ -22,7 +22,7 @@ Classes
 
 
 
-.. py:class:: CflowModel(hparams: Union[omegaconf.DictConfig, omegaconf.ListConfig])
+.. py:class:: CflowModel(input_size: Tuple[int, int], backbone: str, layers: List[str], fiber_batch_size: int = 64, decoder: str = 'freia-cflow', condition_vector: int = 128, coupling_blocks: int = 8, clamp_alpha: float = 1.9, permute_soft: bool = False)
 
    Bases: :py:obj:`torch.nn.Module`
 

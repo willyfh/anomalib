@@ -304,9 +304,11 @@
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
 </ul>
@@ -399,12 +401,11 @@
 <span class="c1"># See the License for the specific language governing permissions</span>
 <span class="c1"># and limitations under the License.</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span> <span class="nn">einops</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torchvision</span>
-<span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.cflow.anomaly_map</span> <span class="kn">import</span> <span class="n">AnomalyMapGenerator</span>
@@ -415,14 +416,25 @@
 <div class="viewcode-block" id="CflowModel"><a class="viewcode-back" href="../../../../api/anomalib/models/cflow/torch_model/index.html#anomalib.models.cflow.torch_model.CflowModel">[docs]</a><span class="k">class</span> <span class="nc">CflowModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">"""CFLOW: Conditional Normalizing Flows."""</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">layers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">fiber_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
+        <span class="n">decoder</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"freia-cflow"</span><span class="p">,</span>
+        <span class="n">condition_vector</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+        <span class="n">coupling_blocks</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="n">clamp_alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.9</span><span class="p">,</span>
+        <span class="n">permute_soft</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fiber_batch_size</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">fiber_batch_size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">condition_vector</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">condition_vector</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dec_arch</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">decoder</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pool_layers</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="n">backbone</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fiber_batch_size</span> <span class="o">=</span> <span class="n">fiber_batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">condition_vector</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">condition_vector</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dec_arch</span> <span class="o">=</span> <span class="n">decoder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pool_layers</span> <span class="o">=</span> <span class="n">layers</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pool_layers</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pool_dims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">out_dims</span>
@@ -430,10 +442,10 @@
             <span class="p">[</span>
                 <span class="n">cflow_head</span><span class="p">(</span>
                     <span class="n">condition_vector</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">condition_vector</span><span class="p">,</span>
-                    <span class="n">coupling_blocks</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">coupling_blocks</span><span class="p">,</span>
-                    <span class="n">clamp_alpha</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">clamp_alpha</span><span class="p">,</span>
+                    <span class="n">coupling_blocks</span><span class="o">=</span><span class="n">coupling_blocks</span><span class="p">,</span>
+                    <span class="n">clamp_alpha</span><span class="o">=</span><span class="n">clamp_alpha</span><span class="p">,</span>
                     <span class="n">n_features</span><span class="o">=</span><span class="n">pool_dim</span><span class="p">,</span>
-                    <span class="n">permute_soft</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">soft_permutation</span><span class="p">,</span>
+                    <span class="n">permute_soft</span><span class="o">=</span><span class="n">permute_soft</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="k">for</span> <span class="n">pool_dim</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pool_dims</span>
             <span class="p">]</span>
@@ -443,9 +455,7 @@
         <span class="k">for</span> <span class="n">parameters</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
             <span class="n">parameters</span><span class="o">.</span><span class="n">requires_grad</span> <span class="o">=</span> <span class="kc">False</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">anomaly_map_generator</span> <span class="o">=</span> <span class="n">AnomalyMapGenerator</span><span class="p">(</span>
-            <span class="n">image_size</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_size</span><span class="p">),</span> <span class="n">pool_layers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pool_layers</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">anomaly_map_generator</span> <span class="o">=</span> <span class="n">AnomalyMapGenerator</span><span class="p">(</span><span class="n">image_size</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">input_size</span><span class="p">),</span> <span class="n">pool_layers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pool_layers</span><span class="p">)</span>
 
 <div class="viewcode-block" id="CflowModel.forward"><a class="viewcode-back" href="../../../../api/anomalib/models/cflow/torch_model/index.html#anomalib.models.cflow.torch_model.CflowModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span><span class="p">):</span>
         <span class="sd">"""Forward-pass images into the network to extract encoder features and compute probability.</span>

@@ -34,89 +34,38 @@ Classes
 
 .. py:class:: GanomalyLightning(hparams: Union[omegaconf.DictConfig, omegaconf.ListConfig])
 
-   Bases: :py:obj:`anomalib.models.components.AnomalyModule`
+   Bases: :py:obj:`Ganomaly`
 
    PL Lightning Module for the GANomaly Algorithm.
 
-   :param hparams: Model parameters
+   :param hparams: Model params
    :type hparams: Union[DictConfig, ListConfig]
-
-   .. py:method:: _reset_min_max(self)
-
-      Resets min_max scores.
-
 
    .. py:method:: configure_callbacks(self)
 
       Configure model-specific callbacks.
 
+      .. note::
+
+         This method is used for the existing CLI.
+         When PL CLI is introduced, configure callback method will be
+             deprecated, and callbacks will be configured from either
+             config.yaml file or from CLI.
+
 
    .. py:method:: configure_optimizers(self) -> List[torch.optim.Optimizer]
 
-      Configure optimizers for generator and discriminator.
+      Configures optimizers for each decoder.
 
-      :returns: Adam optimizers for discriminator and generator.
-      :rtype: List[optim.Optimizer]
+      .. note::
 
+         This method is used for the existing CLI.
+         When PL CLI is introduced, configure optimizers method will be
+             deprecated, and optimizers will be configured from either
+             config.yaml file or from CLI.
 
-   .. py:method:: training_step(self, batch, _, optimizer_idx)
-
-      Training step.
-
-      :param batch: Input batch containing images.
-      :type batch: Dict
-      :param optimizer_idx: Optimizer which is being called for current training step.
-      :type optimizer_idx: int
-
-      :returns: Loss
-      :rtype: Dict[str, Tensor]
-
-
-   .. py:method:: on_validation_start(self) -> None
-
-      Reset min and max values for current validation epoch.
-
-
-   .. py:method:: validation_step(self, batch, _) -> Dict[str, torch.Tensor]
-
-      Update min and max scores from the current step.
-
-      :param batch: Predicted difference between z and z_hat.
-      :type batch: Dict[str, Tensor]
-
-      :returns: batch
-      :rtype: Dict[str, Tensor]
-
-
-   .. py:method:: validation_epoch_end(self, outputs)
-
-      Normalize outputs based on min/max values.
-
-
-   .. py:method:: on_test_start(self) -> None
-
-      Reset min max values before test batch starts.
-
-
-   .. py:method:: test_step(self, batch, _)
-
-      Update min and max scores from the current step.
-
-
-   .. py:method:: test_epoch_end(self, outputs)
-
-      Normalize outputs based on min/max values.
-
-
-   .. py:method:: _normalize(self, scores: torch.Tensor) -> torch.Tensor
-
-      Normalize the scores based on min/max of entire dataset.
-
-      :param scores: Un-normalized scores.
-      :type scores: Tensor
-
-      :returns: Normalized scores.
-      :rtype: Tensor
+      :returns: Adam optimizer for each decoder
+      :rtype: Optimizer
 
 
 

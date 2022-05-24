@@ -19,6 +19,7 @@ Classes
 
 .. autoapisummary::
 
+   anomalib.models.patchcore.lightning_model.Patchcore
    anomalib.models.patchcore.lightning_model.PatchcoreLightning
 
 
@@ -37,24 +38,23 @@ Attributes
 
    
 
-.. py:class:: PatchcoreLightning(hparams)
+.. py:class:: Patchcore(input_size: Tuple[int, int], backbone: str, layers: List[str], coreset_sampling_ratio: float = 0.1, num_neighbors: int = 9)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
    PatchcoreLightning Module to train PatchCore algorithm.
 
-   :param layers: Layers used for feature extraction
-   :type layers: List[str]
-   :param input_size: Input size for the model.
+   :param input_size: Size of the model input.
    :type input_size: Tuple[int, int]
-   :param tile_size: Tile size
-   :type tile_size: Tuple[int, int]
-   :param tile_stride: Stride for tiling
-   :type tile_stride: int
-   :param backbone: Pre-trained model backbone. Defaults to "resnet18".
-   :type backbone: str, optional
-   :param apply_tiling: Apply tiling. Defaults to False.
-   :type apply_tiling: bool, optional
+   :param backbone: Backbone CNN network
+   :type backbone: str
+   :param layers: Layers to extract features from the backbone CNN
+   :type layers: List[str]
+   :param coreset_sampling_ratio: Coreset sampling ratio to subsample embedding.
+                                  Defaults to 0.1.
+   :type coreset_sampling_ratio: float, optional
+   :param num_neighbors: Number of nearest neighbors. Defaults to 9.
+   :type num_neighbors: int, optional
 
    .. py:method:: configure_optimizers(self) -> None
 
@@ -95,5 +95,15 @@ Attributes
       :returns: Image filenames, test images, GT and predicted label/masks
       :rtype: Dict[str, Any]
 
+
+
+.. py:class:: PatchcoreLightning(hparams)
+
+   Bases: :py:obj:`Patchcore`
+
+   PatchcoreLightning Module to train PatchCore algorithm.
+
+   :param hparams: Model params
+   :type hparams: Union[DictConfig, ListConfig]
 
 

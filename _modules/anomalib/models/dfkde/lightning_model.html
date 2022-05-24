@@ -304,9 +304,11 @@
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
 </ul>
@@ -402,8 +404,8 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">omegaconf.dictconfig</span> <span class="kn">import</span> <span class="n">DictConfig</span>
-<span class="kn">from</span> <span class="nn">omegaconf.listconfig</span> <span class="kn">import</span> <span class="n">ListConfig</span>
+<span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">MODEL_REGISTRY</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
@@ -413,22 +415,40 @@
 <div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../../api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="DfkdeLightning"><a class="viewcode-back" href="../../../../api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.DfkdeLightning">[docs]</a><span class="k">class</span> <span class="nc">DfkdeLightning</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
+<span class="nd">@MODEL_REGISTRY</span>
+<div class="viewcode-block" id="Dfkde"><a class="viewcode-back" href="../../../../api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.Dfkde">[docs]</a><span class="k">class</span> <span class="nc">Dfkde</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
     <span class="sd">"""DFKDE: Deep Feature Kernel Density Estimation.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        hparams (Union[DictConfig, ListConfig]): Model params</span>
+<span class="sd">        backbone (str): Pre-trained model backbone.</span>
+<span class="sd">        max_training_points (int, optional): Number of training points to fit the KDE model.</span>
+<span class="sd">            Defaults to 40000.</span>
+<span class="sd">        pre_processing (str, optional): Preprocess features before passing to KDE.</span>
+<span class="sd">            Options are between `norm` and `scale`. Defaults to "scale".</span>
+<span class="sd">        n_components (int, optional): Number of PCA components. Defaults to 16.</span>
+<span class="sd">        threshold_steepness (float, optional): Controls how quickly the value saturates around zero.</span>
+<span class="sd">            Defaults to 0.05.</span>
+<span class="sd">        threshold_offset (float, optional): Offset of the density function from 0. Defaults to 12.0.</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">max_training_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40000</span><span class="p">,</span>
+        <span class="n">pre_processing</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"scale"</span><span class="p">,</span>
+        <span class="n">n_components</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+        <span class="n">threshold_steepness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">threshold_offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span>
+    <span class="p">):</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Initializing DFKDE Lightning model."</span><span class="p">)</span>
-        <span class="n">threshold_steepness</span> <span class="o">=</span> <span class="mf">0.05</span>
-        <span class="n">threshold_offset</span> <span class="o">=</span> <span class="mi">12</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">DfkdeModel</span><span class="p">(</span>
-            <span class="n">backbone</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">,</span>
-            <span class="n">filter_count</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">max_training_points</span><span class="p">,</span>
+            <span class="n">backbone</span><span class="o">=</span><span class="n">backbone</span><span class="p">,</span>
+            <span class="n">n_comps</span><span class="o">=</span><span class="n">n_components</span><span class="p">,</span>
+            <span class="n">pre_processing</span><span class="o">=</span><span class="n">pre_processing</span><span class="p">,</span>
+            <span class="n">filter_count</span><span class="o">=</span><span class="n">max_training_points</span><span class="p">,</span>
             <span class="n">threshold_steepness</span><span class="o">=</span><span class="n">threshold_steepness</span><span class="p">,</span>
             <span class="n">threshold_offset</span><span class="o">=</span><span class="n">threshold_offset</span><span class="p">,</span>
         <span class="p">)</span>
@@ -436,11 +456,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="DfkdeLightning.configure_optimizers"><a class="viewcode-back" href="../../../../api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.DfkdeLightning.configure_optimizers">[docs]</a>    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">():</span>  <span class="c1"># pylint: disable=arguments-differ</span>
+<div class="viewcode-block" id="Dfkde.configure_optimizers"><a class="viewcode-back" href="../../../../api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.Dfkde.configure_optimizers">[docs]</a>    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">():</span>  <span class="c1"># pylint: disable=arguments-differ</span>
         <span class="sd">"""DFKDE doesn't require optimization, therefore returns no optimizers."""</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="DfkdeLightning.training_step"><a class="viewcode-back" href="../../../../api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.DfkdeLightning.training_step">[docs]</a>    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_batch_idx</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
+<div class="viewcode-block" id="Dfkde.training_step"><a class="viewcode-back" href="../../../../api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.Dfkde.training_step">[docs]</a>    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_batch_idx</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
         <span class="sd">"""Training Step of DFKDE. For each batch, features are extracted from the CNN.</span>
 
 <span class="sd">        Args:</span>
@@ -459,7 +479,7 @@
         <span class="c1">#   https://github.com/PyTorchLightning/pytorch-lightning/pull/7357</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">embedding</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DfkdeLightning.on_validation_start"><a class="viewcode-back" href="../../../../api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.DfkdeLightning.on_validation_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Dfkde.on_validation_start"><a class="viewcode-back" href="../../../../api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.Dfkde.on_validation_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Fit a KDE Model to the embedding collected from the training set."""</span>
         <span class="c1"># NOTE: Previous anomalib versions fit Gaussian at the end of the epoch.</span>
         <span class="c1">#   This is not possible anymore with PyTorch Lightning v1.4.0 since validation</span>
@@ -467,7 +487,7 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Fitting a KDE model to the embedding collected from the training set."</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DfkdeLightning.validation_step"><a class="viewcode-back" href="../../../../api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.DfkdeLightning.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
+<div class="viewcode-block" id="Dfkde.validation_step"><a class="viewcode-back" href="../../../../api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.Dfkde.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
         <span class="sd">"""Validation Step of DFKDE.</span>
 
 <span class="sd">        Similar to the training step, features are extracted from the CNN for each batch.</span>
@@ -481,6 +501,26 @@
         <span class="n">batch</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">"image"</span><span class="p">])</span>
 
         <span class="k">return</span> <span class="n">batch</span></div></div>
+
+
+<div class="viewcode-block" id="DfkdeLightning"><a class="viewcode-back" href="../../../../api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.DfkdeLightning">[docs]</a><span class="k">class</span> <span class="nc">DfkdeLightning</span><span class="p">(</span><span class="n">Dfkde</span><span class="p">):</span>
+    <span class="sd">"""DFKDE: Deep Feature Kernel Density Estimation.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        hparams (Union[DictConfig, ListConfig]): Model params</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">backbone</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">,</span>
+            <span class="n">max_training_points</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">max_training_points</span><span class="p">,</span>
+            <span class="n">pre_processing</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">pre_processing</span><span class="p">,</span>
+            <span class="n">n_components</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">n_components</span><span class="p">,</span>
+            <span class="n">threshold_steepness</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">threshold_steepness</span><span class="p">,</span>
+            <span class="n">threshold_offset</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">threshold_offset</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span></div>
 </pre></div>
       </article>
       <footer>

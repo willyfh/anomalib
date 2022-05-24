@@ -71,7 +71,7 @@ Classes
 
 
 
-.. py:class:: STFPMModel(layers: List[str], input_size: Tuple[int, int], backbone: str = 'resnet18', apply_tiling: bool = False, tile_size: Optional[Tuple[int, int]] = None, tile_stride: Optional[int] = None)
+.. py:class:: STFPMModel(layers: List[str], input_size: Tuple[int, int], backbone: str = 'resnet18')
 
    Bases: :py:obj:`torch.nn.Module`
 
@@ -81,14 +81,8 @@ Classes
    :type layers: List[str]
    :param input_size: Input size for the model.
    :type input_size: Tuple[int, int]
-   :param tile_size: Tile size
-   :type tile_size: Tuple[int, int]
-   :param tile_stride: Stride for tiling
-   :type tile_stride: int
    :param backbone: Pre-trained model backbone. Defaults to "resnet18".
    :type backbone: str, optional
-   :param apply_tiling: Apply tiling. Defaults to False.
-   :type apply_tiling: bool, optional
 
    .. py:method:: forward(self, images)
 

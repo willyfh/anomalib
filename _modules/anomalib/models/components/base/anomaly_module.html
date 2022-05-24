@@ -304,9 +304,11 @@
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../../api/anomalib/utils/callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../api/anomalib/utils/callbacks/metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../../api/anomalib/utils/callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../../api/anomalib/utils/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../../api/anomalib/utils/callbacks/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../api/anomalib/utils/callbacks/tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../../api/anomalib/utils/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../../api/anomalib/utils/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
 </ul>
@@ -400,18 +402,17 @@
 <span class="c1"># and limitations under the License.</span>
 
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
-<span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks.base</span> <span class="kn">import</span> <span class="n">Callback</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.utils.metrics</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">AdaptiveThreshold</span><span class="p">,</span>
+    <span class="n">AnomalibMetricCollection</span><span class="p">,</span>
     <span class="n">AnomalyScoreDistribution</span><span class="p">,</span>
     <span class="n">MinMax</span><span class="p">,</span>
-    <span class="n">get_metrics</span><span class="p">,</span>
 <span class="p">)</span>
 
 
@@ -419,32 +420,28 @@
     <span class="sd">"""AnomalyModule to train, validate, predict and test images.</span>
 
 <span class="sd">    Acts as a base class for all the Anomaly Modules in the library.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        params (Union[DictConfig, ListConfig]): Configuration</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]):</span>
-
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="c1"># Force the type for hparams so that it works with OmegaConfig style of accessing</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">:</span> <span class="n">Tensor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Callback</span><span class="p">]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">image_threshold</span> <span class="o">=</span> <span class="n">AdaptiveThreshold</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">image_default</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pixel_threshold</span> <span class="o">=</span> <span class="n">AdaptiveThreshold</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">pixel_default</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adaptive_threshold</span><span class="p">:</span> <span class="nb">bool</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_threshold</span> <span class="o">=</span> <span class="n">AdaptiveThreshold</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixel_threshold</span> <span class="o">=</span> <span class="n">AdaptiveThreshold</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">training_distribution</span> <span class="o">=</span> <span class="n">AnomalyScoreDistribution</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_max</span> <span class="o">=</span> <span class="n">MinMax</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span>
-
-        <span class="c1"># metrics</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">image_metrics</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixel_metrics</span> <span class="o">=</span> <span class="n">get_metrics</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">image_metrics</span><span class="o">.</span><span class="n">set_threshold</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">image_default</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pixel_metrics</span><span class="o">.</span><span class="n">set_threshold</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">pixel_default</span><span class="p">)</span>
+        <span class="c1"># Create placeholders for image and pixel metrics.</span>
+        <span class="c1"># If set from the config file, MetricsConfigurationCallback will</span>
+        <span class="c1">#   create the metric collections upon setup.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_metrics</span><span class="p">:</span> <span class="n">AnomalibMetricCollection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixel_metrics</span><span class="p">:</span> <span class="n">AnomalibMetricCollection</span>
 
 <div class="viewcode-block" id="AnomalyModule.forward"><a class="viewcode-back" href="../../../../../api/anomalib/models/components/base/anomaly_module/index.html#anomalib.models.components.base.anomaly_module.AnomalyModule.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
         <span class="sd">"""Forward-pass input tensor to the module.</span>
@@ -513,7 +510,7 @@
 <span class="sd">        Args:</span>
 <span class="sd">          outputs: Batch of outputs from the validation step</span>
 <span class="sd">        """</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">adaptive</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">adaptive_threshold</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_compute_adaptive_threshold</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_collect_outputs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_metrics</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixel_metrics</span><span class="p">,</span> <span class="n">outputs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_log_metrics</span><span class="p">()</span></div>

@@ -303,9 +303,11 @@
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
 </ul>
@@ -525,7 +527,11 @@
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/utils/callbacks/cdf_normalization/index.html#anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback._collect_stats">_collect_stats() (anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.CdfNormalizationCallback._collect_stats">(anomalib.utils.callbacks.CdfNormalizationCallback method)</a>
 </li>
+        </ul></li>
         <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule._compute_adaptive_threshold">_compute_adaptive_threshold() (anomalib.models.AnomalyModule method)</a>
 
         <ul>
@@ -551,7 +557,11 @@
 </li>
         </ul></li>
         <li><a href="api/anomalib/utils/callbacks/cdf_normalization/index.html#anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback._create_inference_model">_create_inference_model() (anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback static method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.CdfNormalizationCallback._create_inference_model">(anomalib.utils.callbacks.CdfNormalizationCallback static method)</a>
 </li>
+        </ul></li>
         <li><a href="api/anomalib/models/components/base/dynamic_module/index.html#anomalib.models.components.base.dynamic_module.DynamicBufferModule._load_from_state_dict">_load_from_state_dict() (anomalib.models.components.base.dynamic_module.DynamicBufferModule method)</a>
 
         <ul>
@@ -589,15 +599,17 @@
         <ul>
           <li><a href="api/anomalib/deploy/inferencers/index.html#anomalib.deploy.inferencers.Inferencer._normalize">(anomalib.deploy.inferencers.Inferencer method)</a>
 </li>
-          <li><a href="api/anomalib/models/ganomaly/index.html#anomalib.models.ganomaly.GanomalyLightning._normalize">(anomalib.models.ganomaly.GanomalyLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.GanomalyLightning._normalize">(anomalib.models.ganomaly.lightning_model.GanomalyLightning method)</a>
+          <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.Ganomaly._normalize">(anomalib.models.ganomaly.lightning_model.Ganomaly method)</a>
 </li>
         </ul></li>
         <li><a href="api/anomalib/utils/callbacks/cdf_normalization/index.html#anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback._normalize_batch">_normalize_batch() (anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback static method)</a>
 
         <ul>
+          <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.CdfNormalizationCallback._normalize_batch">(anomalib.utils.callbacks.CdfNormalizationCallback static method)</a>
+</li>
           <li><a href="api/anomalib/utils/callbacks/min_max_normalization/index.html#anomalib.utils.callbacks.min_max_normalization.MinMaxNormalizationCallback._normalize_batch">(anomalib.utils.callbacks.min_max_normalization.MinMaxNormalizationCallback static method)</a>
+</li>
+          <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.MinMaxNormalizationCallback._normalize_batch">(anomalib.utils.callbacks.MinMaxNormalizationCallback static method)</a>
 </li>
         </ul></li>
         <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule._outputs_to_cpu">_outputs_to_cpu() (anomalib.models.AnomalyModule method)</a>
@@ -634,12 +646,8 @@
         </ul></li>
         <li><a href="api/anomalib/data/folder/index.html#anomalib.data.folder._prepare_files_labels">_prepare_files_labels() (in module anomalib.data.folder)</a>
 </li>
-        <li><a href="api/anomalib/models/ganomaly/index.html#anomalib.models.ganomaly.GanomalyLightning._reset_min_max">_reset_min_max() (anomalib.models.ganomaly.GanomalyLightning method)</a>
-
-        <ul>
-          <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.GanomalyLightning._reset_min_max">(anomalib.models.ganomaly.lightning_model.GanomalyLightning method)</a>
+        <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.Ganomaly._reset_min_max">_reset_min_max() (anomalib.models.ganomaly.lightning_model.Ganomaly method)</a>
 </li>
-        </ul></li>
         <li><a href="api/anomalib/models/components/dimensionality_reduction/random_projection/index.html#anomalib.models.components.dimensionality_reduction.random_projection.SparseRandomProjection._sparse_random_matrix">_sparse_random_matrix() (anomalib.models.components.dimensionality_reduction.random_projection.SparseRandomProjection method)</a>
 
         <ul>
@@ -649,7 +657,11 @@
 </li>
         </ul></li>
         <li><a href="api/anomalib/utils/callbacks/cdf_normalization/index.html#anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback._standardize_batch">_standardize_batch() (anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback static method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.CdfNormalizationCallback._standardize_batch">(anomalib.utils.callbacks.CdfNormalizationCallback static method)</a>
 </li>
+        </ul></li>
         <li><a href="api/anomalib/deploy/inferencers/base/index.html#anomalib.deploy.inferencers.base.Inferencer._superimpose_segmentation_mask">_superimpose_segmentation_mask() (anomalib.deploy.inferencers.base.Inferencer method)</a>
 
         <ul>
@@ -1077,8 +1089,6 @@
           <li><a href="api/anomalib/models/ganomaly/torch_model/index.html#module-anomalib.models.ganomaly.torch_model">module</a>, <a href="models/anomalib.models.ganomaly.torch_model.html#module-anomalib.models.ganomaly.torch_model">[1]</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     anomalib.models.padim
 
@@ -1086,6 +1096,8 @@
           <li><a href="api/anomalib/models/padim/index.html#module-anomalib.models.padim">module</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     anomalib.models.padim.anomaly_map
 
@@ -1262,6 +1274,13 @@
 </li>
         </ul></li>
         <li>
+    anomalib.utils.callbacks.metrics_configuration
+
+        <ul>
+          <li><a href="api/anomalib/utils/callbacks/metrics_configuration/index.html#module-anomalib.utils.callbacks.metrics_configuration">module</a>
+</li>
+        </ul></li>
+        <li>
     anomalib.utils.callbacks.min_max_normalization
 
         <ul>
@@ -1301,6 +1320,13 @@
 
         <ul>
           <li><a href="api/anomalib/utils/callbacks/openvino/index.html#module-anomalib.utils.callbacks.openvino">module</a>
+</li>
+        </ul></li>
+        <li>
+    anomalib.utils.callbacks.tiler_configuration
+
+        <ul>
+          <li><a href="api/anomalib/utils/callbacks/tiler_configuration/index.html#module-anomalib.utils.callbacks.tiler_configuration">module</a>
 </li>
         </ul></li>
         <li>
@@ -1513,7 +1539,13 @@
   <h2>C</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/anomalib/utils/callbacks/cdf_normalization/index.html#anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback">CdfNormalizationCallback (class in anomalib.utils.callbacks.cdf_normalization)</a>
+        <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.CdfNormalizationCallback">CdfNormalizationCallback (class in anomalib.utils.callbacks)</a>
+
+        <ul>
+          <li><a href="api/anomalib/utils/callbacks/cdf_normalization/index.html#anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback">(class in anomalib.utils.callbacks.cdf_normalization)</a>
+</li>
+        </ul></li>
+        <li><a href="api/anomalib/models/cflow/lightning_model/index.html#anomalib.models.cflow.lightning_model.Cflow">Cflow (class in anomalib.models.cflow.lightning_model)</a>
 </li>
         <li><a href="api/anomalib/models/cflow/utils/index.html#anomalib.models.cflow.utils.cflow_head">cflow_head() (in module anomalib.models.cflow.utils)</a>
 </li>
@@ -1569,6 +1601,8 @@
 </li>
         <li><a href="api/anomalib/models/padim/anomaly_map/index.html#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.compute_distance">compute_distance() (anomalib.models.padim.anomaly_map.AnomalyMapGenerator static method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/models/stfpm/torch_model/index.html#anomalib.models.stfpm.torch_model.Loss.compute_layer_loss">compute_layer_loss() (anomalib.models.stfpm.torch_model.Loss method)</a>
 </li>
         <li><a href="api/anomalib/models/stfpm/anomaly_map/index.html#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.compute_layer_map">compute_layer_map() (anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator method)</a>
@@ -1579,8 +1613,6 @@
           <li><a href="api/anomalib/post_processing/post_process/index.html#anomalib.post_processing.post_process.compute_mask">(in module anomalib.post_processing.post_process)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/pre_processing/tiler/index.html#anomalib.pre_processing.tiler.compute_new_image_size">compute_new_image_size() (in module anomalib.pre_processing.tiler)</a>
 </li>
         <li><a href="api/anomalib/models/cflow/index.html#anomalib.models.cflow.CflowLightning.configure_callbacks">configure_callbacks() (anomalib.models.cflow.CflowLightning method)</a>
@@ -1604,27 +1636,17 @@
         <ul>
           <li><a href="api/anomalib/models/cflow/lightning_model/index.html#anomalib.models.cflow.lightning_model.CflowLightning.configure_optimizers">(anomalib.models.cflow.lightning_model.CflowLightning method)</a>
 </li>
-          <li><a href="api/anomalib/models/dfkde/index.html#anomalib.models.dfkde.DfkdeLightning.configure_optimizers">(anomalib.models.dfkde.DfkdeLightning static method)</a>
+          <li><a href="api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.lightning_model.Dfkde.configure_optimizers">(anomalib.models.dfkde.lightning_model.Dfkde static method)</a>
 </li>
-          <li><a href="api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.lightning_model.DfkdeLightning.configure_optimizers">(anomalib.models.dfkde.lightning_model.DfkdeLightning static method)</a>
-</li>
-          <li><a href="api/anomalib/models/dfm/index.html#anomalib.models.dfm.DfmLightning.configure_optimizers">(anomalib.models.dfm.DfmLightning static method)</a>
-</li>
-          <li><a href="api/anomalib/models/dfm/lightning_model/index.html#anomalib.models.dfm.lightning_model.DfmLightning.configure_optimizers">(anomalib.models.dfm.lightning_model.DfmLightning static method)</a>
+          <li><a href="api/anomalib/models/dfm/lightning_model/index.html#anomalib.models.dfm.lightning_model.Dfm.configure_optimizers">(anomalib.models.dfm.lightning_model.Dfm static method)</a>
 </li>
           <li><a href="api/anomalib/models/ganomaly/index.html#anomalib.models.ganomaly.GanomalyLightning.configure_optimizers">(anomalib.models.ganomaly.GanomalyLightning method)</a>
 </li>
           <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.GanomalyLightning.configure_optimizers">(anomalib.models.ganomaly.lightning_model.GanomalyLightning method)</a>
 </li>
-          <li><a href="api/anomalib/models/padim/lightning_model/index.html#anomalib.models.padim.lightning_model.PadimLightning.configure_optimizers">(anomalib.models.padim.lightning_model.PadimLightning static method)</a>
+          <li><a href="api/anomalib/models/padim/lightning_model/index.html#anomalib.models.padim.lightning_model.Padim.configure_optimizers">(anomalib.models.padim.lightning_model.Padim static method)</a>
 </li>
-          <li><a href="api/anomalib/models/padim/index.html#anomalib.models.padim.PadimLightning.configure_optimizers">(anomalib.models.padim.PadimLightning static method)</a>
-</li>
-          <li><a href="api/anomalib/models/index.html#anomalib.models.PadimLightning.configure_optimizers">(anomalib.models.PadimLightning static method)</a>
-</li>
-          <li><a href="api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.lightning_model.PatchcoreLightning.configure_optimizers">(anomalib.models.patchcore.lightning_model.PatchcoreLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/patchcore/index.html#anomalib.models.patchcore.PatchcoreLightning.configure_optimizers">(anomalib.models.patchcore.PatchcoreLightning method)</a>
+          <li><a href="api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.lightning_model.Patchcore.configure_optimizers">(anomalib.models.patchcore.lightning_model.Patchcore method)</a>
 </li>
           <li><a href="api/anomalib/models/stfpm/lightning_model/index.html#anomalib.models.stfpm.lightning_model.StfpmLightning.configure_optimizers">(anomalib.models.stfpm.lightning_model.StfpmLightning method)</a>
 </li>
@@ -1657,6 +1679,8 @@
           <li><a href="api/anomalib/pre_processing/transforms/custom/index.html#anomalib.pre_processing.transforms.custom.Denormalize">(class in anomalib.pre_processing.transforms.custom)</a>
 </li>
         </ul></li>
+        <li><a href="api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.lightning_model.Dfkde">Dfkde (class in anomalib.models.dfkde.lightning_model)</a>
+</li>
         <li><a href="api/anomalib/models/dfkde/index.html#anomalib.models.dfkde.DfkdeLightning">DfkdeLightning (class in anomalib.models.dfkde)</a>
 
         <ul>
@@ -1664,6 +1688,8 @@
 </li>
         </ul></li>
         <li><a href="api/anomalib/models/dfkde/torch_model/index.html#anomalib.models.dfkde.torch_model.DfkdeModel">DfkdeModel (class in anomalib.models.dfkde.torch_model)</a>
+</li>
+        <li><a href="api/anomalib/models/dfm/lightning_model/index.html#anomalib.models.dfm.lightning_model.Dfm">Dfm (class in anomalib.models.dfm.lightning_model)</a>
 </li>
         <li><a href="api/anomalib/models/dfm/index.html#anomalib.models.dfm.DfmLightning">DfmLightning (class in anomalib.models.dfm)</a>
 
@@ -1881,6 +1907,8 @@
   <h2>G</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.Ganomaly">Ganomaly (class in anomalib.models.ganomaly.lightning_model)</a>
+</li>
         <li><a href="api/anomalib/models/ganomaly/index.html#anomalib.models.ganomaly.GanomalyLightning">GanomalyLightning (class in anomalib.models.ganomaly)</a>
 
         <ul>
@@ -2197,14 +2225,24 @@
 </li>
         <li><a href="api/anomalib/utils/callbacks/nncf/utils/index.html#anomalib.utils.callbacks.nncf.utils.merge_dicts_and_lists_b_into_a">merge_dicts_and_lists_b_into_a() (in module anomalib.utils.callbacks.nncf.utils)</a>
 </li>
+        <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.MetricsConfigurationCallback">MetricsConfigurationCallback (class in anomalib.utils.callbacks)</a>
+
+        <ul>
+          <li><a href="api/anomalib/utils/callbacks/metrics_configuration/index.html#anomalib.utils.callbacks.metrics_configuration.MetricsConfigurationCallback">(class in anomalib.utils.callbacks.metrics_configuration)</a>
+</li>
+        </ul></li>
         <li><a href="api/anomalib/utils/metrics/index.html#anomalib.utils.metrics.MinMax">MinMax (class in anomalib.utils.metrics)</a>
 
         <ul>
           <li><a href="api/anomalib/utils/metrics/min_max/index.html#anomalib.utils.metrics.min_max.MinMax">(class in anomalib.utils.metrics.min_max)</a>
 </li>
         </ul></li>
-        <li><a href="api/anomalib/utils/callbacks/min_max_normalization/index.html#anomalib.utils.callbacks.min_max_normalization.MinMaxNormalizationCallback">MinMaxNormalizationCallback (class in anomalib.utils.callbacks.min_max_normalization)</a>
+        <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.MinMaxNormalizationCallback">MinMaxNormalizationCallback (class in anomalib.utils.callbacks)</a>
+
+        <ul>
+          <li><a href="api/anomalib/utils/callbacks/min_max_normalization/index.html#anomalib.utils.callbacks.min_max_normalization.MinMaxNormalizationCallback">(class in anomalib.utils.callbacks.min_max_normalization)</a>
 </li>
+        </ul></li>
         <li><a href="api/anomalib/utils/sweep/helpers/inference/index.html#anomalib.utils.sweep.helpers.inference.MockImageLoader">MockImageLoader (class in anomalib.utils.sweep.helpers.inference)</a>
 </li>
         <li>
@@ -2369,6 +2407,8 @@
 </li>
           <li><a href="api/anomalib/utils/callbacks/cdf_normalization/index.html#module-anomalib.utils.callbacks.cdf_normalization">anomalib.utils.callbacks.cdf_normalization</a>
 </li>
+          <li><a href="api/anomalib/utils/callbacks/metrics_configuration/index.html#module-anomalib.utils.callbacks.metrics_configuration">anomalib.utils.callbacks.metrics_configuration</a>
+</li>
           <li><a href="api/anomalib/utils/callbacks/min_max_normalization/index.html#module-anomalib.utils.callbacks.min_max_normalization">anomalib.utils.callbacks.min_max_normalization</a>
 </li>
           <li><a href="api/anomalib/utils/callbacks/model_loader/index.html#module-anomalib.utils.callbacks.model_loader">anomalib.utils.callbacks.model_loader</a>
@@ -2380,6 +2420,8 @@
           <li><a href="api/anomalib/utils/callbacks/nncf/utils/index.html#module-anomalib.utils.callbacks.nncf.utils">anomalib.utils.callbacks.nncf.utils</a>
 </li>
           <li><a href="api/anomalib/utils/callbacks/openvino/index.html#module-anomalib.utils.callbacks.openvino">anomalib.utils.callbacks.openvino</a>
+</li>
+          <li><a href="api/anomalib/utils/callbacks/tiler_configuration/index.html#module-anomalib.utils.callbacks.tiler_configuration">anomalib.utils.callbacks.tiler_configuration</a>
 </li>
           <li><a href="api/anomalib/utils/callbacks/timer/index.html#module-anomalib.utils.callbacks.timer">anomalib.utils.callbacks.timer</a>
 </li>
@@ -2485,13 +2527,21 @@
         <li><a href="api/anomalib/utils/callbacks/cdf_normalization/index.html#anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback.on_predict_batch_end">on_predict_batch_end() (anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback method)</a>
 
         <ul>
+          <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.CdfNormalizationCallback.on_predict_batch_end">(anomalib.utils.callbacks.CdfNormalizationCallback method)</a>
+</li>
           <li><a href="api/anomalib/utils/callbacks/min_max_normalization/index.html#anomalib.utils.callbacks.min_max_normalization.MinMaxNormalizationCallback.on_predict_batch_end">(anomalib.utils.callbacks.min_max_normalization.MinMaxNormalizationCallback method)</a>
+</li>
+          <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.MinMaxNormalizationCallback.on_predict_batch_end">(anomalib.utils.callbacks.MinMaxNormalizationCallback method)</a>
 </li>
         </ul></li>
         <li><a href="api/anomalib/utils/callbacks/cdf_normalization/index.html#anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback.on_test_batch_end">on_test_batch_end() (anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback method)</a>
 
         <ul>
+          <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.CdfNormalizationCallback.on_test_batch_end">(anomalib.utils.callbacks.CdfNormalizationCallback method)</a>
+</li>
           <li><a href="api/anomalib/utils/callbacks/min_max_normalization/index.html#anomalib.utils.callbacks.min_max_normalization.MinMaxNormalizationCallback.on_test_batch_end">(anomalib.utils.callbacks.min_max_normalization.MinMaxNormalizationCallback method)</a>
+</li>
+          <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.MinMaxNormalizationCallback.on_test_batch_end">(anomalib.utils.callbacks.MinMaxNormalizationCallback method)</a>
 </li>
           <li><a href="api/anomalib/utils/callbacks/visualizer_callback/index.html#anomalib.utils.callbacks.visualizer_callback.VisualizerCallback.on_test_batch_end">(anomalib.utils.callbacks.visualizer_callback.VisualizerCallback method)</a>
 </li>
@@ -2508,16 +2558,18 @@
           <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.VisualizerCallback.on_test_end">(anomalib.utils.callbacks.VisualizerCallback method)</a>
 </li>
         </ul></li>
-        <li><a href="api/anomalib/models/ganomaly/index.html#anomalib.models.ganomaly.GanomalyLightning.on_test_start">on_test_start() (anomalib.models.ganomaly.GanomalyLightning method)</a>
+        <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.Ganomaly.on_test_start">on_test_start() (anomalib.models.ganomaly.lightning_model.Ganomaly method)</a>
 
         <ul>
-          <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.GanomalyLightning.on_test_start">(anomalib.models.ganomaly.lightning_model.GanomalyLightning method)</a>
-</li>
           <li><a href="api/anomalib/utils/callbacks/cdf_normalization/index.html#anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback.on_test_start">(anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback method)</a>
+</li>
+          <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.CdfNormalizationCallback.on_test_start">(anomalib.utils.callbacks.CdfNormalizationCallback method)</a>
 </li>
           <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.LoadModelCallback.on_test_start">(anomalib.utils.callbacks.LoadModelCallback method)</a>
 </li>
           <li><a href="api/anomalib/utils/callbacks/min_max_normalization/index.html#anomalib.utils.callbacks.min_max_normalization.MinMaxNormalizationCallback.on_test_start">(anomalib.utils.callbacks.min_max_normalization.MinMaxNormalizationCallback method)</a>
+</li>
+          <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.MinMaxNormalizationCallback.on_test_start">(anomalib.utils.callbacks.MinMaxNormalizationCallback method)</a>
 </li>
           <li><a href="api/anomalib/utils/callbacks/model_loader/index.html#anomalib.utils.callbacks.model_loader.LoadModelCallback.on_test_start">(anomalib.utils.callbacks.model_loader.LoadModelCallback method)</a>
 </li>
@@ -2526,6 +2578,8 @@
           <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.TimerCallback.on_test_start">(anomalib.utils.callbacks.TimerCallback method)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/utils/callbacks/nncf/callback/index.html#anomalib.utils.callbacks.nncf.callback.NNCFCallback.on_train_batch_start">on_train_batch_start() (anomalib.utils.callbacks.nncf.callback.NNCFCallback method)</a>
 </li>
         <li><a href="api/anomalib/utils/callbacks/nncf/callback/index.html#anomalib.utils.callbacks.nncf.callback.NNCFCallback.on_train_end">on_train_end() (anomalib.utils.callbacks.nncf.callback.NNCFCallback method)</a>
@@ -2536,38 +2590,32 @@
         </ul></li>
         <li><a href="api/anomalib/utils/callbacks/nncf/callback/index.html#anomalib.utils.callbacks.nncf.callback.NNCFCallback.on_train_epoch_start">on_train_epoch_start() (anomalib.utils.callbacks.nncf.callback.NNCFCallback method)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/utils/callbacks/cdf_normalization/index.html#anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback.on_validation_batch_end">on_validation_batch_end() (anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback method)</a>
 
         <ul>
+          <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.CdfNormalizationCallback.on_validation_batch_end">(anomalib.utils.callbacks.CdfNormalizationCallback method)</a>
+</li>
           <li><a href="api/anomalib/utils/callbacks/min_max_normalization/index.html#anomalib.utils.callbacks.min_max_normalization.MinMaxNormalizationCallback.on_validation_batch_end">(anomalib.utils.callbacks.min_max_normalization.MinMaxNormalizationCallback method)</a>
+</li>
+          <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.MinMaxNormalizationCallback.on_validation_batch_end">(anomalib.utils.callbacks.MinMaxNormalizationCallback method)</a>
 </li>
         </ul></li>
         <li><a href="api/anomalib/utils/callbacks/cdf_normalization/index.html#anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback.on_validation_epoch_start">on_validation_epoch_start() (anomalib.utils.callbacks.cdf_normalization.CdfNormalizationCallback method)</a>
-</li>
-        <li><a href="api/anomalib/models/dfkde/index.html#anomalib.models.dfkde.DfkdeLightning.on_validation_start">on_validation_start() (anomalib.models.dfkde.DfkdeLightning method)</a>
 
         <ul>
-          <li><a href="api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.lightning_model.DfkdeLightning.on_validation_start">(anomalib.models.dfkde.lightning_model.DfkdeLightning method)</a>
+          <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.CdfNormalizationCallback.on_validation_epoch_start">(anomalib.utils.callbacks.CdfNormalizationCallback method)</a>
 </li>
-          <li><a href="api/anomalib/models/dfm/index.html#anomalib.models.dfm.DfmLightning.on_validation_start">(anomalib.models.dfm.DfmLightning method)</a>
+        </ul></li>
+        <li><a href="api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.lightning_model.Dfkde.on_validation_start">on_validation_start() (anomalib.models.dfkde.lightning_model.Dfkde method)</a>
+
+        <ul>
+          <li><a href="api/anomalib/models/dfm/lightning_model/index.html#anomalib.models.dfm.lightning_model.Dfm.on_validation_start">(anomalib.models.dfm.lightning_model.Dfm method)</a>
 </li>
-          <li><a href="api/anomalib/models/dfm/lightning_model/index.html#anomalib.models.dfm.lightning_model.DfmLightning.on_validation_start">(anomalib.models.dfm.lightning_model.DfmLightning method)</a>
+          <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.Ganomaly.on_validation_start">(anomalib.models.ganomaly.lightning_model.Ganomaly method)</a>
 </li>
-          <li><a href="api/anomalib/models/ganomaly/index.html#anomalib.models.ganomaly.GanomalyLightning.on_validation_start">(anomalib.models.ganomaly.GanomalyLightning method)</a>
+          <li><a href="api/anomalib/models/padim/lightning_model/index.html#anomalib.models.padim.lightning_model.Padim.on_validation_start">(anomalib.models.padim.lightning_model.Padim method)</a>
 </li>
-          <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.GanomalyLightning.on_validation_start">(anomalib.models.ganomaly.lightning_model.GanomalyLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/padim/lightning_model/index.html#anomalib.models.padim.lightning_model.PadimLightning.on_validation_start">(anomalib.models.padim.lightning_model.PadimLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/padim/index.html#anomalib.models.padim.PadimLightning.on_validation_start">(anomalib.models.padim.PadimLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/index.html#anomalib.models.PadimLightning.on_validation_start">(anomalib.models.PadimLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.lightning_model.PatchcoreLightning.on_validation_start">(anomalib.models.patchcore.lightning_model.PatchcoreLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/patchcore/index.html#anomalib.models.patchcore.PatchcoreLightning.on_validation_start">(anomalib.models.patchcore.PatchcoreLightning method)</a>
+          <li><a href="api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.lightning_model.Patchcore.on_validation_start">(anomalib.models.patchcore.lightning_model.Patchcore method)</a>
 </li>
         </ul></li>
         <li><a href="api/anomalib/utils/callbacks/openvino/index.html#anomalib.utils.callbacks.openvino.OpenVINOCallback">OpenVINOCallback (class in anomalib.utils.callbacks.openvino)</a>
@@ -2610,15 +2658,17 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/data/utils/image/index.html#anomalib.data.utils.image.pad_nextpow2">pad_nextpow2() (in module anomalib.data.utils.image)</a>
 </li>
-        <li><a href="api/anomalib/models/index.html#anomalib.models.PadimLightning">PadimLightning (class in anomalib.models)</a>
+        <li><a href="api/anomalib/models/padim/lightning_model/index.html#anomalib.models.padim.lightning_model.Padim">Padim (class in anomalib.models.padim.lightning_model)</a>
+</li>
+        <li><a href="api/anomalib/models/padim/index.html#anomalib.models.padim.PadimLightning">PadimLightning (class in anomalib.models.padim)</a>
 
         <ul>
-          <li><a href="api/anomalib/models/padim/index.html#anomalib.models.padim.PadimLightning">(class in anomalib.models.padim)</a>
-</li>
           <li><a href="api/anomalib/models/padim/lightning_model/index.html#anomalib.models.padim.lightning_model.PadimLightning">(class in anomalib.models.padim.lightning_model)</a>
 </li>
         </ul></li>
         <li><a href="api/anomalib/models/padim/torch_model/index.html#anomalib.models.padim.torch_model.PadimModel">PadimModel (class in anomalib.models.padim.torch_model)</a>
+</li>
+        <li><a href="api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.lightning_model.Patchcore">Patchcore (class in anomalib.models.patchcore.lightning_model)</a>
 </li>
         <li><a href="api/anomalib/models/patchcore/index.html#anomalib.models.patchcore.PatchcoreLightning">PatchcoreLightning (class in anomalib.models.patchcore)</a>
 
@@ -2817,7 +2867,13 @@
 </li>
           <li><a href="api/anomalib/data/index.html#anomalib.data.MVTecDataModule.setup">(anomalib.data.MVTecDataModule method)</a>
 </li>
+          <li><a href="api/anomalib/utils/callbacks/metrics_configuration/index.html#anomalib.utils.callbacks.metrics_configuration.MetricsConfigurationCallback.setup">(anomalib.utils.callbacks.metrics_configuration.MetricsConfigurationCallback method)</a>
+</li>
+          <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.MetricsConfigurationCallback.setup">(anomalib.utils.callbacks.MetricsConfigurationCallback method)</a>
+</li>
           <li><a href="api/anomalib/utils/callbacks/nncf/callback/index.html#anomalib.utils.callbacks.nncf.callback.NNCFCallback.setup">(anomalib.utils.callbacks.nncf.callback.NNCFCallback method)</a>
+</li>
+          <li><a href="api/anomalib/utils/callbacks/tiler_configuration/index.html#anomalib.utils.callbacks.tiler_configuration.TilerConfigurationCallback.setup">(anomalib.utils.callbacks.tiler_configuration.TilerConfigurationCallback method)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -2895,9 +2951,7 @@
 </li>
           <li><a href="api/anomalib/models/components/base/index.html#anomalib.models.components.base.AnomalyModule.test_epoch_end">(anomalib.models.components.base.AnomalyModule method)</a>
 </li>
-          <li><a href="api/anomalib/models/ganomaly/index.html#anomalib.models.ganomaly.GanomalyLightning.test_epoch_end">(anomalib.models.ganomaly.GanomalyLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.GanomalyLightning.test_epoch_end">(anomalib.models.ganomaly.lightning_model.GanomalyLightning method)</a>
+          <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.Ganomaly.test_epoch_end">(anomalib.models.ganomaly.lightning_model.Ganomaly method)</a>
 </li>
         </ul></li>
         <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule.test_step">test_step() (anomalib.models.AnomalyModule method)</a>
@@ -2909,9 +2963,7 @@
 </li>
           <li><a href="api/anomalib/models/components/base/index.html#anomalib.models.components.base.AnomalyModule.test_step">(anomalib.models.components.base.AnomalyModule method)</a>
 </li>
-          <li><a href="api/anomalib/models/ganomaly/index.html#anomalib.models.ganomaly.GanomalyLightning.test_step">(anomalib.models.ganomaly.GanomalyLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.GanomalyLightning.test_step">(anomalib.models.ganomaly.lightning_model.GanomalyLightning method)</a>
+          <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.Ganomaly.test_step">(anomalib.models.ganomaly.lightning_model.Ganomaly method)</a>
 </li>
         </ul></li>
         <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule.test_step_end">test_step_end() (anomalib.models.AnomalyModule method)</a>
@@ -2938,6 +2990,10 @@
           <li><a href="api/anomalib/pre_processing/tiler/index.html#anomalib.pre_processing.tiler.Tiler">(class in anomalib.pre_processing.tiler)</a>
 </li>
         </ul></li>
+        <li><a href="api/anomalib/utils/callbacks/tiler_configuration/index.html#anomalib.utils.callbacks.tiler_configuration.TilerConfigurationCallback">TilerConfigurationCallback (class in anomalib.utils.callbacks.tiler_configuration)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.TimerCallback">TimerCallback (class in anomalib.utils.callbacks)</a>
 
         <ul>
@@ -2952,8 +3008,6 @@
           <li><a href="api/anomalib/pre_processing/transforms/custom/index.html#anomalib.pre_processing.transforms.custom.ToNumpy">(class in anomalib.pre_processing.transforms.custom)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/deploy/index.html#anomalib.deploy.TorchInferencer">TorchInferencer (class in anomalib.deploy)</a>
 
         <ul>
@@ -2976,36 +3030,18 @@
           <li><a href="api/anomalib/data/index.html#anomalib.data.MVTecDataModule.train_dataloader">(anomalib.data.MVTecDataModule method)</a>
 </li>
         </ul></li>
-        <li><a href="api/anomalib/models/cflow/index.html#anomalib.models.cflow.CflowLightning.training_step">training_step() (anomalib.models.cflow.CflowLightning method)</a>
+        <li><a href="api/anomalib/models/cflow/lightning_model/index.html#anomalib.models.cflow.lightning_model.Cflow.training_step">training_step() (anomalib.models.cflow.lightning_model.Cflow method)</a>
 
         <ul>
-          <li><a href="api/anomalib/models/cflow/lightning_model/index.html#anomalib.models.cflow.lightning_model.CflowLightning.training_step">(anomalib.models.cflow.lightning_model.CflowLightning method)</a>
+          <li><a href="api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.lightning_model.Dfkde.training_step">(anomalib.models.dfkde.lightning_model.Dfkde method)</a>
 </li>
-          <li><a href="api/anomalib/models/dfkde/index.html#anomalib.models.dfkde.DfkdeLightning.training_step">(anomalib.models.dfkde.DfkdeLightning method)</a>
+          <li><a href="api/anomalib/models/dfm/lightning_model/index.html#anomalib.models.dfm.lightning_model.Dfm.training_step">(anomalib.models.dfm.lightning_model.Dfm method)</a>
 </li>
-          <li><a href="api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.lightning_model.DfkdeLightning.training_step">(anomalib.models.dfkde.lightning_model.DfkdeLightning method)</a>
+          <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.Ganomaly.training_step">(anomalib.models.ganomaly.lightning_model.Ganomaly method)</a>
 </li>
-          <li><a href="api/anomalib/models/dfm/index.html#anomalib.models.dfm.DfmLightning.training_step">(anomalib.models.dfm.DfmLightning method)</a>
+          <li><a href="api/anomalib/models/padim/lightning_model/index.html#anomalib.models.padim.lightning_model.Padim.training_step">(anomalib.models.padim.lightning_model.Padim method)</a>
 </li>
-          <li><a href="api/anomalib/models/dfm/lightning_model/index.html#anomalib.models.dfm.lightning_model.DfmLightning.training_step">(anomalib.models.dfm.lightning_model.DfmLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/ganomaly/index.html#anomalib.models.ganomaly.GanomalyLightning.training_step">(anomalib.models.ganomaly.GanomalyLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.GanomalyLightning.training_step">(anomalib.models.ganomaly.lightning_model.GanomalyLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/padim/lightning_model/index.html#anomalib.models.padim.lightning_model.PadimLightning.training_step">(anomalib.models.padim.lightning_model.PadimLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/padim/index.html#anomalib.models.padim.PadimLightning.training_step">(anomalib.models.padim.PadimLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/index.html#anomalib.models.PadimLightning.training_step">(anomalib.models.PadimLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.lightning_model.PatchcoreLightning.training_step">(anomalib.models.patchcore.lightning_model.PatchcoreLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/patchcore/index.html#anomalib.models.patchcore.PatchcoreLightning.training_step">(anomalib.models.patchcore.PatchcoreLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/stfpm/lightning_model/index.html#anomalib.models.stfpm.lightning_model.StfpmLightning.training_step">(anomalib.models.stfpm.lightning_model.StfpmLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.StfpmLightning.training_step">(anomalib.models.stfpm.StfpmLightning method)</a>
+          <li><a href="api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.lightning_model.Patchcore.training_step">(anomalib.models.patchcore.lightning_model.Patchcore method)</a>
 </li>
         </ul></li>
         <li><a href="api/anomalib/models/components/dimensionality_reduction/index.html#anomalib.models.components.dimensionality_reduction.PCA.transform">transform() (anomalib.models.components.dimensionality_reduction.PCA method)</a>
@@ -3123,17 +3159,13 @@
 </li>
           <li><a href="api/anomalib/models/components/base/index.html#anomalib.models.components.base.AnomalyModule.validation_epoch_end">(anomalib.models.components.base.AnomalyModule method)</a>
 </li>
-          <li><a href="api/anomalib/models/ganomaly/index.html#anomalib.models.ganomaly.GanomalyLightning.validation_epoch_end">(anomalib.models.ganomaly.GanomalyLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.GanomalyLightning.validation_epoch_end">(anomalib.models.ganomaly.lightning_model.GanomalyLightning method)</a>
+          <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.Ganomaly.validation_epoch_end">(anomalib.models.ganomaly.lightning_model.Ganomaly method)</a>
 </li>
         </ul></li>
         <li><a href="api/anomalib/models/index.html#anomalib.models.AnomalyModule.validation_step">validation_step() (anomalib.models.AnomalyModule method)</a>
 
         <ul>
-          <li><a href="api/anomalib/models/cflow/index.html#anomalib.models.cflow.CflowLightning.validation_step">(anomalib.models.cflow.CflowLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/cflow/lightning_model/index.html#anomalib.models.cflow.lightning_model.CflowLightning.validation_step">(anomalib.models.cflow.lightning_model.CflowLightning method)</a>
+          <li><a href="api/anomalib/models/cflow/lightning_model/index.html#anomalib.models.cflow.lightning_model.Cflow.validation_step">(anomalib.models.cflow.lightning_model.Cflow method)</a>
 </li>
           <li><a href="api/anomalib/models/components/index.html#anomalib.models.components.AnomalyModule.validation_step">(anomalib.models.components.AnomalyModule method)</a>
 </li>
@@ -3141,31 +3173,15 @@
 </li>
           <li><a href="api/anomalib/models/components/base/index.html#anomalib.models.components.base.AnomalyModule.validation_step">(anomalib.models.components.base.AnomalyModule method)</a>
 </li>
-          <li><a href="api/anomalib/models/dfkde/index.html#anomalib.models.dfkde.DfkdeLightning.validation_step">(anomalib.models.dfkde.DfkdeLightning method)</a>
+          <li><a href="api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.lightning_model.Dfkde.validation_step">(anomalib.models.dfkde.lightning_model.Dfkde method)</a>
 </li>
-          <li><a href="api/anomalib/models/dfkde/lightning_model/index.html#anomalib.models.dfkde.lightning_model.DfkdeLightning.validation_step">(anomalib.models.dfkde.lightning_model.DfkdeLightning method)</a>
+          <li><a href="api/anomalib/models/dfm/lightning_model/index.html#anomalib.models.dfm.lightning_model.Dfm.validation_step">(anomalib.models.dfm.lightning_model.Dfm method)</a>
 </li>
-          <li><a href="api/anomalib/models/dfm/index.html#anomalib.models.dfm.DfmLightning.validation_step">(anomalib.models.dfm.DfmLightning method)</a>
+          <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.Ganomaly.validation_step">(anomalib.models.ganomaly.lightning_model.Ganomaly method)</a>
 </li>
-          <li><a href="api/anomalib/models/dfm/lightning_model/index.html#anomalib.models.dfm.lightning_model.DfmLightning.validation_step">(anomalib.models.dfm.lightning_model.DfmLightning method)</a>
+          <li><a href="api/anomalib/models/padim/lightning_model/index.html#anomalib.models.padim.lightning_model.Padim.validation_step">(anomalib.models.padim.lightning_model.Padim method)</a>
 </li>
-          <li><a href="api/anomalib/models/ganomaly/index.html#anomalib.models.ganomaly.GanomalyLightning.validation_step">(anomalib.models.ganomaly.GanomalyLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.lightning_model.GanomalyLightning.validation_step">(anomalib.models.ganomaly.lightning_model.GanomalyLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/padim/lightning_model/index.html#anomalib.models.padim.lightning_model.PadimLightning.validation_step">(anomalib.models.padim.lightning_model.PadimLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/padim/index.html#anomalib.models.padim.PadimLightning.validation_step">(anomalib.models.padim.PadimLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/index.html#anomalib.models.PadimLightning.validation_step">(anomalib.models.PadimLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.lightning_model.PatchcoreLightning.validation_step">(anomalib.models.patchcore.lightning_model.PatchcoreLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/patchcore/index.html#anomalib.models.patchcore.PatchcoreLightning.validation_step">(anomalib.models.patchcore.PatchcoreLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/stfpm/lightning_model/index.html#anomalib.models.stfpm.lightning_model.StfpmLightning.validation_step">(anomalib.models.stfpm.lightning_model.StfpmLightning method)</a>
-</li>
-          <li><a href="api/anomalib/models/stfpm/index.html#anomalib.models.stfpm.StfpmLightning.validation_step">(anomalib.models.stfpm.StfpmLightning method)</a>
+          <li><a href="api/anomalib/models/patchcore/lightning_model/index.html#anomalib.models.patchcore.lightning_model.Patchcore.validation_step">(anomalib.models.patchcore.lightning_model.Patchcore method)</a>
 </li>
         </ul></li>
     </ul></td>

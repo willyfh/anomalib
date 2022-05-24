@@ -113,7 +113,7 @@ Classes
 
 
 
-.. py:class:: Tiler(tile_size: Union[int, Sequence], stride: Union[int, Sequence], remove_border_count: int = 0, mode: str = 'padding', tile_count: int = 4)
+.. py:class:: Tiler(tile_size: Union[int, Sequence], stride: Optional[Union[int, Sequence]] = None, remove_border_count: int = 0, mode: str = 'padding', tile_count: int = 4)
 
    Tile Image into (non)overlapping Patches. Images are tiled in order to efficiently process large images.
 

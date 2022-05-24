@@ -19,19 +19,24 @@ Classes
 
 .. autoapisummary::
 
+   anomalib.models.padim.lightning_model.Padim
    anomalib.models.padim.lightning_model.PadimLightning
 
 
 
 
-.. py:class:: PadimLightning(hparams: Union[omegaconf.DictConfig, omegaconf.ListConfig])
+.. py:class:: Padim(layers: List[str], input_size: Tuple[int, int], backbone: str)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
    PaDiM: a Patch Distribution Modeling Framework for Anomaly Detection and Localization.
 
-   :param hparams: Model params
-   :type hparams: Union[DictConfig, ListConfig]
+   :param layers: Layers to extract features from the backbone CNN
+   :type layers: List[str]
+   :param input_size: Size of the model input.
+   :type input_size: Tuple[int, int]
+   :param backbone: Backbone CNN network
+   :type backbone: str
 
    .. py:method:: configure_optimizers()
       :staticmethod:
@@ -67,5 +72,15 @@ Classes
       :returns: Dictionary containing images, features, true labels and masks.
                 These are required in `validation_epoch_end` for feature concatenation.
 
+
+
+.. py:class:: PadimLightning(hparams: Union[omegaconf.DictConfig, omegaconf.ListConfig])
+
+   Bases: :py:obj:`Padim`
+
+   PaDiM: a Patch Distribution Modeling Framework for Anomaly Detection and Localization.
+
+   :param hparams: Model params
+   :type hparams: Union[DictConfig, ListConfig]
 
 
