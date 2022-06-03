@@ -402,14 +402,16 @@
 <span class="c1"># and limitations under the License.</span>
 
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
+<span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Callback</span>
 
+<span class="kn">from</span> <span class="nn">anomalib.utils.callbacks</span> <span class="kn">import</span> <span class="n">MetricsConfigurationCallback</span>
 <span class="kn">from</span> <span class="nn">anomalib.utils.callbacks.timer</span> <span class="kn">import</span> <span class="n">TimerCallback</span>
 
 
-<div class="viewcode-block" id="get_sweep_callbacks"><a class="viewcode-back" href="../../../../../api/anomalib/utils/sweep/helpers/index.html#anomalib.utils.sweep.helpers.callbacks.get_sweep_callbacks">[docs]</a><span class="k">def</span> <span class="nf">get_sweep_callbacks</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Callback</span><span class="p">]:</span>
+<div class="viewcode-block" id="get_sweep_callbacks"><a class="viewcode-back" href="../../../../../api/anomalib/utils/sweep/helpers/index.html#anomalib.utils.sweep.helpers.callbacks.get_sweep_callbacks">[docs]</a><span class="k">def</span> <span class="nf">get_sweep_callbacks</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ListConfig</span><span class="p">,</span> <span class="n">DictConfig</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Callback</span><span class="p">]:</span>
     <span class="sd">"""Gets callbacks relevant to sweep.</span>
 
 <span class="sd">    Args:</span>
@@ -419,6 +421,23 @@
 <span class="sd">        List[Callback]: List of callbacks</span>
 <span class="sd">    """</span>
     <span class="n">callbacks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Callback</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">TimerCallback</span><span class="p">()]</span>
+    <span class="c1"># Add metric configuration to the model via MetricsConfigurationCallback</span>
+    <span class="n">image_metric_names</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">image</span> <span class="k">if</span> <span class="s2">"image"</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">pixel_metric_names</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">pixel</span> <span class="k">if</span> <span class="s2">"pixel"</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">image_threshold</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">image_default</span> <span class="k">if</span> <span class="s2">"image_default"</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="p">)</span>
+    <span class="n">pixel_threshold</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">pixel_default</span> <span class="k">if</span> <span class="s2">"pixel_default"</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="p">)</span>
+    <span class="n">metrics_callback</span> <span class="o">=</span> <span class="n">MetricsConfigurationCallback</span><span class="p">(</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">adaptive</span><span class="p">,</span>
+        <span class="n">image_threshold</span><span class="p">,</span>
+        <span class="n">pixel_threshold</span><span class="p">,</span>
+        <span class="n">image_metric_names</span><span class="p">,</span>
+        <span class="n">pixel_metric_names</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metrics_callback</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">callbacks</span></div>
 </pre></div>
