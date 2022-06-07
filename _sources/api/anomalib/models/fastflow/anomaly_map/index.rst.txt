@@ -1,0 +1,45 @@
+:py:mod:`anomalib.models.fastflow.anomaly_map`
+==============================================
+
+.. py:module:: anomalib.models.fastflow.anomaly_map
+
+.. autoapi-nested-parse::
+
+   FastFlow Anomaly Map Generator Implementation.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.fastflow.anomaly_map.AnomalyMapGenerator
+
+
+
+
+.. py:class:: AnomalyMapGenerator(input_size: Union[omegaconf.ListConfig, Tuple])
+
+   Generate Anomaly Heatmap.
+
+   .. py:method:: __call__(self, hidden_variables: List[torch.Tensor]) -> torch.Tensor
+
+      Generate Anomaly Heatmap.
+
+      This implementation generates the heatmap based on the flow maps
+      computed from the normalizing flow (NF) FastFlow blocks. Each block
+      yields a flow map, which overall is stacked and averaged to an anomaly
+      map.
+
+      :param hidden_variables: List of hidden variables from each NF FastFlow block.
+      :type hidden_variables: List[Tensor]
+
+      :returns: Anomaly Map.
+      :rtype: Tensor
+
+
+
