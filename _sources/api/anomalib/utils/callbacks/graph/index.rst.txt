@@ -1,0 +1,47 @@
+:py:mod:`anomalib.utils.callbacks.graph`
+========================================
+
+.. py:module:: anomalib.utils.callbacks.graph
+
+.. autoapi-nested-parse::
+
+   Log model graph to respective logger.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.callbacks.graph.GraphLogger
+
+
+
+
+.. py:class:: GraphLogger
+
+   Bases: :py:obj:`pytorch_lightning.Callback`
+
+   Log model graph to respective logger.
+
+   .. py:method:: on_train_start(self, trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule) -> None
+
+      Log model graph to respective logger.
+
+      :param trainer: Trainer object which contans reference to loggers.
+      :param pl_module: LightningModule object which is logged.
+
+
+   .. py:method:: on_train_end(self, trainer: pytorch_lightning.Trainer, pl_module: pytorch_lightning.LightningModule) -> None
+
+      Unwatch model if configured for wandb and log it model graph in Tensorboard if specified.
+
+      :param trainer: Trainer object which contans reference to loggers.
+      :param pl_module: LightningModule object which is logged.
+
+
+
