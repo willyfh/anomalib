@@ -1,0 +1,196 @@
+:py:mod:`anomalib.models.draem.torch_model`
+===========================================
+
+.. py:module:: anomalib.models.draem.torch_model
+
+.. autoapi-nested-parse::
+
+   PyTorch model for the DRAEM model implementation.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.draem.torch_model.DraemModel
+   anomalib.models.draem.torch_model.ReconstructiveSubNetwork
+   anomalib.models.draem.torch_model.DiscriminativeSubNetwork
+   anomalib.models.draem.torch_model.EncoderDiscriminative
+   anomalib.models.draem.torch_model.DecoderDiscriminative
+   anomalib.models.draem.torch_model.EncoderReconstructive
+   anomalib.models.draem.torch_model.DecoderReconstructive
+
+
+
+
+.. py:class:: DraemModel
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   DRAEM PyTorch model consisting of the reconstructive and discriminative sub networks.
+
+   .. py:method:: forward(self, batch: torch.Tensor) -> Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]
+
+      Compute the reconstruction and anomaly mask from an input image.
+
+      :param x: batch of input images
+      :type x: Tensor
+
+      :returns: Predicted confidence values of the anomaly mask. During training the reconstructed input images are
+                returned as well.
+
+
+
+.. py:class:: ReconstructiveSubNetwork(in_channels: int = 3, out_channels: int = 3, base_width=128)
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   Autoencoder model that encodes and reconstructs the input image.
+
+   :param in_channels: Number of input channels.
+   :type in_channels: int
+   :param out_channels: Number of output channels.
+   :type out_channels: int
+   :param base_width: Base dimensionality of the layers of the autoencoder.
+   :type base_width: int
+
+   .. py:method:: forward(self, batch: torch.Tensor) -> torch.Tensor
+
+      Encode and reconstruct the input images.
+
+      :param batch: Batch of input images
+      :type batch: Tensor
+
+      :returns: Batch of reconstructed images.
+
+
+
+.. py:class:: DiscriminativeSubNetwork(in_channels: int = 3, out_channels: int = 3, base_width: int = 64)
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   Discriminative model that predicts the anomaly mask from the original image and its reconstruction.
+
+   :param in_channels: Number of input channels.
+   :type in_channels: int
+   :param out_channels: Number of output channels.
+   :type out_channels: int
+   :param base_width: Base dimensionality of the layers of the autoencoder.
+   :type base_width: int
+
+   .. py:method:: forward(self, batch: torch.Tensor) -> torch.Tensor
+
+      Generate the predicted anomaly masks for a batch of input images.
+
+      :param batch: Batch of inputs consisting of the concatenation of the original images
+                    and their reconstructions.
+      :type batch: Tensor
+
+      :returns: Activations of the output layer corresponding to the normal and anomalous class scores on the pixel level.
+
+
+
+.. py:class:: EncoderDiscriminative(in_channels: int, base_width: int)
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   Encoder part of the discriminator network.
+
+   :param in_channels: Number of input channels.
+   :type in_channels: int
+   :param base_width: Base dimensionality of the layers of the autoencoder.
+   :type base_width: int
+
+   .. py:method:: forward(self, batch: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]
+
+      Convert the inputs to the salient space by running them through the encoder network.
+
+      :param batch: Batch of inputs consisting of the concatenation of the original images
+                    and their reconstructions.
+      :type batch: Tensor
+
+      :returns: Computed feature maps for each of the layers in the encoder sub network.
+
+
+
+.. py:class:: DecoderDiscriminative(base_width: int, out_channels: int = 1)
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   Decoder part of the discriminator network.
+
+   :param base_width: Base dimensionality of the layers of the autoencoder.
+   :type base_width: int
+   :param out_channels: Number of output channels.
+   :type out_channels: int
+
+   .. py:method:: forward(self, act1: torch.Tensor, act2: torch.Tensor, act3: torch.Tensor, act4: torch.Tensor, act5: torch.Tensor, act6: torch.Tensor) -> torch.Tensor
+
+      Computes predicted anomaly class scores from the intermediate outputs of the encoder sub network.
+
+      :param act1: Encoder activations of the first block of convolutional layers.
+      :type act1: Tensor
+      :param act2: Encoder activations of the second block of convolutional layers.
+      :type act2: Tensor
+      :param act3: Encoder activations of the third block of convolutional layers.
+      :type act3: Tensor
+      :param act4: Encoder activations of the fourth block of convolutional layers.
+      :type act4: Tensor
+      :param act5: Encoder activations of the fifth block of convolutional layers.
+      :type act5: Tensor
+      :param act6: Encoder activations of the sixth block of convolutional layers.
+      :type act6: Tensor
+
+      :returns: Predicted anomaly class scores per pixel.
+
+
+
+.. py:class:: EncoderReconstructive(in_channels: int, base_width: int)
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   Encoder part of the reconstructive network.
+
+   :param in_channels: Number of input channels.
+   :type in_channels: int
+   :param base_width: Base dimensionality of the layers of the autoencoder.
+   :type base_width: int
+
+   .. py:method:: forward(self, batch: torch.Tensor) -> torch.Tensor
+
+      Encode a batch of input images to the salient space.
+
+      :param batch: Batch of input images.
+      :type batch: Tensor
+
+      :returns: Feature maps extracted from the bottleneck layer.
+
+
+
+.. py:class:: DecoderReconstructive(base_width: int, out_channels: int = 1)
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   Decoder part of the reconstructive network.
+
+   :param base_width: Base dimensionality of the layers of the autoencoder.
+   :type base_width: int
+   :param out_channels: Number of output channels.
+   :type out_channels: int
+
+   .. py:method:: forward(self, act5: torch.Tensor) -> torch.Tensor
+
+      Reconstruct the image from the activations of the bottleneck layer.
+
+      :param act5: Activations of the bottleneck layer.
+      :type act5: Tensor
+
+      :returns: Batch of reconstructed images.
+
+
+

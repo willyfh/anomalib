@@ -1,0 +1,87 @@
+:py:mod:`anomalib.models.draem.lightning_model`
+===============================================
+
+.. py:module:: anomalib.models.draem.lightning_model
+
+.. autoapi-nested-parse::
+
+   DRÆM – A discriminatively trained reconstruction embedding for surface anomaly detection.
+
+   Paper https://arxiv.org/abs/2108.07610
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.draem.lightning_model.Draem
+   anomalib.models.draem.lightning_model.DraemLightning
+
+
+
+
+.. py:class:: Draem(anomaly_source_path: Optional[str] = None)
+
+   Bases: :py:obj:`anomalib.models.components.AnomalyModule`
+
+   DRÆM: A discriminatively trained reconstruction embedding for surface anomaly detection.
+
+   :param anomaly_source_path: Path to folder that contains the anomaly source images. Random noise will
+                               be used if left empty.
+   :type anomaly_source_path: Optional[str]
+
+   .. py:method:: training_step(self, batch, _)
+
+      Training Step of DRAEM.
+
+      Feeds the original image and the simulated anomaly
+      image through the network and computes the training loss.
+
+      :param batch: Batch containing image filename, image, label and mask
+      :type batch: Dict[str, Any]
+
+      :returns: Loss dictionary
+
+
+   .. py:method:: validation_step(self, batch, _)
+
+      Validation step of DRAEM. The Softmax predictions of the anomalous class are used as anomaly map.
+
+      :param batch: Batch of input images
+
+      :returns: Dictionary to which predicted anomaly maps have been added.
+
+
+
+.. py:class:: DraemLightning(hparams: Union[omegaconf.DictConfig, omegaconf.ListConfig])
+
+   Bases: :py:obj:`Draem`
+
+   DRÆM: A discriminatively trained reconstruction embedding for surface anomaly detection.
+
+   :param hparams: Model parameters
+   :type hparams: Union[DictConfig, ListConfig]
+
+   .. py:method:: configure_callbacks(self)
+
+      Configure model-specific callbacks.
+
+      .. note::
+
+         This method is used for the existing CLI.
+         When PL CLI is introduced, configure callback method will be
+             deprecated, and callbacks will be configured from either
+             config.yaml file or from CLI.
+
+
+   .. py:method:: configure_optimizers(self)
+
+      Configure the Adam optimizer.
+
+
+

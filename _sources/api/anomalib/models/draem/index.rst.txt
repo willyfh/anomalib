@@ -1,0 +1,71 @@
+:py:mod:`anomalib.models.draem`
+===============================
+
+.. py:module:: anomalib.models.draem
+
+.. autoapi-nested-parse::
+
+   DRAEM model.
+
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   utils/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   lightning_model/index.rst
+   loss/index.rst
+   torch_model/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.draem.DraemLightning
+
+
+
+
+.. py:class:: DraemLightning(hparams: Union[omegaconf.DictConfig, omegaconf.ListConfig])
+
+   Bases: :py:obj:`Draem`
+
+   DRÆM: A discriminatively trained reconstruction embedding for surface anomaly detection.
+
+   :param hparams: Model parameters
+   :type hparams: Union[DictConfig, ListConfig]
+
+   .. py:method:: configure_callbacks(self)
+
+      Configure model-specific callbacks.
+
+      .. note::
+
+         This method is used for the existing CLI.
+         When PL CLI is introduced, configure callback method will be
+             deprecated, and callbacks will be configured from either
+             config.yaml file or from CLI.
+
+
+   .. py:method:: configure_optimizers(self)
+
+      Configure the Adam optimizer.
+
+
+
