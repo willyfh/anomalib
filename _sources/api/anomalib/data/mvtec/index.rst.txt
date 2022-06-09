@@ -40,8 +40,8 @@ Classes
 
 .. autoapisummary::
 
+   anomalib.data.mvtec.MVTecDataset
    anomalib.data.mvtec.MVTec
-   anomalib.data.mvtec.MVTecDataModule
 
 
 
@@ -120,7 +120,7 @@ Attributes
    :rtype: DataFrame
 
 
-.. py:class:: MVTec(root: Union[pathlib.Path, str], category: str, pre_process: anomalib.pre_processing.PreProcessor, split: str, task: str = 'segmentation', seed: int = 0, create_validation_set: bool = False)
+.. py:class:: MVTecDataset(root: Union[pathlib.Path, str], category: str, pre_process: anomalib.pre_processing.PreProcessor, split: str, task: str = 'segmentation', seed: int = 0, create_validation_set: bool = False)
 
    Bases: :py:obj:`torchvision.datasets.folder.VisionDataset`
 
@@ -146,7 +146,7 @@ Attributes
 
 
 
-.. py:class:: MVTecDataModule(root: str, category: str, image_size: Optional[Union[int, Tuple[int, int]]] = None, train_batch_size: int = 32, test_batch_size: int = 32, num_workers: int = 8, task: str = 'segmentation', transform_config_train: Optional[Union[str, albumentations.Compose]] = None, transform_config_val: Optional[Union[str, albumentations.Compose]] = None, seed: int = 0, create_validation_set: bool = False)
+.. py:class:: MVTec(root: str, category: str, image_size: Optional[Union[int, Tuple[int, int]]] = None, train_batch_size: int = 32, test_batch_size: int = 32, num_workers: int = 8, task: str = 'segmentation', transform_config_train: Optional[Union[str, albumentations.Compose]] = None, transform_config_val: Optional[Union[str, albumentations.Compose]] = None, seed: int = 0, create_validation_set: bool = False)
 
    Bases: :py:obj:`pytorch_lightning.core.datamodule.LightningDataModule`
 

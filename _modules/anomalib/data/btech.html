@@ -571,7 +571,7 @@
     <span class="k">return</span> <span class="n">samples</span></div>
 
 
-<div class="viewcode-block" id="BTech"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTech">[docs]</a><span class="k">class</span> <span class="nc">BTech</span><span class="p">(</span><span class="n">VisionDataset</span><span class="p">):</span>
+<div class="viewcode-block" id="BTechDataset"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTechDataset">[docs]</a><span class="k">class</span> <span class="nc">BTechDataset</span><span class="p">(</span><span class="n">VisionDataset</span><span class="p">):</span>
     <span class="sd">"""BTech PyTorch Dataset."""</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -596,10 +596,10 @@
 <span class="sd">            create_validation_set: Create a validation subset in addition to the train and test subsets</span>
 
 <span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; from anomalib.data.btech import BTech</span>
+<span class="sd">            &gt;&gt;&gt; from anomalib.data.btech import BTechDataset</span>
 <span class="sd">            &gt;&gt;&gt; from anomalib.data.transforms import PreProcessor</span>
 <span class="sd">            &gt;&gt;&gt; pre_process = PreProcessor(image_size=256)</span>
-<span class="sd">            &gt;&gt;&gt; dataset = BTech(</span>
+<span class="sd">            &gt;&gt;&gt; dataset = BTechDataset(</span>
 <span class="sd">            ...     root='./datasets/BTech',</span>
 <span class="sd">            ...     category='leather',</span>
 <span class="sd">            ...     pre_process=pre_process,</span>
@@ -640,11 +640,11 @@
             <span class="n">create_validation_set</span><span class="o">=</span><span class="n">create_validation_set</span><span class="p">,</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="BTech.__len__"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTech.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="BTechDataset.__len__"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTechDataset.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">"""Get length of the dataset."""</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BTech.__getitem__"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTech.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]]:</span>
+<div class="viewcode-block" id="BTechDataset.__getitem__"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTechDataset.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]]:</span>
         <span class="sd">"""Get dataset item for the index ``index``.</span>
 
 <span class="sd">        Args:</span>
@@ -687,7 +687,7 @@
         <span class="k">return</span> <span class="n">item</span></div></div>
 
 
-<div class="viewcode-block" id="BTechDataModule"><a class="viewcode-back" href="../../../api/anomalib/data/index.html#anomalib.data.btech.BTechDataModule">[docs]</a><span class="k">class</span> <span class="nc">BTechDataModule</span><span class="p">(</span><span class="n">LightningDataModule</span><span class="p">):</span>
+<div class="viewcode-block" id="BTech"><a class="viewcode-back" href="../../../api/anomalib/data/index.html#anomalib.data.btech.BTech">[docs]</a><span class="k">class</span> <span class="nc">BTech</span><span class="p">(</span><span class="n">LightningDataModule</span><span class="p">):</span>
     <span class="sd">"""BTechDataModule Lightning Data Module."""</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -721,8 +721,8 @@
 <span class="sd">            create_validation_set: Create a validation subset in addition to the train and test subsets</span>
 
 <span class="sd">        Examples</span>
-<span class="sd">            &gt;&gt;&gt; from anomalib.data import BTechDataModule</span>
-<span class="sd">            &gt;&gt;&gt; datamodule = BTechDataModule(</span>
+<span class="sd">            &gt;&gt;&gt; from anomalib.data import BTech</span>
+<span class="sd">            &gt;&gt;&gt; datamodule = BTech(</span>
 <span class="sd">            ...     root="./datasets/BTech",</span>
 <span class="sd">            ...     category="leather",</span>
 <span class="sd">            ...     image_size=256,</span>
@@ -775,7 +775,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">val_data</span><span class="p">:</span> <span class="n">Dataset</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inference_data</span><span class="p">:</span> <span class="n">Dataset</span>
 
-<div class="viewcode-block" id="BTechDataModule.prepare_data"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTechDataModule.prepare_data">[docs]</a>    <span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="BTech.prepare_data"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTech.prepare_data">[docs]</a>    <span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Download the dataset if not available."""</span>
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Found the dataset."</span><span class="p">)</span>
@@ -816,7 +816,7 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Cleaning the tar file"</span><span class="p">)</span>
             <span class="n">zip_filename</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="BTechDataModule.setup"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTechDataModule.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="BTech.setup"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTech.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Setup train, validation and test data.</span>
 
 <span class="sd">        BTech dataset uses BTech dataset structure, which is the reason for</span>
@@ -828,7 +828,7 @@
 <span class="sd">        """</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Setting up train, validation, test and prediction datasets."</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">stage</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">"fit"</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span> <span class="o">=</span> <span class="n">BTech</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span> <span class="o">=</span> <span class="n">BTechDataset</span><span class="p">(</span>
                 <span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
                 <span class="n">category</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
                 <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process_train</span><span class="p">,</span>
@@ -839,7 +839,7 @@
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_validation_set</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">val_data</span> <span class="o">=</span> <span class="n">BTech</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">val_data</span> <span class="o">=</span> <span class="n">BTechDataset</span><span class="p">(</span>
                 <span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
                 <span class="n">category</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
                 <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process_val</span><span class="p">,</span>
@@ -849,7 +849,7 @@
                 <span class="n">create_validation_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">create_validation_set</span><span class="p">,</span>
             <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">test_data</span> <span class="o">=</span> <span class="n">BTech</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_data</span> <span class="o">=</span> <span class="n">BTechDataset</span><span class="p">(</span>
             <span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
             <span class="n">category</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
             <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process_val</span><span class="p">,</span>
@@ -864,20 +864,20 @@
                 <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span> <span class="n">transform_config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_config_val</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="BTechDataModule.train_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTechDataModule.train_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TRAIN_DATALOADERS</span><span class="p">:</span>
+<div class="viewcode-block" id="BTech.train_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTech.train_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TRAIN_DATALOADERS</span><span class="p">:</span>
         <span class="sd">"""Get train dataloader."""</span>
         <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">train_batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BTechDataModule.val_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTechDataModule.val_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">val_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EVAL_DATALOADERS</span><span class="p">:</span>
+<div class="viewcode-block" id="BTech.val_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTech.val_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">val_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EVAL_DATALOADERS</span><span class="p">:</span>
         <span class="sd">"""Get validation dataloader."""</span>
         <span class="n">dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">val_data</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_validation_set</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_data</span>
         <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BTechDataModule.test_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTechDataModule.test_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">test_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EVAL_DATALOADERS</span><span class="p">:</span>
+<div class="viewcode-block" id="BTech.test_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTech.test_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">test_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EVAL_DATALOADERS</span><span class="p">:</span>
         <span class="sd">"""Get test dataloader."""</span>
         <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_data</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BTechDataModule.predict_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTechDataModule.predict_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">predict_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EVAL_DATALOADERS</span><span class="p">:</span>
+<div class="viewcode-block" id="BTech.predict_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/btech/index.html#anomalib.data.btech.BTech.predict_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">predict_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EVAL_DATALOADERS</span><span class="p">:</span>
         <span class="sd">"""Get predict dataloader."""</span>
         <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inference_data</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span>

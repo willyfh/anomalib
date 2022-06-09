@@ -449,10 +449,10 @@
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">LightningDataModule</span>
 
-<span class="kn">from</span> <span class="nn">.btech</span> <span class="kn">import</span> <span class="n">BTechDataModule</span>
-<span class="kn">from</span> <span class="nn">.folder</span> <span class="kn">import</span> <span class="n">FolderDataModule</span>
+<span class="kn">from</span> <span class="nn">.btech</span> <span class="kn">import</span> <span class="n">BTech</span>
+<span class="kn">from</span> <span class="nn">.folder</span> <span class="kn">import</span> <span class="n">Folder</span>
 <span class="kn">from</span> <span class="nn">.inference</span> <span class="kn">import</span> <span class="n">InferenceDataset</span>
-<span class="kn">from</span> <span class="nn">.mvtec</span> <span class="kn">import</span> <span class="n">MVTecDataModule</span>
+<span class="kn">from</span> <span class="nn">.mvtec</span> <span class="kn">import</span> <span class="n">MVTec</span>
 
 
 <div class="viewcode-block" id="get_datamodule"><a class="viewcode-back" href="../../api/anomalib/data/index.html#anomalib.data.get_datamodule">[docs]</a><span class="k">def</span> <span class="nf">get_datamodule</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">LightningDataModule</span><span class="p">:</span>
@@ -467,7 +467,7 @@
     <span class="n">datamodule</span><span class="p">:</span> <span class="n">LightningDataModule</span>
 
     <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"mvtec"</span><span class="p">:</span>
-        <span class="n">datamodule</span> <span class="o">=</span> <span class="n">MVTecDataModule</span><span class="p">(</span>
+        <span class="n">datamodule</span> <span class="o">=</span> <span class="n">MVTec</span><span class="p">(</span>
             <span class="c1"># TODO: Remove config values. IAAALD-211</span>
             <span class="n">root</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
             <span class="n">category</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
@@ -482,7 +482,7 @@
             <span class="n">create_validation_set</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">create_validation_set</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="k">elif</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"btech"</span><span class="p">:</span>
-        <span class="n">datamodule</span> <span class="o">=</span> <span class="n">BTechDataModule</span><span class="p">(</span>
+        <span class="n">datamodule</span> <span class="o">=</span> <span class="n">BTech</span><span class="p">(</span>
             <span class="c1"># TODO: Remove config values. IAAALD-211</span>
             <span class="n">root</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
             <span class="n">category</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
@@ -497,7 +497,7 @@
             <span class="n">create_validation_set</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">create_validation_set</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="k">elif</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"folder"</span><span class="p">:</span>
-        <span class="n">datamodule</span> <span class="o">=</span> <span class="n">FolderDataModule</span><span class="p">(</span>
+        <span class="n">datamodule</span> <span class="o">=</span> <span class="n">Folder</span><span class="p">(</span>
             <span class="n">root</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
             <span class="n">normal_dir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">normal_dir</span><span class="p">,</span>
             <span class="n">abnormal_dir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">abnormal_dir</span><span class="p">,</span>
@@ -527,10 +527,10 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">"get_datamodule"</span><span class="p">,</span>
-    <span class="s2">"BTechDataModule"</span><span class="p">,</span>
-    <span class="s2">"FolderDataModule"</span><span class="p">,</span>
+    <span class="s2">"BTech"</span><span class="p">,</span>
+    <span class="s2">"Folder"</span><span class="p">,</span>
     <span class="s2">"InferenceDataset"</span><span class="p">,</span>
-    <span class="s2">"MVTecDataModule"</span><span class="p">,</span>
+    <span class="s2">"MVTec"</span><span class="p">,</span>
 <span class="p">]</span>
 </pre></div>
       </article>

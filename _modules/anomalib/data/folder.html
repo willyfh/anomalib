@@ -731,7 +731,7 @@
         <span class="k">return</span> <span class="n">item</span></div></div>
 
 
-<div class="viewcode-block" id="FolderDataModule"><a class="viewcode-back" href="../../../api/anomalib/data/index.html#anomalib.data.folder.FolderDataModule">[docs]</a><span class="k">class</span> <span class="nc">FolderDataModule</span><span class="p">(</span><span class="n">LightningDataModule</span><span class="p">):</span>
+<div class="viewcode-block" id="Folder"><a class="viewcode-back" href="../../../api/anomalib/data/index.html#anomalib.data.folder.Folder">[docs]</a><span class="k">class</span> <span class="nc">Folder</span><span class="p">(</span><span class="n">LightningDataModule</span><span class="p">):</span>
     <span class="sd">"""Folder Lightning Data Module."""</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -789,8 +789,8 @@
 
 <span class="sd">        Examples:</span>
 <span class="sd">            Assume that we use Folder Dataset for the MVTec/bottle/broken_large category. We would do:</span>
-<span class="sd">            &gt;&gt;&gt; from anomalib.data import FolderDataModule</span>
-<span class="sd">            &gt;&gt;&gt; datamodule = FolderDataModule(</span>
+<span class="sd">            &gt;&gt;&gt; from anomalib.data import Folder</span>
+<span class="sd">            &gt;&gt;&gt; datamodule = Folder(</span>
 <span class="sd">            ...     root="./datasets/MVTec/bottle/test",</span>
 <span class="sd">            ...     normal="good",</span>
 <span class="sd">            ...     abnormal="broken_large",</span>
@@ -809,7 +809,7 @@
 <span class="sd">            The dataset expects that mask annotation filenames must be same as the original filename.</span>
 <span class="sd">            To this end, we modified mask filenames in MVTec AD bottle category.</span>
 <span class="sd">            Now we could try folder data module using the mvtec bottle broken large category</span>
-<span class="sd">            &gt;&gt;&gt; datamodule = FolderDataModule(</span>
+<span class="sd">            &gt;&gt;&gt; datamodule = Folder(</span>
 <span class="sd">            ...     root="./datasets/bottle/test",</span>
 <span class="sd">            ...     normal="good",</span>
 <span class="sd">            ...     abnormal="broken_large",</span>
@@ -831,7 +831,7 @@
 <span class="sd">            By default, Folder Data Module does not create a validation set. If a validation set</span>
 <span class="sd">            is needed it could be set as follows:</span>
 
-<span class="sd">            &gt;&gt;&gt; datamodule = FolderDataModule(</span>
+<span class="sd">            &gt;&gt;&gt; datamodule = Folder(</span>
 <span class="sd">            ...     root="./datasets/bottle/test",</span>
 <span class="sd">            ...     normal="good",</span>
 <span class="sd">            ...     abnormal="broken_large",</span>
@@ -893,7 +893,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">val_data</span><span class="p">:</span> <span class="n">Dataset</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inference_data</span><span class="p">:</span> <span class="n">Dataset</span>
 
-<div class="viewcode-block" id="FolderDataModule.setup"><a class="viewcode-back" href="../../../api/anomalib/data/folder/index.html#anomalib.data.folder.FolderDataModule.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Folder.setup"><a class="viewcode-back" href="../../../api/anomalib/data/folder/index.html#anomalib.data.folder.Folder.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Setup train, validation and test data.</span>
 
 <span class="sd">        Args:</span>
@@ -950,20 +950,20 @@
                 <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span> <span class="n">transform_config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_config_val</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="FolderDataModule.train_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/folder/index.html#anomalib.data.folder.FolderDataModule.train_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TRAIN_DATALOADERS</span><span class="p">:</span>
+<div class="viewcode-block" id="Folder.train_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/folder/index.html#anomalib.data.folder.Folder.train_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TRAIN_DATALOADERS</span><span class="p">:</span>
         <span class="sd">"""Get train dataloader."""</span>
         <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">train_batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FolderDataModule.val_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/folder/index.html#anomalib.data.folder.FolderDataModule.val_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">val_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EVAL_DATALOADERS</span><span class="p">:</span>
+<div class="viewcode-block" id="Folder.val_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/folder/index.html#anomalib.data.folder.Folder.val_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">val_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EVAL_DATALOADERS</span><span class="p">:</span>
         <span class="sd">"""Get validation dataloader."""</span>
         <span class="n">dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">val_data</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_validation_set</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_data</span>
         <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FolderDataModule.test_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/folder/index.html#anomalib.data.folder.FolderDataModule.test_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">test_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EVAL_DATALOADERS</span><span class="p">:</span>
+<div class="viewcode-block" id="Folder.test_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/folder/index.html#anomalib.data.folder.Folder.test_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">test_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EVAL_DATALOADERS</span><span class="p">:</span>
         <span class="sd">"""Get test dataloader."""</span>
         <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_data</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FolderDataModule.predict_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/folder/index.html#anomalib.data.folder.FolderDataModule.predict_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">predict_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EVAL_DATALOADERS</span><span class="p">:</span>
+<div class="viewcode-block" id="Folder.predict_dataloader"><a class="viewcode-back" href="../../../api/anomalib/data/folder/index.html#anomalib.data.folder.Folder.predict_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">predict_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EVAL_DATALOADERS</span><span class="p">:</span>
         <span class="sd">"""Get predict dataloader."""</span>
         <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inference_data</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span>
