@@ -1,0 +1,82 @@
+:py:mod:`anomalib.models.reverse_distillation`
+==============================================
+
+.. py:module:: anomalib.models.reverse_distillation
+
+.. autoapi-nested-parse::
+
+   Reverse Distillation Model.
+
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   components/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   anomaly_map/index.rst
+   lightning_model/index.rst
+   loss/index.rst
+   torch_model/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.reverse_distillation.ReverseDistillationLightning
+
+
+
+
+.. py:class:: ReverseDistillationLightning(hparams: Union[omegaconf.DictConfig, omegaconf.ListConfig])
+
+   Bases: :py:obj:`ReverseDistillation`
+
+   PL Lightning Module for Reverse Distillation Algorithm.
+
+   :param hparams: Model parameters
+   :type hparams: Union[DictConfig, ListConfig]
+
+   .. py:method:: configure_callbacks(self)
+
+      Configure model-specific callbacks.
+
+      .. note::
+
+         This method is used for the existing CLI.
+         When PL CLI is introduced, configure callback method will be
+             deprecated, and callbacks will be configured from either
+             config.yaml file or from CLI.
+
+
+   .. py:method:: configure_optimizers(self)
+
+      Configures optimizers for decoder and bottleneck.
+
+      .. note::
+
+         This method is used for the existing CLI.
+         When PL CLI is introduced, configure optimizers method will be
+             deprecated, and optimizers will be configured from either
+             config.yaml file or from CLI.
+
+      :returns: Adam optimizer for each decoder
+      :rtype: Optimizer
+
+
+

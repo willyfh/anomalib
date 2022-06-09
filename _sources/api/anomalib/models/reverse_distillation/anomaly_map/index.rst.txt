@@ -1,0 +1,52 @@
+:py:mod:`anomalib.models.reverse_distillation.anomaly_map`
+==========================================================
+
+.. py:module:: anomalib.models.reverse_distillation.anomaly_map
+
+.. autoapi-nested-parse::
+
+   Compute Anomaly map.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.reverse_distillation.anomaly_map.AnomalyMapGenerator
+
+
+
+
+.. py:class:: AnomalyMapGenerator(image_size: Union[omegaconf.ListConfig, Tuple], sigma: int = 4, mode: str = 'multiply')
+
+   Generate Anomaly Heatmap.
+
+   :param image_size: Size of original image used for upscaling the anomaly map.
+   :type image_size: Union[ListConfig, Tuple]
+   :param sigma: Standard deviation of the gaussian kernel used to smooth anomaly map.
+   :type sigma: int
+   :param mode: Operation used to generate anomaly map. Options are `add` and `multiply`.
+                Defaults to "multiply".
+   :type mode: str, optional
+
+   :raises ValueError: In case modes other than multiply and add are passed.
+
+   .. py:method:: __call__(self, student_features: List[torch.Tensor], teacher_features: List[torch.Tensor]) -> torch.Tensor
+
+      Computes anomaly map given encoder and decoder features.
+
+      :param student_features: List of encoder features
+      :type student_features: List[Tensor]
+      :param teacher_features: List of decoder features
+      :type teacher_features: List[Tensor]
+
+      :returns: Anomaly maps of length batch.
+      :rtype: Tensor
+
+
+

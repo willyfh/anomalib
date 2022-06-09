@@ -1,0 +1,57 @@
+:py:mod:`anomalib.models.reverse_distillation.components`
+=========================================================
+
+.. py:module:: anomalib.models.reverse_distillation.components
+
+.. autoapi-nested-parse::
+
+   PyTorch modules for Reverse Distillation.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   bottleneck/index.rst
+   de_resnet/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.reverse_distillation.components.get_bottleneck_layer
+   anomalib.models.reverse_distillation.components.get_decoder
+
+
+
+.. py:function:: get_bottleneck_layer(backbone: str, **kwargs) -> OCBE
+
+   Get appropriate bottleneck layer based on the name of the backbone.
+
+   :param backbone: Name of the backbone.
+   :type backbone: str
+
+   :returns: One-Class Bottleneck Embedding module.
+   :rtype: Bottleneck_layer
+
+
+.. py:function:: get_decoder(name: str) -> ResNet
+
+   Get decoder model based on the name of the backbone.
+
+   :param name: Name of the backbone.
+   :type name: str
+
+   :returns: Decoder ResNet architecture.
+   :rtype: ResNet
+
+

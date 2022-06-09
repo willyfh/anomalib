@@ -1,0 +1,206 @@
+:py:mod:`anomalib.models.reverse_distillation.components.de_resnet`
+===================================================================
+
+.. py:module:: anomalib.models.reverse_distillation.components.de_resnet
+
+.. autoapi-nested-parse::
+
+   Torch model defining the decoder.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.reverse_distillation.components.de_resnet.DecoderBasicBlock
+   anomalib.models.reverse_distillation.components.de_resnet.DecoderBottleneck
+   anomalib.models.reverse_distillation.components.de_resnet.ResNet
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.reverse_distillation.components.de_resnet._resnet
+   anomalib.models.reverse_distillation.components.de_resnet.de_resnet18
+   anomalib.models.reverse_distillation.components.de_resnet.de_resnet34
+   anomalib.models.reverse_distillation.components.de_resnet.de_resnet50
+   anomalib.models.reverse_distillation.components.de_resnet.de_resnet101
+   anomalib.models.reverse_distillation.components.de_resnet.de_resnet152
+   anomalib.models.reverse_distillation.components.de_resnet.de_resnext50_32x4d
+   anomalib.models.reverse_distillation.components.de_resnet.de_resnext101_32x8d
+   anomalib.models.reverse_distillation.components.de_resnet.de_wide_resnet50_2
+   anomalib.models.reverse_distillation.components.de_resnet.de_wide_resnet101_2
+   anomalib.models.reverse_distillation.components.de_resnet.get_decoder
+
+
+
+.. py:class:: DecoderBasicBlock(inplanes: int, planes: int, stride: int = 1, upsample: Optional[torch.nn.Module] = None, groups: int = 1, base_width: int = 64, dilation: int = 1, norm_layer: Optional[Callable[Ellipsis, torch.nn.Module]] = None)
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   Basic block for decoder ResNet architecture.
+
+   :param inplanes: Number of input channels.
+   :type inplanes: int
+   :param planes: Number of output channels.
+   :type planes: int
+   :param stride: Stride for convolution and de-convolution layers. Defaults to 1.
+   :type stride: int, optional
+   :param upsample: Module used for upsampling output. Defaults to None.
+   :type upsample: Optional[nn.Module], optional
+   :param groups: Number of blocked connections from input channels to output channels.
+                  Defaults to 1.
+   :type groups: int, optional
+   :param base_width: Number of layers in each intermediate convolution layer. Defaults to 64.
+   :type base_width: int, optional
+   :param dilation: Spacing between kernel elements. Defaults to 1.
+   :type dilation: int, optional
+   :param norm_layer: Batch norm layer to use.Defaults to None.
+   :type norm_layer: Optional[Callable[..., nn.Module]], optional
+
+   :raises ValueError: If groups are not equal to 1 and base width is not 64.
+   :raises NotImplementedError: If dilation is greater than 1.
+
+   .. py:attribute:: expansion
+      :annotation: :int = 1
+
+      
+
+   .. py:method:: forward(self, batch: torch.Tensor) -> torch.Tensor
+
+      Forward-pass of de-resnet block.
+
+
+
+.. py:class:: DecoderBottleneck(inplanes: int, planes: int, stride: int = 1, upsample: Optional[torch.nn.Module] = None, groups: int = 1, base_width: int = 64, dilation: int = 1, norm_layer: Optional[Callable[Ellipsis, torch.nn.Module]] = None)
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   Bottleneck for Decoder.
+
+   :param inplanes: Number of input channels.
+   :type inplanes: int
+   :param planes: Number of output channels.
+   :type planes: int
+   :param stride: Stride for convolution and de-convolution layers. Defaults to 1.
+   :type stride: int, optional
+   :param upsample: Module used for upsampling output. Defaults to None.
+   :type upsample: Optional[nn.Module], optional
+   :param groups: Number of blocked connections from input channels to output channels.
+                  Defaults to 1.
+   :type groups: int, optional
+   :param base_width: Number of layers in each intermediate convolution layer. Defaults to 64.
+   :type base_width: int, optional
+   :param dilation: Spacing between kernel elements. Defaults to 1.
+   :type dilation: int, optional
+   :param norm_layer: Batch norm layer to use.Defaults to None.
+   :type norm_layer: Optional[Callable[..., nn.Module]], optional
+
+   .. py:attribute:: expansion
+      :annotation: :int = 4
+
+      
+
+   .. py:method:: forward(self, batch: torch.Tensor) -> torch.Tensor
+
+      Forward-pass of de-resnet bottleneck block.
+
+
+
+.. py:class:: ResNet(block: Type[Union[DecoderBasicBlock, DecoderBottleneck]], layers: List[int], zero_init_residual: bool = False, groups: int = 1, width_per_group: int = 64, norm_layer: Optional[Callable[Ellipsis, torch.nn.Module]] = None)
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   ResNet model for decoder.
+
+   :param block: Type of block to use in a layer.
+   :type block: Type[Union[DecoderBasicBlock, DecoderBottleneck]]
+   :param layers: List to specify number for blocks per layer.
+   :type layers: List[int]
+   :param zero_init_residual: If true, initializes the last batch norm in each layer to zero.
+                              Defaults to False.
+   :type zero_init_residual: bool, optional
+   :param groups: Number of blocked connections per layer from input channels to output channels.
+                  Defaults to 1.
+   :type groups: int, optional
+   :param width_per_group: Number of layers in each intermediate convolution layer.. Defaults to 64.
+   :type width_per_group: int, optional
+   :param norm_layer: Batch norm layer to use. Defaults to None.
+   :type norm_layer: Optional[Callable[..., nn.Module]], optional
+
+   .. py:method:: _make_layer(self, block: Type[Union[DecoderBasicBlock, DecoderBottleneck]], planes: int, blocks: int, stride: int = 1) -> torch.nn.Sequential
+
+
+   .. py:method:: forward(self, batch: torch.Tensor) -> List[torch.Tensor]
+
+      Forward pass for Decoder ResNet. Returns list of features.
+
+
+
+.. py:function:: _resnet(block: Type[Union[DecoderBasicBlock, DecoderBottleneck]], layers: List[int], **kwargs: Any) -> ResNet
+
+
+.. py:function:: de_resnet18() -> ResNet
+
+   ResNet-18 model.
+
+
+.. py:function:: de_resnet34() -> ResNet
+
+   ResNet-34 model.
+
+
+.. py:function:: de_resnet50() -> ResNet
+
+   ResNet-50 model.
+
+
+.. py:function:: de_resnet101() -> ResNet
+
+   ResNet-101 model.
+
+
+.. py:function:: de_resnet152() -> ResNet
+
+   ResNet-152 model.
+
+
+.. py:function:: de_resnext50_32x4d() -> ResNet
+
+   ResNeXt-50 32x4d model.
+
+
+.. py:function:: de_resnext101_32x8d() -> ResNet
+
+   ResNeXt-101 32x8d model.
+
+
+.. py:function:: de_wide_resnet50_2() -> ResNet
+
+   Wide ResNet-50-2 model.
+
+
+.. py:function:: de_wide_resnet101_2() -> ResNet
+
+   Wide ResNet-101-2 model.
+
+
+.. py:function:: get_decoder(name: str) -> ResNet
+
+   Get decoder model based on the name of the backbone.
+
+   :param name: Name of the backbone.
+   :type name: str
+
+   :returns: Decoder ResNet architecture.
+   :rtype: ResNet
+
+

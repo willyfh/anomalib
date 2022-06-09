@@ -24,6 +24,7 @@ Subpackages
    ganomaly/index.rst
    padim/index.rst
    patchcore/index.rst
+   reverse_distillation/index.rst
    stfpm/index.rst
 
 
@@ -44,6 +45,7 @@ Functions
 
 .. autoapisummary::
 
+   anomalib.models._snake_to_pascal_case
    anomalib.models.get_model
 
 
@@ -146,6 +148,17 @@ Functions
 
 
 
+.. py:function:: _snake_to_pascal_case(model_name: str) -> str
+
+   Convert model name from snake case to Pascal case.
+
+   :param model_name: Model name in snake case.
+   :type model_name: str
+
+   :returns: Model name in Pascal case.
+   :rtype: str
+
+
 .. py:function:: get_model(config: Union[omegaconf.DictConfig, omegaconf.ListConfig]) -> components.AnomalyModule
 
    Load model from the configuration file.
@@ -153,8 +166,8 @@ Functions
    Works only when the convention for model naming is followed.
 
    The convention for writing model classes is
-   `anomalib.models.<model_name>.model.<Model_name>Lightning`
-   `anomalib.models.stfpm.model.StfpmLightning`
+   `anomalib.models.<model_name>.lightning_model.<ModelName>Lightning`
+   `anomalib.models.stfpm.lightning_model.StfpmLightning`
 
    :param config: Config.yaml loaded using OmegaConf
    :type config: Union[DictConfig, ListConfig]

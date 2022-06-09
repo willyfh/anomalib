@@ -1,0 +1,42 @@
+:py:mod:`anomalib.models.reverse_distillation.loss`
+===================================================
+
+.. py:module:: anomalib.models.reverse_distillation.loss
+
+.. autoapi-nested-parse::
+
+   Loss function for Reverse Distillation.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.reverse_distillation.loss.ReverseDistillationLoss
+
+
+
+
+.. py:class:: ReverseDistillationLoss
+
+   Loss function for Reverse Distillation.
+
+   .. py:method:: __call__(self, encoder_features: List[torch.Tensor], decoder_features: List[torch.Tensor]) -> torch.Tensor
+
+      Computes cosine similarity loss based on features from encoder and decoder.
+
+      :param encoder_features: List of features extracted from encoder
+      :type encoder_features: List[Tensor]
+      :param decoder_features: List of features extracted from decoder
+      :type decoder_features: List[Tensor]
+
+      :returns: Cosine similarity loss
+      :rtype: Tensor
+
+
+
