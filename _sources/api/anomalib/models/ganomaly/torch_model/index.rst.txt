@@ -126,7 +126,7 @@ Classes
 
 
 
-.. py:class:: GanomalyModel(input_size: Tuple[int, int], num_input_channels: int, n_features: int, latent_vec_size: int, extra_layers: int = 0, add_final_conv_layer: bool = True, wadv: int = 1, wcon: int = 50, wenc: int = 1)
+.. py:class:: GanomalyModel(input_size: Tuple[int, int], num_input_channels: int, n_features: int, latent_vec_size: int, extra_layers: int = 0, add_final_conv_layer: bool = True)
 
    Bases: :py:obj:`torch.nn.Module`
 
@@ -144,12 +144,6 @@ Classes
    :type extra_layers: int, optional
    :param add_final_conv_layer: Add convolution layer at the end. Defaults to True.
    :type add_final_conv_layer: bool, optional
-   :param wadv: Weight for adversarial loss. Defaults to 1.
-   :type wadv: int, optional
-   :param wcon: Image regeneration weight. Defaults to 50.
-   :type wcon: int, optional
-   :param wenc: Latent vector encoder weight. Defaults to 1.
-   :type wenc: int, optional
 
    .. py:method:: weights_init(module: torch.nn.Module)
       :staticmethod:
@@ -160,29 +154,7 @@ Classes
       :type module: nn.Module
 
 
-   .. py:method:: get_discriminator_loss(self, images: torch.Tensor) -> torch.Tensor
-
-      Calculates loss for discriminator.
-
-      :param images: Input images.
-      :type images: Tensor
-
-      :returns: Discriminator loss.
-      :rtype: Tensor
-
-
-   .. py:method:: get_generator_loss(self, images: torch.Tensor) -> torch.Tensor
-
-      Calculates loss for generator.
-
-      :param images: Input images.
-      :type images: Tensor
-
-      :returns: Generator loss.
-      :rtype: Tensor
-
-
-   .. py:method:: forward(self, batch: torch.Tensor) -> torch.Tensor
+   .. py:method:: forward(self, batch: torch.Tensor) -> Union[Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor], torch.Tensor]
 
       Get scores for batch.
 

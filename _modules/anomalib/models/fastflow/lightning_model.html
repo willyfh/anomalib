@@ -286,11 +286,13 @@
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../../../api/anomalib/models/fastflow/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/fastflow/anomaly_map/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.anomaly_map</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/fastflow/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.lightning_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/fastflow/loss/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.loss</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/fastflow/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.torch_model</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../../../api/anomalib/models/ganomaly/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly.lightning_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/ganomaly/loss/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly.loss</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/ganomaly/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly.torch_model</span></code></a></li>
 </ul>
 </li>
@@ -321,6 +323,7 @@
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../../../api/anomalib/models/stfpm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" role="switch" type="checkbox"/><label for="toctree-checkbox-30"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/stfpm/anomaly_map/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.anomaly_map</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/stfpm/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.lightning_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/stfpm/loss/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.loss</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/stfpm/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.torch_model</span></code></a></li>
 </ul>
 </li>
@@ -457,7 +460,8 @@
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">optim</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
-<span class="kn">from</span> <span class="nn">anomalib.models.fastflow.torch_model</span> <span class="kn">import</span> <span class="n">FastflowLoss</span><span class="p">,</span> <span class="n">FastflowModel</span>
+<span class="kn">from</span> <span class="nn">anomalib.models.fastflow.loss</span> <span class="kn">import</span> <span class="n">FastflowLoss</span>
+<span class="kn">from</span> <span class="nn">anomalib.models.fastflow.torch_model</span> <span class="kn">import</span> <span class="n">FastflowModel</span>
 
 
 <span class="nd">@MODEL_REGISTRY</span>
@@ -489,7 +493,7 @@
             <span class="n">conv3x3_only</span><span class="o">=</span><span class="n">conv3x3_only</span><span class="p">,</span>
             <span class="n">hidden_ratio</span><span class="o">=</span><span class="n">hidden_ratio</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">loss_func</span> <span class="o">=</span> <span class="n">FastflowLoss</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">FastflowLoss</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Fastflow.training_step"><a class="viewcode-back" href="../../../../api/anomalib/models/fastflow/lightning_model/index.html#anomalib.models.fastflow.Fastflow.training_step">[docs]</a>    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
         <span class="sd">"""Forward-pass input and return the loss.</span>
@@ -502,7 +506,7 @@
 <span class="sd">            STEP_OUTPUT: Dictionary containing the loss value.</span>
 <span class="sd">        """</span>
         <span class="n">hidden_variables</span><span class="p">,</span> <span class="n">jacobians</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">"image"</span><span class="p">])</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_func</span><span class="p">(</span><span class="n">hidden_variables</span><span class="p">,</span> <span class="n">jacobians</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">hidden_variables</span><span class="p">,</span> <span class="n">jacobians</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">{</span><span class="s2">"loss"</span><span class="p">:</span> <span class="n">loss</span><span class="p">}</span></div>
 
 <div class="viewcode-block" id="Fastflow.validation_step"><a class="viewcode-back" href="../../../../api/anomalib/models/fastflow/lightning_model/index.html#anomalib.models.fastflow.Fastflow.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>

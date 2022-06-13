@@ -286,11 +286,13 @@
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../../../api/anomalib/models/fastflow/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/fastflow/anomaly_map/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.anomaly_map</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/fastflow/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.lightning_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/fastflow/loss/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.loss</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/fastflow/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.torch_model</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../../../api/anomalib/models/ganomaly/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly.lightning_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/ganomaly/loss/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly.loss</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/ganomaly/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly.torch_model</span></code></a></li>
 </ul>
 </li>
@@ -321,6 +323,7 @@
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../../../api/anomalib/models/stfpm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" role="switch" type="checkbox"/><label for="toctree-checkbox-30"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/stfpm/anomaly_map/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.anomaly_map</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/stfpm/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.lightning_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/stfpm/loss/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.loss</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/models/stfpm/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.torch_model</span></code></a></li>
 </ul>
 </li>
@@ -470,8 +473,8 @@
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">MODEL_REGISTRY</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">optim</span>
 
-<span class="kn">from</span> <span class="nn">anomalib.data.utils.image</span> <span class="kn">import</span> <span class="n">pad_nextpow2</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
+<span class="kn">from</span> <span class="nn">anomalib.models.ganomaly.loss</span> <span class="kn">import</span> <span class="n">DiscriminatorLoss</span><span class="p">,</span> <span class="n">GeneratorLoss</span>
 
 <span class="kn">from</span> <span class="nn">.torch_model</span> <span class="kn">import</span> <span class="n">GanomalyModel</span>
 
@@ -515,9 +518,6 @@
             <span class="n">latent_vec_size</span><span class="o">=</span><span class="n">latent_vec_size</span><span class="p">,</span>
             <span class="n">extra_layers</span><span class="o">=</span><span class="n">extra_layers</span><span class="p">,</span>
             <span class="n">add_final_conv_layer</span><span class="o">=</span><span class="n">add_final_conv_layer</span><span class="p">,</span>
-            <span class="n">wadv</span><span class="o">=</span><span class="n">wadv</span><span class="p">,</span>
-            <span class="n">wcon</span><span class="o">=</span><span class="n">wcon</span><span class="p">,</span>
-            <span class="n">wenc</span><span class="o">=</span><span class="n">wenc</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">real_label</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
@@ -525,6 +525,9 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">min_scores</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s2">"inf"</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># pylint: disable=not-callable</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_scores</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s2">"-inf"</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># pylint: disable=not-callable</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">generator_loss</span> <span class="o">=</span> <span class="n">GeneratorLoss</span><span class="p">(</span><span class="n">wadv</span><span class="p">,</span> <span class="n">wcon</span><span class="p">,</span> <span class="n">wenc</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">discriminator_loss</span> <span class="o">=</span> <span class="n">DiscriminatorLoss</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Ganomaly._reset_min_max"><a class="viewcode-back" href="../../../../api/anomalib/models/ganomaly/lightning_model/index.html#anomalib.models.ganomaly.Ganomaly._reset_min_max">[docs]</a>    <span class="k">def</span> <span class="nf">_reset_min_max</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">"""Resets min_max scores."""</span>
@@ -541,24 +544,18 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Dict[str, Tensor]: Loss</span>
 <span class="sd">        """</span>
-        <span class="n">images</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span>
-        <span class="n">padded_images</span> <span class="o">=</span> <span class="n">pad_nextpow2</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
-        <span class="n">loss</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]</span>
+        <span class="c1"># forward pass</span>
+        <span class="n">padded</span><span class="p">,</span> <span class="n">fake</span><span class="p">,</span> <span class="n">latent_i</span><span class="p">,</span> <span class="n">latent_o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">"image"</span><span class="p">])</span>
+        <span class="n">pred_real</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">discriminator</span><span class="p">(</span><span class="n">padded</span><span class="p">)</span>
 
-        <span class="c1"># Discriminator</span>
-        <span class="k">if</span> <span class="n">optimizer_idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="c1"># forward pass</span>
-            <span class="n">loss_discriminator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_discriminator_loss</span><span class="p">(</span><span class="n">padded_images</span><span class="p">)</span>
-            <span class="n">loss</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"loss"</span><span class="p">:</span> <span class="n">loss_discriminator</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">optimizer_idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Discriminator</span>
+            <span class="n">pred_fake</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">discriminator</span><span class="p">(</span><span class="n">fake</span><span class="o">.</span><span class="n">detach</span><span class="p">())</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">discriminator_loss</span><span class="p">(</span><span class="n">pred_real</span><span class="p">,</span> <span class="n">pred_fake</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># Generator</span>
+            <span class="n">pred_fake</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">discriminator</span><span class="p">(</span><span class="n">fake</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator_loss</span><span class="p">(</span><span class="n">latent_i</span><span class="p">,</span> <span class="n">latent_o</span><span class="p">,</span> <span class="n">padded</span><span class="p">,</span> <span class="n">fake</span><span class="p">,</span> <span class="n">pred_real</span><span class="p">,</span> <span class="n">pred_fake</span><span class="p">)</span>
 
-        <span class="c1"># Generator</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># forward pass</span>
-            <span class="n">loss_generator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_generator_loss</span><span class="p">(</span><span class="n">padded_images</span><span class="p">)</span>
-
-            <span class="n">loss</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"loss"</span><span class="p">:</span> <span class="n">loss_generator</span><span class="p">}</span>
-
-        <span class="k">return</span> <span class="n">loss</span></div>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"loss"</span><span class="p">:</span> <span class="n">loss</span><span class="p">}</span></div>
 
 <div class="viewcode-block" id="Ganomaly.on_validation_start"><a class="viewcode-back" href="../../../../models/anomalib.models.ganomaly.lightning_model.html#anomalib.models.ganomaly.Ganomaly.on_validation_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Reset min and max values for current validation epoch."""</span>

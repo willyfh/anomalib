@@ -1,0 +1,44 @@
+:py:mod:`anomalib.models.fastflow.loss`
+=======================================
+
+.. py:module:: anomalib.models.fastflow.loss
+
+.. autoapi-nested-parse::
+
+   Loss function for the FastFlow Model Implementation.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.fastflow.loss.FastflowLoss
+
+
+
+
+.. py:class:: FastflowLoss
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   FastFlow Loss.
+
+   .. py:method:: forward(self, hidden_variables: List[torch.Tensor], jacobians: List[torch.Tensor]) -> torch.Tensor
+
+      Calculate the Fastflow loss.
+
+      :param hidden_variables: Hidden variables from the fastflow model. f: X -> Z
+      :type hidden_variables: List[Tensor]
+      :param jacobians: Log of the jacobian determinants from the fastflow model.
+      :type jacobians: List[Tensor]
+
+      :returns: Fastflow loss computed based on the hidden variables and the log of the Jacobians.
+      :rtype: Tensor
+
+
+

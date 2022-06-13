@@ -17,7 +17,6 @@ Classes
 
 .. autoapisummary::
 
-   anomalib.models.fastflow.torch_model.FastflowLoss
    anomalib.models.fastflow.torch_model.FastflowModel
 
 
@@ -69,26 +68,6 @@ Functions
 
    :returns: FastFlow Block.
    :rtype: SequenceINN
-
-
-.. py:class:: FastflowLoss
-
-   Bases: :py:obj:`torch.nn.Module`
-
-   FastFlow Loss.
-
-   .. py:method:: forward(self, hidden_variables: List[torch.Tensor], jacobians: List[torch.Tensor]) -> torch.Tensor
-
-      Calculate the Fastflow loss.
-
-      :param hidden_variables: Hidden variables from the fastflow model. f: X -> Z
-      :type hidden_variables: List[Tensor]
-      :param jacobians: Log of the jacobian determinants from the fastflow model.
-      :type jacobians: List[Tensor]
-
-      :returns: _description_
-      :rtype: Tensor
-
 
 
 .. py:class:: FastflowModel(input_size: Tuple[int, int], backbone: str, flow_steps: int, conv3x3_only: bool = False, hidden_ratio: float = 1.0)

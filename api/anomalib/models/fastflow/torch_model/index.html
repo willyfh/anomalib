@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" /><link rel="next" title="anomalib.models.ganomaly" href="../../ganomaly/index.html" /><link rel="prev" title="anomalib.models.fastflow.lightning_model" href="../lightning_model/index.html" />
+<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" /><link rel="next" title="anomalib.models.ganomaly" href="../../ganomaly/index.html" /><link rel="prev" title="anomalib.models.fastflow.loss" href="../loss/index.html" />
 
     <meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
         <title>anomalib.models.fastflow.torch_model - Anomalib 2021, Anomalib Contributors documentation</title>
@@ -287,11 +287,13 @@
 <li class="toctree-l4 current has-children"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l5"><a class="reference internal" href="../anomaly_map/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.anomaly_map</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.lightning_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../loss/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.loss</span></code></a></li>
 <li class="toctree-l5 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.torch_model</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../ganomaly/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../ganomaly/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly.lightning_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../ganomaly/loss/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly.loss</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../ganomaly/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly.torch_model</span></code></a></li>
 </ul>
 </li>
@@ -322,6 +324,7 @@
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../stfpm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" role="switch" type="checkbox"/><label for="toctree-checkbox-30"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../stfpm/anomaly_map/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.anomaly_map</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../stfpm/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.lightning_model</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../stfpm/loss/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.loss</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../stfpm/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.torch_model</span></code></a></li>
 </ul>
 </li>
@@ -455,10 +458,7 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.fastflow.torch_model.FastflowLoss" title="anomalib.models.fastflow.torch_model.FastflowLoss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FastflowLoss</span></code></a></p></td>
-<td><p>FastFlow Loss.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.models.fastflow.torch_model.FastflowModel" title="anomalib.models.fastflow.torch_model.FastflowModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FastflowModel</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.fastflow.torch_model.FastflowModel" title="anomalib.models.fastflow.torch_model.FastflowModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FastflowModel</span></code></a></p></td>
 <td><p>FastFlow.</p></td>
 </tr>
 </tbody>
@@ -527,31 +527,6 @@ Figure 2 and Section 3.3 in the paper.</p>
 <dd class="field-odd"><p><a class="reference internal" href="../../components/freia/framework/index.html#anomalib.models.components.freia.framework.SequenceINN" title="anomalib.models.components.freia.framework.SequenceINN">SequenceINN</a></p>
 </dd>
 </dl>
-</dd></dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="anomalib.models.fastflow.torch_model.FastflowLoss">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.fastflow.torch_model.</span></span><span class="sig-name descname"><span class="pre">FastflowLoss</span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/fastflow/torch_model.html#FastflowLoss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.fastflow.torch_model.FastflowLoss" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></p>
-<p>FastFlow Loss.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.fastflow.torch_model.FastflowLoss.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jacobians</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/fastflow/torch_model.html#FastflowLoss.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.fastflow.torch_model.FastflowLoss.forward" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the Fastflow loss.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>hidden_variables</strong> (<em>List</em><em>[</em><em>Tensor</em><em>]</em>) – Hidden variables from the fastflow model. f: X -&gt; Z</p></li>
-<li><p><strong>jacobians</strong> (<em>List</em><em>[</em><em>Tensor</em><em>]</em>) – Log of the jacobian determinants from the fastflow model.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>_description_</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Tensor</p>
-</dd>
-</dl>
-</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.fastflow.torch_model.FastflowModel">
@@ -660,14 +635,14 @@ During the validation/test, return the anomaly map.</p>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../lightning_model/index.html">
+          <a class="prev-page" href="../loss/index.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.lightning_model</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.loss</span></code></div>
                 
               </div>
             </a>
@@ -707,10 +682,6 @@ During the validation/test, return the anomaly map.</p>
 <li><a class="reference internal" href="#functions">Functions</a><ul>
 <li><a class="reference internal" href="#anomalib.models.fastflow.torch_model.subnet_conv_func">subnet_conv_func</a></li>
 <li><a class="reference internal" href="#anomalib.models.fastflow.torch_model.create_fast_flow_block">create_fast_flow_block</a></li>
-<li><a class="reference internal" href="#anomalib.models.fastflow.torch_model.FastflowLoss">FastflowLoss</a><ul>
-<li><a class="reference internal" href="#anomalib.models.fastflow.torch_model.FastflowLoss.forward">forward</a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#anomalib.models.fastflow.torch_model.FastflowModel">FastflowModel</a><ul>
 <li><a class="reference internal" href="#anomalib.models.fastflow.torch_model.FastflowModel.forward">forward</a></li>
 <li><a class="reference internal" href="#anomalib.models.fastflow.torch_model.FastflowModel._get_cnn_features">_get_cnn_features</a></li>
