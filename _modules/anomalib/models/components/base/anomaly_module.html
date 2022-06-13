@@ -458,6 +458,7 @@
 <span class="c1"># See the License for the specific language governing permissions</span>
 <span class="c1"># and limitations under the License.</span>
 
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
@@ -472,6 +473,8 @@
     <span class="n">MinMax</span><span class="p">,</span>
 <span class="p">)</span>
 
+<div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../../../api/anomalib/models/components/base/anomaly_module/index.html#anomalib.models.components.base.anomaly_module.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="AnomalyModule"><a class="viewcode-back" href="../../../../../api/anomalib/models/components/base/index.html#anomalib.models.components.base.anomaly_module.AnomalyModule">[docs]</a><span class="k">class</span> <span class="nc">AnomalyModule</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
     <span class="sd">"""AnomalyModule to train, validate, predict and test images.</span>
@@ -481,6 +484,8 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Initializing </span><span class="si">%s</span><span class="s2"> model."</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">:</span> <span class="n">Tensor</span>

@@ -461,7 +461,6 @@
 <span class="c1"># See the License for the specific language governing permissions</span>
 <span class="c1"># and limitations under the License.</span>
 
-<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">einops</span>
@@ -475,8 +474,6 @@
 <span class="kn">from</span> <span class="nn">anomalib.models.cflow.torch_model</span> <span class="kn">import</span> <span class="n">CflowModel</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.cflow.utils</span> <span class="kn">import</span> <span class="n">get_logp</span><span class="p">,</span> <span class="n">positional_encoding_2d</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
-
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Cflow"</span><span class="p">,</span> <span class="s2">"CflowLightning"</span><span class="p">]</span>
 
@@ -498,7 +495,6 @@
         <span class="n">permute_soft</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Initializing Cflow Lightning model."</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span> <span class="n">CflowModel</span> <span class="o">=</span> <span class="n">CflowModel</span><span class="p">(</span>
             <span class="n">input_size</span><span class="o">=</span><span class="n">input_size</span><span class="p">,</span>
