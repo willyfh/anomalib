@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="anomalib.models.cflow.lightning_model" href="anomalib.models.cflow.lightning_model.html" /><link rel="prev" title="anomalib.models.ganomaly.torch_model" href="anomalib.models.ganomaly.torch_model.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Export &amp; Optimization" href="export.html" /><link rel="prev" title="Pre-commit Hooks" href="using_pre_commit.html" />
 
     <meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
-        <title>anomalib.models.cflow.anomaly_map - Anomalib 2021, Anomalib Contributors documentation</title>
+        <title>Inference - Anomalib 2021, Anomalib Contributors documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -155,47 +155,24 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../guides/getting_started.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/getting_started.html#training">Training</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/getting_started.html#development">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#training">Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#development">Development</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Models</span></p>
-<ul class="current">
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../models.html">Models Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.dfkde.lightning_model.html">anomalib.models.dfkde.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.dfkde.torch_model.html">anomalib.models.dfkde.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.dfm.lightning_model.html">anomalib.models.dfm.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.dfm.torch_model.html">anomalib.models.dfm.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.ganomaly.lightning_model.html">anomalib.models.ganomaly.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.ganomaly.torch_model.html">anomalib.models.ganomaly.torch_model</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">anomalib.models.cflow.anomaly_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.cflow.lightning_model.html">anomalib.models.cflow.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.cflow.torch_model.html">anomalib.models.cflow.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.cflow.utils.html">anomalib.models.cflow.utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.padim.anomaly_map.html">anomalib.models.padim.anomaly_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.padim.lightning_model.html">anomalib.models.padim.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.padim.torch_model.html">anomalib.models.padim.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.patchcore.anomaly_map.html">anomalib.models.patchcore.anomaly_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.patchcore.lightning_model.html">anomalib.models.patchcore.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.patchcore.torch_model.html">anomalib.models.patchcore.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.stfpm.anomaly_map.html">anomalib.models.stfpm.anomaly_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.stfpm.lightning_model.html">anomalib.models.stfpm.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.stfpm.torch_model.html">anomalib.models.stfpm.torch_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.reverse_distillation.lightning_model.html">anomalib.models.reverse_distillation.lightning_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anomalib.models.reverse_distillation.torch_model.html">anomalib.models.reverse_distillation.torch_model</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models.html">Models Reference</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Python API Reference</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../api/anomalib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.config</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/anomalib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.config</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../api/anomalib/config/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.config.config</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/data/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/data/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/data/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/data/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/data/utils/download/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.download</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/data/utils/image/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.image</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/data/utils/split/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.utils.split</span></code></a></li>
@@ -207,8 +184,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../api/anomalib/data/mvtec/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.data.mvtec</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/deploy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/deploy/inferencers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/deploy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/deploy/inferencers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/deploy/inferencers/base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/deploy/inferencers/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/deploy/inferencers/torch/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch</span></code></a></li>
@@ -217,64 +194,64 @@
 <li class="toctree-l4"><a class="reference internal" href="../api/anomalib/deploy/optimize/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.optimize</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/models/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/cflow/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.cflow</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/models/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/cflow/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.cflow</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/cflow/anomaly_map/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.cflow.anomaly_map</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/cflow/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.cflow.lightning_model</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/cflow/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.cflow.torch_model</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/cflow/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.cflow.utils</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/components/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/components/base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.base</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/components/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/components/base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.base</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l6"><a class="reference internal" href="../api/anomalib/models/components/base/anomaly_module/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.base.anomaly_module</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="../api/anomalib/models/components/base/dynamic_module/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.base.dynamic_module</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/components/dimensionality_reduction/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.dimensionality_reduction</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/components/dimensionality_reduction/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.dimensionality_reduction</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l6"><a class="reference internal" href="../api/anomalib/models/components/dimensionality_reduction/pca/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.dimensionality_reduction.pca</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="../api/anomalib/models/components/dimensionality_reduction/random_projection/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.dimensionality_reduction.random_projection</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/components/feature_extractors/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.feature_extractors</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/components/feature_extractors/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.feature_extractors</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l6"><a class="reference internal" href="../api/anomalib/models/components/feature_extractors/feature_extractor/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.feature_extractors.feature_extractor</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/components/freia/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.freia</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l6 has-children"><a class="reference internal" href="../api/anomalib/models/components/freia/framework/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.freia.framework</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/components/freia/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.freia</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6 has-children"><a class="reference internal" href="../api/anomalib/models/components/freia/framework/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.freia.framework</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l7"><a class="reference internal" href="../api/anomalib/models/components/freia/framework/sequence_inn/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.freia.framework.sequence_inn</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l6 has-children"><a class="reference internal" href="../api/anomalib/models/components/freia/modules/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.freia.modules</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6 has-children"><a class="reference internal" href="../api/anomalib/models/components/freia/modules/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.freia.modules</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l7"><a class="reference internal" href="../api/anomalib/models/components/freia/modules/all_in_one_block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.freia.modules.all_in_one_block</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../api/anomalib/models/components/freia/modules/base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.freia.modules.base</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/components/sampling/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.sampling</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/components/sampling/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.sampling</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l6"><a class="reference internal" href="../api/anomalib/models/components/sampling/k_center_greedy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.sampling.k_center_greedy</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/components/stats/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.stats</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/components/stats/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.stats</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l6"><a class="reference internal" href="../api/anomalib/models/components/stats/kde/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.stats.kde</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="../api/anomalib/models/components/stats/multi_variate_gaussian/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.components.stats.multi_variate_gaussian</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/dfkde/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/dfkde/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/dfkde/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde.lightning_model</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/dfkde/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfkde.torch_model</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/dfm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfm</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/dfm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfm</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/dfm/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfm.lightning_model</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/dfm/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.dfm.torch_model</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/draem/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.draem</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/draem/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.draem.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/draem/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.draem</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/draem/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.draem.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l6"><a class="reference internal" href="../api/anomalib/models/draem/utils/augmenter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.draem.utils.augmenter</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="../api/anomalib/models/draem/utils/perlin/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.draem.utils.perlin</span></code></a></li>
 </ul>
@@ -284,33 +261,33 @@
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/draem/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.draem.torch_model</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/fastflow/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/fastflow/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/fastflow/anomaly_map/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.anomaly_map</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/fastflow/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.lightning_model</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/fastflow/loss/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.loss</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/fastflow/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.fastflow.torch_model</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/ganomaly/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/ganomaly/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/ganomaly/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly.lightning_model</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/ganomaly/loss/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly.loss</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/ganomaly/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.ganomaly.torch_model</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/padim/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.padim</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/padim/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.padim</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/padim/anomaly_map/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.padim.anomaly_map</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/padim/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.padim.lightning_model</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/padim/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.padim.torch_model</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/patchcore/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/patchcore/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/patchcore/anomaly_map/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.anomaly_map</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/patchcore/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.lightning_model</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/patchcore/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.patchcore.torch_model</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/reverse_distillation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.reverse_distillation</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" role="switch" type="checkbox"/><label for="toctree-checkbox-28"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/reverse_distillation/components/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.reverse_distillation.components</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" role="switch" type="checkbox"/><label for="toctree-checkbox-29"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/reverse_distillation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.reverse_distillation</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/models/reverse_distillation/components/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.reverse_distillation.components</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" role="switch" type="checkbox"/><label for="toctree-checkbox-28"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l6"><a class="reference internal" href="../api/anomalib/models/reverse_distillation/components/bottleneck/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.reverse_distillation.components.bottleneck</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="../api/anomalib/models/reverse_distillation/components/de_resnet/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.reverse_distillation.components.de_resnet</span></code></a></li>
 </ul>
@@ -321,7 +298,7 @@
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/reverse_distillation/torch_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.reverse_distillation.torch_model</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/stfpm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" role="switch" type="checkbox"/><label for="toctree-checkbox-30"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/models/stfpm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" role="switch" type="checkbox"/><label for="toctree-checkbox-29"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/stfpm/anomaly_map/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.anomaly_map</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/stfpm/lightning_model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.lightning_model</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/models/stfpm/loss/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.models.stfpm.loss</span></code></a></li>
@@ -330,8 +307,8 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/post_processing/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.post_processing</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" role="switch" type="checkbox"/><label for="toctree-checkbox-31"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/post_processing/normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.post_processing.normalization</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" role="switch" type="checkbox"/><label for="toctree-checkbox-32"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/post_processing/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.post_processing</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" role="switch" type="checkbox"/><label for="toctree-checkbox-30"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/post_processing/normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.post_processing.normalization</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" role="switch" type="checkbox"/><label for="toctree-checkbox-31"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/post_processing/normalization/cdf/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.post_processing.normalization.cdf</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/post_processing/normalization/min_max/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.post_processing.normalization.min_max</span></code></a></li>
 </ul>
@@ -340,8 +317,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../api/anomalib/post_processing/visualizer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.post_processing.visualizer</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/pre_processing/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.pre_processing</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" role="switch" type="checkbox"/><label for="toctree-checkbox-33"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/pre_processing/transforms/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.pre_processing.transforms</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" role="switch" type="checkbox"/><label for="toctree-checkbox-34"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/pre_processing/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.pre_processing</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" role="switch" type="checkbox"/><label for="toctree-checkbox-32"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/pre_processing/transforms/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.pre_processing.transforms</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" role="switch" type="checkbox"/><label for="toctree-checkbox-33"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/pre_processing/transforms/custom/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.pre_processing.transforms.custom</span></code></a></li>
 </ul>
 </li>
@@ -349,9 +326,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../api/anomalib/pre_processing/tiler/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.pre_processing.tiler</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-35" name="toctree-checkbox-35" role="switch" type="checkbox"/><label for="toctree-checkbox-35"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/utils/callbacks/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-36" name="toctree-checkbox-36" role="switch" type="checkbox"/><label for="toctree-checkbox-36"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/utils/callbacks/nncf/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.nncf</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" role="switch" type="checkbox"/><label for="toctree-checkbox-37"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" role="switch" type="checkbox"/><label for="toctree-checkbox-34"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/utils/callbacks/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-35" name="toctree-checkbox-35" role="switch" type="checkbox"/><label for="toctree-checkbox-35"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../api/anomalib/utils/callbacks/nncf/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.nncf</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-36" name="toctree-checkbox-36" role="switch" type="checkbox"/><label for="toctree-checkbox-36"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l6"><a class="reference internal" href="../api/anomalib/utils/callbacks/nncf/callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.nncf.callback</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="../api/anomalib/utils/callbacks/nncf/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.nncf.utils</span></code></a></li>
 </ul>
@@ -365,6 +342,10 @@
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/utils/callbacks/tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/utils/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/utils/callbacks/visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/utils/cli/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.cli</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" role="switch" type="checkbox"/><label for="toctree-checkbox-37"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../api/anomalib/utils/cli/cli/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.cli.cli</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/utils/loggers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" role="switch" type="checkbox"/><label for="toctree-checkbox-38"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -399,17 +380,19 @@
 </li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../guides/developing_on_docker.html">Developing on Docker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/developing_on_docker.html#build-the-docker-image">Build the Docker Image</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/developing_on_docker.html#run-the-docker-image">Run the Docker Image</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/developing_on_docker.html#using-vscode">Using VSCode</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/structure_of_documentation.html">Structure of the Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/using_tox.html">Using Tox</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/using_pre_commit.html">Pre-commit Hooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/benchmarking.html">Benchmarking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/hyperparameter_optimization.html">Hyperparameter Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/logging.html">Logging</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="developing_on_docker.html">Developing on Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developing_on_docker.html#build-the-docker-image">Build the Docker Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developing_on_docker.html#run-the-docker-image">Run the Docker Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developing_on_docker.html#using-vscode">Using VSCode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure_of_documentation.html">Structure of the Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_tox.html">Using Tox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_pre_commit.html">Pre-commit Hooks</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="export.html">Export &amp; Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hyperparameter_optimization.html">Hyperparameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Datasets</span></p>
 <ul>
@@ -445,88 +428,122 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <section id="module-anomalib.models.cflow.anomaly_map">
-<span id="anomalib-models-cflow-anomaly-map"></span><h1>anomalib.models.cflow.anomaly_map<a class="headerlink" href="#module-anomalib.models.cflow.anomaly_map" title="Permalink to this headline">¶</a></h1>
-<p>Anomaly Map Generator for CFlow model implementation.</p>
-<p class="rubric">Classes</p>
-<div class="table-wrapper"><table class="autosummary longtable docutils align-default">
+        <section id="inference">
+<span id="inference-documentation"></span><h1>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h1>
+<p>Anomalib provides entrypoint scripts for using a trained model to generate predictions from a source of image data. This guide explains how to run inference with the standard PyTorch model and the exported OpenVINO model.</p>
+<section id="pytorch-lightning-inference">
+<h2>PyTorch (Lightning) Inference<a class="headerlink" href="#pytorch-lightning-inference" title="Permalink to this headline">¶</a></h2>
+<p>The entrypoint script in <code class="docutils literal notranslate"><span class="pre">tools/inference/lightning.py</span></code> can be used to run inference with a trained PyTorch model. The script runs inference by loading a previously trained model into a PyTorch Lightning trainer and running the <code class="docutils literal notranslate"><span class="pre">predict</span> <span class="pre">sequence</span></code>. The entrypoint script has several command line arguments that can be used to configure inference:</p>
+<div class="table-wrapper"><table class="docutils align-default">
 <colgroup>
-<col style="width: 10%"/>
-<col style="width: 90%"/>
+<col style="width: 18%"/>
+<col style="width: 9%"/>
+<col style="width: 73%"/>
 </colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Required</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator" title="anomalib.models.cflow.anomaly_map.AnomalyMapGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnomalyMapGenerator</span></code></a>(image_size, pool_layers)</p></td>
-<td><p>Generate Anomaly Heatmap.</p></td>
+<tr class="row-even"><td><p>config</p></td>
+<td><p>True</p></td>
+<td><p>Path to the model config file.</p></td>
+</tr>
+<tr class="row-odd"><td><p>weight_path</p></td>
+<td><p>True</p></td>
+<td><p>Path to the <code class="docutils literal notranslate"><span class="pre">.ckpt</span></code> model checkpoint file.</p></td>
+</tr>
+<tr class="row-even"><td><p>image_path</p></td>
+<td><p>True</p></td>
+<td><p>Path to the image source. This can be a single image or a folder of images.</p></td>
+</tr>
+<tr class="row-odd"><td><p>save_path</p></td>
+<td><p>False</p></td>
+<td><p>Path to which the output images should be saved.</p></td>
+</tr>
+<tr class="row-even"><td><p>visualization_mode</p></td>
+<td><p>False</p></td>
+<td><p>Determines how the inference results are visualized. Options: “full”, “simple”.</p></td>
+</tr>
+<tr class="row-odd"><td><p>disable_show_images</p></td>
+<td><p>False</p></td>
+<td><p>When this flag is passed, visualizations will not be shown on the screen.</p></td>
 </tr>
 </tbody>
 </table></div>
-<dl class="py class">
-<dt class="sig sig-object py" id="anomalib.models.cflow.anomaly_map.AnomalyMapGenerator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.cflow.anomaly_map.</span></span><span class="sig-name descname"><span class="pre">AnomalyMapGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/anomalib/models/cflow/anomaly_map.html#AnomalyMapGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Generate Anomaly Heatmap.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.cflow.anomaly_map.AnomalyMapGenerator.__call__">
-<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../_modules/anomalib/models/cflow/anomaly_map.html#AnomalyMapGenerator.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns anomaly_map.</p>
-<p>Expects <cite>distribution</cite>, <cite>height</cite> and ‘width’ keywords to be passed explicitly</p>
-<p>Example
-&gt;&gt;&gt; anomaly_map_generator = AnomalyMapGenerator(image_size=tuple(hparams.model.input_size),
-&gt;&gt;&gt;        pool_layers=pool_layers)
-&gt;&gt;&gt; output = self.anomaly_map_generator(distribution=dist, height=height, width=width)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – <cite>distribution</cite>, <cite>height</cite> and ‘width’ keys are not found</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>anomaly map</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>torch.Tensor</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.cflow.anomaly_map.AnomalyMapGenerator.compute_anomaly_map">
-<span class="sig-name descname"><span class="pre">compute_anomaly_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../_modules/anomalib/models/cflow/anomaly_map.html#AnomalyMapGenerator.compute_anomaly_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator.compute_anomaly_map" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the layer map based on likelihood estimation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>distribution</strong> – Probability distribution for each decoder block</p></li>
-<li><p><strong>height</strong> – blocks height</p></li>
-<li><p><strong>width</strong> – blocks width</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Final Anomaly Map</p>
-</dd>
-</dl>
-</dd></dl>
-</dd></dl>
+<p>To run inference, call the script from the command line with the with the following parameters, e.g.:</p>
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">tools/inference/lightning.py</span> <span class="pre">--config</span> <span class="pre">padim.yaml</span> <span class="pre">--weight_path</span> <span class="pre">results/weights/model.ckpt</span> <span class="pre">--image_path</span> <span class="pre">image.png</span></code></p>
+<p>This will run inference on the specified image file or all images in the folder. A visualization of the inference results including the predicted heatmap and segmentation results (if applicable), will be displayed on the screen, like the example below.</p>
+</section>
+<section id="openvino-inference">
+<h2>OpenVINO Inference<a class="headerlink" href="#openvino-inference" title="Permalink to this headline">¶</a></h2>
+<p>To run OpenVINO inference, first make sure that your model has been exported to the OpenVINO IR format. Once the model has been exported, OpenVINO inference can be triggered by running the OpenVINO entrypoint script in <code class="docutils literal notranslate"><span class="pre">tools/inference/openvino.py</span></code>. The command line arguments are very similar to PyTorch inference entrypoint script:</p>
+<div class="table-wrapper"><table class="docutils align-default">
+<colgroup>
+<col style="width: 12%"/>
+<col style="width: 9%"/>
+<col style="width: 79%"/>
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Required</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>config</p></td>
+<td><p>True</p></td>
+<td><p>Path to the model config file.</p></td>
+</tr>
+<tr class="row-odd"><td><p>weight_path</p></td>
+<td><p>True</p></td>
+<td><p>Path to the OpenVINO IR model file (either <code class="docutils literal notranslate"><span class="pre">.xml</span></code> or <code class="docutils literal notranslate"><span class="pre">.bin</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p>image_path</p></td>
+<td><p>True</p></td>
+<td><p>Path to the image source. This can be a single image or a folder of images.</p></td>
+</tr>
+<tr class="row-odd"><td><p>save_data</p></td>
+<td><p>False</p></td>
+<td><p>Path to which the output images should be saved. Leave empty for live visualization.</p></td>
+</tr>
+<tr class="row-even"><td><p>meta_data</p></td>
+<td><p>True</p></td>
+<td><p>Path to the JSON file containing the model’s meta data (e.g. normalization
+parameters and anomaly score threshold).</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>For correct inference results, the <code class="docutils literal notranslate"><span class="pre">meta_data</span></code> argument should be specified and point to the <code class="docutils literal notranslate"><span class="pre">meta_data.json</span></code> file that was generated when exporting the OpenVINO IR model. The file is stored in the same folder as the <code class="docutils literal notranslate"><span class="pre">.xml</span></code> and <code class="docutils literal notranslate"><span class="pre">.bin</span></code> files of the model.</p>
+<p>As an example, OpenVINO inference can be triggered by the following command:</p>
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">tools/inference/openvino.py</span> <span class="pre">--config</span> <span class="pre">padim.yaml</span> <span class="pre">--weight_path</span> <span class="pre">results/openvino/model.xml</span> <span class="pre">--image_path</span> <span class="pre">image.png</span> <span class="pre">--meta_data</span> <span class="pre">results/openvino/meta_data.json</span></code></p>
+<p>Similar to PyTorch inference, the visualization results will be displayed on the screen, and optionally saved to the file system location specified by the <code class="docutils literal notranslate"><span class="pre">save_data</span></code> parameter.</p>
+</section>
 </section>
 
       </article>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="anomalib.models.cflow.lightning_model.html">
+          <a class="next-page" href="export.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">anomalib.models.cflow.lightning_model</div>
+                <div class="title">Export &amp; Optimization</div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="anomalib.models.ganomaly.torch_model.html">
+          <a class="prev-page" href="using_pre_commit.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">anomalib.models.ganomaly.torch_model</div>
+                <div class="title">Pre-commit Hooks</div>
                 
               </div>
             </a>
@@ -540,7 +557,7 @@
               <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
               <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
             |
-            <a class="muted-link" href="../_sources/models/anomalib.models.cflow.anomaly_map.rst.txt"
+            <a class="muted-link" href="../_sources/guides/inference.rst.txt"
                rel="nofollow">
               Show Source
             </a>
@@ -560,12 +577,9 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">anomalib.models.cflow.anomaly_map</a><ul>
-<li><a class="reference internal" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator">AnomalyMapGenerator</a><ul>
-<li><a class="reference internal" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator.__call__">__call__</a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator.compute_anomaly_map">compute_anomaly_map</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#">Inference</a><ul>
+<li><a class="reference internal" href="#pytorch-lightning-inference">PyTorch (Lightning) Inference</a></li>
+<li><a class="reference internal" href="#openvino-inference">OpenVINO Inference</a></li>
 </ul>
 </li>
 </ul>

@@ -38,8 +38,68 @@ Classes
 
 .. autoapisummary::
 
+   anomalib.models.reverse_distillation.ReverseDistillation
    anomalib.models.reverse_distillation.ReverseDistillationLightning
 
+
+
+
+.. py:class:: ReverseDistillation(input_size: Tuple[int, int], backbone: str, layers: List[str], anomaly_map_mode: str, lr: float, beta1: float, beta2: float)
+
+   Bases: :py:obj:`anomalib.models.components.AnomalyModule`
+
+   PL Lightning Module for Reverse Distillation Algorithm.
+
+   :param input_size: Size of model input
+   :type input_size: Tuple[int, int]
+   :param backbone: Backbone of CNN network
+   :type backbone: str
+   :param layers: Layers to extract features from the backbone CNN
+   :type layers: List[str]
+
+   .. py:method:: configure_optimizers(self)
+
+      Configures optimizers for decoder and bottleneck.
+
+      .. note::
+
+         This method is used for the existing CLI.
+         When PL CLI is introduced, configure optimizers method will be
+             deprecated, and optimizers will be configured from either
+             config.yaml file or from CLI.
+
+      :returns: Adam optimizer for each decoder
+      :rtype: Optimizer
+
+
+   .. py:method:: training_step(self, batch, _) -> Dict[str, torch.Tensor]
+
+      Training Step of Reverse Distillation Model.
+
+      Features are extracted from three layers of the Encoder model. These are passed to the bottleneck layer
+      that are passed to the decoder network. The loss is then calculated based on the cosine similarity between the
+      encoder and decoder features.
+
+      :param batch: Input batch
+      :type batch: Tensor
+      :param _: Index of the batch.
+
+      :returns: Feature Map
+
+
+   .. py:method:: validation_step(self, batch, _)
+
+      Validation Step of Reverse Distillation Model.
+
+      Similar to the training step, encoder/decoder features are extracted from the CNN for each batch, and
+      anomaly map is computed.
+
+      :param batch: Input batch
+      :type batch: Tensor
+      :param _: Index of the batch.
+
+      :returns: Dictionary containing images, anomaly maps, true labels and masks.
+                These are required in `validation_epoch_end` for feature concatenation.
 
 
 
@@ -62,21 +122,6 @@ Classes
          When PL CLI is introduced, configure callback method will be
              deprecated, and callbacks will be configured from either
              config.yaml file or from CLI.
-
-
-   .. py:method:: configure_optimizers(self)
-
-      Configures optimizers for decoder and bottleneck.
-
-      .. note::
-
-         This method is used for the existing CLI.
-         When PL CLI is introduced, configure optimizers method will be
-             deprecated, and optimizers will be configured from either
-             config.yaml file or from CLI.
-
-      :returns: Adam optimizer for each decoder
-      :rtype: Optimizer
 
 
 

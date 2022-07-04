@@ -27,8 +27,66 @@ Classes
 
 .. autoapisummary::
 
+   anomalib.models.dfm.Dfm
    anomalib.models.dfm.DfmLightning
 
+
+
+
+.. py:class:: Dfm(backbone: str, layer: str, pooling_kernel_size: int = 4, pca_level: float = 0.97, score_type: str = 'fre')
+
+   Bases: :py:obj:`anomalib.models.components.AnomalyModule`
+
+   DFM: Deep Featured Kernel Density Estimation.
+
+   :param backbone: Backbone CNN network
+   :type backbone: str
+   :param layer: Layer to extract features from the backbone CNN
+   :type layer: str
+   :param pooling_kernel_size: Kernel size to pool features extracted from the CNN.
+                               Defaults to 4.
+   :type pooling_kernel_size: int, optional
+   :param pca_level: Ratio from which number of components for PCA are calculated.
+                     Defaults to 0.97.
+   :type pca_level: float, optional
+   :param score_type: Scoring type. Options are `fre` and `nll`. Defaults to "fre".
+   :type score_type: str, optional
+   :param nll: for Gaussian modeling, fre: pca feature reconstruction error
+
+   .. py:method:: configure_optimizers() -> None
+      :staticmethod:
+
+      DFM doesn't require optimization, therefore returns no optimizers.
+
+
+   .. py:method:: training_step(self, batch, _)
+
+      Training Step of DFM.
+
+      For each batch, features are extracted from the CNN.
+
+      :param batch: Input batch
+      :type batch: Dict[str, Tensor]
+      :param _: Index of the batch.
+
+      :returns: Deep CNN features.
+
+
+   .. py:method:: on_validation_start(self) -> None
+
+      Fit a PCA transformation and a Gaussian model to dataset.
+
+
+   .. py:method:: validation_step(self, batch, _)
+
+      Validation Step of DFM.
+
+      Similar to the training step, features are extracted from the CNN for each batch.
+
+      :param batch: Input batch
+      :type batch: List[Dict[str, Any]]
+
+      :returns: Dictionary containing FRE anomaly scores and ground-truth.
 
 
 

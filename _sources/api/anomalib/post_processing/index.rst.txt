@@ -114,52 +114,83 @@ Functions
    :rtype: np.ndarray
 
 
-.. py:class:: Visualizer
+.. py:class:: Visualizer(mode: str, task: str)
 
-   Anomaly Visualization.
+   Class that handles the logic of composing the visualizations.
 
-   The visualizer object is responsible for collating all the images passed to it into a single image. This can then
-   either be logged by accessing the `figure` attribute or can be saved directly by calling `save()` method.
+   :param mode: visualization mode, either "full" or "simple"
+   :type mode: str
+   :param task: task type, either "segmentation" or "classification"
+   :type task: str
 
-   .. rubric:: Example
+   .. py:method:: visualize_batch(self, batch: Dict) -> Iterator[numpy.ndarray]
 
-   >>> visualizer = Visualizer()
-   >>> visualizer.add_image(image=image, title="Image")
-   >>> visualizer.close()
+      Generator that yields a visualization result for each item in the batch.
 
-   .. py:method:: add_image(self, image: numpy.ndarray, title: str, color_map: Optional[str] = None)
+      :param batch: Dictionary containing the ground truth and predictions of a batch of images.
+      :type batch: Dict
 
-      Add image to figure.
+      :returns: Generator that yields a display-ready visualization for each image.
 
-      :param image: Image which should be added to the figure.
-      :type image: np.ndarray
-      :param title: Image title shown on the plot.
+
+   .. py:method:: visualize_image(self, image_result: ImageResult) -> numpy.ndarray
+
+      Generate the visualization for an image.
+
+      :param image_result: GT and Prediction data for a single image.
+      :type image_result: ImageResult
+
+      :returns: The full or simple visualization for the image, depending on the specified mode.
+
+
+   .. py:method:: _visualize_full(self, image_result: ImageResult)
+
+      Generate the full set of visualization for an image.
+
+      The full visualization mode shows a grid with subplots that contain the original image, the GT mask (if
+      available), the predicted heat map, the predicted segmentation mask (if available), and the predicted
+      segmentations (if available).
+
+      :param image_result: GT and Prediction data for a single image.
+      :type image_result: ImageResult
+
+      :returns: An image showing the full set of visualizations for the input image.
+
+
+   .. py:method:: _visualize_simple(self, image_result)
+
+      Generate a simple visualization for an image.
+
+      The simple visualization mode only shows the model's predictions in a single image.
+
+      :param image_result: GT and Prediction data for a single image.
+      :type image_result: ImageResult
+
+      :returns: An image showing the simple visualization for the input image.
+
+
+   .. py:method:: show(title: str, image: numpy.ndarray, delay: int = 0)
+      :staticmethod:
+
+      Show an image on the screen.
+
+      :param title: Title that will be given to the window showing the image.
       :type title: str
-      :param color_map: Name of matplotlib color map used to map scalar data to colours. Defaults to None.
-      :type color_map: Optional[str]
+      :param image: Image that will be shown in the window.
+      :type image: np.ndarray
+      :param delay: Delay in milliseconds to wait for keystroke. 0 for infinite.
+      :type delay: int
 
 
-   .. py:method:: generate(self)
+   .. py:method:: save(file_path: pathlib.Path, image: numpy.ndarray)
+      :staticmethod:
 
-      Generate the image.
+      Save an image to the file system.
 
-
-   .. py:method:: show(self)
-
-      Show image on a matplotlib figure.
-
-
-   .. py:method:: save(self, filename: pathlib.Path)
-
-      Save image.
-
-      :param filename: Filename to save image
-      :type filename: Path
-
-
-   .. py:method:: close(self)
-
-      Close figure.
+      :param file_path: Path to which the image will be saved.
+      :type file_path: Path
+      :param image: Image that will be saved to the file system.
+      :type image: np.ndarray
 
 
 

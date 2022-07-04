@@ -1,0 +1,85 @@
+:py:mod:`anomalib.utils.cli.cli`
+================================
+
+.. py:module:: anomalib.utils.cli.cli
+
+.. autoapi-nested-parse::
+
+   Anomalib CLI.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.cli.cli.AnomalibCLI
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.cli.cli.main
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.cli.cli.logger
+
+
+.. py:data:: logger
+   
+
+   
+
+.. py:class:: AnomalibCLI(model_class: Optional[Union[Type[pytorch_lightning.LightningModule], Callable[Ellipsis, pytorch_lightning.LightningModule]]] = None, datamodule_class: Optional[Union[Type[pytorch_lightning.LightningDataModule], Callable[Ellipsis, pytorch_lightning.LightningDataModule]]] = None, save_config_callback: Optional[Type[pytorch_lightning.utilities.cli.SaveConfigCallback]] = SaveConfigCallback, save_config_filename: str = 'config.yaml', save_config_overwrite: bool = False, save_config_multifile: bool = False, trainer_class: Union[Type[pytorch_lightning.Trainer], Callable[Ellipsis, pytorch_lightning.Trainer]] = Trainer, trainer_defaults: Optional[Dict[str, Any]] = None, seed_everything_default: Optional[int] = None, description: str = 'Anomalib trainer command line tool', env_prefix: str = 'Anomalib', env_parse: bool = False, parser_kwargs: Optional[Union[Dict[str, Any], Dict[str, Dict[str, Any]]]] = None, subclass_mode_model: bool = False, subclass_mode_data: bool = False, run: bool = True, auto_registry: bool = True)
+
+   Bases: :py:obj:`pytorch_lightning.utilities.cli.LightningCLI`
+
+   Implementation of a fully configurable CLI tool for anomalib.
+
+   The advantage of this tool is its flexibility to configure the pipeline
+   from both the CLI and a configuration file (.yaml or .json). It is even
+   possible to use both the CLI and a configuration file simultaneously.
+   For more details, the reader could refer to PyTorch Lightning CLI documentation.
+
+   .. py:method:: add_arguments_to_parser(self, parser: pytorch_lightning.utilities.cli.LightningArgumentParser) -> None
+
+      Add default arguments.
+
+      :param parser: Lightning Argument Parser.
+      :type parser: LightningArgumentParser
+
+
+   .. py:method:: __set_default_root_dir(self) -> None
+
+      Sets the default root directory depending on the subcommand type. <train, fit, predict, tune.>.
+
+
+   .. py:method:: __set_callbacks(self) -> None
+
+      Sets the default callbacks used within the pipeline.
+
+
+   .. py:method:: before_instantiate_classes(self) -> None
+
+      Modify the configuration to properly instantiate classes.
+
+
+
+.. py:function:: main() -> None
+
+   Trainer via Anomalib CLI.
+
+

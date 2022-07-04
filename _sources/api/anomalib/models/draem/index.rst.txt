@@ -37,8 +37,42 @@ Classes
 
 .. autoapisummary::
 
+   anomalib.models.draem.Draem
    anomalib.models.draem.DraemLightning
 
+
+
+
+.. py:class:: Draem(anomaly_source_path: Optional[str] = None)
+
+   Bases: :py:obj:`anomalib.models.components.AnomalyModule`
+
+   DRÆM: A discriminatively trained reconstruction embedding for surface anomaly detection.
+
+   :param anomaly_source_path: Path to folder that contains the anomaly source images. Random noise will
+                               be used if left empty.
+   :type anomaly_source_path: Optional[str]
+
+   .. py:method:: training_step(self, batch, _)
+
+      Training Step of DRAEM.
+
+      Feeds the original image and the simulated anomaly
+      image through the network and computes the training loss.
+
+      :param batch: Batch containing image filename, image, label and mask
+      :type batch: Dict[str, Any]
+
+      :returns: Loss dictionary
+
+
+   .. py:method:: validation_step(self, batch, _)
+
+      Validation step of DRAEM. The Softmax predictions of the anomalous class are used as anomaly map.
+
+      :param batch: Batch of input images
+
+      :returns: Dictionary to which predicted anomaly maps have been added.
 
 
 

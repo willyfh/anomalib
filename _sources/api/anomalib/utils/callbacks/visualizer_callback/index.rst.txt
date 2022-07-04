@@ -22,7 +22,7 @@ Classes
 
 
 
-.. py:class:: VisualizerCallback(task: str, log_images_to: Optional[List[str]] = None, inputs_are_normalized: bool = True)
+.. py:class:: VisualizerCallback(task: str, mode: str, image_save_path: str, inputs_are_normalized: bool = True, show_images: bool = False, log_images: bool = True, save_images: bool = True)
 
    Bases: :py:obj:`pytorch_lightning.Callback`
 
@@ -34,21 +34,37 @@ Classes
    To save the images to the filesystem, add the 'local' keyword to the `project.log_images_to` parameter in the
    config.yaml file.
 
-   .. py:method:: _add_images(self, visualizer: anomalib.post_processing.Visualizer, module: anomalib.models.components.AnomalyModule, trainer: pytorch_lightning.Trainer, filename: pathlib.Path)
+   .. py:method:: _add_to_logger(self, image: numpy.ndarray, module: anomalib.models.components.AnomalyModule, trainer: pytorch_lightning.Trainer, filename: pathlib.Path)
 
-      Save image to logger/local storage.
+      Log image from a visualizer to each of the available loggers in the project.
 
-      Saves the image in `visualizer.figure` to the respective loggers and local storage if specified in
-      `log_images_to` in `config.yaml` of the models.
-
-      :param visualizer: Visualizer object from which the `figure` is saved/logged.
-      :type visualizer: Visualizer
+      :param image: Image that should be added to the loggers.
+      :type image: np.ndarray
       :param module: Anomaly module.
       :type module: AnomalyModule
       :param trainer: Pytorch Lightning trainer which holds reference to `logger`
       :type trainer: Trainer
       :param filename: Path of the input image. This name is used as name for the generated image.
       :type filename: Path
+
+
+   .. py:method:: on_predict_batch_end(self, _trainer: pytorch_lightning.Trainer, _pl_module: anomalib.models.components.AnomalyModule, outputs: Optional[pytorch_lightning.utilities.types.STEP_OUTPUT], _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
+
+      Show images at the end of every batch.
+
+      :param _trainer: Pytorch lightning trainer object (unused).
+      :type _trainer: Trainer
+      :param _pl_module: Lightning modules derived from BaseAnomalyLightning object as
+      :type _pl_module: LightningModule
+      :param currently only they support logging images.:
+      :param outputs: Outputs of the current test step.
+      :type outputs: Dict[str, Any]
+      :param _batch: Input batch of the current test step (unused).
+      :type _batch: Any
+      :param _batch_idx: Index of the current test batch (unused).
+      :type _batch_idx: int
+      :param _dataloader_idx: Index of the dataloader that yielded the current batch (unused).
+      :type _dataloader_idx: int
 
 
    .. py:method:: on_test_batch_end(self, trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule, outputs: Optional[pytorch_lightning.utilities.types.STEP_OUTPUT], _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None

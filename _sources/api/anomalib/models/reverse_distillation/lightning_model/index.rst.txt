@@ -25,7 +25,7 @@ Classes
 
 
 
-.. py:class:: ReverseDistillation(input_size: Tuple[int, int], backbone: str, layers: List[str], anomaly_map_mode: str)
+.. py:class:: ReverseDistillation(input_size: Tuple[int, int], backbone: str, layers: List[str], anomaly_map_mode: str, lr: float, beta1: float, beta2: float)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
@@ -37,6 +37,21 @@ Classes
    :type backbone: str
    :param layers: Layers to extract features from the backbone CNN
    :type layers: List[str]
+
+   .. py:method:: configure_optimizers(self)
+
+      Configures optimizers for decoder and bottleneck.
+
+      .. note::
+
+         This method is used for the existing CLI.
+         When PL CLI is introduced, configure optimizers method will be
+             deprecated, and optimizers will be configured from either
+             config.yaml file or from CLI.
+
+      :returns: Adam optimizer for each decoder
+      :rtype: Optimizer
+
 
    .. py:method:: training_step(self, batch, _) -> Dict[str, torch.Tensor]
 
@@ -88,21 +103,6 @@ Classes
          When PL CLI is introduced, configure callback method will be
              deprecated, and callbacks will be configured from either
              config.yaml file or from CLI.
-
-
-   .. py:method:: configure_optimizers(self)
-
-      Configures optimizers for decoder and bottleneck.
-
-      .. note::
-
-         This method is used for the existing CLI.
-         When PL CLI is introduced, configure optimizers method will be
-             deprecated, and optimizers will be configured from either
-             config.yaml file or from CLI.
-
-      :returns: Adam optimizer for each decoder
-      :rtype: Optimizer
 
 
 

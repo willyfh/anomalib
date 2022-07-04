@@ -38,7 +38,7 @@ Attributes
 
    
 
-.. py:class:: Ganomaly(batch_size: int, input_size: Tuple[int, int], n_features: int, latent_vec_size: int, extra_layers: int = 0, add_final_conv_layer: bool = True, wadv: int = 1, wcon: int = 50, wenc: int = 1)
+.. py:class:: Ganomaly(batch_size: int, input_size: Tuple[int, int], n_features: int, latent_vec_size: int, extra_layers: int = 0, add_final_conv_layer: bool = True, wadv: int = 1, wcon: int = 50, wenc: int = 1, lr: float = 0.0002, beta1: float = 0.5, beta2: float = 0.999)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
@@ -66,6 +66,21 @@ Attributes
    .. py:method:: _reset_min_max(self)
 
       Resets min_max scores.
+
+
+   .. py:method:: configure_optimizers(self) -> List[torch.optim.Optimizer]
+
+      Configures optimizers for each decoder.
+
+      .. note::
+
+         This method is used for the existing CLI.
+         When PL CLI is introduced, configure optimizers method will be
+             deprecated, and optimizers will be configured from either
+             config.yaml file or from CLI.
+
+      :returns: Adam optimizer for each decoder
+      :rtype: Optimizer
 
 
    .. py:method:: training_step(self, batch, _, optimizer_idx)
@@ -148,21 +163,6 @@ Attributes
          When PL CLI is introduced, configure callback method will be
              deprecated, and callbacks will be configured from either
              config.yaml file or from CLI.
-
-
-   .. py:method:: configure_optimizers(self) -> List[torch.optim.Optimizer]
-
-      Configures optimizers for each decoder.
-
-      .. note::
-
-         This method is used for the existing CLI.
-         When PL CLI is introduced, configure optimizers method will be
-             deprecated, and optimizers will be configured from either
-             config.yaml file or from CLI.
-
-      :returns: Adam optimizer for each decoder
-      :rtype: Optimizer
 
 
 

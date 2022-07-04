@@ -41,9 +41,16 @@ Attributes
 
    Callback that loads the model weights from the state dict.
 
-   .. py:method:: on_test_start(self, trainer, pl_module: anomalib.models.components.AnomalyModule) -> None
+   .. py:method:: on_test_start(self, _trainer, pl_module: anomalib.models.components.AnomalyModule) -> None
 
       Call when the test begins.
+
+      Loads the model weights from ``weights_path`` into the PyTorch module.
+
+
+   .. py:method:: on_predict_start(self, _trainer, pl_module: anomalib.models.components.AnomalyModule) -> None
+
+      Call when inference begins.
 
       Loads the model weights from ``weights_path`` into the PyTorch module.
 
