@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
     <meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
-        <title>anomalib.deploy.inferencers.torch - Anomalib 2021, Anomalib Contributors documentation</title>
+        <title>anomalib.deploy.inferencers.torch_inference - Anomalib 2021, Anomalib Contributors documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
@@ -185,9 +185,9 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/anomalib/deploy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/torch/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/base_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base_inference</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/openvino_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino_inference</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/torch_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch_inference</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/deploy/optimize/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.optimize</span></code></a></li>
@@ -427,7 +427,7 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <h1>Source code for anomalib.deploy.inferencers.torch</h1><div class="highlight"><pre>
+        <h1>Source code for anomalib.deploy.inferencers.torch_inference</h1><div class="highlight"><pre>
 <span></span><span class="sd">"""This module contains Torch inference implementations."""</span>
 
 <span class="c1"># Copyright (C) 2020 Intel Corporation</span>
@@ -458,10 +458,10 @@
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
 <span class="kn">from</span> <span class="nn">anomalib.pre_processing</span> <span class="kn">import</span> <span class="n">PreProcessor</span>
 
-<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">Inferencer</span>
+<span class="kn">from</span> <span class="nn">.base_inference</span> <span class="kn">import</span> <span class="n">Inferencer</span>
 
 
-<div class="viewcode-block" id="TorchInferencer"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/torch/index.html#anomalib.deploy.inferencers.TorchInferencer">[docs]</a><span class="k">class</span> <span class="nc">TorchInferencer</span><span class="p">(</span><span class="n">Inferencer</span><span class="p">):</span>
+<div class="viewcode-block" id="TorchInferencer"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/torch_inference/index.html#anomalib.deploy.inferencers.TorchInferencer">[docs]</a><span class="k">class</span> <span class="nc">TorchInferencer</span><span class="p">(</span><span class="n">Inferencer</span><span class="p">):</span>
     <span class="sd">"""PyTorch implementation for the inference.</span>
 
 <span class="sd">    Args:</span>
@@ -486,7 +486,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_meta_data</span><span class="p">(</span><span class="n">meta_data_path</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TorchInferencer._load_meta_data"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/torch/index.html#anomalib.deploy.inferencers.TorchInferencer._load_meta_data">[docs]</a>    <span class="k">def</span> <span class="nf">_load_meta_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">DictConfig</span><span class="p">]:</span>
+<div class="viewcode-block" id="TorchInferencer._load_meta_data"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/torch_inference/index.html#anomalib.deploy.inferencers.TorchInferencer._load_meta_data">[docs]</a>    <span class="k">def</span> <span class="nf">_load_meta_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">DictConfig</span><span class="p">]:</span>
         <span class="sd">"""Load metadata from file or from model state dict.</span>
 
 <span class="sd">        Args:</span>
@@ -503,7 +503,7 @@
             <span class="n">meta_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_load_meta_data</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">meta_data</span></div>
 
-<div class="viewcode-block" id="TorchInferencer.load_model"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/torch/index.html#anomalib.deploy.inferencers.TorchInferencer.load_model">[docs]</a>    <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">AnomalyModule</span><span class="p">:</span>
+<div class="viewcode-block" id="TorchInferencer.load_model"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/torch_inference/index.html#anomalib.deploy.inferencers.TorchInferencer.load_model">[docs]</a>    <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">AnomalyModule</span><span class="p">:</span>
         <span class="sd">"""Load the PyTorch model.</span>
 
 <span class="sd">        Args:</span>
@@ -517,7 +517,7 @@
         <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">model</span></div>
 
-<div class="viewcode-block" id="TorchInferencer.pre_process"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/torch/index.html#anomalib.deploy.inferencers.TorchInferencer.pre_process">[docs]</a>    <span class="k">def</span> <span class="nf">pre_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="TorchInferencer.pre_process"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/torch_inference/index.html#anomalib.deploy.inferencers.TorchInferencer.pre_process">[docs]</a>    <span class="k">def</span> <span class="nf">pre_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Pre process the input image by applying transformations.</span>
 
 <span class="sd">        Args:</span>
@@ -536,7 +536,7 @@
 
         <span class="k">return</span> <span class="n">processed_image</span></div>
 
-<div class="viewcode-block" id="TorchInferencer.forward"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/torch/index.html#anomalib.deploy.inferencers.TorchInferencer.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="TorchInferencer.forward"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/torch_inference/index.html#anomalib.deploy.inferencers.TorchInferencer.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Forward-Pass input tensor to the model.</span>
 
 <span class="sd">        Args:</span>
@@ -547,7 +547,7 @@
 <span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">image</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TorchInferencer.post_process"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/torch/index.html#anomalib.deploy.inferencers.TorchInferencer.post_process">[docs]</a>    <span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span>
+<div class="viewcode-block" id="TorchInferencer.post_process"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/torch_inference/index.html#anomalib.deploy.inferencers.TorchInferencer.post_process">[docs]</a>    <span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">meta_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">DictConfig</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
         <span class="sd">"""Post process the output predictions.</span>

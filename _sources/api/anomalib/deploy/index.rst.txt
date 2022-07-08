@@ -35,6 +35,7 @@ Classes
 
 .. autoapisummary::
 
+   anomalib.deploy.Inferencer
    anomalib.deploy.OpenVINOInferencer
    anomalib.deploy.TorchInferencer
 
@@ -50,9 +51,119 @@ Functions
 
 
 
+.. py:class:: Inferencer
+
+   Bases: :py:obj:`abc.ABC`
+
+   Abstract class for the inference.
+
+   This is used by both Torch and OpenVINO inference.
+
+   .. py:method:: load_model(self, path: Union[str, pathlib.Path])
+      :abstractmethod:
+
+      Load Model.
+
+
+   .. py:method:: pre_process(self, image: numpy.ndarray) -> Union[numpy.ndarray, torch.Tensor]
+      :abstractmethod:
+
+      Pre-process.
+
+
+   .. py:method:: forward(self, image: Union[numpy.ndarray, torch.Tensor]) -> Union[numpy.ndarray, torch.Tensor]
+      :abstractmethod:
+
+      Forward-Pass input to model.
+
+
+   .. py:method:: post_process(self, predictions: Union[numpy.ndarray, torch.Tensor], meta_data: Optional[Dict]) -> Tuple[numpy.ndarray, float]
+      :abstractmethod:
+
+      Post-Process.
+
+
+   .. py:method:: predict(self, image: Union[str, numpy.ndarray, pathlib.Path], superimpose: bool = True, meta_data: Optional[dict] = None, overlay_mask: bool = False) -> Tuple[numpy.ndarray, float]
+
+      Perform a prediction for a given input image.
+
+      The main workflow is (i) pre-processing, (ii) forward-pass, (iii) post-process.
+
+      :param image: Input image whose output is to be predicted.
+                    It could be either a path to image or numpy array itself.
+      :type image: Union[str, np.ndarray]
+      :param superimpose: If this is set to True, output predictions
+                          will be superimposed onto the original image. If false, `predict`
+                          method will return the raw heatmap.
+      :type superimpose: bool
+      :param overlay_mask: If this is set to True, output segmentation mask on top of image.
+      :type overlay_mask: bool
+
+      :returns: Output predictions to be visualized.
+      :rtype: np.ndarray
+
+
+   .. py:method:: _superimpose_segmentation_mask(self, meta_data: dict, anomaly_map: numpy.ndarray, image: numpy.ndarray)
+
+      Superimpose segmentation mask on top of image.
+
+      :param meta_data: Metadata of the image which contains the image size.
+      :type meta_data: dict
+      :param anomaly_map: Anomaly map which is used to extract segmentation mask.
+      :type anomaly_map: np.ndarray
+      :param image: Image on which segmentation mask is to be superimposed.
+      :type image: np.ndarray
+
+      :returns: Image with segmentation mask superimposed.
+      :rtype: np.ndarray
+
+
+   .. py:method:: __call__(self, image: numpy.ndarray) -> Tuple[numpy.ndarray, float]
+
+      Call predict on the Image.
+
+      :param image: Input Image
+      :type image: np.ndarray
+
+      :returns: Output predictions to be visualized
+      :rtype: np.ndarray
+
+
+   .. py:method:: _normalize(self, anomaly_maps: Union[torch.Tensor, numpy.ndarray], pred_scores: Union[torch.Tensor, numpy.float32], meta_data: Union[Dict, omegaconf.DictConfig]) -> Tuple[Union[numpy.ndarray, torch.Tensor], float]
+
+      Applies normalization and resizes the image.
+
+      :param anomaly_maps: Predicted raw anomaly map.
+      :type anomaly_maps: Union[Tensor, np.ndarray]
+      :param pred_scores: Predicted anomaly score
+      :type pred_scores: Union[Tensor, np.float32]
+      :param meta_data: Meta data. Post-processing step sometimes requires
+                        additional meta data such as image shape. This variable comprises such info.
+      :type meta_data: Dict
+
+      :returns:
+
+                Post processed predictions that are ready to be visualized and
+                    predicted scores.
+      :rtype: Tuple[Union[np.ndarray, Tensor], float]
+
+
+   .. py:method:: _load_meta_data(self, path: Optional[Union[str, pathlib.Path]] = None) -> Union[omegaconf.DictConfig, Dict[str, Union[float, numpy.ndarray, torch.Tensor]]]
+
+      Loads the meta data from the given path.
+
+      :param path: Path to JSON file containing the metadata.
+                   If no path is provided, it returns an empty dict. Defaults to None.
+      :type path: Optional[Union[str, Path]], optional
+
+      :returns: Dictionary containing the metadata.
+      :rtype: Union[DictConfig, Dict]
+
+
+
 .. py:class:: OpenVINOInferencer(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], path: Union[str, pathlib.Path, Tuple[bytes, bytes]], meta_data_path: Union[str, pathlib.Path] = None)
 
-   Bases: :py:obj:`anomalib.deploy.inferencers.base.Inferencer`
+   Bases: :py:obj:`anomalib.deploy.inferencers.base_inference.Inferencer`
 
    OpenVINO implementation for the inference.
 
@@ -119,7 +230,7 @@ Functions
 
 .. py:class:: TorchInferencer(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model_source: Union[str, pathlib.Path, anomalib.models.components.AnomalyModule], meta_data_path: Union[str, pathlib.Path] = None)
 
-   Bases: :py:obj:`anomalib.deploy.inferencers.base.Inferencer`
+   Bases: :py:obj:`anomalib.deploy.inferencers.base_inference.Inferencer`
 
    PyTorch implementation for the inference.
 

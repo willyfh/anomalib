@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
     <meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
-        <title>anomalib.deploy.inferencers.openvino - Anomalib 2021, Anomalib Contributors documentation</title>
+        <title>anomalib.deploy.inferencers.base_inference - Anomalib 2021, Anomalib Contributors documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
@@ -185,9 +185,9 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/anomalib/deploy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/torch/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/base_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base_inference</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/openvino_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino_inference</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/torch_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch_inference</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/deploy/optimize/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.optimize</span></code></a></li>
@@ -427,8 +427,8 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <h1>Source code for anomalib.deploy.inferencers.openvino</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""This module contains inference-related abstract class and its Torch and OpenVINO implementations."""</span>
+        <h1>Source code for anomalib.deploy.inferencers.base_inference</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Base Inferencer for Torch and OpenVINO."""</span>
 
 <span class="c1"># Copyright (C) 2020 Intel Corporation</span>
 <span class="c1">#</span>
@@ -444,139 +444,194 @@
 <span class="c1"># See the License for the specific language governing permissions</span>
 <span class="c1"># and limitations under the License.</span>
 
-<span class="kn">from</span> <span class="nn">importlib.util</span> <span class="kn">import</span> <span class="n">find_spec</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">cast</span>
 
 <span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
+<span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">OmegaConf</span>
+<span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="n">dilation</span>
+<span class="kn">from</span> <span class="nn">skimage.segmentation</span> <span class="kn">import</span> <span class="n">find_boundaries</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 
-<span class="kn">from</span> <span class="nn">anomalib.pre_processing</span> <span class="kn">import</span> <span class="n">PreProcessor</span>
+<span class="kn">from</span> <span class="nn">anomalib.data.utils</span> <span class="kn">import</span> <span class="n">read_image</span>
+<span class="kn">from</span> <span class="nn">anomalib.post_processing</span> <span class="kn">import</span> <span class="n">compute_mask</span><span class="p">,</span> <span class="n">superimpose_anomaly_map</span>
+<span class="kn">from</span> <span class="nn">anomalib.post_processing.normalization.cdf</span> <span class="kn">import</span> <span class="n">normalize</span> <span class="k">as</span> <span class="n">normalize_cdf</span>
+<span class="kn">from</span> <span class="nn">anomalib.post_processing.normalization.cdf</span> <span class="kn">import</span> <span class="n">standardize</span>
+<span class="kn">from</span> <span class="nn">anomalib.post_processing.normalization.min_max</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">normalize</span> <span class="k">as</span> <span class="n">normalize_min_max</span><span class="p">,</span>
+<span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">Inferencer</span>
 
-<span class="k">if</span> <span class="n">find_spec</span><span class="p">(</span><span class="s2">"openvino"</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">openvino.inference_engine</span> <span class="kn">import</span> <span class="p">(</span>  <span class="c1"># type: ignore  # pylint: disable=no-name-in-module</span>
-        <span class="n">IECore</span><span class="p">,</span>
-    <span class="p">)</span>
+<div class="viewcode-block" id="Inferencer"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/index.html#anomalib.deploy.inferencers.base_inference.Inferencer">[docs]</a><span class="k">class</span> <span class="nc">Inferencer</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">"""Abstract class for the inference.</span>
 
-
-<div class="viewcode-block" id="OpenVINOInferencer"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/openvino/index.html#anomalib.deploy.inferencers.OpenVINOInferencer">[docs]</a><span class="k">class</span> <span class="nc">OpenVINOInferencer</span><span class="p">(</span><span class="n">Inferencer</span><span class="p">):</span>
-    <span class="sd">"""OpenVINO implementation for the inference.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        config (DictConfig): Configurable parameters that are used</span>
-<span class="sd">            during the training stage.</span>
-<span class="sd">        path (Union[str, Path]): Path to the openvino onnx, xml or bin file.</span>
-<span class="sd">        meta_data_path (Union[str, Path], optional): Path to metadata file. Defaults to None.</span>
+<span class="sd">    This is used by both Torch and OpenVINO inference.</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">],</span>
-        <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">]],</span>
-        <span class="n">meta_data_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">input_blob</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_blob</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_load_meta_data</span><span class="p">(</span><span class="n">meta_data_path</span><span class="p">)</span>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="Inferencer.load_model"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/base_inference/index.html#anomalib.deploy.inferencers.base_inference.Inferencer.load_model">[docs]</a>    <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]):</span>
+        <span class="sd">"""Load Model."""</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
-<div class="viewcode-block" id="OpenVINOInferencer.load_model"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/openvino/index.html#anomalib.deploy.inferencers.OpenVINOInferencer.load_model">[docs]</a>    <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">]]):</span>
-        <span class="sd">"""Load the OpenVINO model.</span>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="Inferencer.pre_process"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/base_inference/index.html#anomalib.deploy.inferencers.base_inference.Inferencer.pre_process">[docs]</a>    <span class="k">def</span> <span class="nf">pre_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+        <span class="sd">"""Pre-process."""</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
-<span class="sd">        Args:</span>
-<span class="sd">            path (Union[str, Path, Tuple[bytes, bytes]]): Path to the onnx or xml and bin files</span>
-<span class="sd">                                                        or tuple of .xml and .bin data as bytes.</span>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="Inferencer.forward"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/base_inference/index.html#anomalib.deploy.inferencers.base_inference.Inferencer.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+        <span class="sd">"""Forward-Pass input to model."""</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            [Tuple[str, str, ExecutableNetwork]]: Input and Output blob names</span>
-<span class="sd">                together with the Executable network.</span>
-<span class="sd">        """</span>
-        <span class="n">ie_core</span> <span class="o">=</span> <span class="n">IECore</span><span class="p">()</span>
-        <span class="c1"># If tuple of bytes is passed</span>
-
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-            <span class="n">network</span> <span class="o">=</span> <span class="n">ie_core</span><span class="o">.</span><span class="n">read_network</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">init_from_buffer</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Path</span><span class="p">)</span> <span class="k">else</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">".bin"</span><span class="p">,</span> <span class="s2">".xml"</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">".bin"</span><span class="p">:</span>
-                    <span class="n">bin_path</span><span class="p">,</span> <span class="n">xml_path</span> <span class="o">=</span> <span class="n">path</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".xml"</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">".xml"</span><span class="p">:</span>
-                    <span class="n">xml_path</span><span class="p">,</span> <span class="n">bin_path</span> <span class="o">=</span> <span class="n">path</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".bin"</span><span class="p">)</span>
-                <span class="n">network</span> <span class="o">=</span> <span class="n">ie_core</span><span class="o">.</span><span class="n">read_network</span><span class="p">(</span><span class="n">xml_path</span><span class="p">,</span> <span class="n">bin_path</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">".onnx"</span><span class="p">:</span>
-                <span class="n">network</span> <span class="o">=</span> <span class="n">ie_core</span><span class="o">.</span><span class="n">read_network</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Path must be .onnx, .bin or .xml file. Got </span><span class="si">{</span><span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-        <span class="n">input_blob</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">input_info</span><span class="p">))</span>
-        <span class="n">output_blob</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">outputs</span><span class="p">))</span>
-        <span class="n">executable_network</span> <span class="o">=</span> <span class="n">ie_core</span><span class="o">.</span><span class="n">load_network</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">device_name</span><span class="o">=</span><span class="s2">"CPU"</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">input_blob</span><span class="p">,</span> <span class="n">output_blob</span><span class="p">,</span> <span class="n">executable_network</span></div>
-
-<div class="viewcode-block" id="OpenVINOInferencer.pre_process"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/openvino/index.html#anomalib.deploy.inferencers.OpenVINOInferencer.pre_process">[docs]</a>    <span class="k">def</span> <span class="nf">pre_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">"""Pre process the input image by applying transformations.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            image (np.ndarray): Input image.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray: pre-processed image.</span>
-<span class="sd">        """</span>
-        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">transform</span> <span class="k">if</span> <span class="s2">"transform"</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="n">image_size</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">image_size</span><span class="p">)</span>
-        <span class="n">pre_processor</span> <span class="o">=</span> <span class="n">PreProcessor</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">image_size</span><span class="p">)</span>
-        <span class="n">processed_image</span> <span class="o">=</span> <span class="n">pre_processor</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">)[</span><span class="s2">"image"</span><span class="p">]</span>
-
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">processed_image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="n">processed_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">processed_image</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">processed_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="n">processed_image</span> <span class="o">=</span> <span class="n">processed_image</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">processed_image</span></div>
-
-<div class="viewcode-block" id="OpenVINOInferencer.forward"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/openvino/index.html#anomalib.deploy.inferencers.OpenVINOInferencer.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">"""Forward-Pass input tensor to the model.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            image (np.ndarray): Input tensor.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray: Output predictions.</span>
-<span class="sd">        """</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">input_blob</span><span class="p">:</span> <span class="n">image</span><span class="p">})</span></div>
-
-<div class="viewcode-block" id="OpenVINOInferencer.post_process"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/openvino/index.html#anomalib.deploy.inferencers.OpenVINOInferencer.post_process">[docs]</a>    <span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">meta_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">DictConfig</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="Inferencer.post_process"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/base_inference/index.html#anomalib.deploy.inferencers.base_inference.Inferencer.post_process">[docs]</a>    <span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">],</span> <span class="n">meta_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-        <span class="sd">"""Post process the output predictions.</span>
+        <span class="sd">"""Post-Process."""</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="Inferencer.predict"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/base_inference/index.html#anomalib.deploy.inferencers.base_inference.Inferencer.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+        <span class="n">superimpose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">meta_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">overlay_mask</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">"""Perform a prediction for a given input image.</span>
+
+<span class="sd">        The main workflow is (i) pre-processing, (ii) forward-pass, (iii) post-process.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            predictions (np.ndarray): Raw output predicted by the model.</span>
-<span class="sd">            meta_data (Dict, optional): Meta data. Post-processing step sometimes requires</span>
-<span class="sd">                additional meta data such as image shape. This variable comprises such info.</span>
-<span class="sd">                Defaults to None.</span>
+<span class="sd">            image (Union[str, np.ndarray]): Input image whose output is to be predicted.</span>
+<span class="sd">                It could be either a path to image or numpy array itself.</span>
+
+<span class="sd">            superimpose (bool): If this is set to True, output predictions</span>
+<span class="sd">                will be superimposed onto the original image. If false, `predict`</span>
+<span class="sd">                method will return the raw heatmap.</span>
+
+<span class="sd">            overlay_mask (bool): If this is set to True, output segmentation mask on top of image.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray: Post processed predictions that are ready to be visualized.</span>
+<span class="sd">            np.ndarray: Output predictions to be visualized.</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="n">meta_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">meta_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"meta_data"</span><span class="p">):</span>
+                <span class="n">meta_data</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"meta_data"</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">meta_data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
+            <span class="n">image_arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># image is already a numpy array. Kept for mypy compatibility.</span>
+            <span class="n">image_arr</span> <span class="o">=</span> <span class="n">image</span>
+        <span class="n">meta_data</span><span class="p">[</span><span class="s2">"image_shape"</span><span class="p">]</span> <span class="o">=</span> <span class="n">image_arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
 
-        <span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_blob</span><span class="p">]</span>
-        <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
-        <span class="n">pred_score</span> <span class="o">=</span> <span class="n">anomaly_map</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">processed_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">(</span><span class="n">image_arr</span><span class="p">)</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">processed_image</span><span class="p">)</span>
+        <span class="n">anomaly_map</span><span class="p">,</span> <span class="n">pred_scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_process</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">meta_data</span><span class="o">=</span><span class="n">meta_data</span><span class="p">)</span>
 
-        <span class="n">anomaly_map</span><span class="p">,</span> <span class="n">pred_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">,</span> <span class="n">pred_score</span><span class="p">,</span> <span class="n">meta_data</span><span class="p">)</span>
+        <span class="c1"># Overlay segmentation mask using raw predictions</span>
+        <span class="k">if</span> <span class="n">overlay_mask</span> <span class="ow">and</span> <span class="n">meta_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">image_arr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_superimpose_segmentation_mask</span><span class="p">(</span><span class="n">meta_data</span><span class="p">,</span> <span class="n">anomaly_map</span><span class="p">,</span> <span class="n">image_arr</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="s2">"image_shape"</span> <span class="ow">in</span> <span class="n">meta_data</span> <span class="ow">and</span> <span class="n">anomaly_map</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"image_shape"</span><span class="p">]:</span>
-            <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">,</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"image_shape"</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">superimpose</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">superimpose_anomaly_map</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">,</span> <span class="n">image_arr</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">anomaly_map</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">pred_score</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">anomaly_map</span><span class="p">,</span> <span class="n">pred_scores</span></div>
+
+<div class="viewcode-block" id="Inferencer._superimpose_segmentation_mask"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/base_inference/index.html#anomalib.deploy.inferencers.base_inference.Inferencer._superimpose_segmentation_mask">[docs]</a>    <span class="k">def</span> <span class="nf">_superimpose_segmentation_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meta_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">anomaly_map</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="sd">"""Superimpose segmentation mask on top of image.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            meta_data (dict): Metadata of the image which contains the image size.</span>
+<span class="sd">            anomaly_map (np.ndarray): Anomaly map which is used to extract segmentation mask.</span>
+<span class="sd">            image (np.ndarray): Image on which segmentation mask is to be superimposed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Image with segmentation mask superimposed.</span>
+<span class="sd">        """</span>
+        <span class="n">pred_mask</span> <span class="o">=</span> <span class="n">compute_mask</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># assumes predictions are normalized.</span>
+        <span class="n">image_height</span> <span class="o">=</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"image_shape"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">image_width</span> <span class="o">=</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"image_shape"</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">pred_mask</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">pred_mask</span><span class="p">,</span> <span class="p">(</span><span class="n">image_width</span><span class="p">,</span> <span class="n">image_height</span><span class="p">))</span>
+        <span class="n">boundaries</span> <span class="o">=</span> <span class="n">find_boundaries</span><span class="p">(</span><span class="n">pred_mask</span><span class="p">)</span>
+        <span class="n">outlines</span> <span class="o">=</span> <span class="n">dilation</span><span class="p">(</span><span class="n">boundaries</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">)))</span>
+        <span class="n">image</span><span class="p">[</span><span class="n">outlines</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">image</span></div>
+
+<div class="viewcode-block" id="Inferencer.__call__"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/base_inference/index.html#anomalib.deploy.inferencers.base_inference.Inferencer.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">"""Call predict on the Image.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image (np.ndarray): Input Image</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Output predictions to be visualized</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">image</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Inferencer._normalize"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/base_inference/index.html#anomalib.deploy.inferencers.base_inference.Inferencer._normalize">[docs]</a>    <span class="k">def</span> <span class="nf">_normalize</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">anomaly_maps</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+        <span class="n">pred_scores</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">],</span>
+        <span class="n">meta_data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">DictConfig</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">],</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">"""Applies normalization and resizes the image.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            anomaly_maps (Union[Tensor, np.ndarray]): Predicted raw anomaly map.</span>
+<span class="sd">            pred_scores (Union[Tensor, np.float32]): Predicted anomaly score</span>
+<span class="sd">            meta_data (Dict): Meta data. Post-processing step sometimes requires</span>
+<span class="sd">                additional meta data such as image shape. This variable comprises such info.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[Union[np.ndarray, Tensor], float]: Post processed predictions that are ready to be visualized and</span>
+<span class="sd">                predicted scores.</span>
+
+
+<span class="sd">        """</span>
+
+        <span class="c1"># min max normalization</span>
+        <span class="k">if</span> <span class="s2">"min"</span> <span class="ow">in</span> <span class="n">meta_data</span> <span class="ow">and</span> <span class="s2">"max"</span> <span class="ow">in</span> <span class="n">meta_data</span><span class="p">:</span>
+            <span class="n">anomaly_maps</span> <span class="o">=</span> <span class="n">normalize_min_max</span><span class="p">(</span>
+                <span class="n">anomaly_maps</span><span class="p">,</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"pixel_threshold"</span><span class="p">],</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"min"</span><span class="p">],</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"max"</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">pred_scores</span> <span class="o">=</span> <span class="n">normalize_min_max</span><span class="p">(</span>
+                <span class="n">pred_scores</span><span class="p">,</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"image_threshold"</span><span class="p">],</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"min"</span><span class="p">],</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"max"</span><span class="p">]</span>
+            <span class="p">)</span>
+
+        <span class="c1"># standardize pixel scores</span>
+        <span class="k">if</span> <span class="s2">"pixel_mean"</span> <span class="ow">in</span> <span class="n">meta_data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="s2">"pixel_std"</span> <span class="ow">in</span> <span class="n">meta_data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">anomaly_maps</span> <span class="o">=</span> <span class="n">standardize</span><span class="p">(</span>
+                <span class="n">anomaly_maps</span><span class="p">,</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"pixel_mean"</span><span class="p">],</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"pixel_std"</span><span class="p">],</span> <span class="n">center_at</span><span class="o">=</span><span class="n">meta_data</span><span class="p">[</span><span class="s2">"image_mean"</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">anomaly_maps</span> <span class="o">=</span> <span class="n">normalize_cdf</span><span class="p">(</span><span class="n">anomaly_maps</span><span class="p">,</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"pixel_threshold"</span><span class="p">])</span>
+
+        <span class="c1"># standardize image scores</span>
+        <span class="k">if</span> <span class="s2">"image_mean"</span> <span class="ow">in</span> <span class="n">meta_data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="s2">"image_std"</span> <span class="ow">in</span> <span class="n">meta_data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">pred_scores</span> <span class="o">=</span> <span class="n">standardize</span><span class="p">(</span><span class="n">pred_scores</span><span class="p">,</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"image_mean"</span><span class="p">],</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"image_std"</span><span class="p">])</span>
+            <span class="n">pred_scores</span> <span class="o">=</span> <span class="n">normalize_cdf</span><span class="p">(</span><span class="n">pred_scores</span><span class="p">,</span> <span class="n">meta_data</span><span class="p">[</span><span class="s2">"image_threshold"</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">anomaly_maps</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">pred_scores</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Inferencer._load_meta_data"><a class="viewcode-back" href="../../../../api/anomalib/deploy/inferencers/base_inference/index.html#anomalib.deploy.inferencers.base_inference.Inferencer._load_meta_data">[docs]</a>    <span class="k">def</span> <span class="nf">_load_meta_data</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]]]:</span>
+        <span class="sd">"""Loads the meta data from the given path.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path (Optional[Union[str, Path]], optional): Path to JSON file containing the metadata.</span>
+<span class="sd">                If no path is provided, it returns an empty dict. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Union[DictConfig, Dict]: Dictionary containing the metadata.</span>
+<span class="sd">        """</span>
+        <span class="n">meta_data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">OmegaConf</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">meta_data</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">meta_data</span></div></div>
 </pre></div>
       </article>
       <footer>

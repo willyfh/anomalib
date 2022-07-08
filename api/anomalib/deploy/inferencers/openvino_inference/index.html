@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" /><link rel="next" title="anomalib.deploy.optimize" href="../../optimize/index.html" /><link rel="prev" title="anomalib.deploy.inferencers.openvino" href="../openvino/index.html" />
+<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" /><link rel="next" title="anomalib.deploy.inferencers.torch_inference" href="../torch_inference/index.html" /><link rel="prev" title="anomalib.deploy.inferencers.base_inference" href="../base_inference/index.html" />
 
     <meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
-        <title>anomalib.deploy.inferencers.torch - Anomalib 2021, Anomalib Contributors documentation</title>
+        <title>anomalib.deploy.inferencers.openvino_inference - Anomalib 2021, Anomalib Contributors documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css" />
@@ -186,9 +186,9 @@
 </li>
 <li class="toctree-l3 current has-children"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l4 current has-children"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l5"><a class="reference internal" href="../base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino</span></code></a></li>
-<li class="toctree-l5 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../base_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base_inference</span></code></a></li>
+<li class="toctree-l5 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino_inference</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../torch_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch_inference</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../optimize/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.optimize</span></code></a></li>
@@ -428,9 +428,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <section id="module-anomalib.deploy.inferencers.torch">
-<span id="anomalib-deploy-inferencers-torch"></span><h1><a class="reference internal" href="#module-anomalib.deploy.inferencers.torch" title="anomalib.deploy.inferencers.torch"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch</span></code></a><a class="headerlink" href="#module-anomalib.deploy.inferencers.torch" title="Permalink to this headline">¶</a></h1>
-<p>This module contains Torch inference implementations.</p>
+        <section id="module-anomalib.deploy.inferencers.openvino_inference">
+<span id="anomalib-deploy-inferencers-openvino-inference"></span><h1><a class="reference internal" href="#module-anomalib.deploy.inferencers.openvino_inference" title="anomalib.deploy.inferencers.openvino_inference"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino_inference</span></code></a><a class="headerlink" href="#module-anomalib.deploy.inferencers.openvino_inference" title="Permalink to this headline">¶</a></h1>
+<p>This module contains inference-related abstract class and its Torch and OpenVINO implementations.</p>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 <section id="classes">
@@ -441,100 +441,87 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.deploy.inferencers.torch.TorchInferencer" title="anomalib.deploy.inferencers.torch.TorchInferencer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TorchInferencer</span></code></a></p></td>
-<td><p>PyTorch implementation for the inference.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer" title="anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OpenVINOInferencer</span></code></a></p></td>
+<td><p>OpenVINO implementation for the inference.</p></td>
 </tr>
 </tbody>
 </table></div>
 <dl class="py class">
-<dt class="sig sig-object py" id="anomalib.deploy.inferencers.torch.TorchInferencer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.deploy.inferencers.torch.</span></span><span class="sig-name descname"><span class="pre">TorchInferencer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../models/components/index.html#anomalib.models.components.AnomalyModule" title="anomalib.models.components.AnomalyModule"><span class="pre">anomalib.models.components.AnomalyModule</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/deploy/inferencers/torch.html#TorchInferencer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.deploy.inferencers.torch.TorchInferencer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../base/index.html#anomalib.deploy.inferencers.base.Inferencer" title="anomalib.deploy.inferencers.base.Inferencer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base.Inferencer</span></code></a></p>
-<p>PyTorch implementation for the inference.</p>
+<dt class="sig sig-object py" id="anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.deploy.inferencers.openvino_inference.</span></span><span class="sig-name descname"><span class="pre">OpenVINOInferencer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/deploy/inferencers/openvino_inference.html#OpenVINOInferencer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../base_inference/index.html#anomalib.deploy.inferencers.base_inference.Inferencer" title="anomalib.deploy.inferencers.base_inference.Inferencer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base_inference.Inferencer</span></code></a></p>
+<p>OpenVINO implementation for the inference.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>config</strong> (<em>DictConfig</em>) – Configurable parameters that are used
 during the training stage.</p></li>
-<li><p><strong>model_source</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>, </em><a class="reference internal" href="../../../models/components/base/anomaly_module/index.html#anomalib.models.components.base.anomaly_module.AnomalyModule" title="anomalib.models.components.base.anomaly_module.AnomalyModule"><em>AnomalyModule</em></a><em>]</em>) – Path to the model ckpt file or the Anomaly model.</p></li>
-<li><p><strong>meta_data_path</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em><em>, </em><em>optional</em>) – Path to metadata file. If none, it tries to load the params
-from the model state_dict. Defaults to None.</p></li>
+<li><p><strong>path</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em>) – Path to the openvino onnx, xml or bin file.</p></li>
+<li><p><strong>meta_data_path</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em><em>, </em><em>optional</em>) – Path to metadata file. Defaults to None.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.deploy.inferencers.torch.TorchInferencer._load_meta_data">
-<span class="sig-name descname"><span class="pre">_load_meta_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/deploy/inferencers/torch.html#TorchInferencer._load_meta_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.deploy.inferencers.torch.TorchInferencer._load_meta_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load metadata from file or from model state dict.</p>
+<dt class="sig sig-object py" id="anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer.load_model">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/deploy/inferencers/openvino_inference.html#OpenVINOInferencer.load_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the OpenVINO model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Path to metadata file. If none, it tries to load the params
-from the model state_dict. Defaults to None.</p>
+<dd class="field-odd"><p><strong>path</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>, </em><em>Tuple</em><em>[</em><em>bytes</em><em>, </em><em>bytes</em><em>]</em><em>]</em>) – Path to the onnx or xml and bin files
+or tuple of .xml and .bin data as bytes.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Dictionary containing the meta_data.</p>
+<dd class="field-even"><p><dl class="simple">
+<dt>Input and Output blob names</dt><dd><p>together with the Executable network.</p>
+</dd>
+</dl>
+</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Dict</p>
+<dd class="field-odd"><p>[Tuple[str, str, ExecutableNetwork]]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.deploy.inferencers.torch.TorchInferencer.load_model">
-<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="../../../models/components/index.html#anomalib.models.components.AnomalyModule" title="anomalib.models.components.AnomalyModule"><span class="pre">anomalib.models.components.AnomalyModule</span></a></span></span><a class="reference internal" href="../../../../../_modules/anomalib/deploy/inferencers/torch.html#TorchInferencer.load_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.deploy.inferencers.torch.TorchInferencer.load_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load the PyTorch model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em>) – Path to model ckpt file.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>PyTorch Lightning model.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>(<a class="reference internal" href="../../../models/components/base/anomaly_module/index.html#anomalib.models.components.base.anomaly_module.AnomalyModule" title="anomalib.models.components.base.anomaly_module.AnomalyModule">AnomalyModule</a>)</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.deploy.inferencers.torch.TorchInferencer.pre_process">
-<span class="sig-name descname"><span class="pre">pre_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/deploy/inferencers/torch.html#TorchInferencer.pre_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.deploy.inferencers.torch.TorchInferencer.pre_process" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer.pre_process">
+<span class="sig-name descname"><span class="pre">pre_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/deploy/inferencers/openvino_inference.html#OpenVINOInferencer.pre_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer.pre_process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pre process the input image by applying transformations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>image</strong> (<em>np.ndarray</em>) – Input image</p>
+<dd class="field-odd"><p><strong>image</strong> (<em>np.ndarray</em>) – Input image.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>pre-processed image.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Tensor</p>
+<dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.deploy.inferencers.torch.TorchInferencer.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/deploy/inferencers/torch.html#TorchInferencer.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.deploy.inferencers.torch.TorchInferencer.forward" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/deploy/inferencers/openvino_inference.html#OpenVINOInferencer.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Forward-Pass input tensor to the model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>image</strong> (<em>Tensor</em>) – Input tensor.</p>
+<dd class="field-odd"><p><strong>image</strong> (<em>np.ndarray</em>) – Input tensor.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Output predictions.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Tensor</p>
+<dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.deploy.inferencers.torch.TorchInferencer.post_process">
-<span class="sig-name descname"><span class="pre">post_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/deploy/inferencers/torch.html#TorchInferencer.post_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.deploy.inferencers.torch.TorchInferencer.post_process" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer.post_process">
+<span class="sig-name descname"><span class="pre">post_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/deploy/inferencers/openvino_inference.html#OpenVINOInferencer.post_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer.post_process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Post process the output predictions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>predictions</strong> (<em>Tensor</em>) – Raw output predicted by the model.</p></li>
+<li><p><strong>predictions</strong> (<em>np.ndarray</em>) – Raw output predicted by the model.</p></li>
 <li><p><strong>meta_data</strong> (<em>Dict</em><em>, </em><em>optional</em>) – Meta data. Post-processing step sometimes requires
 additional meta data such as image shape. This variable comprises such info.
 Defaults to None.</p></li>
@@ -557,23 +544,23 @@ Defaults to None.</p></li>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../../optimize/index.html">
+          <a class="next-page" href="../torch_inference/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.optimize</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch_inference</span></code></div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../openvino/index.html">
+          <a class="prev-page" href="../base_inference/index.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base_inference</span></code></div>
                 
               </div>
             </a>
@@ -587,7 +574,7 @@ Defaults to None.</p></li>
               <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
               <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
             |
-            <a class="muted-link" href="../../../../../_sources/api/anomalib/deploy/inferencers/torch/index.rst.txt"
+            <a class="muted-link" href="../../../../../_sources/api/anomalib/deploy/inferencers/openvino_inference/index.rst.txt"
                rel="nofollow">
               Show Source
             </a>
@@ -607,15 +594,14 @@ Defaults to None.</p></li>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch</span></code></a><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino_inference</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
-<li><a class="reference internal" href="#anomalib.deploy.inferencers.torch.TorchInferencer">TorchInferencer</a><ul>
-<li><a class="reference internal" href="#anomalib.deploy.inferencers.torch.TorchInferencer._load_meta_data">_load_meta_data</a></li>
-<li><a class="reference internal" href="#anomalib.deploy.inferencers.torch.TorchInferencer.load_model">load_model</a></li>
-<li><a class="reference internal" href="#anomalib.deploy.inferencers.torch.TorchInferencer.pre_process">pre_process</a></li>
-<li><a class="reference internal" href="#anomalib.deploy.inferencers.torch.TorchInferencer.forward">forward</a></li>
-<li><a class="reference internal" href="#anomalib.deploy.inferencers.torch.TorchInferencer.post_process">post_process</a></li>
+<li><a class="reference internal" href="#anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer">OpenVINOInferencer</a><ul>
+<li><a class="reference internal" href="#anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer.load_model">load_model</a></li>
+<li><a class="reference internal" href="#anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer.pre_process">pre_process</a></li>
+<li><a class="reference internal" href="#anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer.forward">forward</a></li>
+<li><a class="reference internal" href="#anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer.post_process">post_process</a></li>
 </ul>
 </li>
 </ul>
