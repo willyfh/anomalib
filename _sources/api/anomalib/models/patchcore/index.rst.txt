@@ -34,7 +34,7 @@ Classes
 
 
 
-.. py:class:: Patchcore(input_size: Tuple[int, int], backbone: str, layers: List[str], coreset_sampling_ratio: float = 0.1, num_neighbors: int = 9)
+.. py:class:: Patchcore(input_size: Tuple[int, int], backbone: str, layers: List[str], pre_trained: bool = True, coreset_sampling_ratio: float = 0.1, num_neighbors: int = 9)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
@@ -46,6 +46,8 @@ Classes
    :type backbone: str
    :param layers: Layers to extract features from the backbone CNN
    :type layers: List[str]
+   :param pre_trained: Boolean to check whether to use a pre_trained backbone.
+   :type pre_trained: bool, optional
    :param coreset_sampling_ratio: Coreset sampling ratio to subsample embedding.
                                   Defaults to 0.1.
    :type coreset_sampling_ratio: float, optional

@@ -37,7 +37,7 @@ Classes
 
 
 
-.. py:class:: Fastflow(input_size: Tuple[int, int], backbone: str, flow_steps: int, conv3x3_only: bool = False, hidden_ratio: float = 1.0)
+.. py:class:: Fastflow(input_size: Tuple[int, int], backbone: str, pre_trained: bool = True, flow_steps: int = 8, conv3x3_only: bool = False, hidden_ratio: float = 1.0)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
@@ -47,8 +47,10 @@ Classes
    :type input_size: Tuple[int, int]
    :param backbone: Backbone CNN network
    :type backbone: str
+   :param pre_trained: Boolean to check whether to use a pre_trained backbone.
+   :type pre_trained: bool, optional
    :param flow_steps: Flow steps.
-   :type flow_steps: int
+   :type flow_steps: int, optional
    :param conv3x3_only: Use only conv3x3 in fast_flow model. Defaults to False.
    :type conv3x3_only: bool, optinoal
    :param hidden_ratio: Ratio to calculate hidden var channels. Defaults to 1.0.
@@ -136,7 +138,7 @@ Classes
 
 
 
-.. py:class:: FastflowModel(input_size: Tuple[int, int], backbone: str, flow_steps: int, conv3x3_only: bool = False, hidden_ratio: float = 1.0)
+.. py:class:: FastflowModel(input_size: Tuple[int, int], backbone: str, pre_trained: bool = True, flow_steps: int = 8, conv3x3_only: bool = False, hidden_ratio: float = 1.0)
 
    Bases: :py:obj:`torch.nn.Module`
 
@@ -148,8 +150,10 @@ Classes
    :type input_size: Tuple[int, int]
    :param backbone: Backbone CNN network
    :type backbone: str
+   :param pre_trained: Boolean to check whether to use a pre_trained backbone.
+   :type pre_trained: bool, optional
    :param flow_steps: Flow steps.
-   :type flow_steps: int
+   :type flow_steps: int, optional
    :param conv3x3_only: Use only conv3x3 in fast_flow model. Defaults to False.
    :type conv3x3_only: bool, optinoal
    :param hidden_ratio: Ratio to calculate hidden var channels. Defaults to 1.0.

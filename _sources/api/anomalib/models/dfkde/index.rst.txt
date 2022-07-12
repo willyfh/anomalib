@@ -33,7 +33,7 @@ Classes
 
 
 
-.. py:class:: Dfkde(backbone: str, max_training_points: int = 40000, pre_processing: str = 'scale', n_components: int = 16, threshold_steepness: float = 0.05, threshold_offset: int = 12)
+.. py:class:: Dfkde(backbone: str, pre_trained: bool = True, max_training_points: int = 40000, pre_processing: str = 'scale', n_components: int = 16, threshold_steepness: float = 0.05, threshold_offset: int = 12)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
@@ -41,6 +41,8 @@ Classes
 
    :param backbone: Pre-trained model backbone.
    :type backbone: str
+   :param pre_trained: Boolean to check whether to use a pre_trained backbone.
+   :type pre_trained: bool, optional
    :param max_training_points: Number of training points to fit the KDE model.
                                Defaults to 40000.
    :type max_training_points: int, optional

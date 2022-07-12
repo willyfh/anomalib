@@ -22,7 +22,7 @@ Classes
 
 
 
-.. py:class:: ReverseDistillationModel(backbone: str, input_size: Tuple[int, int], layers: List[str], anomaly_map_mode: str)
+.. py:class:: ReverseDistillationModel(backbone: str, input_size: Tuple[int, int], layers: List[str], anomaly_map_mode: str, pre_trained: bool = True)
 
    Bases: :py:obj:`torch.nn.Module`
 
@@ -36,6 +36,8 @@ Classes
    :type layers: List[str]
    :param anomaly_map_mode: Mode used to generate anomaly map. Options are between ``multiply`` and ``add``.
    :type anomaly_map_mode: str
+   :param pre_trained: Boolean to check whether to use a pre_trained backbone.
+   :type pre_trained: bool, optional
 
    .. py:method:: forward(self, images: torch.Tensor) -> Union[torch.Tensor, Tuple[List[torch.Tensor], List[torch.Tensor]]]
 

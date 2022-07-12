@@ -466,15 +466,23 @@
 <span class="sd">        input_size (Tuple[int, int]): Size of input image</span>
 <span class="sd">        layers (List[str]): Name of layers from which the features are extracted.</span>
 <span class="sd">        anomaly_map_mode (str): Mode used to generate anomaly map. Options are between ``multiply`` and ``add``.</span>
+<span class="sd">        pre_trained (bool, optional): Boolean to check whether to use a pre_trained backbone.</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">layers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">anomaly_map_mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">layers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">anomaly_map_mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">pre_trained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tiler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tiler</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="n">encoder_backbone</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="n">backbone</span><span class="p">)</span>
         <span class="c1"># TODO replace with TIMM feature extractor</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="n">encoder_backbone</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="n">encoder_backbone</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bottleneck</span> <span class="o">=</span> <span class="n">get_bottleneck_layer</span><span class="p">(</span><span class="n">backbone</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span> <span class="o">=</span> <span class="n">get_decoder</span><span class="p">(</span><span class="n">backbone</span><span class="p">)</span>
 

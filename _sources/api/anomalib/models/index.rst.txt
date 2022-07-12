@@ -50,7 +50,7 @@ Classes
 
 
 
-.. py:class:: Cflow(input_size: Tuple[int, int], backbone: str, layers: List[str], fiber_batch_size: int = 64, decoder: str = 'freia-cflow', condition_vector: int = 128, coupling_blocks: int = 8, clamp_alpha: float = 1.9, permute_soft: bool = False, lr: float = 0.0001)
+.. py:class:: Cflow(input_size: Tuple[int, int], backbone: str, layers: List[str], pre_trained: bool = True, fiber_batch_size: int = 64, decoder: str = 'freia-cflow', condition_vector: int = 128, coupling_blocks: int = 8, clamp_alpha: float = 1.9, permute_soft: bool = False, lr: float = 0.0001)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
@@ -101,7 +101,7 @@ Classes
 
 
 
-.. py:class:: Dfkde(backbone: str, max_training_points: int = 40000, pre_processing: str = 'scale', n_components: int = 16, threshold_steepness: float = 0.05, threshold_offset: int = 12)
+.. py:class:: Dfkde(backbone: str, pre_trained: bool = True, max_training_points: int = 40000, pre_processing: str = 'scale', n_components: int = 16, threshold_steepness: float = 0.05, threshold_offset: int = 12)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
@@ -109,6 +109,8 @@ Classes
 
    :param backbone: Pre-trained model backbone.
    :type backbone: str
+   :param pre_trained: Boolean to check whether to use a pre_trained backbone.
+   :type pre_trained: bool, optional
    :param max_training_points: Number of training points to fit the KDE model.
                                Defaults to 40000.
    :type max_training_points: int, optional
@@ -157,7 +159,7 @@ Classes
 
 
 
-.. py:class:: Dfm(backbone: str, layer: str, pooling_kernel_size: int = 4, pca_level: float = 0.97, score_type: str = 'fre')
+.. py:class:: Dfm(backbone: str, layer: str, pre_trained: bool = True, pooling_kernel_size: int = 4, pca_level: float = 0.97, score_type: str = 'fre')
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
@@ -167,6 +169,8 @@ Classes
    :type backbone: str
    :param layer: Layer to extract features from the backbone CNN
    :type layer: str
+   :param pre_trained: Boolean to check whether to use a pre_trained backbone.
+   :type pre_trained: bool, optional
    :param pooling_kernel_size: Kernel size to pool features extracted from the CNN.
                                Defaults to 4.
    :type pooling_kernel_size: int, optional
@@ -247,7 +251,7 @@ Classes
 
 
 
-.. py:class:: Fastflow(input_size: Tuple[int, int], backbone: str, flow_steps: int, conv3x3_only: bool = False, hidden_ratio: float = 1.0)
+.. py:class:: Fastflow(input_size: Tuple[int, int], backbone: str, pre_trained: bool = True, flow_steps: int = 8, conv3x3_only: bool = False, hidden_ratio: float = 1.0)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
@@ -257,8 +261,10 @@ Classes
    :type input_size: Tuple[int, int]
    :param backbone: Backbone CNN network
    :type backbone: str
+   :param pre_trained: Boolean to check whether to use a pre_trained backbone.
+   :type pre_trained: bool, optional
    :param flow_steps: Flow steps.
-   :type flow_steps: int
+   :type flow_steps: int, optional
    :param conv3x3_only: Use only conv3x3 in fast_flow model. Defaults to False.
    :type conv3x3_only: bool, optinoal
    :param hidden_ratio: Ratio to calculate hidden var channels. Defaults to 1.0.
@@ -395,7 +401,7 @@ Classes
 
 
 
-.. py:class:: Padim(layers: List[str], input_size: Tuple[int, int], backbone: str)
+.. py:class:: Padim(layers: List[str], input_size: Tuple[int, int], backbone: str, pre_trained: bool = True)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
@@ -407,6 +413,8 @@ Classes
    :type input_size: Tuple[int, int]
    :param backbone: Backbone CNN network
    :type backbone: str
+   :param pre_trained: Boolean to check whether to use a pre_trained backbone.
+   :type pre_trained: bool, optional
 
    .. py:method:: configure_optimizers()
       :staticmethod:
@@ -444,7 +452,7 @@ Classes
 
 
 
-.. py:class:: Patchcore(input_size: Tuple[int, int], backbone: str, layers: List[str], coreset_sampling_ratio: float = 0.1, num_neighbors: int = 9)
+.. py:class:: Patchcore(input_size: Tuple[int, int], backbone: str, layers: List[str], pre_trained: bool = True, coreset_sampling_ratio: float = 0.1, num_neighbors: int = 9)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
@@ -456,6 +464,8 @@ Classes
    :type backbone: str
    :param layers: Layers to extract features from the backbone CNN
    :type layers: List[str]
+   :param pre_trained: Boolean to check whether to use a pre_trained backbone.
+   :type pre_trained: bool, optional
    :param coreset_sampling_ratio: Coreset sampling ratio to subsample embedding.
                                   Defaults to 0.1.
    :type coreset_sampling_ratio: float, optional
@@ -503,7 +513,7 @@ Classes
 
 
 
-.. py:class:: ReverseDistillation(input_size: Tuple[int, int], backbone: str, layers: List[str], anomaly_map_mode: str, lr: float, beta1: float, beta2: float)
+.. py:class:: ReverseDistillation(input_size: Tuple[int, int], backbone: str, layers: List[str], anomaly_map_mode: str, lr: float, beta1: float, beta2: float, pre_trained: bool = True)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
@@ -515,6 +525,8 @@ Classes
    :type backbone: str
    :param layers: Layers to extract features from the backbone CNN
    :type layers: List[str]
+   :param pre_trained: Boolean to check whether to use a pre_trained backbone.
+   :type pre_trained: bool, optional
 
    .. py:method:: configure_optimizers(self)
 

@@ -35,7 +35,7 @@ Attributes
 
    
 
-.. py:class:: PadimModel(input_size: Tuple[int, int], layers: List[str], backbone: str = 'resnet18')
+.. py:class:: PadimModel(input_size: Tuple[int, int], layers: List[str], backbone: str = 'resnet18', pre_trained: bool = True)
 
    Bases: :py:obj:`torch.nn.Module`
 
@@ -47,6 +47,8 @@ Attributes
    :type layers: List[str]
    :param backbone: Pre-trained model backbone. Defaults to "resnet18".
    :type backbone: str, optional
+   :param pre_trained: Boolean to check whether to use a pre_trained backbone.
+   :type pre_trained: bool, optional
 
    .. py:method:: forward(self, input_tensor: torch.Tensor) -> torch.Tensor
 

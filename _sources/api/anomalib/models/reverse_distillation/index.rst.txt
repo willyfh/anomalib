@@ -44,7 +44,7 @@ Classes
 
 
 
-.. py:class:: ReverseDistillation(input_size: Tuple[int, int], backbone: str, layers: List[str], anomaly_map_mode: str, lr: float, beta1: float, beta2: float)
+.. py:class:: ReverseDistillation(input_size: Tuple[int, int], backbone: str, layers: List[str], anomaly_map_mode: str, lr: float, beta1: float, beta2: float, pre_trained: bool = True)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
@@ -56,6 +56,8 @@ Classes
    :type backbone: str
    :param layers: Layers to extract features from the backbone CNN
    :type layers: List[str]
+   :param pre_trained: Boolean to check whether to use a pre_trained backbone.
+   :type pre_trained: bool, optional
 
    .. py:method:: configure_optimizers(self)
 

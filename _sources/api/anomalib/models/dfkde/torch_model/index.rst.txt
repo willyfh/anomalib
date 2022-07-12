@@ -35,7 +35,7 @@ Attributes
 
    
 
-.. py:class:: DfkdeModel(backbone: str, n_comps: int = 16, pre_processing: str = 'scale', filter_count: int = 40000, threshold_steepness: float = 0.05, threshold_offset: float = 12.0)
+.. py:class:: DfkdeModel(backbone: str, pre_trained: bool = True, n_comps: int = 16, pre_processing: str = 'scale', filter_count: int = 40000, threshold_steepness: float = 0.05, threshold_offset: float = 12.0)
 
    Bases: :py:obj:`torch.nn.Module`
 
@@ -43,6 +43,8 @@ Attributes
 
    :param backbone: Pre-trained model backbone.
    :type backbone: str
+   :param pre_trained: Boolean to check whether to use a pre_trained backbone.
+   :type pre_trained: bool, optional
    :param n_comps: Number of PCA components. Defaults to 16.
    :type n_comps: int, optional
    :param pre_processing: Preprocess features before passing to KDE.

@@ -36,7 +36,7 @@ Attributes
 
    
 
-.. py:class:: Dfm(backbone: str, layer: str, pooling_kernel_size: int = 4, pca_level: float = 0.97, score_type: str = 'fre')
+.. py:class:: Dfm(backbone: str, layer: str, pre_trained: bool = True, pooling_kernel_size: int = 4, pca_level: float = 0.97, score_type: str = 'fre')
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
@@ -46,6 +46,8 @@ Attributes
    :type backbone: str
    :param layer: Layer to extract features from the backbone CNN
    :type layer: str
+   :param pre_trained: Boolean to check whether to use a pre_trained backbone.
+   :type pre_trained: bool, optional
    :param pooling_kernel_size: Kernel size to pool features extracted from the CNN.
                                Defaults to 4.
    :type pooling_kernel_size: int, optional

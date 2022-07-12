@@ -462,6 +462,7 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        backbone (str): Pre-trained model backbone.</span>
+<span class="sd">        pre_trained (bool, optional): Boolean to check whether to use a pre_trained backbone.</span>
 <span class="sd">        n_comps (int, optional): Number of PCA components. Defaults to 16.</span>
 <span class="sd">        pre_processing (str, optional): Preprocess features before passing to KDE.</span>
 <span class="sd">            Options are between `norm` and `scale`. Defaults to "scale".</span>
@@ -473,6 +474,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">pre_trained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">n_comps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
         <span class="n">pre_processing</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"scale"</span><span class="p">,</span>
         <span class="n">filter_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40000</span><span class="p">,</span>
@@ -487,7 +489,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">threshold_offset</span> <span class="o">=</span> <span class="n">threshold_offset</span>
 
         <span class="n">_backbone</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="n">backbone</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="n">_backbone</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="s2">"avgpool"</span><span class="p">])</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="n">_backbone</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="s2">"avgpool"</span><span class="p">])</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">pca_model</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kde_model</span> <span class="o">=</span> <span class="n">GaussianKDE</span><span class="p">()</span>

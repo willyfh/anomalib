@@ -468,6 +468,7 @@
 <span class="sd">        input_size (Tuple[int, int]): Size of model input</span>
 <span class="sd">        backbone (str): Backbone of CNN network</span>
 <span class="sd">        layers (List[str]): Layers to extract features from the backbone CNN</span>
+<span class="sd">        pre_trained (bool, optional): Boolean to check whether to use a pre_trained backbone.</span>
 <span class="sd">    """</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -479,10 +480,15 @@
         <span class="n">lr</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">beta1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">beta2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">pre_trained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">ReverseDistillationModel</span><span class="p">(</span>
-            <span class="n">backbone</span><span class="o">=</span><span class="n">backbone</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">,</span> <span class="n">input_size</span><span class="o">=</span><span class="n">input_size</span><span class="p">,</span> <span class="n">anomaly_map_mode</span><span class="o">=</span><span class="n">anomaly_map_mode</span>
+            <span class="n">backbone</span><span class="o">=</span><span class="n">backbone</span><span class="p">,</span>
+            <span class="n">pre_trained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">,</span>
+            <span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">,</span>
+            <span class="n">input_size</span><span class="o">=</span><span class="n">input_size</span><span class="p">,</span>
+            <span class="n">anomaly_map_mode</span><span class="o">=</span><span class="n">anomaly_map_mode</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">ReverseDistillationLoss</span><span class="p">()</span>
         <span class="c1"># TODO: LR should be part of optimizer in config.yaml! Since reverse distillation has custom</span>

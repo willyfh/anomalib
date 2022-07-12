@@ -34,7 +34,7 @@ Classes
 
 
 
-.. py:class:: Padim(layers: List[str], input_size: Tuple[int, int], backbone: str)
+.. py:class:: Padim(layers: List[str], input_size: Tuple[int, int], backbone: str, pre_trained: bool = True)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
@@ -46,6 +46,8 @@ Classes
    :type input_size: Tuple[int, int]
    :param backbone: Backbone CNN network
    :type backbone: str
+   :param pre_trained: Boolean to check whether to use a pre_trained backbone.
+   :type pre_trained: bool, optional
 
    .. py:method:: configure_optimizers()
       :staticmethod:

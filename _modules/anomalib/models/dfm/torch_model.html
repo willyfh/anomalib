@@ -517,13 +517,20 @@
 <span class="sd">    Args:</span>
 <span class="sd">        backbone (str): Pre-trained model backbone.</span>
 <span class="sd">        layer (str): Layer from which to extract features.</span>
-<span class="sd">        pooling_kernel_size (int): Kernel size to pool features extracted from the CNN.</span>
+<span class="sd">        pre_trained (bool, optional): Boolean to check whether to use a pre_trained backbone.</span>
+<span class="sd">        pooling_kernel_size (int, optional): Kernel size to pool features extracted from the CNN.</span>
 <span class="sd">        n_comps (float, optional): Ratio from which number of components for PCA are calculated. Defaults to 0.97.</span>
 <span class="sd">        score_type (str, optional): Scoring type. Options are `fre` and `nll`. Defaults to "fre".</span>
 <span class="sd">    """</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pooling_kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_comps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.97</span><span class="p">,</span> <span class="n">score_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"fre"</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">layer</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">pre_trained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">pooling_kernel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="n">n_comps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.97</span><span class="p">,</span>
+        <span class="n">score_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"fre"</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="n">backbone</span><span class="p">)</span>
@@ -532,7 +539,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pca_model</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span> <span class="o">=</span> <span class="n">SingleClassGaussian</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">score_type</span> <span class="o">=</span> <span class="n">score_type</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="n">layer</span><span class="p">])</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="n">layer</span><span class="p">])</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 
 <div class="viewcode-block" id="DFMModel.fit"><a class="viewcode-back" href="../../../../api/anomalib/models/dfm/torch_model/index.html#anomalib.models.dfm.torch_model.DFMModel.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Fit a pca transformation and a Gaussian model to dataset.</span>
