@@ -33,6 +33,34 @@ Classes
       First compute ROC curve, then compute area under the curve.
 
       :returns: Value of the AUROC metric
+      :rtype: Tensor
+
+
+   .. py:method:: update(self, preds: torch.Tensor, target: torch.Tensor) -> None
+
+      Update state with new values.
+
+      Need to flatten new values as ROC expects them in this format for binary classification.
+
+      :param preds: predictions of the model
+      :type preds: Tensor
+      :param target: ground truth targets
+      :type target: Tensor
+
+
+   .. py:method:: _compute(self) -> Tuple[torch.Tensor, torch.Tensor]
+
+      Compute fpr/tpr value pairs.
+
+      :returns: Tuple containing Tensors for fpr and tpr
+
+
+   .. py:method:: generate_figure(self) -> Tuple[matplotlib.figure.Figure, str]
+
+      Generate a figure containing the ROC curve, the baseline and the AUROC.
+
+      :returns: Tuple containing both the figure and the figure title to be used for logging
+      :rtype: Tuple[Figure, str]
 
 
 

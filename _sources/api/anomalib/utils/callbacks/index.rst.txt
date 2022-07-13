@@ -16,6 +16,7 @@ Subpackages
    :maxdepth: 3
 
    nncf/index.rst
+   visualizer/index.rst
 
 
 Submodules
@@ -32,7 +33,6 @@ Submodules
    openvino/index.rst
    tiler_configuration/index.rst
    timer/index.rst
-   visualizer_callback/index.rst
 
 
 Package Contents
@@ -49,7 +49,8 @@ Classes
    anomalib.utils.callbacks.LoadModelCallback
    anomalib.utils.callbacks.TilerConfigurationCallback
    anomalib.utils.callbacks.TimerCallback
-   anomalib.utils.callbacks.VisualizerCallback
+   anomalib.utils.callbacks.ImageVisualizerCallback
+   anomalib.utils.callbacks.MetricVisualizerCallback
 
 
 
@@ -272,9 +273,9 @@ Classes
 
 
 
-.. py:class:: VisualizerCallback(task: str, mode: str, image_save_path: str, inputs_are_normalized: bool = True, show_images: bool = False, log_images: bool = True, save_images: bool = True)
+.. py:class:: ImageVisualizerCallback(task: str, mode: str, image_save_path: str, inputs_are_normalized: bool = True, show_images: bool = False, log_images: bool = True, save_images: bool = True)
 
-   Bases: :py:obj:`pytorch_lightning.Callback`
+   Bases: :py:obj:`anomalib.utils.callbacks.visualizer.visualizer_base.BaseVisualizerCallback`
 
    Callback that visualizes the inference results of a model.
 
@@ -283,20 +284,6 @@ Classes
 
    To save the images to the filesystem, add the 'local' keyword to the `project.log_images_to` parameter in the
    config.yaml file.
-
-   .. py:method:: _add_to_logger(self, image: numpy.ndarray, module: anomalib.models.components.AnomalyModule, trainer: pytorch_lightning.Trainer, filename: pathlib.Path)
-
-      Log image from a visualizer to each of the available loggers in the project.
-
-      :param image: Image that should be added to the loggers.
-      :type image: np.ndarray
-      :param module: Anomaly module.
-      :type module: AnomalyModule
-      :param trainer: Pytorch Lightning trainer which holds reference to `logger`
-      :type trainer: Trainer
-      :param filename: Path of the input image. This name is used as name for the generated image.
-      :type filename: Path
-
 
    .. py:method:: on_predict_batch_end(self, _trainer: pytorch_lightning.Trainer, _pl_module: anomalib.models.components.AnomalyModule, outputs: Optional[pytorch_lightning.utilities.types.STEP_OUTPUT], _batch: Any, _batch_idx: int, _dataloader_idx: int) -> None
 
@@ -336,16 +323,26 @@ Classes
       :type _dataloader_idx: int
 
 
-   .. py:method:: on_test_end(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule) -> None
 
-      Sync logs.
+.. py:class:: MetricVisualizerCallback(task: str, mode: str, image_save_path: str, inputs_are_normalized: bool = True, show_images: bool = False, log_images: bool = True, save_images: bool = True)
 
-      Currently only ``AnomalibWandbLogger`` is called from this method. This is because logging as a single batch
-      ensures that all images appear as part of the same step.
+   Bases: :py:obj:`anomalib.utils.callbacks.visualizer.visualizer_base.BaseVisualizerCallback`
 
-      :param _trainer: Pytorch Lightning trainer (unused)
-      :type _trainer: pl.Trainer
-      :param pl_module: Anomaly module
+   Callback that visualizes the metric results of a model by plotting the corresponding curves.
+
+   To save the images to the filesystem, add the 'local' keyword to the `project.log_images_to` parameter in the
+   config.yaml file.
+
+   .. py:method:: on_test_end(self, trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule) -> None
+
+      Log images of the metrics contained in pl_module.
+
+      In order to also plot custom metrics, they need to have implemented a `generate_figure` function that returns
+      Tuple[matplotlib.figure.Figure, str].
+
+      :param trainer: pytorch lightning trainer.
+      :type trainer: pl.Trainer
+      :param pl_module: pytorch lightning module.
       :type pl_module: AnomalyModule
 
 

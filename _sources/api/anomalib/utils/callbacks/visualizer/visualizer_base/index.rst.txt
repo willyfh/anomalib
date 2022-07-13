@@ -1,0 +1,61 @@
+:py:mod:`anomalib.utils.callbacks.visualizer.visualizer_base`
+=============================================================
+
+.. py:module:: anomalib.utils.callbacks.visualizer.visualizer_base
+
+.. autoapi-nested-parse::
+
+   Base Visualizer Callback.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.callbacks.visualizer.visualizer_base.BaseVisualizerCallback
+
+
+
+
+.. py:class:: BaseVisualizerCallback(task: str, mode: str, image_save_path: str, inputs_are_normalized: bool = True, show_images: bool = False, log_images: bool = True, save_images: bool = True)
+
+   Bases: :py:obj:`pytorch_lightning.Callback`
+
+   Callback that visualizes the results of a model.
+
+   To save the images to the filesystem, add the 'local' keyword to the `project.log_images_to` parameter in the
+   config.yaml file.
+
+   .. py:method:: _add_to_logger(self, image: numpy.ndarray, module: anomalib.models.components.AnomalyModule, trainer: pytorch_lightning.Trainer, filename: Union[pathlib.Path, str])
+
+      Log image from a visualizer to each of the available loggers in the project.
+
+      :param image: Image that should be added to the loggers.
+      :type image: np.ndarray
+      :param module: Anomaly module.
+      :type module: AnomalyModule
+      :param trainer: Pytorch Lightning trainer which holds reference to `logger`
+      :type trainer: Trainer
+      :param filename: Path of the input image. This name is used as name for the generated image.
+      :type filename: Path
+
+
+   .. py:method:: on_test_end(self, trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule) -> None
+
+      Sync logs.
+
+      Currently only ``AnomalibWandbLogger.save`` is called from this method.
+      This is because logging as a single batch ensures that all images appear as part of the same step.
+
+      :param trainer: Pytorch Lightning trainer
+      :type trainer: pl.Trainer
+      :param pl_module: Anomaly module (unused)
+      :type pl_module: AnomalyModule
+
+
+

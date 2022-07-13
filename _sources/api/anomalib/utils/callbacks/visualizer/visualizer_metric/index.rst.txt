@@ -1,0 +1,47 @@
+:py:mod:`anomalib.utils.callbacks.visualizer.visualizer_metric`
+===============================================================
+
+.. py:module:: anomalib.utils.callbacks.visualizer.visualizer_metric
+
+.. autoapi-nested-parse::
+
+   Metric Visualizer Callback.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.callbacks.visualizer.visualizer_metric.MetricVisualizerCallback
+
+
+
+
+.. py:class:: MetricVisualizerCallback(task: str, mode: str, image_save_path: str, inputs_are_normalized: bool = True, show_images: bool = False, log_images: bool = True, save_images: bool = True)
+
+   Bases: :py:obj:`anomalib.utils.callbacks.visualizer.visualizer_base.BaseVisualizerCallback`
+
+   Callback that visualizes the metric results of a model by plotting the corresponding curves.
+
+   To save the images to the filesystem, add the 'local' keyword to the `project.log_images_to` parameter in the
+   config.yaml file.
+
+   .. py:method:: on_test_end(self, trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule) -> None
+
+      Log images of the metrics contained in pl_module.
+
+      In order to also plot custom metrics, they need to have implemented a `generate_figure` function that returns
+      Tuple[matplotlib.figure.Figure, str].
+
+      :param trainer: pytorch lightning trainer.
+      :type trainer: pl.Trainer
+      :param pl_module: pytorch lightning module.
+      :type pl_module: AnomalyModule
+
+
+

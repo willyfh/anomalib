@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../../search.html" /><link rel="next" title="anomalib.utils.callbacks.cdf_normalization" href="../../cdf_normalization/index.html" /><link rel="prev" title="anomalib.utils.callbacks.nncf.callback" href="../callback/index.html" />
+<link rel="index" title="Index" href="../../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../../search.html" /><link rel="next" title="anomalib.utils.callbacks.visualizer" href="../../visualizer/index.html" /><link rel="prev" title="anomalib.utils.callbacks.nncf.callback" href="../callback/index.html" />
 
     <meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
         <title>anomalib.utils.callbacks.nncf.utils - Anomalib 2021, Anomalib Contributors documentation</title>
@@ -333,6 +333,12 @@
 <li class="toctree-l6 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.nncf.utils</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../visualizer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" role="switch" type="checkbox"/><label for="toctree-checkbox-37"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../visualizer/visualizer_base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer.visualizer_base</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../visualizer/visualizer_image/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer.visualizer_image</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../visualizer/visualizer_metric/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer.visualizer_metric</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l5"><a class="reference internal" href="../../cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../graph/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.graph</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
@@ -341,30 +347,32 @@
 <li class="toctree-l5"><a class="reference internal" href="../../openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../../visualizer_callback/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer_callback</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../../../cli/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.cli</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" role="switch" type="checkbox"/><label for="toctree-checkbox-37"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../cli/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.cli</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" role="switch" type="checkbox"/><label for="toctree-checkbox-38"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../cli/cli/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.cli.cli</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../../../loggers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" role="switch" type="checkbox"/><label for="toctree-checkbox-38"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../loggers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-39" name="toctree-checkbox-39" role="switch" type="checkbox"/><label for="toctree-checkbox-39"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../loggers/base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.base</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../loggers/tensorboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.tensorboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../loggers/wandb/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.wandb</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../../../metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-39" name="toctree-checkbox-39" role="switch" type="checkbox"/><label for="toctree-checkbox-39"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-40" name="toctree-checkbox-40" role="switch" type="checkbox"/><label for="toctree-checkbox-40"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../metrics/adaptive_threshold/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.adaptive_threshold</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../metrics/anomaly_score_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.anomaly_score_distribution</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../metrics/aupr/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.aupr</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../metrics/aupro/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.aupro</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../metrics/auroc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.auroc</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../metrics/collection/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.collection</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../metrics/min_max/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.min_max</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../metrics/optimal_f1/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.optimal_f1</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../metrics/plotting_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.plotting_utils</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="../../../sweep/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-40" name="toctree-checkbox-40" role="switch" type="checkbox"/><label for="toctree-checkbox-40"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5 has-children"><a class="reference internal" href="../../../sweep/helpers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.helpers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-41" name="toctree-checkbox-41" role="switch" type="checkbox"/><label for="toctree-checkbox-41"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../sweep/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-41" name="toctree-checkbox-41" role="switch" type="checkbox"/><label for="toctree-checkbox-41"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../../sweep/helpers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.helpers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-42" name="toctree-checkbox-42" role="switch" type="checkbox"/><label for="toctree-checkbox-42"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l6"><a class="reference internal" href="../../../sweep/helpers/callbacks/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.helpers.callbacks</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="../../../sweep/helpers/inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep.helpers.inference</span></code></a></li>
 </ul>
@@ -596,12 +604,12 @@ since otherwise the order of list merging is counter-intuitive.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../../cdf_normalization/index.html">
+          <a class="next-page" href="../../visualizer/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.visualizer</span></code></div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
