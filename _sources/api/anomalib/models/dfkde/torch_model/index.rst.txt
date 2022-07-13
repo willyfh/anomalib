@@ -68,17 +68,7 @@ Attributes
       :rtype: Tensor
 
 
-   .. py:method:: fit(self, embeddings: List[torch.Tensor]) -> bool
-
-      Fit a kde model to embeddings.
-
-      :param embeddings: Input embeddings to fit the model.
-      :type embeddings: Tensor
-
-      :returns: Boolean confirming whether the training is successful.
-
-
-   .. py:method:: preprocess(self, feature_stack: torch.Tensor, max_length: Optional[torch.Tensor] = None) -> Tuple[torch.Tensor, torch.Tensor]
+   .. py:method:: pre_process(self, feature_stack: torch.Tensor, max_length: Optional[torch.Tensor] = None) -> Tuple[torch.Tensor, torch.Tensor]
 
       Pre-process the CNN features.
 
@@ -92,7 +82,17 @@ Attributes
       :rtype: (Tuple)
 
 
-   .. py:method:: evaluate(self, features: torch.Tensor, as_log_likelihood: Optional[bool] = False) -> torch.Tensor
+   .. py:method:: fit(self, embeddings: List[torch.Tensor]) -> bool
+
+      Fit a kde model to embeddings.
+
+      :param embeddings: Input embeddings to fit the model.
+      :type embeddings: Tensor
+
+      :returns: Boolean confirming whether the training is successful.
+
+
+   .. py:method:: compute_kde_scores(self, features: torch.Tensor, as_log_likelihood: Optional[bool] = False) -> torch.Tensor
 
       Compute the KDE scores.
 
@@ -108,6 +108,16 @@ Attributes
       :rtype: (Tensor)
 
 
+   .. py:method:: compute_probabilities(self, scores: torch.Tensor) -> torch.Tensor
+
+      Converts density scores to anomaly probabilities (see https://www.desmos.com/calculator/ifju7eesg7).
+
+      :param scores: density of an image.
+      :type scores: Tensor
+
+      :returns: probability that image with {density} is anomalous
+
+
    .. py:method:: predict(self, features: torch.Tensor) -> torch.Tensor
 
       Predicts the probability that the features belong to the anomalous class.
@@ -116,16 +126,6 @@ Attributes
       :type features: Tensor
 
       :returns: Detection probabilities
-
-
-   .. py:method:: to_probability(self, densities: torch.Tensor) -> torch.Tensor
-
-      Converts density scores to anomaly probabilities (see https://www.desmos.com/calculator/ifju7eesg7).
-
-      :param densities: density of an image.
-      :type densities: Tensor
-
-      :returns: probability that image with {density} is anomalous
 
 
    .. py:method:: forward(self, batch: torch.Tensor) -> torch.Tensor

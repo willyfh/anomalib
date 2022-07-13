@@ -500,21 +500,8 @@ Options are between <cite>norm</cite> and <cite>scale</cite>. Defaults to “sca
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.torch_model.DfkdeModel.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embeddings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/torch_model.html#DfkdeModel.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.torch_model.DfkdeModel.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fit a kde model to embeddings.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>embeddings</strong> (<em>Tensor</em>) – Input embeddings to fit the model.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Boolean confirming whether the training is successful.</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.torch_model.DfkdeModel.preprocess">
-<span class="sig-name descname"><span class="pre">preprocess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_stack</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/torch_model.html#DfkdeModel.preprocess"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.torch_model.DfkdeModel.preprocess" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.dfkde.torch_model.DfkdeModel.pre_process">
+<span class="sig-name descname"><span class="pre">pre_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_stack</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/torch_model.html#DfkdeModel.pre_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.torch_model.DfkdeModel.pre_process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pre-process the CNN features.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -533,8 +520,21 @@ provided, the length is calculated from the <code class="docutils literal notran
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.torch_model.DfkdeModel.evaluate">
-<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_log_likelihood</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/torch_model.html#DfkdeModel.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.torch_model.DfkdeModel.evaluate" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.models.dfkde.torch_model.DfkdeModel.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embeddings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/torch_model.html#DfkdeModel.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.torch_model.DfkdeModel.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a kde model to embeddings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>embeddings</strong> (<em>Tensor</em>) – Input embeddings to fit the model.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Boolean confirming whether the training is successful.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.dfkde.torch_model.DfkdeModel.compute_kde_scores">
+<span class="sig-name descname"><span class="pre">compute_kde_scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_log_likelihood</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/torch_model.html#DfkdeModel.compute_kde_scores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.torch_model.DfkdeModel.compute_kde_scores" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the KDE scores.</p>
 <dl class="simple">
 <dt>The scores calculated from the KDE model are converted to densities. If <cite>as_log_likelihood</cite> is set to true then</dt><dd><p>the log of the scores are calculated.</p>
@@ -556,6 +556,19 @@ provided, the length is calculated from the <code class="docutils literal notran
 </dl>
 </dd></dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.dfkde.torch_model.DfkdeModel.compute_probabilities">
+<span class="sig-name descname"><span class="pre">compute_probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/torch_model.html#DfkdeModel.compute_probabilities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.torch_model.DfkdeModel.compute_probabilities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts density scores to anomaly probabilities (see <a class="reference external" href="https://www.desmos.com/calculator/ifju7eesg7">https://www.desmos.com/calculator/ifju7eesg7</a>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>Tensor</em>) – density of an image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>probability that image with {density} is anomalous</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.dfkde.torch_model.DfkdeModel.predict">
 <span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/torch_model.html#DfkdeModel.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.torch_model.DfkdeModel.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predicts the probability that the features belong to the anomalous class.</p>
@@ -565,19 +578,6 @@ provided, the length is calculated from the <code class="docutils literal notran
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Detection probabilities</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.torch_model.DfkdeModel.to_probability">
-<span class="sig-name descname"><span class="pre">to_probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">densities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/dfkde/torch_model.html#DfkdeModel.to_probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfkde.torch_model.DfkdeModel.to_probability" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts density scores to anomaly probabilities (see <a class="reference external" href="https://www.desmos.com/calculator/ifju7eesg7">https://www.desmos.com/calculator/ifju7eesg7</a>).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>densities</strong> (<em>Tensor</em>) – density of an image.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>probability that image with {density} is anomalous</p>
 </dd>
 </dl>
 </dd></dl>
@@ -663,11 +663,11 @@ provided, the length is calculated from the <code class="docutils literal notran
 <li><a class="reference internal" href="#anomalib.models.dfkde.torch_model.logger">logger</a></li>
 <li><a class="reference internal" href="#anomalib.models.dfkde.torch_model.DfkdeModel">DfkdeModel</a><ul>
 <li><a class="reference internal" href="#anomalib.models.dfkde.torch_model.DfkdeModel.get_features">get_features</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfkde.torch_model.DfkdeModel.pre_process">pre_process</a></li>
 <li><a class="reference internal" href="#anomalib.models.dfkde.torch_model.DfkdeModel.fit">fit</a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.torch_model.DfkdeModel.preprocess">preprocess</a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.torch_model.DfkdeModel.evaluate">evaluate</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfkde.torch_model.DfkdeModel.compute_kde_scores">compute_kde_scores</a></li>
+<li><a class="reference internal" href="#anomalib.models.dfkde.torch_model.DfkdeModel.compute_probabilities">compute_probabilities</a></li>
 <li><a class="reference internal" href="#anomalib.models.dfkde.torch_model.DfkdeModel.predict">predict</a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.torch_model.DfkdeModel.to_probability">to_probability</a></li>
 <li><a class="reference internal" href="#anomalib.models.dfkde.torch_model.DfkdeModel.forward">forward</a></li>
 </ul>
 </li>
