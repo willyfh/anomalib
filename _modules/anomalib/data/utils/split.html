@@ -487,7 +487,7 @@
 <span class="sd">        DataFrame: Output dataframe where the part of the training set is assigned to test set.</span>
 <span class="sd">    """</span>
 
-    <span class="k">if</span> <span class="n">seed</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">seed</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
     <span class="n">normal_train_image_indices</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">index</span><span class="p">[(</span><span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="s2">"train"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">label</span> <span class="o">==</span> <span class="n">normal_label</span><span class="p">)]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
@@ -512,7 +512,7 @@
 <span class="sd">        normal_label (str): Name of the normal label. For MVTec AD, for instance, this is normal_label.</span>
 <span class="sd">    """</span>
 
-    <span class="k">if</span> <span class="n">seed</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">seed</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
     <span class="c1"># Split normal images.</span>
