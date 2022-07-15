@@ -1,0 +1,76 @@
+:py:mod:`anomalib.data.utils.generators.perlin`
+===============================================
+
+.. py:module:: anomalib.data.utils.generators.perlin
+
+.. autoapi-nested-parse::
+
+   Helper functions for generating Perlin noise.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.data.utils.generators.perlin.lerp_np
+   anomalib.data.utils.generators.perlin.rand_perlin_2d_octaves_np
+   anomalib.data.utils.generators.perlin.generate_perlin_noise_2d
+   anomalib.data.utils.generators.perlin.random_2d_perlin
+   anomalib.data.utils.generators.perlin._rand_perlin_2d_np
+   anomalib.data.utils.generators.perlin._rand_perlin_2d
+   anomalib.data.utils.generators.perlin.rand_perlin_2d_octaves
+
+
+
+.. py:function:: lerp_np(x, y, w)
+
+   Helper function.
+
+
+.. py:function:: rand_perlin_2d_octaves_np(shape, res, octaves=1, persistence=0.5)
+
+   Generate Perlin noise parameterized by the octaves method. Numpy version.
+
+
+.. py:function:: generate_perlin_noise_2d(shape, res)
+
+   Fractal perlin noise.
+
+
+.. py:function:: random_2d_perlin(shape: Tuple, res: Tuple[Union[int, torch.Tensor], Union[int, torch.Tensor]], fade=lambda t: 6 * t**5 - 15 * t**4 + 10 * t**3) -> Union[numpy.ndarray, torch.Tensor]
+
+   Returns a random 2d perlin noise array.
+
+   :param shape: Shape of the 2d map.
+   :type shape: Tuple
+   :param res: Tuple of scales for perlin noise for height and width dimension.
+   :type res: Tuple[Union[int, Tensor]]
+   :param fade: Function used for fading the resulting 2d map.
+                Defaults to equation 6*t**5-15*t**4+10*t**3.
+   :type fade: _type_, optional
+
+   :returns: Random 2d-array/tensor generated using perlin noise.
+   :rtype: Union[np.ndarray, Tensor]
+
+
+.. py:function:: _rand_perlin_2d_np(shape, res, fade=lambda t: 6 * t**5 - 15 * t**4 + 10 * t**3)
+
+   Generate a random image containing Perlin noise. Numpy version.
+
+
+.. py:function:: _rand_perlin_2d(shape, res, fade=lambda t: 6 * t**5 - 15 * t**4 + 10 * t**3)
+
+   Generate a random image containing Perlin noise. PyTorch version.
+
+
+.. py:function:: rand_perlin_2d_octaves(shape, res, octaves=1, persistence=0.5)
+
+   Generate Perlin noise parameterized by the octaves method. PyTorch version.
+
+

@@ -1,0 +1,49 @@
+:py:mod:`anomalib.data.utils.generators`
+========================================
+
+.. py:module:: anomalib.data.utils.generators
+
+.. autoapi-nested-parse::
+
+   Utilities to generate synthetic data.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   perlin/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.data.utils.generators.random_2d_perlin
+
+
+
+.. py:function:: random_2d_perlin(shape: Tuple, res: Tuple[Union[int, torch.Tensor], Union[int, torch.Tensor]], fade=lambda t: 6 * t**5 - 15 * t**4 + 10 * t**3) -> Union[numpy.ndarray, torch.Tensor]
+
+   Returns a random 2d perlin noise array.
+
+   :param shape: Shape of the 2d map.
+   :type shape: Tuple
+   :param res: Tuple of scales for perlin noise for height and width dimension.
+   :type res: Tuple[Union[int, Tensor]]
+   :param fade: Function used for fading the resulting 2d map.
+                Defaults to equation 6*t**5-15*t**4+10*t**3.
+   :type fade: _type_, optional
+
+   :returns: Random 2d-array/tensor generated using perlin noise.
+   :rtype: Union[np.ndarray, Tensor]
+
+
