@@ -30,7 +30,7 @@ Functions
 
 
 
-.. py:function:: split_normal_images_in_train_set(samples: pandas.core.frame.DataFrame, split_ratio: float = 0.1, seed: int = 0, normal_label: str = 'good') -> pandas.core.frame.DataFrame
+.. py:function:: split_normal_images_in_train_set(samples: pandas.core.frame.DataFrame, split_ratio: float = 0.1, seed: Optional[int] = None, normal_label: str = 'good') -> pandas.core.frame.DataFrame
 
    Split normal images in train set.
 
@@ -54,7 +54,7 @@ Functions
    :rtype: DataFrame
 
 
-.. py:function:: create_validation_set_from_test_set(samples: pandas.core.frame.DataFrame, seed: int = 0, normal_label: str = 'good') -> pandas.core.frame.DataFrame
+.. py:function:: create_validation_set_from_test_set(samples: pandas.core.frame.DataFrame, seed: Optional[int] = None, normal_label: str = 'good') -> pandas.core.frame.DataFrame
 
    Craete Validation Set from Test Set.
 

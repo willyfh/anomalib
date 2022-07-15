@@ -464,12 +464,13 @@
 <span class="c1"># and limitations under the License.</span>
 
 <span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">pandas.core.frame</span> <span class="kn">import</span> <span class="n">DataFrame</span>
 
 
 <div class="viewcode-block" id="split_normal_images_in_train_set"><a class="viewcode-back" href="../../../../api/anomalib/data/utils/split/index.html#anomalib.data.utils.split.split_normal_images_in_train_set">[docs]</a><span class="k">def</span> <span class="nf">split_normal_images_in_train_set</span><span class="p">(</span>
-    <span class="n">samples</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">split_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">normal_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"good"</span>
+    <span class="n">samples</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">split_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">normal_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"good"</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">"""Split normal images in train set.</span>
 
@@ -490,7 +491,7 @@
 <span class="sd">        DataFrame: Output dataframe where the part of the training set is assigned to test set.</span>
 <span class="sd">    """</span>
 
-    <span class="k">if</span> <span class="n">seed</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">seed</span><span class="p">:</span>
         <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
     <span class="n">normal_train_image_indices</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">index</span><span class="p">[(</span><span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="s2">"train"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">label</span> <span class="o">==</span> <span class="n">normal_label</span><span class="p">)]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
@@ -503,7 +504,9 @@
     <span class="k">return</span> <span class="n">samples</span></div>
 
 
-<div class="viewcode-block" id="create_validation_set_from_test_set"><a class="viewcode-back" href="../../../../api/anomalib/data/utils/split/index.html#anomalib.data.utils.split.create_validation_set_from_test_set">[docs]</a><span class="k">def</span> <span class="nf">create_validation_set_from_test_set</span><span class="p">(</span><span class="n">samples</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">normal_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"good"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+<div class="viewcode-block" id="create_validation_set_from_test_set"><a class="viewcode-back" href="../../../../api/anomalib/data/utils/split/index.html#anomalib.data.utils.split.create_validation_set_from_test_set">[docs]</a><span class="k">def</span> <span class="nf">create_validation_set_from_test_set</span><span class="p">(</span>
+    <span class="n">samples</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">normal_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"good"</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">"""Craete Validation Set from Test Set.</span>
 
 <span class="sd">    This function creates a validation set from test set by splitting both</span>
@@ -515,7 +518,7 @@
 <span class="sd">        normal_label (str): Name of the normal label. For MVTec AD, for instance, this is normal_label.</span>
 <span class="sd">    """</span>
 
-    <span class="k">if</span> <span class="n">seed</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">seed</span><span class="p">:</span>
         <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
     <span class="c1"># Split normal images.</span>

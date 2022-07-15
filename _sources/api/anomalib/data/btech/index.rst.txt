@@ -49,7 +49,7 @@ Attributes
 
    
 
-.. py:function:: make_btech_dataset(path: pathlib.Path, split: Optional[str] = None, split_ratio: float = 0.1, seed: int = 0, create_validation_set: bool = False) -> pandas.core.frame.DataFrame
+.. py:function:: make_btech_dataset(path: pathlib.Path, split: Optional[str] = None, split_ratio: float = 0.1, seed: Optional[int] = None, create_validation_set: bool = False) -> pandas.core.frame.DataFrame
 
    Create BTech samples by parsing the BTech data file structure.
 
@@ -93,7 +93,7 @@ Attributes
    :rtype: DataFrame
 
 
-.. py:class:: BTechDataset(root: Union[pathlib.Path, str], category: str, pre_process: anomalib.pre_processing.PreProcessor, split: str, task: str = 'segmentation', seed: int = 0, create_validation_set: bool = False)
+.. py:class:: BTechDataset(root: Union[pathlib.Path, str], category: str, pre_process: anomalib.pre_processing.PreProcessor, split: str, task: str = 'segmentation', seed: Optional[int] = None, create_validation_set: bool = False)
 
    Bases: :py:obj:`torchvision.datasets.folder.VisionDataset`
 
@@ -119,7 +119,7 @@ Attributes
 
 
 
-.. py:class:: BTech(root: str, category: str, image_size: Optional[Union[int, Tuple[int, int]]] = None, train_batch_size: int = 32, test_batch_size: int = 32, num_workers: int = 8, task: str = 'segmentation', transform_config_train: Optional[Union[str, albumentations.Compose]] = None, transform_config_val: Optional[Union[str, albumentations.Compose]] = None, seed: int = 0, create_validation_set: bool = False)
+.. py:class:: BTech(root: str, category: str, image_size: Optional[Union[int, Tuple[int, int]]] = None, train_batch_size: int = 32, test_batch_size: int = 32, num_workers: int = 8, task: str = 'segmentation', transform_config_train: Optional[Union[str, albumentations.Compose]] = None, transform_config_val: Optional[Union[str, albumentations.Compose]] = None, seed: Optional[int] = None, create_validation_set: bool = False)
 
    Bases: :py:obj:`pytorch_lightning.core.datamodule.LightningDataModule`
 
