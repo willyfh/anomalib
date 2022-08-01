@@ -190,9 +190,9 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../api/anomalib/deploy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/deploy/inferencers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../api/anomalib/deploy/inferencers/base_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base_inference</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../api/anomalib/deploy/inferencers/openvino_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino_inference</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../api/anomalib/deploy/inferencers/torch_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch_inference</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/anomalib/deploy/inferencers/base_inferencer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base_inferencer</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/anomalib/deploy/inferencers/openvino_inferencer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino_inferencer</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/anomalib/deploy/inferencers/torch_inferencer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch_inferencer</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../api/anomalib/deploy/optimize/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.optimize</span></code></a></li>
@@ -445,9 +445,7 @@
 <p>What is tox?</p>
 <blockquote>
 <div><p><code class="docutils literal notranslate"><span class="pre">tox</span></code> aims to automate and standardize testing in Python. It is part of a larger vision of easing the packaging, testing and release process of Python software.</p>
-</div></blockquote>
-<blockquote>
-<div><p>It is a generic virtualenv management and test command line tool you can use for:</p>
+<p>It is a generic virtualenv management and test command line tool you can use for:</p>
 <ul class="simple">
 <li><p>checking that your package installs correctly with different Python versions and interpreters</p></li>
 <li><p>running your tests in each of the environments, configuring your test tool of choice</p></li>
@@ -459,21 +457,27 @@
 <h2>Setting-up and Getting Started<a class="headerlink" href="#setting-up-and-getting-started" title="Permalink to this headline">¶</a></h2>
 <p>Setting up tox is easy</p>
 <ol class="arabic simple">
-<li><p>Create new Conda environment
-<code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">toxenv</span> <span class="pre">python=3.8</span></code></p></li>
-<li><p>Activate the environment
-<code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">toxenv</span></code></p></li>
-<li><p>Install tox
-<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">tox</span></code></p></li>
-<li><p>Run
-<code class="docutils literal notranslate"><span class="pre">tox</span></code>
-It should setup the environments and install the dependencies.</p></li>
+<li><p>Create new Conda environment</p></li>
 </ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">toxenv</span> <span class="pre">python=3.8</span></code></p>
+<ol class="arabic simple">
+<li><p>Activate the environment</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">toxenv</span></code></p>
+<ol class="arabic simple">
+<li><p>Install tox</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">tox</span></code></p>
+<ol class="arabic simple">
+<li><p>Run</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">tox</span></code>
+It should setup the environments and install the dependencies.</p>
+<hr class="docutils"/>
+<p><strong>NOTE</strong></p>
 <p>All developers are required to run tox before creating their MR. If you have setup pre-commit hooks then this step can be skipped.</p>
-</div>
 </section>
+<hr class="docutils"/>
 <section id="brief-explanation-of-tox-ini">
 <h2>Brief Explanation of <code class="docutils literal notranslate"><span class="pre">tox.ini</span></code><a class="headerlink" href="#brief-explanation-of-tox-ini" title="Permalink to this headline">¶</a></h2>
 <p>Here is a brief explanation of <code class="docutils literal notranslate"><span class="pre">tox.ini</span></code> for those who are interested. However, for more details, the readers are directed to the <a class="reference external" href="https://tox.readthedocs.io/">official docs</a>.</p>
@@ -482,15 +486,15 @@ It should setup the environments and install the dependencies.</p></li>
 <p><code class="docutils literal notranslate"><span class="pre">isolated_build</span> <span class="pre">=</span> <span class="pre">True</span></code> tells tox to use a virtual environment instead of using the global python.</p>
 <p><code class="docutils literal notranslate"><span class="pre">skip_missing_interpreters</span> <span class="pre">=</span> <span class="pre">True</span></code> allows tox to run even if some specified environments are missing.</p>
 <p><code class="docutils literal notranslate"><span class="pre">envlist</span></code> This defines all the environments that tox should create. Take for example that we want to create an environment to run <code class="docutils literal notranslate"><span class="pre">black</span></code> formatter. We can name this environment as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">tox</span><span class="p">]</span>
-<span class="n">envlist</span> <span class="o">=</span>
-    <span class="n">black_env</span>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[tox]</span><span class="w"></span>
+<span class="na">envlist</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="na">black_env</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Then to define the commands in this environment all we need to do is start a block with <code class="docutils literal notranslate"><span class="pre">[testenv:black_env]</span></code> and then define the dependencies and call the commands.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">testenv</span><span class="p">:</span><span class="n">black_env</span><span class="p">]</span>
-    <span class="n">deps</span> <span class="o">=</span> <span class="n">black</span>
-    <span class="n">commands</span> <span class="o">=</span> <span class="n">black</span> <span class="o">.</span>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[testenv:black_env]</span><span class="w"></span>
+<span class="w">    </span><span class="na">deps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">black</span><span class="w"></span>
+<span class="w">    </span><span class="na">commands</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">black .</span><span class="w"></span>
 </pre></div>
 </div>
 <p>For a more elaborate setup, refer to the <code class="docutils literal notranslate"><span class="pre">tox.ini</span></code> file in this repository.</p>

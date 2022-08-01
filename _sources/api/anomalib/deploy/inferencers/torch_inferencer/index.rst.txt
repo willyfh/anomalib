@@ -1,7 +1,7 @@
-:py:mod:`anomalib.deploy.inferencers.torch_inference`
-=====================================================
+:py:mod:`anomalib.deploy.inferencers.torch_inferencer`
+======================================================
 
-.. py:module:: anomalib.deploy.inferencers.torch_inference
+.. py:module:: anomalib.deploy.inferencers.torch_inferencer
 
 .. autoapi-nested-parse::
 
@@ -17,20 +17,20 @@ Classes
 
 .. autoapisummary::
 
-   anomalib.deploy.inferencers.torch_inference.TorchInferencer
+   anomalib.deploy.inferencers.torch_inferencer.TorchInferencer
 
 
 
 
-.. py:class:: TorchInferencer(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model_source: Union[str, pathlib.Path, anomalib.models.components.AnomalyModule], meta_data_path: Union[str, pathlib.Path] = None)
+.. py:class:: TorchInferencer(config: Union[str, pathlib.Path, omegaconf.DictConfig, omegaconf.ListConfig], model_source: Union[str, pathlib.Path, anomalib.models.components.AnomalyModule], meta_data_path: Union[str, pathlib.Path] = None)
 
-   Bases: :py:obj:`anomalib.deploy.inferencers.base_inference.Inferencer`
+   Bases: :py:obj:`anomalib.deploy.inferencers.base_inferencer.Inferencer`
 
    PyTorch implementation for the inference.
 
    :param config: Configurable parameters that are used
                   during the training stage.
-   :type config: DictConfig
+   :type config: Union[str, Path, DictConfig, ListConfig]
    :param model_source: Path to the model ckpt file or the Anomaly model.
    :type model_source: Union[str, Path, AnomalyModule]
    :param meta_data_path: Path to metadata file. If none, it tries to load the params
@@ -82,7 +82,7 @@ Classes
       :rtype: Tensor
 
 
-   .. py:method:: post_process(self, predictions: torch.Tensor, meta_data: Optional[Union[Dict, omegaconf.DictConfig]] = None) -> Tuple[numpy.ndarray, float]
+   .. py:method:: post_process(self, predictions: torch.Tensor, meta_data: Optional[Union[Dict, omegaconf.DictConfig]] = None) -> Dict[str, Any]
 
       Post process the output predictions.
 
@@ -93,8 +93,8 @@ Classes
                         Defaults to None.
       :type meta_data: Dict, optional
 
-      :returns: Post processed predictions that are ready to be visualized.
-      :rtype: np.ndarray
+      :returns: Post processed prediction results.
+      :rtype: Dict[str, Union[str, float, np.ndarray]]
 
 
 

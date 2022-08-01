@@ -15,9 +15,9 @@ Submodules
    :titlesonly:
    :maxdepth: 1
 
-   base_inference/index.rst
-   openvino_inference/index.rst
-   torch_inference/index.rst
+   base_inferencer/index.rst
+   openvino_inferencer/index.rst
+   torch_inferencer/index.rst
 
 
 Package Contents
@@ -61,13 +61,13 @@ Classes
       Forward-Pass input to model.
 
 
-   .. py:method:: post_process(self, predictions: Union[numpy.ndarray, torch.Tensor], meta_data: Optional[Dict]) -> Tuple[numpy.ndarray, float]
+   .. py:method:: post_process(self, predictions: Union[numpy.ndarray, torch.Tensor], meta_data: Optional[Dict[str, Any]]) -> Dict[str, Any]
       :abstractmethod:
 
       Post-Process.
 
 
-   .. py:method:: predict(self, image: Union[str, numpy.ndarray, pathlib.Path], superimpose: bool = True, meta_data: Optional[dict] = None, overlay_mask: bool = False) -> Tuple[numpy.ndarray, float]
+   .. py:method:: predict(self, image: Union[str, numpy.ndarray, pathlib.Path], meta_data: Optional[Dict[str, Any]] = None) -> anomalib.post_processing.ImageResult
 
       Perform a prediction for a given input image.
 
@@ -76,15 +76,10 @@ Classes
       :param image: Input image whose output is to be predicted.
                     It could be either a path to image or numpy array itself.
       :type image: Union[str, np.ndarray]
-      :param superimpose: If this is set to True, output predictions
-                          will be superimposed onto the original image. If false, `predict`
-                          method will return the raw heatmap.
-      :type superimpose: bool
-      :param overlay_mask: If this is set to True, output segmentation mask on top of image.
-      :type overlay_mask: bool
+      :param meta_data: Meta-data information such as shape, threshold.
 
-      :returns: Output predictions to be visualized.
-      :rtype: np.ndarray
+      :returns: Prediction results to be visualized.
+      :rtype: ImageResult
 
 
    .. py:method:: _superimpose_segmentation_mask(self, meta_data: dict, anomaly_map: numpy.ndarray, image: numpy.ndarray)
@@ -102,15 +97,15 @@ Classes
       :rtype: np.ndarray
 
 
-   .. py:method:: __call__(self, image: numpy.ndarray) -> Tuple[numpy.ndarray, float]
+   .. py:method:: __call__(self, image: numpy.ndarray) -> anomalib.post_processing.ImageResult
 
       Call predict on the Image.
 
       :param image: Input Image
       :type image: np.ndarray
 
-      :returns: Output predictions to be visualized
-      :rtype: np.ndarray
+      :returns: Prediction results to be visualized.
+      :rtype: ImageResult
 
 
    .. py:method:: _normalize(self, anomaly_maps: Union[torch.Tensor, numpy.ndarray], pred_scores: Union[torch.Tensor, numpy.float32], meta_data: Union[Dict, omegaconf.DictConfig]) -> Tuple[Union[numpy.ndarray, torch.Tensor], float]
@@ -132,7 +127,7 @@ Classes
       :rtype: Tuple[Union[np.ndarray, Tensor], float]
 
 
-   .. py:method:: _load_meta_data(self, path: Optional[Union[str, pathlib.Path]] = None) -> Union[omegaconf.DictConfig, Dict[str, Union[float, numpy.ndarray, torch.Tensor]]]
+   .. py:method:: _load_meta_data(self, path: Optional[Union[str, pathlib.Path]] = None) -> Union[omegaconf.DictConfig, Dict]
 
       Loads the meta data from the given path.
 
@@ -145,15 +140,15 @@ Classes
 
 
 
-.. py:class:: OpenVINOInferencer(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], path: Union[str, pathlib.Path, Tuple[bytes, bytes]], meta_data_path: Union[str, pathlib.Path] = None)
+.. py:class:: OpenVINOInferencer(config: Union[str, pathlib.Path, omegaconf.DictConfig, omegaconf.ListConfig], path: Union[str, pathlib.Path, Tuple[bytes, bytes]], meta_data_path: Union[str, pathlib.Path] = None)
 
-   Bases: :py:obj:`anomalib.deploy.inferencers.base_inference.Inferencer`
+   Bases: :py:obj:`anomalib.deploy.inferencers.base_inferencer.Inferencer`
 
    OpenVINO implementation for the inference.
 
    :param config: Configurable parameters that are used
                   during the training stage.
-   :type config: DictConfig
+   :type config: Union[str, Path, DictConfig, ListConfig]
    :param path: Path to the openvino onnx, xml or bin file.
    :type path: Union[str, Path]
    :param meta_data_path: Path to metadata file. Defaults to None.
@@ -196,7 +191,7 @@ Classes
       :rtype: np.ndarray
 
 
-   .. py:method:: post_process(self, predictions: numpy.ndarray, meta_data: Optional[Union[Dict, omegaconf.DictConfig]] = None) -> Tuple[numpy.ndarray, float]
+   .. py:method:: post_process(self, predictions: numpy.ndarray, meta_data: Optional[Union[Dict, omegaconf.DictConfig]] = None) -> Dict[str, Any]
 
       Post process the output predictions.
 
@@ -207,20 +202,20 @@ Classes
                         Defaults to None.
       :type meta_data: Dict, optional
 
-      :returns: Post processed predictions that are ready to be visualized.
-      :rtype: np.ndarray
+      :returns: Post processed prediction results.
+      :rtype: Dict[str, Any]
 
 
 
-.. py:class:: TorchInferencer(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model_source: Union[str, pathlib.Path, anomalib.models.components.AnomalyModule], meta_data_path: Union[str, pathlib.Path] = None)
+.. py:class:: TorchInferencer(config: Union[str, pathlib.Path, omegaconf.DictConfig, omegaconf.ListConfig], model_source: Union[str, pathlib.Path, anomalib.models.components.AnomalyModule], meta_data_path: Union[str, pathlib.Path] = None)
 
-   Bases: :py:obj:`anomalib.deploy.inferencers.base_inference.Inferencer`
+   Bases: :py:obj:`anomalib.deploy.inferencers.base_inferencer.Inferencer`
 
    PyTorch implementation for the inference.
 
    :param config: Configurable parameters that are used
                   during the training stage.
-   :type config: DictConfig
+   :type config: Union[str, Path, DictConfig, ListConfig]
    :param model_source: Path to the model ckpt file or the Anomaly model.
    :type model_source: Union[str, Path, AnomalyModule]
    :param meta_data_path: Path to metadata file. If none, it tries to load the params
@@ -272,7 +267,7 @@ Classes
       :rtype: Tensor
 
 
-   .. py:method:: post_process(self, predictions: torch.Tensor, meta_data: Optional[Union[Dict, omegaconf.DictConfig]] = None) -> Tuple[numpy.ndarray, float]
+   .. py:method:: post_process(self, predictions: torch.Tensor, meta_data: Optional[Union[Dict, omegaconf.DictConfig]] = None) -> Dict[str, Any]
 
       Post process the output predictions.
 
@@ -283,8 +278,8 @@ Classes
                         Defaults to None.
       :type meta_data: Dict, optional
 
-      :returns: Post processed predictions that are ready to be visualized.
-      :rtype: np.ndarray
+      :returns: Post processed prediction results.
+      :rtype: Dict[str, Union[str, float, np.ndarray]]
 
 
 

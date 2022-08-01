@@ -190,9 +190,9 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../deploy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../deploy/inferencers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../deploy/inferencers/base_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base_inference</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../deploy/inferencers/openvino_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino_inference</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../deploy/inferencers/torch_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch_inference</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../deploy/inferencers/base_inferencer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base_inferencer</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../deploy/inferencers/openvino_inferencer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino_inferencer</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../deploy/inferencers/torch_inferencer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch_inferencer</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../deploy/optimize/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.optimize</span></code></a></li>
@@ -473,7 +473,10 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.post_processing.Visualizer" title="anomalib.post_processing.Visualizer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Visualizer</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.post_processing.ImageResult" title="anomalib.post_processing.ImageResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageResult</span></code></a></p></td>
+<td><p>Collection of data needed to visualize the predictions for an image.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.post_processing.Visualizer" title="anomalib.post_processing.Visualizer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Visualizer</span></code></a></p></td>
 <td><p>Class that handles the logic of composing the visualizations.</p></td>
 </tr>
 </tbody>
@@ -579,6 +582,48 @@ be normalized to image min-max</p></li>
 </dl>
 </dd></dl>
 <dl class="py class">
+<dt class="sig sig-object py" id="anomalib.post_processing.ImageResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.post_processing.</span></span><span class="sig-name descname"><span class="pre">ImageResult</span></span><a class="reference internal" href="../../../_modules/anomalib/post_processing/visualizer.html#ImageResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.post_processing.ImageResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collection of data needed to visualize the predictions for an image.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.post_processing.ImageResult.image">
+<span class="sig-name descname"><span class="pre">image</span></span><em class="property"><span class="w"> </span><span class="pre">:numpy.ndarray</span></em><a class="headerlink" href="#anomalib.post_processing.ImageResult.image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.post_processing.ImageResult.pred_score">
+<span class="sig-name descname"><span class="pre">pred_score</span></span><em class="property"><span class="w"> </span><span class="pre">:float</span></em><a class="headerlink" href="#anomalib.post_processing.ImageResult.pred_score" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.post_processing.ImageResult.pred_label">
+<span class="sig-name descname"><span class="pre">pred_label</span></span><em class="property"><span class="w"> </span><span class="pre">:str</span></em><a class="headerlink" href="#anomalib.post_processing.ImageResult.pred_label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.post_processing.ImageResult.anomaly_map">
+<span class="sig-name descname"><span class="pre">anomaly_map</span></span><em class="property"><span class="w"> </span><span class="pre">:Optional[numpy.ndarray]</span></em><a class="headerlink" href="#anomalib.post_processing.ImageResult.anomaly_map" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.post_processing.ImageResult.gt_mask">
+<span class="sig-name descname"><span class="pre">gt_mask</span></span><em class="property"><span class="w"> </span><span class="pre">:Optional[numpy.ndarray]</span></em><a class="headerlink" href="#anomalib.post_processing.ImageResult.gt_mask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.post_processing.ImageResult.pred_mask">
+<span class="sig-name descname"><span class="pre">pred_mask</span></span><em class="property"><span class="w"> </span><span class="pre">:Optional[numpy.ndarray]</span></em><a class="headerlink" href="#anomalib.post_processing.ImageResult.pred_mask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.post_processing.ImageResult.heat_map">
+<span class="sig-name descname"><span class="pre">heat_map</span></span><em class="property"><span class="w"> </span><span class="pre">:numpy.ndarray</span></em><a class="headerlink" href="#anomalib.post_processing.ImageResult.heat_map" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.post_processing.ImageResult.segmentations">
+<span class="sig-name descname"><span class="pre">segmentations</span></span><em class="property"><span class="w"> </span><span class="pre">:numpy.ndarray</span></em><a class="headerlink" href="#anomalib.post_processing.ImageResult.segmentations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.post_processing.ImageResult.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#anomalib.post_processing.ImageResult.__post_init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate heatmap overlay and segmentations, convert masks to images.</p>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
 <dt class="sig sig-object py" id="anomalib.post_processing.Visualizer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.post_processing.</span></span><span class="sig-name descname"><span class="pre">Visualizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/anomalib/post_processing/visualizer.html#Visualizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.post_processing.Visualizer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class that handles the logic of composing the visualizations.</p>
@@ -605,11 +650,11 @@ be normalized to image min-max</p></li>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.post_processing.Visualizer.visualize_image">
-<span class="sig-name descname"><span class="pre">visualize_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="visualizer/index.html#anomalib.post_processing.visualizer.ImageResult" title="anomalib.post_processing.visualizer.ImageResult"><span class="pre">ImageResult</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#anomalib.post_processing.Visualizer.visualize_image" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">visualize_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#anomalib.post_processing.ImageResult" title="anomalib.post_processing.ImageResult"><span class="pre">ImageResult</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#anomalib.post_processing.Visualizer.visualize_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate the visualization for an image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>image_result</strong> (<a class="reference internal" href="visualizer/index.html#anomalib.post_processing.visualizer.ImageResult" title="anomalib.post_processing.visualizer.ImageResult"><em>ImageResult</em></a>) – GT and Prediction data for a single image.</p>
+<dd class="field-odd"><p><strong>image_result</strong> (<a class="reference internal" href="#anomalib.post_processing.ImageResult" title="anomalib.post_processing.ImageResult"><em>ImageResult</em></a>) – GT and Prediction data for a single image.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The full or simple visualization for the image, depending on the specified mode.</p>
@@ -618,14 +663,14 @@ be normalized to image min-max</p></li>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.post_processing.Visualizer._visualize_full">
-<span class="sig-name descname"><span class="pre">_visualize_full</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="visualizer/index.html#anomalib.post_processing.visualizer.ImageResult" title="anomalib.post_processing.visualizer.ImageResult"><span class="pre">ImageResult</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.post_processing.Visualizer._visualize_full" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">_visualize_full</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#anomalib.post_processing.ImageResult" title="anomalib.post_processing.ImageResult"><span class="pre">ImageResult</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#anomalib.post_processing.Visualizer._visualize_full" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate the full set of visualization for an image.</p>
 <p>The full visualization mode shows a grid with subplots that contain the original image, the GT mask (if
 available), the predicted heat map, the predicted segmentation mask (if available), and the predicted
 segmentations (if available).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>image_result</strong> (<a class="reference internal" href="visualizer/index.html#anomalib.post_processing.visualizer.ImageResult" title="anomalib.post_processing.visualizer.ImageResult"><em>ImageResult</em></a>) – GT and Prediction data for a single image.</p>
+<dd class="field-odd"><p><strong>image_result</strong> (<a class="reference internal" href="#anomalib.post_processing.ImageResult" title="anomalib.post_processing.ImageResult"><em>ImageResult</em></a>) – GT and Prediction data for a single image.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>An image showing the full set of visualizations for the input image.</p>
@@ -634,12 +679,12 @@ segmentations (if available).</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.post_processing.Visualizer._visualize_simple">
-<span class="sig-name descname"><span class="pre">_visualize_simple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.post_processing.Visualizer._visualize_simple" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">_visualize_simple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#anomalib.post_processing.ImageResult" title="anomalib.post_processing.ImageResult"><span class="pre">ImageResult</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#anomalib.post_processing.Visualizer._visualize_simple" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a simple visualization for an image.</p>
 <p>The simple visualization mode only shows the model’s predictions in a single image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>image_result</strong> (<a class="reference internal" href="visualizer/index.html#anomalib.post_processing.visualizer.ImageResult" title="anomalib.post_processing.visualizer.ImageResult"><em>ImageResult</em></a>) – GT and Prediction data for a single image.</p>
+<dd class="field-odd"><p><strong>image_result</strong> (<a class="reference internal" href="#anomalib.post_processing.ImageResult" title="anomalib.post_processing.ImageResult"><em>ImageResult</em></a>) – GT and Prediction data for a single image.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>An image showing the simple visualization for the input image.</p>
@@ -648,7 +693,7 @@ segmentations (if available).</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.post_processing.Visualizer.show">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.post_processing.Visualizer.show" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#anomalib.post_processing.Visualizer.show" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show an image on the screen.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -662,7 +707,7 @@ segmentations (if available).</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.post_processing.Visualizer.save">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.post_processing.Visualizer.save" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#anomalib.post_processing.Visualizer.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save an image to the file system.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -743,6 +788,18 @@ segmentations (if available).</p>
 <li><a class="reference internal" href="#anomalib.post_processing.anomaly_map_to_color_map">anomaly_map_to_color_map</a></li>
 <li><a class="reference internal" href="#anomalib.post_processing.compute_mask">compute_mask</a></li>
 <li><a class="reference internal" href="#anomalib.post_processing.superimpose_anomaly_map">superimpose_anomaly_map</a></li>
+<li><a class="reference internal" href="#anomalib.post_processing.ImageResult">ImageResult</a><ul>
+<li><a class="reference internal" href="#anomalib.post_processing.ImageResult.image">image</a></li>
+<li><a class="reference internal" href="#anomalib.post_processing.ImageResult.pred_score">pred_score</a></li>
+<li><a class="reference internal" href="#anomalib.post_processing.ImageResult.pred_label">pred_label</a></li>
+<li><a class="reference internal" href="#anomalib.post_processing.ImageResult.anomaly_map">anomaly_map</a></li>
+<li><a class="reference internal" href="#anomalib.post_processing.ImageResult.gt_mask">gt_mask</a></li>
+<li><a class="reference internal" href="#anomalib.post_processing.ImageResult.pred_mask">pred_mask</a></li>
+<li><a class="reference internal" href="#anomalib.post_processing.ImageResult.heat_map">heat_map</a></li>
+<li><a class="reference internal" href="#anomalib.post_processing.ImageResult.segmentations">segmentations</a></li>
+<li><a class="reference internal" href="#anomalib.post_processing.ImageResult.__post_init__">__post_init__</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#anomalib.post_processing.Visualizer">Visualizer</a><ul>
 <li><a class="reference internal" href="#anomalib.post_processing.Visualizer.visualize_batch">visualize_batch</a></li>
 <li><a class="reference internal" href="#anomalib.post_processing.Visualizer.visualize_image">visualize_image</a></li>

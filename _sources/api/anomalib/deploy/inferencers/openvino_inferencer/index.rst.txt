@@ -1,7 +1,7 @@
-:py:mod:`anomalib.deploy.inferencers.openvino_inference`
-========================================================
+:py:mod:`anomalib.deploy.inferencers.openvino_inferencer`
+=========================================================
 
-.. py:module:: anomalib.deploy.inferencers.openvino_inference
+.. py:module:: anomalib.deploy.inferencers.openvino_inferencer
 
 .. autoapi-nested-parse::
 
@@ -17,20 +17,20 @@ Classes
 
 .. autoapisummary::
 
-   anomalib.deploy.inferencers.openvino_inference.OpenVINOInferencer
+   anomalib.deploy.inferencers.openvino_inferencer.OpenVINOInferencer
 
 
 
 
-.. py:class:: OpenVINOInferencer(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], path: Union[str, pathlib.Path, Tuple[bytes, bytes]], meta_data_path: Union[str, pathlib.Path] = None)
+.. py:class:: OpenVINOInferencer(config: Union[str, pathlib.Path, omegaconf.DictConfig, omegaconf.ListConfig], path: Union[str, pathlib.Path, Tuple[bytes, bytes]], meta_data_path: Union[str, pathlib.Path] = None)
 
-   Bases: :py:obj:`anomalib.deploy.inferencers.base_inference.Inferencer`
+   Bases: :py:obj:`anomalib.deploy.inferencers.base_inferencer.Inferencer`
 
    OpenVINO implementation for the inference.
 
    :param config: Configurable parameters that are used
                   during the training stage.
-   :type config: DictConfig
+   :type config: Union[str, Path, DictConfig, ListConfig]
    :param path: Path to the openvino onnx, xml or bin file.
    :type path: Union[str, Path]
    :param meta_data_path: Path to metadata file. Defaults to None.
@@ -73,7 +73,7 @@ Classes
       :rtype: np.ndarray
 
 
-   .. py:method:: post_process(self, predictions: numpy.ndarray, meta_data: Optional[Union[Dict, omegaconf.DictConfig]] = None) -> Tuple[numpy.ndarray, float]
+   .. py:method:: post_process(self, predictions: numpy.ndarray, meta_data: Optional[Union[Dict, omegaconf.DictConfig]] = None) -> Dict[str, Any]
 
       Post process the output predictions.
 
@@ -84,8 +84,8 @@ Classes
                         Defaults to None.
       :type meta_data: Dict, optional
 
-      :returns: Post processed predictions that are ready to be visualized.
-      :rtype: np.ndarray
+      :returns: Post processed prediction results.
+      :rtype: Dict[str, Any]
 
 
 

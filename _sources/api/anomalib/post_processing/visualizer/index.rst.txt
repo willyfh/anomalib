@@ -44,7 +44,7 @@ Classes
       
 
    .. py:attribute:: anomaly_map
-      :annotation: :numpy.ndarray
+      :annotation: :Optional[numpy.ndarray]
 
       
 
@@ -68,7 +68,7 @@ Classes
 
       
 
-   .. py:method:: __post_init__(self)
+   .. py:method:: __post_init__(self) -> None
 
       Generate heatmap overlay and segmentations, convert masks to images.
 
@@ -103,7 +103,7 @@ Classes
       :returns: The full or simple visualization for the image, depending on the specified mode.
 
 
-   .. py:method:: _visualize_full(self, image_result: ImageResult)
+   .. py:method:: _visualize_full(self, image_result: ImageResult) -> numpy.ndarray
 
       Generate the full set of visualization for an image.
 
@@ -117,7 +117,7 @@ Classes
       :returns: An image showing the full set of visualizations for the input image.
 
 
-   .. py:method:: _visualize_simple(self, image_result)
+   .. py:method:: _visualize_simple(self, image_result: ImageResult) -> numpy.ndarray
 
       Generate a simple visualization for an image.
 
@@ -129,7 +129,7 @@ Classes
       :returns: An image showing the simple visualization for the input image.
 
 
-   .. py:method:: show(title: str, image: numpy.ndarray, delay: int = 0)
+   .. py:method:: show(title: str, image: numpy.ndarray, delay: int = 0) -> None
       :staticmethod:
 
       Show an image on the screen.
@@ -142,7 +142,7 @@ Classes
       :type delay: int
 
 
-   .. py:method:: save(file_path: pathlib.Path, image: numpy.ndarray)
+   .. py:method:: save(file_path: pathlib.Path, image: numpy.ndarray) -> None
       :staticmethod:
 
       Save an image to the file system.
@@ -161,7 +161,7 @@ Classes
    Individual images can be added with the `add_image` method. When all images have been added, the `generate` method
    must be called to compile the image grid and obtain the final visualization.
 
-   .. py:method:: add_image(self, image: numpy.ndarray, title: Optional[str] = None, color_map: Optional[str] = None)
+   .. py:method:: add_image(self, image: numpy.ndarray, title: Optional[str] = None, color_map: Optional[str] = None) -> None
 
       Add an image to the grid.
 

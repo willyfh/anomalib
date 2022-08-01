@@ -190,9 +190,9 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../deploy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../deploy/inferencers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../../deploy/inferencers/base_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base_inference</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../../deploy/inferencers/openvino_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino_inference</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../../deploy/inferencers/torch_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch_inference</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../deploy/inferencers/base_inferencer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base_inferencer</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../deploy/inferencers/openvino_inferencer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino_inferencer</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../deploy/inferencers/torch_inferencer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch_inferencer</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../deploy/optimize/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.optimize</span></code></a></li>
@@ -493,10 +493,13 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#anomalib.data.utils.random_2d_perlin" title="anomalib.data.utils.random_2d_perlin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random_2d_perlin</span></code></a>(shape: Tuple, res: Tuple[Union[int, torch.Tensor], Union[int, torch.Tensor]], fade=lambda t: 6 * t**5 - 15 * t**4 + 10 * t**3) → Union[numpy.ndarray, torch.Tensor]</p></td>
 <td><p>Returns a random 2d perlin noise array.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.data.utils.get_image_filenames" title="anomalib.data.utils.get_image_filenames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_image_filenames</span></code></a>(path: Union[str, pathlib.Path]) → List[str]</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.data.utils.generate_output_image_filename" title="anomalib.data.utils.generate_output_image_filename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_output_image_filename</span></code></a>(input_path: Union[str, pathlib.Path], output_path: Union[str, pathlib.Path]) → pathlib.Path</p></td>
+<td><p>Generate an output filename to save the inference image.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.data.utils.get_image_filenames" title="anomalib.data.utils.get_image_filenames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_image_filenames</span></code></a>(path: Union[str, pathlib.Path]) → List[pathlib.Path]</p></td>
 <td><p>Get image filenames.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.data.utils.read_image" title="anomalib.data.utils.read_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_image</span></code></a>(path: Union[str, pathlib.Path]) → numpy.ndarray</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.data.utils.read_image" title="anomalib.data.utils.read_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_image</span></code></a>(path: Union[str, pathlib.Path]) → numpy.ndarray</p></td>
 <td><p>Read image from disk in RGB format.</p></td>
 </tr>
 </tbody>
@@ -653,8 +656,53 @@ Defaults to equation 6*t**5-15*t**4+10*t**3.</p></li>
 </dl>
 </dd></dl>
 <dl class="py function">
+<dt class="sig sig-object py" id="anomalib.data.utils.generate_output_image_filename">
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">generate_output_image_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">pathlib.Path</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/utils/image.html#generate_output_image_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.generate_output_image_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an output filename to save the inference image.</p>
+<p>This function generates an output filaname by checking the input and output filenames. Input path is
+the input to infer, and output path is the path to save the output predictions specified by the user.</p>
+<p>The function expects <code class="docutils literal notranslate"><span class="pre">input_path</span></code> to always be a file, not a directory. <code class="docutils literal notranslate"><span class="pre">output_path</span></code> could be a
+filename or directory. If it is a filename, the function checks if the specified filename exists on
+the file system. If yes, the function calls <code class="docutils literal notranslate"><span class="pre">duplicate_filename</span></code> to duplicate the filename to avoid
+overwriting the existing file. If <code class="docutils literal notranslate"><span class="pre">output_path</span></code> is a directory, this function adds the parent and
+filenames of <code class="docutils literal notranslate"><span class="pre">input_path</span></code> to <code class="docutils literal notranslate"><span class="pre">output_path</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_path</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em>) – Path to the input image to infer.</p></li>
+<li><p><strong>output_path</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em>) – Path to output to save the predictions.
+Could be a filename or a directory.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">input_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"datasets/MVTec/bottle/test/broken_large/000.png"</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"datasets/MVTec/bottle/test/broken_large/000.png"</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generate_output_image_filename</span><span class="p">(</span><span class="n">input_path</span><span class="p">,</span> <span class="n">output_path</span><span class="p">)</span>
+<span class="go">PosixPath('datasets/MVTec/bottle/test/broken_large/000_1.png')</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">input_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"datasets/MVTec/bottle/test/broken_large/000.png"</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"results/images"</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generate_output_image_filename</span><span class="p">(</span><span class="n">input_path</span><span class="p">,</span> <span class="n">output_path</span><span class="p">)</span>
+<span class="go">PosixPath('results/images/broken_large/000.png')</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – When the <code class="docutils literal notranslate"><span class="pre">input_path</span></code> is not a file.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The output filename to save the output predictions from the inferencer.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Path</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
 <dt class="sig sig-object py" id="anomalib.data.utils.get_image_filenames">
-<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">get_image_filenames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/utils/image.html#get_image_filenames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.get_image_filenames" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">get_image_filenames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/utils/image.html#get_image_filenames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.get_image_filenames" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get image filenames.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -664,7 +712,7 @@ Defaults to equation 6*t**5-15*t**4+10*t**3.</p></li>
 <dd class="field-even"><p>List of image filenames</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>List[str]</p>
+<dd class="field-odd"><p>List[Path]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -757,6 +805,7 @@ Defaults to equation 6*t**5-15*t**4+10*t**3.</p></li>
 </li>
 <li><a class="reference internal" href="#anomalib.data.utils.hash_check">hash_check</a></li>
 <li><a class="reference internal" href="#anomalib.data.utils.random_2d_perlin">random_2d_perlin</a></li>
+<li><a class="reference internal" href="#anomalib.data.utils.generate_output_image_filename">generate_output_image_filename</a></li>
 <li><a class="reference internal" href="#anomalib.data.utils.get_image_filenames">get_image_filenames</a></li>
 <li><a class="reference internal" href="#anomalib.data.utils.read_image">read_image</a></li>
 </ul>

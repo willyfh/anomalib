@@ -36,6 +36,7 @@ Classes
 
 .. autoapisummary::
 
+   anomalib.post_processing.ImageResult
    anomalib.post_processing.Visualizer
 
 
@@ -114,6 +115,56 @@ Functions
    :rtype: np.ndarray
 
 
+.. py:class:: ImageResult
+
+   Collection of data needed to visualize the predictions for an image.
+
+   .. py:attribute:: image
+      :annotation: :numpy.ndarray
+
+      
+
+   .. py:attribute:: pred_score
+      :annotation: :float
+
+      
+
+   .. py:attribute:: pred_label
+      :annotation: :str
+
+      
+
+   .. py:attribute:: anomaly_map
+      :annotation: :Optional[numpy.ndarray]
+
+      
+
+   .. py:attribute:: gt_mask
+      :annotation: :Optional[numpy.ndarray]
+
+      
+
+   .. py:attribute:: pred_mask
+      :annotation: :Optional[numpy.ndarray]
+
+      
+
+   .. py:attribute:: heat_map
+      :annotation: :numpy.ndarray
+
+      
+
+   .. py:attribute:: segmentations
+      :annotation: :numpy.ndarray
+
+      
+
+   .. py:method:: __post_init__(self) -> None
+
+      Generate heatmap overlay and segmentations, convert masks to images.
+
+
+
 .. py:class:: Visualizer(mode: str, task: str)
 
    Class that handles the logic of composing the visualizations.
@@ -143,7 +194,7 @@ Functions
       :returns: The full or simple visualization for the image, depending on the specified mode.
 
 
-   .. py:method:: _visualize_full(self, image_result: ImageResult)
+   .. py:method:: _visualize_full(self, image_result: ImageResult) -> numpy.ndarray
 
       Generate the full set of visualization for an image.
 
@@ -157,7 +208,7 @@ Functions
       :returns: An image showing the full set of visualizations for the input image.
 
 
-   .. py:method:: _visualize_simple(self, image_result)
+   .. py:method:: _visualize_simple(self, image_result: ImageResult) -> numpy.ndarray
 
       Generate a simple visualization for an image.
 
@@ -169,7 +220,7 @@ Functions
       :returns: An image showing the simple visualization for the input image.
 
 
-   .. py:method:: show(title: str, image: numpy.ndarray, delay: int = 0)
+   .. py:method:: show(title: str, image: numpy.ndarray, delay: int = 0) -> None
       :staticmethod:
 
       Show an image on the screen.
@@ -182,7 +233,7 @@ Functions
       :type delay: int
 
 
-   .. py:method:: save(file_path: pathlib.Path, image: numpy.ndarray)
+   .. py:method:: save(file_path: pathlib.Path, image: numpy.ndarray) -> None
       :staticmethod:
 
       Save an image to the file system.

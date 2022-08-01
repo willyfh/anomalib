@@ -189,9 +189,9 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/anomalib/deploy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/base_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base_inference</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/openvino_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino_inference</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/torch_inference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch_inference</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/base_inferencer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.base_inferencer</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/openvino_inferencer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.openvino_inferencer</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/deploy/inferencers/torch_inferencer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.inferencers.torch_inferencer</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../api/anomalib/deploy/optimize/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.deploy.optimize</span></code></a></li>
@@ -456,6 +456,7 @@
 <span class="c1"># and limitations under the License.</span>
 
 <span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
@@ -466,31 +467,130 @@
 <span class="kn">from</span> <span class="nn">torchvision.datasets.folder</span> <span class="kn">import</span> <span class="n">IMG_EXTENSIONS</span>
 
 
-<div class="viewcode-block" id="get_image_filenames"><a class="viewcode-back" href="../../../../api/anomalib/data/utils/index.html#anomalib.data.utils.image.get_image_filenames">[docs]</a><span class="k">def</span> <span class="nf">get_image_filenames</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="get_image_filenames"><a class="viewcode-back" href="../../../../api/anomalib/data/utils/index.html#anomalib.data.utils.image.get_image_filenames">[docs]</a><span class="k">def</span> <span class="nf">get_image_filenames</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
     <span class="sd">"""Get image filenames.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path (Union[str, Path]): Path to image or image-folder.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        List[str]: List of image filenames</span>
+<span class="sd">        List[Path]: List of image filenames</span>
 
 <span class="sd">    """</span>
-    <span class="n">image_filenames</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">image_filenames</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">and</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="n">IMG_EXTENSIONS</span><span class="p">:</span>
-        <span class="n">image_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)]</span>
+        <span class="n">image_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">path</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
-        <span class="n">image_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"**/*"</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="n">IMG_EXTENSIONS</span><span class="p">]</span>
+        <span class="n">image_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"**/*"</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="n">IMG_EXTENSIONS</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">image_filenames</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Found 0 images in </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">image_filenames</span></div>
+
+
+<div class="viewcode-block" id="duplicate_filename"><a class="viewcode-back" href="../../../../api/anomalib/data/utils/image/index.html#anomalib.data.utils.image.duplicate_filename">[docs]</a><span class="k">def</span> <span class="nf">duplicate_filename</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+    <span class="sd">"""Check and duplicate filename.</span>
+
+<span class="sd">    This function checks the path and adds a suffix if it already exists on the file system.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path (Union[str, Path]): Input Path</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; path = Path("datasets/MVTec/bottle/test/broken_large/000.png")</span>
+<span class="sd">        &gt;&gt;&gt; path.exists()</span>
+<span class="sd">        True</span>
+
+<span class="sd">        If we pass this to ``duplicate_filename`` function we would get the following:</span>
+<span class="sd">        &gt;&gt;&gt; duplicate_filename(path)</span>
+<span class="sd">        PosixPath('datasets/MVTec/bottle/test/broken_large/000_1.png')</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Path: Duplicated output path.</span>
+<span class="sd">    """</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">duplicated_path</span> <span class="o">=</span> <span class="n">path</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">path</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">"_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="o">+</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">duplicated_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">break</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">duplicated_path</span></div>
+
+
+<div class="viewcode-block" id="generate_output_image_filename"><a class="viewcode-back" href="../../../../api/anomalib/data/utils/index.html#anomalib.data.utils.image.generate_output_image_filename">[docs]</a><span class="k">def</span> <span class="nf">generate_output_image_filename</span><span class="p">(</span><span class="n">input_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">output_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+    <span class="sd">"""Generate an output filename to save the inference image.</span>
+
+<span class="sd">    This function generates an output filaname by checking the input and output filenames. Input path is</span>
+<span class="sd">    the input to infer, and output path is the path to save the output predictions specified by the user.</span>
+
+<span class="sd">    The function expects ``input_path`` to always be a file, not a directory. ``output_path`` could be a</span>
+<span class="sd">    filename or directory. If it is a filename, the function checks if the specified filename exists on</span>
+<span class="sd">    the file system. If yes, the function calls ``duplicate_filename`` to duplicate the filename to avoid</span>
+<span class="sd">    overwriting the existing file. If ``output_path`` is a directory, this function adds the parent and</span>
+<span class="sd">    filenames of ``input_path`` to ``output_path``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        input_path (Union[str, Path]): Path to the input image to infer.</span>
+<span class="sd">        output_path (Union[str, Path]): Path to output to save the predictions.</span>
+<span class="sd">            Could be a filename or a directory.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; input_path = Path("datasets/MVTec/bottle/test/broken_large/000.png")</span>
+<span class="sd">        &gt;&gt;&gt; output_path = Path("datasets/MVTec/bottle/test/broken_large/000.png")</span>
+<span class="sd">        &gt;&gt;&gt; generate_output_image_filename(input_path, output_path)</span>
+<span class="sd">        PosixPath('datasets/MVTec/bottle/test/broken_large/000_1.png')</span>
+
+<span class="sd">        &gt;&gt;&gt; input_path = Path("datasets/MVTec/bottle/test/broken_large/000.png")</span>
+<span class="sd">        &gt;&gt;&gt; output_path = Path("results/images")</span>
+<span class="sd">        &gt;&gt;&gt; generate_output_image_filename(input_path, output_path)</span>
+<span class="sd">        PosixPath('results/images/broken_large/000.png')</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: When the ``input_path`` is not a file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Path: The output filename to save the output predictions from the inferencer.</span>
+<span class="sd">    """</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">input_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">input_path</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">output_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
+
+    <span class="c1"># This function expects an ``input_path`` that is a file. This is to check if output_path</span>
+    <span class="k">if</span> <span class="n">input_path</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"input_path is expected to be a file to generate a proper output filename."</span><span class="p">)</span>
+
+    <span class="n">file_path</span><span class="p">:</span> <span class="n">Path</span>
+    <span class="k">if</span> <span class="n">output_path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">""</span><span class="p">:</span>
+        <span class="c1"># If the output is a directory, then add parent directory name</span>
+        <span class="c1"># and filename to the path. This is to ensure we do not overwrite</span>
+        <span class="c1"># images and organize based on the categories.</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">output_path</span> <span class="o">/</span> <span class="n">input_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="o">/</span> <span class="n">input_path</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">output_path</span>
+
+    <span class="c1"># This new ``file_path`` might contain a directory path yet to be created.</span>
+    <span class="c1"># Create the parent directory to avoid such cases.</span>
+    <span class="n">file_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">file_path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2"> already exists. Renaming the file to avoid overwriting."</span><span class="p">)</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">duplicate_filename</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">file_path</span></div>
 
 
 <div class="viewcode-block" id="read_image"><a class="viewcode-back" href="../../../../api/anomalib/data/utils/index.html#anomalib.data.utils.image.read_image">[docs]</a><span class="k">def</span> <span class="nf">read_image</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>

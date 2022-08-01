@@ -48,6 +48,7 @@ Functions
 
    anomalib.data.utils.hash_check
    anomalib.data.utils.random_2d_perlin
+   anomalib.data.utils.generate_output_image_filename
    anomalib.data.utils.get_image_filenames
    anomalib.data.utils.read_image
 
@@ -217,7 +218,44 @@ Functions
    :rtype: Union[np.ndarray, Tensor]
 
 
-.. py:function:: get_image_filenames(path: Union[str, pathlib.Path]) -> List[str]
+.. py:function:: generate_output_image_filename(input_path: Union[str, pathlib.Path], output_path: Union[str, pathlib.Path]) -> pathlib.Path
+
+   Generate an output filename to save the inference image.
+
+   This function generates an output filaname by checking the input and output filenames. Input path is
+   the input to infer, and output path is the path to save the output predictions specified by the user.
+
+   The function expects ``input_path`` to always be a file, not a directory. ``output_path`` could be a
+   filename or directory. If it is a filename, the function checks if the specified filename exists on
+   the file system. If yes, the function calls ``duplicate_filename`` to duplicate the filename to avoid
+   overwriting the existing file. If ``output_path`` is a directory, this function adds the parent and
+   filenames of ``input_path`` to ``output_path``.
+
+   :param input_path: Path to the input image to infer.
+   :type input_path: Union[str, Path]
+   :param output_path: Path to output to save the predictions.
+                       Could be a filename or a directory.
+   :type output_path: Union[str, Path]
+
+   .. rubric:: Examples
+
+   >>> input_path = Path("datasets/MVTec/bottle/test/broken_large/000.png")
+   >>> output_path = Path("datasets/MVTec/bottle/test/broken_large/000.png")
+   >>> generate_output_image_filename(input_path, output_path)
+   PosixPath('datasets/MVTec/bottle/test/broken_large/000_1.png')
+
+   >>> input_path = Path("datasets/MVTec/bottle/test/broken_large/000.png")
+   >>> output_path = Path("results/images")
+   >>> generate_output_image_filename(input_path, output_path)
+   PosixPath('results/images/broken_large/000.png')
+
+   :raises ValueError: When the ``input_path`` is not a file.
+
+   :returns: The output filename to save the output predictions from the inferencer.
+   :rtype: Path
+
+
+.. py:function:: get_image_filenames(path: Union[str, pathlib.Path]) -> List[pathlib.Path]
 
    Get image filenames.
 
@@ -225,7 +263,7 @@ Functions
    :type path: Union[str, Path]
 
    :returns: List of image filenames
-   :rtype: List[str]
+   :rtype: List[Path]
 
 
 .. py:function:: read_image(path: Union[str, pathlib.Path]) -> numpy.ndarray
