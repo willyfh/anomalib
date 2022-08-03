@@ -509,7 +509,7 @@
 <span class="sd">            Dictionary to which predicted anomaly maps have been added.</span>
 <span class="sd">        """</span>
         <span class="n">prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">"image"</span><span class="p">])</span>
-        <span class="n">batch</span><span class="p">[</span><span class="s2">"anomaly_maps"</span><span class="p">]</span> <span class="o">=</span> <span class="n">prediction</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+        <span class="n">batch</span><span class="p">[</span><span class="s2">"anomaly_maps"</span><span class="p">]</span> <span class="o">=</span> <span class="n">prediction</span>
         <span class="k">return</span> <span class="n">batch</span></div></div>
 
 

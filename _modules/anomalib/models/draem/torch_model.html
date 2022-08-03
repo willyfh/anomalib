@@ -479,7 +479,7 @@
         <span class="n">prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">discriminative_subnetwork</span><span class="p">(</span><span class="n">concatenated_inputs</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">reconstruction</span><span class="p">,</span> <span class="n">prediction</span>
-        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span></div></div>
 
 
 <div class="viewcode-block" id="ReconstructiveSubNetwork"><a class="viewcode-back" href="../../../../api/anomalib/models/draem/torch_model/index.html#anomalib.models.draem.torch_model.ReconstructiveSubNetwork">[docs]</a><span class="k">class</span> <span class="nc">ReconstructiveSubNetwork</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
