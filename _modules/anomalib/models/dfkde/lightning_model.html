@@ -492,6 +492,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
+        <span class="n">layers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
         <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">pre_trained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">max_training_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40000</span><span class="p">,</span>
@@ -503,6 +504,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">DfkdeModel</span><span class="p">(</span>
+            <span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">,</span>
             <span class="n">backbone</span><span class="o">=</span><span class="n">backbone</span><span class="p">,</span>
             <span class="n">pre_trained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">,</span>
             <span class="n">n_comps</span><span class="o">=</span><span class="n">n_components</span><span class="p">,</span>
@@ -571,6 +573,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">layers</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">,</span>
             <span class="n">backbone</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">,</span>
             <span class="n">max_training_points</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">max_training_points</span><span class="p">,</span>
             <span class="n">pre_processing</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">pre_processing</span><span class="p">,</span>

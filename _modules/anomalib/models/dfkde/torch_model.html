@@ -488,6 +488,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
+        <span class="n">layers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
         <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">pre_trained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">n_comps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
@@ -504,7 +505,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">threshold_offset</span> <span class="o">=</span> <span class="n">threshold_offset</span>
 
         <span class="n">_backbone</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="n">backbone</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="n">_backbone</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="s2">"avgpool"</span><span class="p">])</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="n">_backbone</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">pca_model</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kde_model</span> <span class="o">=</span> <span class="n">GaussianKDE</span><span class="p">()</span>
