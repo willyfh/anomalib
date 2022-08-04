@@ -18,6 +18,7 @@ Subpackages
    base/index.rst
    dimensionality_reduction/index.rst
    feature_extractors/index.rst
+   filters/index.rst
    freia/index.rst
    sampling/index.rst
    stats/index.rst
@@ -36,6 +37,7 @@ Classes
    anomalib.models.components.PCA
    anomalib.models.components.SparseRandomProjection
    anomalib.models.components.FeatureExtractor
+   anomalib.models.components.GaussianBlur2d
    anomalib.models.components.KCenterGreedy
    anomalib.models.components.GaussianKDE
    anomalib.models.components.MultiVariateGaussian
@@ -344,6 +346,28 @@ Classes
       :type input_tensor: Tensor
 
       :returns: Feature map extracted from the CNN
+
+
+
+.. py:class:: GaussianBlur2d(kernel_size: Union[Tuple[int, int], int], sigma: Union[Tuple[float, float], float], channels: int, normalize: bool = True, border_type: str = 'reflect', padding: str = 'same')
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   Compute GaussianBlur in 2d.
+
+   Makes use of kornia functions, but most notably the kernel is not computed
+   during the forward pass, and does not depend on the input size. As a caveat,
+   the number of channels that are expected have to be provided during initialization.
+
+   .. py:method:: forward(self, input_tensor: torch.Tensor) -> torch.Tensor
+
+      Blur the input with the computed Gaussian.
+
+      :param input_tensor: Input tensor to be blurred.
+      :type input_tensor: Tensor
+
+      :returns: Blurred output tensor.
+      :rtype: Tensor
 
 
 

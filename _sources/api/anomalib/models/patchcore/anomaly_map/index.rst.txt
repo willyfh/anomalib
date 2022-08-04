@@ -24,6 +24,8 @@ Classes
 
 .. py:class:: AnomalyMapGenerator(input_size: Union[omegaconf.ListConfig, Tuple], sigma: int = 4)
 
+   Bases: :py:obj:`torch.nn.Module`
+
    Generate Anomaly Heatmap.
 
    .. py:method:: compute_anomaly_map(self, patch_scores: torch.Tensor, feature_map_shape: torch.Size) -> torch.Tensor
@@ -51,7 +53,7 @@ Classes
       :rtype: torch.Tensor
 
 
-   .. py:method:: __call__(self, **kwargs: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]
+   .. py:method:: forward(self, **kwargs: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]
 
       Returns anomaly_map and anomaly_score.
 

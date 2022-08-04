@@ -24,6 +24,8 @@ Classes
 
 .. py:class:: AnomalyMapGenerator(image_size: Union[omegaconf.ListConfig, Tuple], sigma: int = 4)
 
+   Bases: :py:obj:`torch.nn.Module`
+
    Generate Anomaly Heatmap.
 
    :param image_size: Size of the input image. The anomaly map is upsampled to this dimension.
@@ -83,7 +85,7 @@ Classes
       :returns: Output anomaly score.
 
 
-   .. py:method:: __call__(self, **kwds)
+   .. py:method:: forward(self, **kwds)
 
       Returns anomaly_map.
 
