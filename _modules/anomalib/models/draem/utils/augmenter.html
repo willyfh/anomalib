@@ -456,6 +456,7 @@
 
 
 <span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
@@ -467,6 +468,11 @@
 <span class="kn">from</span> <span class="nn">torchvision.datasets.folder</span> <span class="kn">import</span> <span class="n">IMG_EXTENSIONS</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.data.utils</span> <span class="kn">import</span> <span class="n">random_2d_perlin</span>
+
+
+<div class="viewcode-block" id="nextpow2"><a class="viewcode-back" href="../../../../../api/anomalib/models/draem/utils/augmenter/index.html#anomalib.models.draem.utils.augmenter.nextpow2">[docs]</a><span class="k">def</span> <span class="nf">nextpow2</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="sd">"""Returns the smallest power of 2 greater than or equal to the input value."""</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span></div>
 
 
 <div class="viewcode-block" id="Augmenter"><a class="viewcode-back" href="../../../../../api/anomalib/models/draem/utils/index.html#anomalib.models.draem.utils.augmenter.Augmenter">[docs]</a><span class="k">class</span> <span class="nc">Augmenter</span><span class="p">:</span>
@@ -529,7 +535,9 @@
         <span class="n">perlin_scalex</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">min_perlin_scale</span><span class="p">,</span> <span class="n">perlin_scale</span><span class="p">)</span>
         <span class="n">perlin_scaley</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">min_perlin_scale</span><span class="p">,</span> <span class="n">perlin_scale</span><span class="p">)</span>
 
-        <span class="n">perlin_noise</span> <span class="o">=</span> <span class="n">random_2d_perlin</span><span class="p">((</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">),</span> <span class="p">(</span><span class="n">perlin_scalex</span><span class="p">,</span> <span class="n">perlin_scaley</span><span class="p">))</span>
+        <span class="n">perlin_noise</span> <span class="o">=</span> <span class="n">random_2d_perlin</span><span class="p">((</span><span class="n">nextpow2</span><span class="p">(</span><span class="n">height</span><span class="p">),</span> <span class="n">nextpow2</span><span class="p">(</span><span class="n">width</span><span class="p">)),</span> <span class="p">(</span><span class="n">perlin_scalex</span><span class="p">,</span> <span class="n">perlin_scaley</span><span class="p">))[</span>
+            <span class="p">:</span><span class="n">height</span><span class="p">,</span> <span class="p">:</span><span class="n">width</span>
+        <span class="p">]</span>
         <span class="n">perlin_noise</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">perlin_noise</span><span class="p">)</span>
 
         <span class="c1"># Create mask from perlin noise</span>
