@@ -472,6 +472,7 @@
     <span class="n">ModelCheckpoint</span><span class="p">,</span>
     <span class="n">TilerConfigurationCallback</span><span class="p">,</span>
     <span class="n">TimerCallback</span><span class="p">,</span>
+    <span class="n">add_visualizer_callback</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">anomalib.utils.loggers</span> <span class="kn">import</span> <span class="n">configure_logger</span>
 
@@ -596,8 +597,8 @@
             <span class="c1">#   that is two-level up.</span>
             <span class="n">default_root_dir</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">resume_from_checkpoint</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="s2">"image_save_path"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">or</span> <span class="n">config</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">image_save_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">subcommand</span><span class="p">]</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">image_save_path</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">path</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">image_save_path</span> <span class="o">==</span> <span class="s2">""</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">subcommand</span><span class="p">]</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">image_save_path</span> <span class="o">=</span> <span class="n">default_root_dir</span> <span class="o">+</span> <span class="s2">"/images"</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">subcommand</span><span class="p">]</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">default_root_dir</span> <span class="o">=</span> <span class="n">default_root_dir</span></div>
 
 <div class="viewcode-block" id="AnomalibCLI.__set_callbacks"><a class="viewcode-back" href="../../../../api/anomalib/utils/cli/cli/index.html#anomalib.utils.cli.cli.AnomalibCLI.__set_callbacks">[docs]</a>    <span class="k">def</span> <span class="nf">__set_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -653,6 +654,9 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">"Unknown normalization type </span><span class="si">{</span><span class="n">normalization</span><span class="si">}</span><span class="s2">. </span><span class="se">\n</span><span class="s2">"</span> <span class="s2">"Available types are either None, min_max or cdf"</span>
                 <span class="p">)</span>
+
+        <span class="n">add_visualizer_callback</span><span class="p">(</span><span class="n">callbacks</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">subcommand</span><span class="p">]</span><span class="o">.</span><span class="n">visualization</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">visualization</span>
 
         <span class="c1"># TODO: https://github.com/openvinotoolkit/anomalib/issues/19</span>
         <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">openvino</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">nncf</span><span class="p">:</span>
