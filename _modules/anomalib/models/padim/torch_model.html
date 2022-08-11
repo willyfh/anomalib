@@ -453,7 +453,6 @@
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
-<span class="kn">import</span> <span class="nn">torchvision</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">FeatureExtractor</span><span class="p">,</span> <span class="n">MultiVariateGaussian</span>
@@ -486,9 +485,9 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tiler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tiler</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="n">backbone</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span> <span class="o">=</span> <span class="n">backbone</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="n">layers</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">),</span> <span class="n">layers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">,</span> <span class="n">pre_trained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dims</span> <span class="o">=</span> <span class="n">DIMS</span><span class="p">[</span><span class="n">backbone</span><span class="p">]</span>
         <span class="c1"># pylint: disable=not-callable</span>
         <span class="c1"># Since idx is randomly selected, save it with model to get same results</span>
@@ -543,7 +542,6 @@
             <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">anomaly_map_generator</span><span class="p">(</span>
                 <span class="n">embedding</span><span class="o">=</span><span class="n">embeddings</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gaussian</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">inv_covariance</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gaussian</span><span class="o">.</span><span class="n">inv_covariance</span>
             <span class="p">)</span>
-
         <span class="k">return</span> <span class="n">output</span></div>
 
 <div class="viewcode-block" id="PadimModel.generate_embedding"><a class="viewcode-back" href="../../../../api/anomalib/models/padim/torch_model/index.html#anomalib.models.padim.torch_model.PadimModel.generate_embedding">[docs]</a>    <span class="k">def</span> <span class="nf">generate_embedding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>

@@ -31,7 +31,7 @@ Classes
 
 
 
-.. py:class:: FeatureExtractor(backbone: torch.nn.Module, layers: Iterable[str])
+.. py:class:: FeatureExtractor(backbone: str, layers: List[str], pre_trained: bool = True)
 
    Bases: :py:obj:`torch.nn.Module`
 
@@ -45,10 +45,9 @@ Classes
    .. rubric:: Example
 
    >>> import torch
-   >>> import torchvision
    >>> from anomalib.core.model.feature_extractor import FeatureExtractor
 
-   >>> model = FeatureExtractor(model=torchvision.models.resnet18(), layers=['layer1', 'layer2', 'layer3'])
+   >>> model = FeatureExtractor(model="resnet18", layers=['layer1', 'layer2', 'layer3'])
    >>> input = torch.rand((32, 3, 256, 256))
    >>> features = model(input)
 
@@ -57,14 +56,14 @@ Classes
    >>> [feature.shape for feature in features.values()]
        [torch.Size([32, 64, 64, 64]), torch.Size([32, 128, 32, 32]), torch.Size([32, 256, 16, 16])]
 
-   .. py:method:: get_features(self, layer_id: str) -> Callable
+   .. py:method:: _map_layer_to_idx(self, offset: int = 3) -> List[int]
 
-      Get layer features.
+      Maps set of layer names to indices of model.
 
-      :param layer_id: Layer ID
-      :type layer_id: str
+      :param offset:
+      :type offset: int
 
-      :returns: Layer features
+      :returns: Feature map extracted from the CNN
 
 
    .. py:method:: forward(self, input_tensor: torch.Tensor) -> Dict[str, torch.Tensor]

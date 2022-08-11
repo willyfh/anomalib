@@ -451,8 +451,10 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
 
+<span class="kn">import</span> <span class="nn">timm</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
@@ -466,10 +468,9 @@
 
 <span class="sd">    Example:</span>
 <span class="sd">        &gt;&gt;&gt; import torch</span>
-<span class="sd">        &gt;&gt;&gt; import torchvision</span>
 <span class="sd">        &gt;&gt;&gt; from anomalib.core.model.feature_extractor import FeatureExtractor</span>
 
-<span class="sd">        &gt;&gt;&gt; model = FeatureExtractor(model=torchvision.models.resnet18(), layers=['layer1', 'layer2', 'layer3'])</span>
+<span class="sd">        &gt;&gt;&gt; model = FeatureExtractor(model="resnet18", layers=['layer1', 'layer2', 'layer3'])</span>
 <span class="sd">        &gt;&gt;&gt; input = torch.rand((32, 3, 256, 256))</span>
 <span class="sd">        &gt;&gt;&gt; features = model(input)</span>
 
@@ -479,42 +480,46 @@
 <span class="sd">            [torch.Size([32, 64, 64, 64]), torch.Size([32, 128, 32, 32]), torch.Size([32, 256, 16, 16])]</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backbone</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> <span class="n">layers</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">layers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">pre_trained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span> <span class="o">=</span> <span class="n">backbone</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="n">layers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_layer_to_idx</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span>
+            <span class="n">backbone</span><span class="p">,</span>
+            <span class="n">pretrained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">,</span>
+            <span class="n">features_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">exportable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">out_indices</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_dims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">feature_info</span><span class="o">.</span><span class="n">channels</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_features</span> <span class="o">=</span> <span class="p">{</span><span class="n">layer</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">out_dims</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="k">for</span> <span class="n">layer_id</span> <span class="ow">in</span> <span class="n">layers</span><span class="p">:</span>
-            <span class="n">layer</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="o">.</span><span class="n">named_modules</span><span class="p">()])[</span><span class="n">layer_id</span><span class="p">]</span>
-            <span class="n">layer</span><span class="o">.</span><span class="n">register_forward_hook</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_features</span><span class="p">(</span><span class="n">layer_id</span><span class="p">))</span>
-            <span class="c1"># get output dimension of features if available</span>
-            <span class="n">layer_modules</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="n">layer</span><span class="o">.</span><span class="n">modules</span><span class="p">()]</span>
-            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layer_modules</span><span class="p">))):</span>
-                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">layer_modules</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="s2">"out_channels"</span><span class="p">):</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">out_dims</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layer_modules</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">out_channels</span><span class="p">)</span>
-                    <span class="k">break</span>
-
-<div class="viewcode-block" id="FeatureExtractor.get_features"><a class="viewcode-back" href="../../../../../api/anomalib/models/components/feature_extractors/feature_extractor/index.html#anomalib.models.components.feature_extractors.feature_extractor.FeatureExtractor.get_features">[docs]</a>    <span class="k">def</span> <span class="nf">get_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
-        <span class="sd">"""Get layer features.</span>
+<div class="viewcode-block" id="FeatureExtractor._map_layer_to_idx"><a class="viewcode-back" href="../../../../../api/anomalib/models/components/feature_extractors/feature_extractor/index.html#anomalib.models.components.feature_extractors.feature_extractor.FeatureExtractor._map_layer_to_idx">[docs]</a>    <span class="k">def</span> <span class="nf">_map_layer_to_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">"""Maps set of layer names to indices of model.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            layer_id (str): Layer ID</span>
+<span class="sd">            offset (int) `timm` ignores the first few layers when indexing please update offset based on need</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Layer features</span>
+<span class="sd">            Feature map extracted from the CNN</span>
 <span class="sd">        """</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">,</span>
+            <span class="n">pretrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">features_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">exportable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">named_children</span><span class="p">())</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="n">offset</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Layer </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> not found in model </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+                <span class="c1"># Remove unfound key from layer dict</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 
-        <span class="k">def</span> <span class="nf">hook</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">__</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
-            <span class="sd">"""Hook to extract features via a forward-pass.</span>
-
-<span class="sd">            Args:</span>
-<span class="sd">              output: Feature map collected after the forward-pass.</span>
-<span class="sd">            """</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">[</span><span class="n">layer_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span>
-
-        <span class="k">return</span> <span class="n">hook</span></div>
+        <span class="k">return</span> <span class="n">idx</span></div>
 
 <div class="viewcode-block" id="FeatureExtractor.forward"><a class="viewcode-back" href="../../../../../api/anomalib/models/components/feature_extractors/feature_extractor/index.html#anomalib.models.components.feature_extractors.feature_extractor.FeatureExtractor.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
         <span class="sd">"""Forward-pass input tensor into the CNN.</span>
@@ -525,9 +530,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Feature map extracted from the CNN</span>
 <span class="sd">        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_features</span> <span class="o">=</span> <span class="p">{</span><span class="n">layer</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">}</span>
-        <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span></div></div>
+        <span class="n">features</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">features</span></div></div>
 </pre></div>
       </article>
       <footer>

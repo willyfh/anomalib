@@ -850,7 +850,7 @@ The input data to project into a smaller dimensional space</p>
 </dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.components.FeatureExtractor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.components.</span></span><span class="sig-name descname"><span class="pre">FeatureExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backbone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.nn.Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.components.FeatureExtractor" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.components.</span></span><span class="sig-name descname"><span class="pre">FeatureExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backbone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_trained</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.components.FeatureExtractor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></p>
 <p>Extract features from a CNN.</p>
 <dl class="field-list simple">
@@ -863,11 +863,10 @@ The input data to project into a smaller dimensional space</p>
 </dl>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">torchvision</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">anomalib.core.model.feature_extractor</span> <span class="kn">import</span> <span class="n">FeatureExtractor</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">(),</span> <span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="s1">'layer1'</span><span class="p">,</span> <span class="s1">'layer2'</span><span class="p">,</span> <span class="s1">'layer3'</span><span class="p">])</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"resnet18"</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="s1">'layer1'</span><span class="p">,</span> <span class="s1">'layer2'</span><span class="p">,</span> <span class="s1">'layer3'</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">features</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
 </pre></div>
@@ -879,15 +878,15 @@ The input data to project into a smaller dimensional space</p>
 </pre></div>
 </div>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.components.FeatureExtractor.get_features">
-<span class="sig-name descname"><span class="pre">get_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="headerlink" href="#anomalib.models.components.FeatureExtractor.get_features" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get layer features.</p>
+<dt class="sig sig-object py" id="anomalib.models.components.FeatureExtractor._map_layer_to_idx">
+<span class="sig-name descname"><span class="pre">_map_layer_to_idx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#anomalib.models.components.FeatureExtractor._map_layer_to_idx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps set of layer names to indices of model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>layer_id</strong> (<em>str</em>) – Layer ID</p>
+<dd class="field-odd"><p><strong>offset</strong> (<em>int</em>) – </p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Layer features</p>
+<dd class="field-even"><p>Feature map extracted from the CNN</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1233,7 +1232,7 @@ weights can be used to assign probabilities to observation vectors. (Default val
 </ul>
 </li>
 <li><a class="reference internal" href="#anomalib.models.components.FeatureExtractor">FeatureExtractor</a><ul>
-<li><a class="reference internal" href="#anomalib.models.components.FeatureExtractor.get_features">get_features</a></li>
+<li><a class="reference internal" href="#anomalib.models.components.FeatureExtractor._map_layer_to_idx">_map_layer_to_idx</a></li>
 <li><a class="reference internal" href="#anomalib.models.components.FeatureExtractor.forward">forward</a></li>
 </ul>
 </li>
