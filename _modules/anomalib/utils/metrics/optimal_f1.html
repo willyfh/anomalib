@@ -488,7 +488,11 @@
         <span class="n">f1_score</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">precision</span> <span class="o">*</span> <span class="n">recall</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">precision</span> <span class="o">+</span> <span class="n">recall</span> <span class="o">+</span> <span class="mf">1e-10</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">thresholds</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">f1_score</span><span class="p">)]</span>
         <span class="n">optimal_f1_score</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">f1_score</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">optimal_f1_score</span></div></div>
+        <span class="k">return</span> <span class="n">optimal_f1_score</span></div>
+
+<div class="viewcode-block" id="OptimalF1.reset"><a class="viewcode-back" href="../../../../api/anomalib/utils/metrics/optimal_f1/index.html#anomalib.utils.metrics.OptimalF1.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""Reset the metric."""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">precision_recall_curve</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div></div>
 </pre></div>
       </article>
       <footer>

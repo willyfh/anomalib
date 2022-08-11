@@ -492,7 +492,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">thresholds</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">thresholds</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">f1_score</span><span class="p">)]</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="AdaptiveThreshold.reset"><a class="viewcode-back" href="../../../../api/anomalib/utils/metrics/adaptive_threshold/index.html#anomalib.utils.metrics.adaptive_threshold.AdaptiveThreshold.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""Reset the metric."""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">precision_recall_curve</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div></div>
 </pre></div>
       </article>
       <footer>
