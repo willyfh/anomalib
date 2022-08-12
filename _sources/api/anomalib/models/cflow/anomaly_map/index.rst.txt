@@ -24,6 +24,8 @@ Classes
 
 .. py:class:: AnomalyMapGenerator(image_size: Union[omegaconf.ListConfig, Tuple], pool_layers: List[str])
 
+   Bases: :py:obj:`torch.nn.Module`
+
    Generate Anomaly Heatmap.
 
    .. py:method:: compute_anomaly_map(self, distribution: Union[List[torch.Tensor], List[List]], height: List[int], width: List[int]) -> torch.Tensor
@@ -37,7 +39,7 @@ Classes
       :returns: Final Anomaly Map
 
 
-   .. py:method:: __call__(self, **kwargs: Union[List[torch.Tensor], List[int], List[List]]) -> torch.Tensor
+   .. py:method:: forward(self, **kwargs: Union[List[torch.Tensor], List[int], List[List]]) -> torch.Tensor
 
       Returns anomaly_map.
 

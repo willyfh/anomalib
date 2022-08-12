@@ -24,9 +24,11 @@ Classes
 
 .. py:class:: AnomalyMapGenerator(input_size: Union[omegaconf.ListConfig, Tuple])
 
+   Bases: :py:obj:`torch.nn.Module`
+
    Generate Anomaly Heatmap.
 
-   .. py:method:: __call__(self, hidden_variables: List[torch.Tensor]) -> torch.Tensor
+   .. py:method:: forward(self, hidden_variables: List[torch.Tensor]) -> torch.Tensor
 
       Generate Anomaly Heatmap.
 

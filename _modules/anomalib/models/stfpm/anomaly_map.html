@@ -453,16 +453,17 @@
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">ListConfig</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
 
-<div class="viewcode-block" id="AnomalyMapGenerator"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/anomaly_map/index.html#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator">[docs]</a><span class="k">class</span> <span class="nc">AnomalyMapGenerator</span><span class="p">:</span>
+<div class="viewcode-block" id="AnomalyMapGenerator"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/anomaly_map/index.html#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator">[docs]</a><span class="k">class</span> <span class="nc">AnomalyMapGenerator</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">"""Generate Anomaly Heatmap."""</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">image_size</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ListConfig</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">],</span>
     <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">PairwiseDistance</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_size</span> <span class="o">=</span> <span class="n">image_size</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">image_size</span><span class="p">)</span>
 
@@ -504,7 +505,7 @@
 
         <span class="k">return</span> <span class="n">anomaly_map</span></div>
 
-<div class="viewcode-block" id="AnomalyMapGenerator.__call__"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/anomaly_map/index.html#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="AnomalyMapGenerator.forward"><a class="viewcode-back" href="../../../../api/anomalib/models/stfpm/anomaly_map/index.html#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Returns anomaly map.</span>
 
 <span class="sd">        Expects `teach_features` and `student_features` keywords to be passed explicitly.</span>
@@ -523,11 +524,11 @@
 <span class="sd">            torch.Tensor: anomaly map</span>
 <span class="sd">        """</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="s2">"teacher_features"</span> <span class="ow">in</span> <span class="n">kwds</span> <span class="ow">and</span> <span class="s2">"student_features"</span> <span class="ow">in</span> <span class="n">kwds</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Expected keys `teacher_features` and `student_features. Found </span><span class="si">{</span><span class="n">kwds</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="s2">"teacher_features"</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">and</span> <span class="s2">"student_features"</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Expected keys `teacher_features` and `student_features. Found </span><span class="si">{</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-        <span class="n">teacher_features</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">"teacher_features"</span><span class="p">]</span>
-        <span class="n">student_features</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">"student_features"</span><span class="p">]</span>
+        <span class="n">teacher_features</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">"teacher_features"</span><span class="p">]</span>
+        <span class="n">student_features</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">"student_features"</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_anomaly_map</span><span class="p">(</span><span class="n">teacher_features</span><span class="p">,</span> <span class="n">student_features</span><span class="p">)</span></div></div>
 </pre></div>

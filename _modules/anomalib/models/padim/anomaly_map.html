@@ -554,7 +554,7 @@
 
         <span class="k">return</span> <span class="n">smoothed_anomaly_map</span></div>
 
-<div class="viewcode-block" id="AnomalyMapGenerator.forward"><a class="viewcode-back" href="../../../../api/anomalib/models/padim/anomaly_map/index.html#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+<div class="viewcode-block" id="AnomalyMapGenerator.forward"><a class="viewcode-back" href="../../../../api/anomalib/models/padim/anomaly_map/index.html#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">"""Returns anomaly_map.</span>
 
 <span class="sd">        Expects `embedding`, `mean` and `covariance` keywords to be passed explicitly.</span>
@@ -570,12 +570,12 @@
 <span class="sd">            torch.Tensor: anomaly map</span>
 <span class="sd">        """</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="s2">"embedding"</span> <span class="ow">in</span> <span class="n">kwds</span> <span class="ow">and</span> <span class="s2">"mean"</span> <span class="ow">in</span> <span class="n">kwds</span> <span class="ow">and</span> <span class="s2">"inv_covariance"</span> <span class="ow">in</span> <span class="n">kwds</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Expected keys `embedding`, `mean` and `covariance`. Found </span><span class="si">{</span><span class="n">kwds</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="s2">"embedding"</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">and</span> <span class="s2">"mean"</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">and</span> <span class="s2">"inv_covariance"</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Expected keys `embedding`, `mean` and `covariance`. Found </span><span class="si">{</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-        <span class="n">embedding</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">"embedding"</span><span class="p">]</span>
-        <span class="n">mean</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">"mean"</span><span class="p">]</span>
-        <span class="n">inv_covariance</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">"inv_covariance"</span><span class="p">]</span>
+        <span class="n">embedding</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">"embedding"</span><span class="p">]</span>
+        <span class="n">mean</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">"mean"</span><span class="p">]</span>
+        <span class="n">inv_covariance</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">"inv_covariance"</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_anomaly_map</span><span class="p">(</span><span class="n">embedding</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">inv_covariance</span><span class="p">)</span></div></div>
 </pre></div>

@@ -24,6 +24,8 @@ Classes
 
 .. py:class:: AnomalyMapGenerator(image_size: Union[omegaconf.ListConfig, Tuple], sigma: int = 4, mode: str = 'multiply')
 
+   Bases: :py:obj:`torch.nn.Module`
+
    Generate Anomaly Heatmap.
 
    :param image_size: Size of original image used for upscaling the anomaly map.
@@ -36,7 +38,7 @@ Classes
 
    :raises ValueError: In case modes other than multiply and add are passed.
 
-   .. py:method:: __call__(self, student_features: List[torch.Tensor], teacher_features: List[torch.Tensor]) -> torch.Tensor
+   .. py:method:: forward(self, student_features: List[torch.Tensor], teacher_features: List[torch.Tensor]) -> torch.Tensor
 
       Computes anomaly map given encoder and decoder features.
 
