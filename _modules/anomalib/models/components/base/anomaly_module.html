@@ -459,13 +459,9 @@
 <span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks.base</span> <span class="kn">import</span> <span class="n">Callback</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">torchmetrics</span> <span class="kn">import</span> <span class="n">Metric</span>
 
-<span class="kn">from</span> <span class="nn">anomalib.utils.metrics</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">AdaptiveThreshold</span><span class="p">,</span>
-    <span class="n">AnomalibMetricCollection</span><span class="p">,</span>
-    <span class="n">AnomalyScoreDistribution</span><span class="p">,</span>
-    <span class="n">MinMax</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">anomalib.utils.metrics</span> <span class="kn">import</span> <span class="n">AdaptiveThreshold</span><span class="p">,</span> <span class="n">AnomalibMetricCollection</span>
 
 <div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../../../api/anomalib/models/components/base/anomaly_module/index.html#anomalib.models.components.base.anomaly_module.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
 
@@ -490,12 +486,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">image_threshold</span> <span class="o">=</span> <span class="n">AdaptiveThreshold</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pixel_threshold</span> <span class="o">=</span> <span class="n">AdaptiveThreshold</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">training_distribution</span> <span class="o">=</span> <span class="n">AnomalyScoreDistribution</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">min_max</span> <span class="o">=</span> <span class="n">MinMax</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalization_metrics</span><span class="p">:</span> <span class="n">Metric</span>
 
-        <span class="c1"># Create placeholders for image and pixel metrics.</span>
-        <span class="c1"># If set from the config file, MetricsConfigurationCallback will</span>
-        <span class="c1">#   create the metric collections upon setup.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_metrics</span><span class="p">:</span> <span class="n">AnomalibMetricCollection</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pixel_metrics</span><span class="p">:</span> <span class="n">AnomalibMetricCollection</span>
 

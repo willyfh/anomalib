@@ -452,7 +452,7 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Callback</span>
@@ -461,18 +461,29 @@
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
 <span class="kn">from</span> <span class="nn">anomalib.post_processing.normalization.min_max</span> <span class="kn">import</span> <span class="n">normalize</span>
+<span class="kn">from</span> <span class="nn">anomalib.utils.metrics</span> <span class="kn">import</span> <span class="n">MinMax</span>
 
 
 <span class="nd">@CALLBACK_REGISTRY</span>
 <div class="viewcode-block" id="MinMaxNormalizationCallback"><a class="viewcode-back" href="../../../../api/anomalib/utils/callbacks/min_max_normalization/index.html#anomalib.utils.callbacks.MinMaxNormalizationCallback">[docs]</a><span class="k">class</span> <span class="nc">MinMaxNormalizationCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
     <span class="sd">"""Callback that normalizes the image-level and pixel-level anomaly scores using min-max normalization."""</span>
 
-<div class="viewcode-block" id="MinMaxNormalizationCallback.on_test_start"><a class="viewcode-back" href="../../../../api/anomalib/utils/callbacks/min_max_normalization/index.html#anomalib.utils.callbacks.MinMaxNormalizationCallback.on_test_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_test_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># pylint: disable=unused-argument</span>
+<div class="viewcode-block" id="MinMaxNormalizationCallback.setup"><a class="viewcode-back" href="../../../../api/anomalib/utils/callbacks/min_max_normalization/index.html#anomalib.utils.callbacks.MinMaxNormalizationCallback.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""Adds min_max metrics to normalization metrics."""</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pl_module</span><span class="p">,</span> <span class="s2">"normalization_metrics"</span><span class="p">):</span>
+            <span class="n">pl_module</span><span class="o">.</span><span class="n">normalization_metrics</span> <span class="o">=</span> <span class="n">MinMax</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pl_module</span><span class="o">.</span><span class="n">normalization_metrics</span><span class="p">,</span> <span class="n">MinMax</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"Expected normalization_metrics to be of type MinMax, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">pl_module</span><span class="o">.</span><span class="n">normalization_metrics</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+            <span class="p">)</span></div>
+
+    <span class="c1"># pylint: disable=unused-argument</span>
+<div class="viewcode-block" id="MinMaxNormalizationCallback.on_test_start"><a class="viewcode-back" href="../../../../api/anomalib/utils/callbacks/min_max_normalization/index.html#anomalib.utils.callbacks.MinMaxNormalizationCallback.on_test_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_test_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Called when the test begins."""</span>
-        <span class="k">if</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">image_metrics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">pl_module</span><span class="o">.</span><span class="n">image_metrics</span><span class="o">.</span><span class="n">set_threshold</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">pixel_metrics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">pl_module</span><span class="o">.</span><span class="n">pixel_metrics</span><span class="o">.</span><span class="n">set_threshold</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span></div>
+        <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="p">(</span><span class="n">pl_module</span><span class="o">.</span><span class="n">image_metrics</span><span class="p">,</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">pixel_metrics</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">metric</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">metric</span><span class="o">.</span><span class="n">set_threshold</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MinMaxNormalizationCallback.on_validation_batch_end"><a class="viewcode-back" href="../../../../api/anomalib/utils/callbacks/min_max_normalization/index.html#anomalib.utils.callbacks.MinMaxNormalizationCallback.on_validation_batch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_batch_end</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -485,9 +496,9 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Called when the validation batch ends, update the min and max observed values."""</span>
         <span class="k">if</span> <span class="s2">"anomaly_maps"</span> <span class="ow">in</span> <span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="n">pl_module</span><span class="o">.</span><span class="n">min_max</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"anomaly_maps"</span><span class="p">])</span>
+            <span class="n">pl_module</span><span class="o">.</span><span class="n">normalization_metrics</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"anomaly_maps"</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">pl_module</span><span class="o">.</span><span class="n">min_max</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">])</span></div>
+            <span class="n">pl_module</span><span class="o">.</span><span class="n">normalization_metrics</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="MinMaxNormalizationCallback.on_test_batch_end"><a class="viewcode-back" href="../../../../api/anomalib/utils/callbacks/min_max_normalization/index.html#anomalib.utils.callbacks.MinMaxNormalizationCallback.on_test_batch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_test_batch_end</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -516,7 +527,7 @@
     <span class="nd">@staticmethod</span>
 <div class="viewcode-block" id="MinMaxNormalizationCallback._normalize_batch"><a class="viewcode-back" href="../../../../api/anomalib/utils/callbacks/min_max_normalization/index.html#anomalib.utils.callbacks.MinMaxNormalizationCallback._normalize_batch">[docs]</a>    <span class="k">def</span> <span class="nf">_normalize_batch</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">):</span>
         <span class="sd">"""Normalize a batch of predictions."""</span>
-        <span class="n">stats</span> <span class="o">=</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">min_max</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">normalization_metrics</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
         <span class="n">outputs</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span>
             <span class="n">outputs</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">],</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">image_threshold</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span> <span class="n">stats</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">max</span>
         <span class="p">)</span>

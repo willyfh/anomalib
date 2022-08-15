@@ -489,16 +489,13 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.sweep.set_in_nested_config" title="anomalib.utils.sweep.set_in_nested_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_in_nested_config</span></code></a>(config: omegaconf.DictConfig, keymap: List, value: Any)</p></td>
 <td><p>Set an item in a nested config object using a list of keys.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_meta_data" title="anomalib.utils.sweep.get_meta_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_meta_data</span></code></a>(model: anomalib.models.components.AnomalyModule, input_size: Tuple[int, int]) → Dict</p></td>
-<td><p>Get meta data for inference.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_openvino_throughput" title="anomalib.utils.sweep.get_openvino_throughput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_openvino_throughput</span></code></a>(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model_path: pathlib.Path, test_dataset: torch.utils.data.DataLoader, meta_data: Dict) → float</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_openvino_throughput" title="anomalib.utils.sweep.get_openvino_throughput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_openvino_throughput</span></code></a>(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model_path: pathlib.Path, test_dataset: torch.utils.data.DataLoader) → float</p></td>
 <td><p>Runs the generated OpenVINO model on a dummy dataset to get throughput.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_sweep_callbacks" title="anomalib.utils.sweep.get_sweep_callbacks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_sweep_callbacks</span></code></a>(config: Union[omegaconf.ListConfig, omegaconf.DictConfig]) → List[pytorch_lightning.Callback]</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_sweep_callbacks" title="anomalib.utils.sweep.get_sweep_callbacks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_sweep_callbacks</span></code></a>(config: Union[omegaconf.ListConfig, omegaconf.DictConfig]) → List[pytorch_lightning.Callback]</p></td>
 <td><p>Gets callbacks relevant to sweep.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_torch_throughput" title="anomalib.utils.sweep.get_torch_throughput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_torch_throughput</span></code></a>(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model: anomalib.models.components.AnomalyModule, test_dataset: torch.utils.data.DataLoader, meta_data: Dict) → float</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.utils.sweep.get_torch_throughput" title="anomalib.utils.sweep.get_torch_throughput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_torch_throughput</span></code></a>(config: Union[omegaconf.DictConfig, omegaconf.ListConfig], model: anomalib.models.components.AnomalyModule, test_dataset: torch.utils.data.DataLoader) → float</p></td>
 <td><p>Tests the model on dummy data. Images are passed sequentially to make the comparision with OpenVINO model fair.</p></td>
 </tr>
 </tbody>
@@ -595,27 +592,8 @@ and values for current run.</p>
 </div>
 </dd></dl>
 <dl class="py function">
-<dt class="sig sig-object py" id="anomalib.utils.sweep.get_meta_data">
-<span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.</span></span><span class="sig-name descname"><span class="pre">get_meta_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../models/components/index.html#anomalib.models.components.AnomalyModule" title="anomalib.models.components.AnomalyModule"><span class="pre">anomalib.models.components.AnomalyModule</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="headerlink" href="#anomalib.utils.sweep.get_meta_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get meta data for inference.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> (<a class="reference internal" href="../../models/components/base/anomaly_module/index.html#anomalib.models.components.base.anomaly_module.AnomalyModule" title="anomalib.models.components.base.anomaly_module.AnomalyModule"><em>AnomalyModule</em></a>) – Trained model from which the metadata is extracted.</p></li>
-<li><p><strong>input_size</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – Input size used to resize the pixel level mean and std.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Metadata as dictionary.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>(Dict)</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py function">
 <dt class="sig sig-object py" id="anomalib.utils.sweep.get_openvino_throughput">
-<span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.</span></span><span class="sig-name descname"><span class="pre">get_openvino_throughput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.utils.data.DataLoader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#anomalib.utils.sweep.get_openvino_throughput" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.</span></span><span class="sig-name descname"><span class="pre">get_openvino_throughput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.utils.data.DataLoader</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#anomalib.utils.sweep.get_openvino_throughput" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs the generated OpenVINO model on a dummy dataset to get throughput.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -623,7 +601,6 @@ and values for current run.</p>
 <li><p><strong>config</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model config.</p></li>
 <li><p><strong>model_path</strong> (<em>Path</em>) – Path to folder containing the OpenVINO models. It then searches <cite>model.xml</cite> in the folder.</p></li>
 <li><p><strong>test_dataset</strong> (<em>DataLoader</em>) – The test dataset used as a reference for the mock dataset.</p></li>
-<li><p><strong>meta_data</strong> (<em>Dict</em>) – Metadata used for normalization.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -652,7 +629,7 @@ and values for current run.</p>
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="anomalib.utils.sweep.get_torch_throughput">
-<span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.</span></span><span class="sig-name descname"><span class="pre">get_torch_throughput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../models/components/index.html#anomalib.models.components.AnomalyModule" title="anomalib.models.components.AnomalyModule"><span class="pre">anomalib.models.components.AnomalyModule</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.utils.data.DataLoader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#anomalib.utils.sweep.get_torch_throughput" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.</span></span><span class="sig-name descname"><span class="pre">get_torch_throughput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../models/components/index.html#anomalib.models.components.AnomalyModule" title="anomalib.models.components.AnomalyModule"><span class="pre">anomalib.models.components.AnomalyModule</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.utils.data.DataLoader</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#anomalib.utils.sweep.get_torch_throughput" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests the model on dummy data. Images are passed sequentially to make the comparision with OpenVINO model fair.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -660,7 +637,6 @@ and values for current run.</p>
 <li><p><strong>config</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model config.</p></li>
 <li><p><strong>model</strong> (<em>Path</em>) – Model on which inference is called.</p></li>
 <li><p><strong>test_dataset</strong> (<em>DataLoader</em>) – The test dataset used as a reference for the mock dataset.</p></li>
-<li><p><strong>meta_data</strong> (<em>Dict</em>) – Metadata used for normalization.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -737,7 +713,6 @@ and values for current run.</p>
 <li><a class="reference internal" href="#anomalib.utils.sweep.flatten_sweep_params">flatten_sweep_params</a></li>
 <li><a class="reference internal" href="#anomalib.utils.sweep.get_run_config">get_run_config</a></li>
 <li><a class="reference internal" href="#anomalib.utils.sweep.set_in_nested_config">set_in_nested_config</a></li>
-<li><a class="reference internal" href="#anomalib.utils.sweep.get_meta_data">get_meta_data</a></li>
 <li><a class="reference internal" href="#anomalib.utils.sweep.get_openvino_throughput">get_openvino_throughput</a></li>
 <li><a class="reference internal" href="#anomalib.utils.sweep.get_sweep_callbacks">get_sweep_callbacks</a></li>
 <li><a class="reference internal" href="#anomalib.utils.sweep.get_torch_throughput">get_torch_throughput</a></li>

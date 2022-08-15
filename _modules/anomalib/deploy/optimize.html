@@ -460,6 +460,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">from</span> <span class="nn">torch.types</span> <span class="kn">import</span> <span class="n">Number</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
 
@@ -474,16 +475,13 @@
 <span class="sd">        Dict[str, Tensor]: metadata</span>
 <span class="sd">    """</span>
     <span class="n">meta_data</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">cached_meta_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">cached_meta_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">Number</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">"image_threshold"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">image_threshold</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
         <span class="s2">"pixel_threshold"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">pixel_threshold</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
-        <span class="s2">"pixel_mean"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">training_distribution</span><span class="o">.</span><span class="n">pixel_mean</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span>
-        <span class="s2">"image_mean"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">training_distribution</span><span class="o">.</span><span class="n">image_mean</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span>
-        <span class="s2">"pixel_std"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">training_distribution</span><span class="o">.</span><span class="n">pixel_std</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span>
-        <span class="s2">"image_std"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">training_distribution</span><span class="o">.</span><span class="n">image_std</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span>
-        <span class="s2">"min"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">min_max</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
-        <span class="s2">"max"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">min_max</span><span class="o">.</span><span class="n">max</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
     <span class="p">}</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">"normalization_metrics"</span><span class="p">)</span> <span class="ow">and</span> <span class="n">model</span><span class="o">.</span><span class="n">normalization_metrics</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">normalization_metrics</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">cached_meta_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
     <span class="c1"># Remove undefined values by copying in a new dict</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">cached_meta_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>

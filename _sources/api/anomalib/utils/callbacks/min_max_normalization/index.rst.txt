@@ -28,7 +28,12 @@ Classes
 
    Callback that normalizes the image-level and pixel-level anomaly scores using min-max normalization.
 
-   .. py:method:: on_test_start(self, _trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule) -> None
+   .. py:method:: setup(self, trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule, stage: Optional[str] = None) -> None
+
+      Adds min_max metrics to normalization metrics.
+
+
+   .. py:method:: on_test_start(self, trainer: pytorch_lightning.Trainer, pl_module: anomalib.models.components.AnomalyModule) -> None
 
       Called when the test begins.
 

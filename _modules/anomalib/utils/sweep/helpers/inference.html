@@ -454,7 +454,7 @@
 
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
@@ -494,45 +494,8 @@
             <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span></div></div>
 
 
-<div class="viewcode-block" id="get_meta_data"><a class="viewcode-back" href="../../../../../api/anomalib/utils/sweep/helpers/inference/index.html#anomalib.utils.sweep.helpers.get_meta_data">[docs]</a><span class="k">def</span> <span class="nf">get_meta_data</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">,</span> <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-    <span class="sd">"""Get meta data for inference.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        model (AnomalyModule): Trained model from which the metadata is extracted.</span>
-<span class="sd">        input_size (Tuple[int, int]): Input size used to resize the pixel level mean and std.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        (Dict): Metadata as dictionary.</span>
-<span class="sd">    """</span>
-    <span class="n">meta_data</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">"image_threshold"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">image_threshold</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
-        <span class="s2">"pixel_threshold"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">pixel_threshold</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
-        <span class="s2">"min"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">min_max</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
-        <span class="s2">"max"</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">min_max</span><span class="o">.</span><span class="n">max</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
-        <span class="s2">"stats"</span><span class="p">:</span> <span class="p">{},</span>
-    <span class="p">}</span>
-
-    <span class="n">image_mean</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">training_distribution</span><span class="o">.</span><span class="n">image_mean</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">image_mean</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">meta_data</span><span class="p">[</span><span class="s2">"stats"</span><span class="p">][</span><span class="s2">"image_mean"</span><span class="p">]</span> <span class="o">=</span> <span class="n">image_mean</span>
-
-    <span class="n">image_std</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">training_distribution</span><span class="o">.</span><span class="n">image_std</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">image_std</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">meta_data</span><span class="p">[</span><span class="s2">"stats"</span><span class="p">][</span><span class="s2">"image_std"</span><span class="p">]</span> <span class="o">=</span> <span class="n">image_std</span>
-
-    <span class="n">pixel_mean</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">training_distribution</span><span class="o">.</span><span class="n">pixel_mean</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">pixel_mean</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">meta_data</span><span class="p">[</span><span class="s2">"stats"</span><span class="p">][</span><span class="s2">"pixel_mean"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pixel_mean</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">input_size</span><span class="p">)</span>
-
-    <span class="n">pixel_std</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">training_distribution</span><span class="o">.</span><span class="n">pixel_std</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">pixel_std</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">meta_data</span><span class="p">[</span><span class="s2">"stats"</span><span class="p">][</span><span class="s2">"pixel_std"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pixel_std</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">input_size</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">meta_data</span></div>
-
-
 <div class="viewcode-block" id="get_torch_throughput"><a class="viewcode-back" href="../../../../../api/anomalib/utils/sweep/helpers/inference/index.html#anomalib.utils.sweep.helpers.get_torch_throughput">[docs]</a><span class="k">def</span> <span class="nf">get_torch_throughput</span><span class="p">(</span>
-    <span class="n">config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">],</span> <span class="n">model</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">,</span> <span class="n">test_dataset</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">meta_data</span><span class="p">:</span> <span class="n">Dict</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">],</span> <span class="n">model</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">,</span> <span class="n">test_dataset</span><span class="p">:</span> <span class="n">DataLoader</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="sd">"""Tests the model on dummy data. Images are passed sequentially to make the comparision with OpenVINO model fair.</span>
 
@@ -540,7 +503,6 @@
 <span class="sd">        config (Union[DictConfig, ListConfig]): Model config.</span>
 <span class="sd">        model (Path): Model on which inference is called.</span>
 <span class="sd">        test_dataset (DataLoader): The test dataset used as a reference for the mock dataset.</span>
-<span class="sd">        meta_data (Dict): Metadata used for normalization.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        float: Inference throughput</span>
@@ -552,7 +514,7 @@
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="c1"># Since we don't care about performance metrics and just the throughput, use mock data.</span>
     <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">torch_dataloader</span><span class="p">():</span>
-        <span class="n">inferencer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">meta_data</span><span class="o">=</span><span class="n">meta_data</span><span class="p">)</span>
+        <span class="n">inferencer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
 
     <span class="c1"># get throughput</span>
     <span class="n">inference_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
@@ -562,26 +524,23 @@
     <span class="k">return</span> <span class="n">throughput</span></div>
 
 
-<div class="viewcode-block" id="get_openvino_throughput"><a class="viewcode-back" href="../../../../../api/anomalib/utils/sweep/helpers/inference/index.html#anomalib.utils.sweep.helpers.get_openvino_throughput">[docs]</a><span class="k">def</span> <span class="nf">get_openvino_throughput</span><span class="p">(</span>
-    <span class="n">config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">],</span> <span class="n">model_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">test_dataset</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">meta_data</span><span class="p">:</span> <span class="n">Dict</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<div class="viewcode-block" id="get_openvino_throughput"><a class="viewcode-back" href="../../../../../api/anomalib/utils/sweep/helpers/inference/index.html#anomalib.utils.sweep.helpers.get_openvino_throughput">[docs]</a><span class="k">def</span> <span class="nf">get_openvino_throughput</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">],</span> <span class="n">model_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">test_dataset</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="sd">"""Runs the generated OpenVINO model on a dummy dataset to get throughput.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        config (Union[DictConfig, ListConfig]): Model config.</span>
 <span class="sd">        model_path (Path): Path to folder containing the OpenVINO models. It then searches `model.xml` in the folder.</span>
 <span class="sd">        test_dataset (DataLoader): The test dataset used as a reference for the mock dataset.</span>
-<span class="sd">        meta_data (Dict): Metadata used for normalization.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        float: Inference throughput</span>
 <span class="sd">    """</span>
-    <span class="n">inferencer</span> <span class="o">=</span> <span class="n">OpenVINOInferencer</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">/</span> <span class="s2">"model.xml"</span><span class="p">)</span>
+    <span class="n">inferencer</span> <span class="o">=</span> <span class="n">OpenVINOInferencer</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">/</span> <span class="s2">"model.xml"</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">/</span> <span class="s2">"meta_data.json"</span><span class="p">)</span>
     <span class="n">openvino_dataloader</span> <span class="o">=</span> <span class="n">MockImageLoader</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span> <span class="n">total_count</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">))</span>
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="c1"># Create test images on CPU. Since we don't care about performance metrics and just the throughput, use mock data.</span>
     <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">openvino_dataloader</span><span class="p">():</span>
-        <span class="n">inferencer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">meta_data</span><span class="o">=</span><span class="n">meta_data</span><span class="p">)</span>
+        <span class="n">inferencer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
 
     <span class="c1"># get throughput</span>
     <span class="n">inference_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
