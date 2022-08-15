@@ -28,7 +28,7 @@ Classes
 
 
 
-.. py:class:: DraemModel
+.. py:class:: DraemModel(sspcab: bool = False)
 
    Bases: :py:obj:`torch.nn.Module`
 
@@ -46,7 +46,7 @@ Classes
 
 
 
-.. py:class:: ReconstructiveSubNetwork(in_channels: int = 3, out_channels: int = 3, base_width=128)
+.. py:class:: ReconstructiveSubNetwork(in_channels: int = 3, out_channels: int = 3, base_width=128, sspcab: bool = False)
 
    Bases: :py:obj:`torch.nn.Module`
 
@@ -150,7 +150,7 @@ Classes
 
 
 
-.. py:class:: EncoderReconstructive(in_channels: int, base_width: int)
+.. py:class:: EncoderReconstructive(in_channels: int, base_width: int, sspcab: bool = False)
 
    Bases: :py:obj:`torch.nn.Module`
 

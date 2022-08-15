@@ -1,0 +1,65 @@
+:py:mod:`anomalib.models.components.layers.sspcab`
+==================================================
+
+.. py:module:: anomalib.models.components.layers.sspcab
+
+.. autoapi-nested-parse::
+
+   SSPCAB: Self-Supervised Predictive Convolutional Attention Block for reconstruction-based models.
+
+   Paper https://arxiv.org/abs/2111.09099
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.models.components.layers.sspcab.AttentionModule
+   anomalib.models.components.layers.sspcab.SSPCAB
+
+
+
+
+.. py:class:: AttentionModule(in_channels: int, reduction_ratio: int = 8)
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   Squeeze and excitation block that acts as the attention module in SSPCAB.
+
+   :param channels: Number of input channels.
+   :type channels: int
+   :param reduction_ratio: Reduction ratio of the attention module.
+   :type reduction_ratio: int
+
+   .. py:method:: forward(self, inputs: torch.Tensor) -> torch.Tensor
+
+      Forward pass through the attention module.
+
+
+
+.. py:class:: SSPCAB(in_channels: int, kernel_size: int = 1, dilation: int = 1, reduction_ratio: int = 8)
+
+   Bases: :py:obj:`torch.nn.Module`
+
+   SSPCAB block.
+
+   :param in_channels: Number of input channels.
+   :type in_channels: int
+   :param kernel_size: Size of the receptive fields of the masked convolution kernel.
+   :type kernel_size: int
+   :param dilation: Dilation factor of the masked convolution kernel.
+   :type dilation: int
+   :param reduction_ratio: Reduction ratio of the attention module.
+   :type reduction_ratio: int
+
+   .. py:method:: forward(self, inputs: torch.Tensor) -> torch.Tensor
+
+      Forward pass through the SSPCAB block.
+
+
+

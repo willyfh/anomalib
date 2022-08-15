@@ -218,7 +218,7 @@ Classes
 
 
 
-.. py:class:: Draem(anomaly_source_path: Optional[str] = None)
+.. py:class:: Draem(enable_sspcab: bool = False, sspcab_lambda: float = 0.1, anomaly_source_path: Optional[str] = None)
 
    Bases: :py:obj:`anomalib.models.components.AnomalyModule`
 
@@ -227,6 +227,11 @@ Classes
    :param anomaly_source_path: Path to folder that contains the anomaly source images. Random noise will
                                be used if left empty.
    :type anomaly_source_path: Optional[str]
+
+   .. py:method:: setup_sspcab(self)
+
+      Prepare the model for the SSPCAB training step by adding forward hooks for the SSPCAB layer activations.
+
 
    .. py:method:: training_step(self, batch, _)
 
