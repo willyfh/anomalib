@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" /><link rel="next" title="anomalib.utils.callbacks.tiler_configuration" href="../tiler_configuration/index.html" /><link rel="prev" title="anomalib.utils.callbacks.model_loader" href="../model_loader/index.html" />
+<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" /><link rel="next" title="anomalib.utils.callbacks.graph" href="../graph/index.html" /><link rel="prev" title="anomalib.utils.callbacks.cdf_normalization" href="../cdf_normalization/index.html" />
 
     <meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
-        <title>anomalib.utils.callbacks.openvino - Anomalib 2021, Anomalib Contributors documentation</title>
+        <title>anomalib.utils.callbacks.export - Anomalib 2021, Anomalib Contributors documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css" />
@@ -351,11 +351,11 @@
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.export</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../graph/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.graph</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
-<li class="toctree-l5 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 </ul>
@@ -447,8 +447,8 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <section id="module-anomalib.utils.callbacks.openvino">
-<span id="anomalib-utils-callbacks-openvino"></span><h1><a class="reference internal" href="#module-anomalib.utils.callbacks.openvino" title="anomalib.utils.callbacks.openvino"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a><a class="headerlink" href="#module-anomalib.utils.callbacks.openvino" title="Permalink to this headline">¶</a></h1>
+        <section id="module-anomalib.utils.callbacks.export">
+<span id="anomalib-utils-callbacks-export"></span><h1><a class="reference internal" href="#module-anomalib.utils.callbacks.export" title="anomalib.utils.callbacks.export"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.export</span></code></a><a class="headerlink" href="#module-anomalib.utils.callbacks.export" title="Permalink to this headline">¶</a></h1>
 <p>Callback that compresses a trained model by first exporting to .onnx format, and then converting to OpenVINO IR.</p>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
@@ -460,7 +460,7 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.callbacks.openvino.OpenVINOCallback" title="anomalib.utils.callbacks.openvino.OpenVINOCallback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OpenVINOCallback</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.callbacks.export.ExportCallback" title="anomalib.utils.callbacks.export.ExportCallback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExportCallback</span></code></a></p></td>
 <td><p>Callback to compresses a trained model.</p></td>
 </tr>
 </tbody>
@@ -474,18 +474,18 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.callbacks.openvino.logger" title="anomalib.utils.callbacks.openvino.logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logger</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.callbacks.export.logger" title="anomalib.utils.callbacks.export.logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logger</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table></div>
 <dl class="py data">
-<dt class="sig sig-object py" id="anomalib.utils.callbacks.openvino.logger">
-<span class="sig-prename descclassname"><span class="pre">anomalib.utils.callbacks.openvino.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/openvino.html#logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.openvino.logger" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.utils.callbacks.export.logger">
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.callbacks.export.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/export.html#logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.export.logger" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 <dl class="py class">
-<dt class="sig sig-object py" id="anomalib.utils.callbacks.openvino.OpenVINOCallback">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.callbacks.openvino.</span></span><span class="sig-name descname"><span class="pre">OpenVINOCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/openvino.html#OpenVINOCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.openvino.OpenVINOCallback" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.utils.callbacks.export.ExportCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.callbacks.export.</span></span><span class="sig-name descname"><span class="pre">ExportCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/export.html#ExportCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.export.ExportCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pytorch_lightning.Callback</span></code></p>
 <p>Callback to compresses a trained model.</p>
 <p>Model is first exported to <code class="docutils literal notranslate"><span class="pre">.onnx</span></code> format, and then converted to OpenVINO IR.</p>
@@ -499,8 +499,8 @@
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.utils.callbacks.openvino.OpenVINOCallback.on_train_end">
-<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../../models/components/index.html#anomalib.models.components.AnomalyModule" title="anomalib.models.components.AnomalyModule"><span class="pre">anomalib.models.components.AnomalyModule</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/openvino.html#OpenVINOCallback.on_train_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.openvino.OpenVINOCallback.on_train_end" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="anomalib.utils.callbacks.export.ExportCallback.on_train_end">
+<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pl_module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../../models/components/index.html#anomalib.models.components.AnomalyModule" title="anomalib.models.components.AnomalyModule"><span class="pre">anomalib.models.components.AnomalyModule</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/utils/callbacks/export.html#ExportCallback.on_train_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.callbacks.export.ExportCallback.on_train_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Call when the train ends.</p>
 <p>Converts the model to <code class="docutils literal notranslate"><span class="pre">onnx</span></code> format and then calls OpenVINO’s model optimizer to get the
 <code class="docutils literal notranslate"><span class="pre">.xml</span></code> and <code class="docutils literal notranslate"><span class="pre">.bin</span></code> IR files.</p>
@@ -514,23 +514,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../tiler_configuration/index.html">
+          <a class="next-page" href="../graph/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.graph</span></code></div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../model_loader/index.html">
+          <a class="prev-page" href="../cdf_normalization/index.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></div>
                 
               </div>
             </a>
@@ -544,7 +544,7 @@
               <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
               <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
             |
-            <a class="muted-link" href="../../../../../_sources/api/anomalib/utils/callbacks/openvino/index.rst.txt"
+            <a class="muted-link" href="../../../../../_sources/api/anomalib/utils/callbacks/export/index.rst.txt"
                rel="nofollow">
               Show Source
             </a>
@@ -564,13 +564,13 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.export</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a></li>
 <li><a class="reference internal" href="#attributes">Attributes</a><ul>
-<li><a class="reference internal" href="#anomalib.utils.callbacks.openvino.logger">logger</a></li>
-<li><a class="reference internal" href="#anomalib.utils.callbacks.openvino.OpenVINOCallback">OpenVINOCallback</a><ul>
-<li><a class="reference internal" href="#anomalib.utils.callbacks.openvino.OpenVINOCallback.on_train_end">on_train_end</a></li>
+<li><a class="reference internal" href="#anomalib.utils.callbacks.export.logger">logger</a></li>
+<li><a class="reference internal" href="#anomalib.utils.callbacks.export.ExportCallback">ExportCallback</a><ul>
+<li><a class="reference internal" href="#anomalib.utils.callbacks.export.ExportCallback.on_train_end">on_train_end</a></li>
 </ul>
 </li>
 </ul>

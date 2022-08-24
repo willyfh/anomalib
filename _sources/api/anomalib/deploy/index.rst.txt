@@ -299,7 +299,7 @@ Functions
 
 
 
-.. py:function:: export_convert(model: anomalib.models.components.AnomalyModule, input_size: Union[List[int], Tuple[int, int]], onnx_path: Union[str, pathlib.Path], export_path: Union[str, pathlib.Path])
+.. py:function:: export_convert(model: anomalib.models.components.AnomalyModule, input_size: Union[List[int], Tuple[int, int]], export_mode: str, export_path: Optional[Union[str, pathlib.Path]] = None)
 
    Export the model to onnx format and convert to OpenVINO IR.
 
@@ -307,10 +307,10 @@ Functions
    :type model: AnomalyModule
    :param input_size: Image size used as the input for onnx converter.
    :type input_size: Union[List[int], Tuple[int, int]]
-   :param onnx_path: Path to output onnx model.
-   :type onnx_path: Union[str, Path]
    :param export_path: Path to exported OpenVINO IR.
    :type export_path: Union[str, Path]
+   :param export_mode: Mode to export onnx or openvino
+   :type export_mode: str
 
 
 .. py:function:: get_model_metadata(model: anomalib.models.components.AnomalyModule) -> Dict[str, torch.Tensor]

@@ -350,11 +350,11 @@
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.export</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/graph/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.graph</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 </ul>
@@ -454,6 +454,7 @@
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">import_module</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
@@ -540,7 +541,9 @@
 <span class="sd">        """</span>
         <span class="c1"># TODO: https://github.com/openvinotoolkit/anomalib/issues/19</span>
         <span class="c1"># TODO: https://github.com/openvinotoolkit/anomalib/issues/20</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--openvino"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Export to ONNX and OpenVINO IR format."</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">"--export_mode"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Select export mode to ONNX or OpenVINO IR format."</span>
+        <span class="p">)</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--nncf"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Path to NNCF config to enable quantized training."</span><span class="p">)</span>
 
         <span class="c1"># ADD CUSTOM CALLBACKS TO CONFIG</span>
@@ -662,23 +665,23 @@
         <span class="n">add_visualizer_callback</span><span class="p">(</span><span class="n">callbacks</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">subcommand</span><span class="p">]</span><span class="o">.</span><span class="n">visualization</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">visualization</span>
 
-        <span class="c1"># TODO: https://github.com/openvinotoolkit/anomalib/issues/19</span>
-        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">openvino</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">nncf</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"OpenVINO and NNCF cannot be set simultaneously."</span><span class="p">)</span>
-
         <span class="c1"># Export to OpenVINO</span>
-        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">openvino</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">anomalib.utils.callbacks.openvino</span> <span class="kn">import</span> <span class="p">(</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
-                <span class="n">OpenVINOCallback</span><span class="p">,</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">export_mode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">anomalib.utils.callbacks.export</span> <span class="kn">import</span> <span class="p">(</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
+                <span class="n">ExportCallback</span><span class="p">,</span>
             <span class="p">)</span>
 
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Setting model export to </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">export_mode</span><span class="p">)</span>
             <span class="n">callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="n">OpenVINOCallback</span><span class="p">(</span>
+                <span class="n">ExportCallback</span><span class="p">(</span>
                     <span class="n">input_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">init_args</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span>
                     <span class="n">dirpath</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">default_root_dir</span><span class="p">,</span> <span class="s2">"compressed"</span><span class="p">),</span>
                     <span class="n">filename</span><span class="o">=</span><span class="s2">"model"</span><span class="p">,</span>
+                    <span class="n">export_mode</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">export_mode</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Export option: </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">export_mode</span><span class="si">}</span><span class="s2"> not found. Defaulting to no model export"</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">nncf</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">nncf</span><span class="p">)</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">nncf</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".yaml"</span><span class="p">):</span>
                 <span class="n">nncf_module</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="s2">"anomalib.core.callbacks.nncf_callback"</span><span class="p">)</span>

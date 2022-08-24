@@ -349,11 +349,11 @@
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/cdf_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.cdf_normalization</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.export</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/graph/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.graph</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/metrics_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.metrics_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/min_max_normalization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.min_max_normalization</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/model_loader/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.model_loader</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/openvino/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.openvino</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/tiler_configuration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.tiler_configuration</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="api/anomalib/utils/callbacks/timer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.callbacks.timer</span></code></a></li>
 </ul>
@@ -1635,6 +1635,13 @@
 </li>
         </ul></li>
         <li>
+    anomalib.utils.callbacks.export
+
+        <ul>
+          <li><a href="api/anomalib/utils/callbacks/export/index.html#module-anomalib.utils.callbacks.export">module</a>
+</li>
+        </ul></li>
+        <li>
     anomalib.utils.callbacks.graph
 
         <ul>
@@ -1681,13 +1688,6 @@
 
         <ul>
           <li><a href="api/anomalib/utils/callbacks/nncf/utils/index.html#module-anomalib.utils.callbacks.nncf.utils">module</a>
-</li>
-        </ul></li>
-        <li>
-    anomalib.utils.callbacks.openvino
-
-        <ul>
-          <li><a href="api/anomalib/utils/callbacks/openvino/index.html#module-anomalib.utils.callbacks.openvino">module</a>
 </li>
         </ul></li>
         <li>
@@ -2339,20 +2339,22 @@
 </li>
         <li><a href="api/anomalib/models/draem/torch_model/index.html#anomalib.models.draem.torch_model.EncoderReconstructive">EncoderReconstructive (class in anomalib.models.draem.torch_model)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/models/reverse_distillation/components/de_resnet/index.html#anomalib.models.reverse_distillation.components.de_resnet.DecoderBasicBlock.expansion">expansion (anomalib.models.reverse_distillation.components.de_resnet.DecoderBasicBlock attribute)</a>
 
         <ul>
           <li><a href="api/anomalib/models/reverse_distillation/components/de_resnet/index.html#anomalib.models.reverse_distillation.components.de_resnet.DecoderBottleneck.expansion">(anomalib.models.reverse_distillation.components.de_resnet.DecoderBottleneck attribute)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/anomalib/deploy/index.html#anomalib.deploy.export_convert">export_convert() (in module anomalib.deploy)</a>
 
         <ul>
           <li><a href="api/anomalib/deploy/optimize/index.html#anomalib.deploy.optimize.export_convert">(in module anomalib.deploy.optimize)</a>
 </li>
         </ul></li>
+        <li><a href="api/anomalib/utils/callbacks/export/index.html#anomalib.utils.callbacks.export.ExportCallback">ExportCallback (class in anomalib.utils.callbacks.export)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -3004,11 +3006,11 @@
 </li>
           <li><a href="api/anomalib/utils/callbacks/cdf_normalization/index.html#anomalib.utils.callbacks.cdf_normalization.logger">(in module anomalib.utils.callbacks.cdf_normalization)</a>
 </li>
+          <li><a href="api/anomalib/utils/callbacks/export/index.html#anomalib.utils.callbacks.export.logger">(in module anomalib.utils.callbacks.export)</a>
+</li>
           <li><a href="api/anomalib/utils/callbacks/model_loader/index.html#anomalib.utils.callbacks.model_loader.logger">(in module anomalib.utils.callbacks.model_loader)</a>
 </li>
           <li><a href="api/anomalib/utils/callbacks/nncf/utils/index.html#anomalib.utils.callbacks.nncf.utils.logger">(in module anomalib.utils.callbacks.nncf.utils)</a>
-</li>
-          <li><a href="api/anomalib/utils/callbacks/openvino/index.html#anomalib.utils.callbacks.openvino.logger">(in module anomalib.utils.callbacks.openvino)</a>
 </li>
           <li><a href="api/anomalib/utils/callbacks/timer/index.html#anomalib.utils.callbacks.timer.logger">(in module anomalib.utils.callbacks.timer)</a>
 </li>
@@ -3277,6 +3279,8 @@
 </li>
           <li><a href="api/anomalib/utils/callbacks/cdf_normalization/index.html#module-anomalib.utils.callbacks.cdf_normalization">anomalib.utils.callbacks.cdf_normalization</a>
 </li>
+          <li><a href="api/anomalib/utils/callbacks/export/index.html#module-anomalib.utils.callbacks.export">anomalib.utils.callbacks.export</a>
+</li>
           <li><a href="api/anomalib/utils/callbacks/graph/index.html#module-anomalib.utils.callbacks.graph">anomalib.utils.callbacks.graph</a>
 </li>
           <li><a href="api/anomalib/utils/callbacks/metrics_configuration/index.html#module-anomalib.utils.callbacks.metrics_configuration">anomalib.utils.callbacks.metrics_configuration</a>
@@ -3290,8 +3294,6 @@
           <li><a href="api/anomalib/utils/callbacks/nncf/callback/index.html#module-anomalib.utils.callbacks.nncf.callback">anomalib.utils.callbacks.nncf.callback</a>
 </li>
           <li><a href="api/anomalib/utils/callbacks/nncf/utils/index.html#module-anomalib.utils.callbacks.nncf.utils">anomalib.utils.callbacks.nncf.utils</a>
-</li>
-          <li><a href="api/anomalib/utils/callbacks/openvino/index.html#module-anomalib.utils.callbacks.openvino">anomalib.utils.callbacks.openvino</a>
 </li>
           <li><a href="api/anomalib/utils/callbacks/tiler_configuration/index.html#module-anomalib.utils.callbacks.tiler_configuration">anomalib.utils.callbacks.tiler_configuration</a>
 </li>
@@ -3494,16 +3496,16 @@
           <li><a href="api/anomalib/utils/callbacks/index.html#anomalib.utils.callbacks.TimerCallback.on_test_start">(anomalib.utils.callbacks.TimerCallback method)</a>
 </li>
         </ul></li>
-        <li><a href="api/anomalib/utils/callbacks/nncf/callback/index.html#anomalib.utils.callbacks.nncf.callback.NNCFCallback.on_train_batch_start">on_train_batch_start() (anomalib.utils.callbacks.nncf.callback.NNCFCallback method)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/anomalib/utils/callbacks/graph/index.html#anomalib.utils.callbacks.graph.GraphLogger.on_train_end">on_train_end() (anomalib.utils.callbacks.graph.GraphLogger method)</a>
+        <li><a href="api/anomalib/utils/callbacks/nncf/callback/index.html#anomalib.utils.callbacks.nncf.callback.NNCFCallback.on_train_batch_start">on_train_batch_start() (anomalib.utils.callbacks.nncf.callback.NNCFCallback method)</a>
+</li>
+        <li><a href="api/anomalib/utils/callbacks/export/index.html#anomalib.utils.callbacks.export.ExportCallback.on_train_end">on_train_end() (anomalib.utils.callbacks.export.ExportCallback method)</a>
 
         <ul>
-          <li><a href="api/anomalib/utils/callbacks/nncf/callback/index.html#anomalib.utils.callbacks.nncf.callback.NNCFCallback.on_train_end">(anomalib.utils.callbacks.nncf.callback.NNCFCallback method)</a>
+          <li><a href="api/anomalib/utils/callbacks/graph/index.html#anomalib.utils.callbacks.graph.GraphLogger.on_train_end">(anomalib.utils.callbacks.graph.GraphLogger method)</a>
 </li>
-          <li><a href="api/anomalib/utils/callbacks/openvino/index.html#anomalib.utils.callbacks.openvino.OpenVINOCallback.on_train_end">(anomalib.utils.callbacks.openvino.OpenVINOCallback method)</a>
+          <li><a href="api/anomalib/utils/callbacks/nncf/callback/index.html#anomalib.utils.callbacks.nncf.callback.NNCFCallback.on_train_end">(anomalib.utils.callbacks.nncf.callback.NNCFCallback method)</a>
 </li>
         </ul></li>
         <li><a href="api/anomalib/utils/callbacks/nncf/callback/index.html#anomalib.utils.callbacks.nncf.callback.NNCFCallback.on_train_epoch_start">on_train_epoch_start() (anomalib.utils.callbacks.nncf.callback.NNCFCallback method)</a>
@@ -3558,8 +3560,6 @@
           <li><a href="api/anomalib/models/patchcore/index.html#anomalib.models.patchcore.Patchcore.on_validation_start">(anomalib.models.patchcore.Patchcore method)</a>
 </li>
         </ul></li>
-        <li><a href="api/anomalib/utils/callbacks/openvino/index.html#anomalib.utils.callbacks.openvino.OpenVINOCallback">OpenVINOCallback (class in anomalib.utils.callbacks.openvino)</a>
-</li>
         <li><a href="api/anomalib/deploy/index.html#anomalib.deploy.OpenVINOInferencer">OpenVINOInferencer (class in anomalib.deploy)</a>
 
         <ul>
