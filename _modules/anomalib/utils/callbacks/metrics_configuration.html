@@ -453,6 +453,7 @@
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
 
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
@@ -462,6 +463,8 @@
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components.base.anomaly_module</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
 <span class="kn">from</span> <span class="nn">anomalib.utils.metrics</span> <span class="kn">import</span> <span class="n">metric_collection_from_names</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"MetricsConfigurationCallback"</span><span class="p">]</span>
 
@@ -473,6 +476,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">adaptive_threshold</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">task</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"segmentation"</span><span class="p">,</span>
         <span class="n">default_image_threshold</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">default_pixel_threshold</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">image_metric_names</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -487,6 +491,7 @@
 <span class="sd">        these to the lightning module.</span>
 
 <span class="sd">        Args:</span>
+<span class="sd">            task (str): Task type of the current run.</span>
 <span class="sd">            adaptive_threshold (bool): Flag indicating whether threshold should be adaptive.</span>
 <span class="sd">            default_image_threshold (Optional[float]): Default image threshold value.</span>
 <span class="sd">            default_pixel_threshold (Optional[float]): Default pixel threshold value.</span>
@@ -495,6 +500,7 @@
 <span class="sd">            normalization_method(Optional[str]): Normalization method. &lt;None, min_max, cdf&gt;</span>
 <span class="sd">        """</span>
         <span class="c1"># TODO: https://github.com/openvinotoolkit/anomalib/issues/384</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">task</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_metric_names</span> <span class="o">=</span> <span class="n">image_metric_names</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pixel_metric_names</span> <span class="o">=</span> <span class="n">pixel_metric_names</span>
 
@@ -525,7 +531,19 @@
 <span class="sd">            stage (Optional[str], optional): fit, validate, test or predict. Defaults to None.</span>
 <span class="sd">        """</span>
         <span class="n">image_metric_names</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_metric_names</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_metric_names</span>
-        <span class="n">pixel_metric_names</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixel_metric_names</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixel_metric_names</span>
+
+        <span class="n">pixel_metric_names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixel_metric_names</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">pixel_metric_names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">==</span> <span class="s2">"classification"</span><span class="p">:</span>
+            <span class="n">pixel_metric_names</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">"Cannot perform pixel-level evaluation when task type is classification. "</span>
+                <span class="s2">"Ignoring the following pixel-level metrics: </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pixel_metric_names</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pixel_metric_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixel_metric_names</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pl_module</span><span class="p">,</span> <span class="n">AnomalyModule</span><span class="p">):</span>
             <span class="n">pl_module</span><span class="o">.</span><span class="n">adaptive_threshold</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">adaptive_threshold</span>
