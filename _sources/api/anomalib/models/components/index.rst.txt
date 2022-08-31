@@ -127,15 +127,18 @@ Classes
    .. py:method:: _compute_adaptive_threshold(self, outputs)
 
 
-   .. py:method:: _collect_outputs(self, image_metric, pixel_metric, outputs)
+   .. py:method:: _collect_outputs(image_metric, pixel_metric, outputs)
+      :staticmethod:
 
 
-   .. py:method:: _post_process(self, outputs)
+   .. py:method:: _post_process(outputs)
+      :staticmethod:
 
       Compute labels based on model predictions.
 
 
-   .. py:method:: _outputs_to_cpu(self, output)
+   .. py:method:: _outputs_to_cpu(output)
+      :staticmethod:
 
 
    .. py:method:: _log_metrics(self)

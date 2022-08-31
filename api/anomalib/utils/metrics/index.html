@@ -502,15 +502,10 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AdaptiveThreshold">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.metrics.</span></span><span class="sig-name descname"><span class="pre">AdaptiveThreshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/utils/metrics/adaptive_threshold.html#AdaptiveThreshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AdaptiveThreshold" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torchmetrics.Metric</span></code></p>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torchmetrics.PrecisionRecallCurve</span></code></p>
 <p>Optimal F1 Metric.</p>
 <p>Compute the optimal F1 score at the adaptive threshold, based on the F1 metric of the true labels and the
 predicted anomaly scores.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.utils.metrics.AdaptiveThreshold.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#anomalib.utils.metrics.AdaptiveThreshold.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the precision-recall curve metric.</p>
-</dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AdaptiveThreshold.compute">
 <span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="headerlink" href="#anomalib.utils.metrics.AdaptiveThreshold.compute" title="Permalink to this definition">¶</a></dt>
@@ -522,11 +517,6 @@ threshold as attribute and return the maximum value of the F1 score.</p>
 <dd class="field-odd"><p>Value of the F1 score at the optimal threshold.</p>
 </dd>
 </dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.utils.metrics.AdaptiveThreshold.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#anomalib.utils.metrics.AdaptiveThreshold.reset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reset the metric.</p>
 </dd></dl>
 </dd></dl>
 <dl class="py class">
@@ -867,9 +857,7 @@ threshold as attribute and return the maximum value of the F1 score.</p>
 <li><a class="reference internal" href="#package-contents">Package Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
 <li><a class="reference internal" href="#anomalib.utils.metrics.AdaptiveThreshold">AdaptiveThreshold</a><ul>
-<li><a class="reference internal" href="#anomalib.utils.metrics.AdaptiveThreshold.update">update</a></li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.AdaptiveThreshold.compute">compute</a></li>
-<li><a class="reference internal" href="#anomalib.utils.metrics.AdaptiveThreshold.reset">reset</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.AnomalyScoreDistribution">AnomalyScoreDistribution</a><ul>
