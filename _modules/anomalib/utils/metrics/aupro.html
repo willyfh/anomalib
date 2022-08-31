@@ -379,6 +379,7 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/metrics/min_max/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.min_max</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/metrics/optimal_f1/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.optimal_f1</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/metrics/plotting_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.plotting_utils</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/metrics/pro/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.pro</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../../../api/anomalib/utils/sweep/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-44" name="toctree-checkbox-44" role="switch" type="checkbox"/><label for="toctree-checkbox-44"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -455,12 +456,16 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">kornia.contrib</span> <span class="kn">import</span> <span class="n">connected_components</span>
 <span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="kn">import</span> <span class="n">Figure</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 <span class="kn">from</span> <span class="nn">torchmetrics</span> <span class="kn">import</span> <span class="n">Metric</span>
 <span class="kn">from</span> <span class="nn">torchmetrics.functional</span> <span class="kn">import</span> <span class="n">auc</span><span class="p">,</span> <span class="n">roc</span>
 <span class="kn">from</span> <span class="nn">torchmetrics.utilities.data</span> <span class="kn">import</span> <span class="n">dim_zero_cat</span>
+
+<span class="kn">from</span> <span class="nn">anomalib.utils.metrics.pro</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">connected_components_cpu</span><span class="p">,</span>
+    <span class="n">connected_components_gpu</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">.plotting_utils</span> <span class="kn">import</span> <span class="n">plot_figure</span>
 
@@ -529,9 +534,10 @@
             <span class="p">)</span>
         <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># kornia expects N1HW format</span>
         <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>  <span class="c1"># kornia expects FloatTensor</span>
-        <span class="n">cca</span> <span class="o">=</span> <span class="n">connected_components</span><span class="p">(</span>
-            <span class="n">target</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">1000</span>
-        <span class="p">)</span>  <span class="c1"># Need higher thresholds this to avoid oversegmentation.</span>
+        <span class="k">if</span> <span class="n">target</span><span class="o">.</span><span class="n">is_cuda</span><span class="p">:</span>
+            <span class="n">cca</span> <span class="o">=</span> <span class="n">connected_components_gpu</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cca</span> <span class="o">=</span> <span class="n">connected_components_cpu</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
 
         <span class="n">preds</span> <span class="o">=</span> <span class="n">preds</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
         <span class="n">cca</span> <span class="o">=</span> <span class="n">cca</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>

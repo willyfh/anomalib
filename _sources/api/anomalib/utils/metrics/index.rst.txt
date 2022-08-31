@@ -24,6 +24,7 @@ Submodules
    min_max/index.rst
    optimal_f1/index.rst
    plotting_utils/index.rst
+   pro/index.rst
 
 
 Package Contents
@@ -41,6 +42,7 @@ Classes
    anomalib.utils.metrics.AUROC
    anomalib.utils.metrics.MinMax
    anomalib.utils.metrics.OptimalF1
+   anomalib.utils.metrics.PRO
 
 
 
@@ -297,6 +299,33 @@ Classes
    .. py:method:: reset(self) -> None
 
       Reset the metric.
+
+
+
+.. py:class:: PRO(threshold: float = 0.5, **kwargs)
+
+   Bases: :py:obj:`torchmetrics.Metric`
+
+   Per-Region Overlap (PRO) Score.
+
+   .. py:attribute:: target
+      :annotation: :List[torch.Tensor]
+
+      
+
+   .. py:attribute:: preds
+      :annotation: :List[torch.Tensor]
+
+      
+
+   .. py:method:: update(self, predictions: torch.Tensor, targets: torch.Tensor) -> None
+
+      Compute the PRO score for the current batch.
+
+
+   .. py:method:: compute(self) -> torch.Tensor
+
+      Compute the macro average of the PRO score across all regions in all batches.
 
 
 

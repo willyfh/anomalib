@@ -1,0 +1,99 @@
+:py:mod:`anomalib.utils.metrics.pro`
+====================================
+
+.. py:module:: anomalib.utils.metrics.pro
+
+.. autoapi-nested-parse::
+
+   Implementation of PRO metric based on TorchMetrics.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.metrics.pro.PRO
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   anomalib.utils.metrics.pro.pro_score
+   anomalib.utils.metrics.pro.connected_components_gpu
+   anomalib.utils.metrics.pro.connected_components_cpu
+
+
+
+.. py:class:: PRO(threshold: float = 0.5, **kwargs)
+
+   Bases: :py:obj:`torchmetrics.Metric`
+
+   Per-Region Overlap (PRO) Score.
+
+   .. py:attribute:: target
+      :annotation: :List[torch.Tensor]
+
+      
+
+   .. py:attribute:: preds
+      :annotation: :List[torch.Tensor]
+
+      
+
+   .. py:method:: update(self, predictions: torch.Tensor, targets: torch.Tensor) -> None
+
+      Compute the PRO score for the current batch.
+
+
+   .. py:method:: compute(self) -> torch.Tensor
+
+      Compute the macro average of the PRO score across all regions in all batches.
+
+
+
+.. py:function:: pro_score(predictions: torch.Tensor, comps: torch.Tensor, threshold: float = 0.5) -> torch.Tensor
+
+   Calculate the PRO score for a batch of predictions.
+
+   :param predictions: Predicted anomaly masks (Bx1xHxW)
+   :type predictions: Tensor
+   :param comps: (Tensor): Labeled connected components (BxHxW). The components should be labeled from 0 to N
+   :param threshold: When predictions are passed as float, the threshold is used to binarize the predictions.
+   :type threshold: float
+
+   :returns: Scalar value representing the average PRO score for the input batch.
+   :rtype: Tensor
+
+
+.. py:function:: connected_components_gpu(binary_input: torch.Tensor, num_iterations: int = 1000) -> torch.Tensor
+
+   Perform connected component labeling on GPU and remap the labels from 0 to N.
+
+   :param binary_input: Binary input data from which we want to extract connected components (Bx1xHxW)
+   :type binary_input: Tensor
+   :param num_iterations: Number of iterations used in the connected component computation.
+   :type num_iterations: int
+
+   :returns: Components labeled from 0 to N.
+   :rtype: Tensor
+
+
+.. py:function:: connected_components_cpu(image: torch.Tensor) -> torch.Tensor
+
+   Connected component labeling on CPU.
+
+   :param image: Binary input data from which we want to extract connected components (Bx1xHxW)
+   :type image: Tensor
+
+   :returns: Components labeled from 0 to N.
+   :rtype: Tensor
+
+

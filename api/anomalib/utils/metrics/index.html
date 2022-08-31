@@ -380,6 +380,7 @@
 <li class="toctree-l5"><a class="reference internal" href="min_max/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.min_max</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="optimal_f1/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.optimal_f1</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="plotting_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.plotting_utils</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pro/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.pro</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../sweep/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.sweep</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-44" name="toctree-checkbox-44" role="switch" type="checkbox"/><label for="toctree-checkbox-44"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -463,6 +464,7 @@
 <li class="toctree-l1"><a class="reference internal" href="min_max/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.min_max</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="optimal_f1/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.optimal_f1</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="plotting_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.plotting_utils</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pro/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.metrics.pro</span></code></a></li>
 </ul>
 </div>
 </section>
@@ -496,6 +498,9 @@
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.metrics.OptimalF1" title="anomalib.utils.metrics.OptimalF1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimalF1</span></code></a></p></td>
 <td><p>Optimal F1 Metric.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.utils.metrics.PRO" title="anomalib.utils.metrics.PRO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PRO</span></code></a></p></td>
+<td><p>Per-Region Overlap (PRO) Score.</p></td>
 </tr>
 </tbody>
 </table></div>
@@ -794,6 +799,30 @@ threshold as attribute and return the maximum value of the F1 score.</p>
 <dd><p>Reset the metric.</p>
 </dd></dl>
 </dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.utils.metrics.PRO">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.metrics.</span></span><span class="sig-name descname"><span class="pre">PRO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/utils/metrics/pro.html#PRO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.PRO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torchmetrics.Metric</span></code></p>
+<p>Per-Region Overlap (PRO) Score.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.utils.metrics.PRO.target">
+<span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="w"> </span><span class="pre">:List[torch.Tensor]</span></em><a class="headerlink" href="#anomalib.utils.metrics.PRO.target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.utils.metrics.PRO.preds">
+<span class="sig-name descname"><span class="pre">preds</span></span><em class="property"><span class="w"> </span><span class="pre">:List[torch.Tensor]</span></em><a class="headerlink" href="#anomalib.utils.metrics.PRO.preds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.utils.metrics.PRO.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#anomalib.utils.metrics.PRO.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the PRO score for the current batch.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.utils.metrics.PRO.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="headerlink" href="#anomalib.utils.metrics.PRO.compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the macro average of the PRO score across all regions in all batches.</p>
+</dd></dl>
+</dd></dl>
 </section>
 </section>
 </section>
@@ -901,6 +930,13 @@ threshold as attribute and return the maximum value of the F1 score.</p>
 <li><a class="reference internal" href="#anomalib.utils.metrics.OptimalF1.update">update</a></li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.OptimalF1.compute">compute</a></li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.OptimalF1.reset">reset</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#anomalib.utils.metrics.PRO">PRO</a><ul>
+<li><a class="reference internal" href="#anomalib.utils.metrics.PRO.target">target</a></li>
+<li><a class="reference internal" href="#anomalib.utils.metrics.PRO.preds">preds</a></li>
+<li><a class="reference internal" href="#anomalib.utils.metrics.PRO.update">update</a></li>
+<li><a class="reference internal" href="#anomalib.utils.metrics.PRO.compute">compute</a></li>
 </ul>
 </li>
 </ul>
