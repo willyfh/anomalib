@@ -758,6 +758,10 @@ connected component analysis.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.metrics.</span></span><span class="sig-name descname"><span class="pre">MinMax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/utils/metrics/min_max.html#MinMax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.MinMax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torchmetrics.Metric</span></code></p>
 <p>Track the min and max values of the observations in each batch.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.utils.metrics.MinMax.full_state_update">
+<span class="sig-name descname"><span class="pre">full_state_update</span></span><em class="property"><span class="w"> </span><span class="pre">:bool</span> <span class="pre">=</span> <span class="pre">True</span></em><a class="headerlink" href="#anomalib.utils.metrics.MinMax.full_state_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.MinMax.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#anomalib.utils.metrics.MinMax.update" title="Permalink to this definition">¶</a></dt>
@@ -776,6 +780,10 @@ connected component analysis.</p>
 <p>Optimal F1 Metric.</p>
 <p>Compute the optimal F1 score at the adaptive threshold, based on the F1 metric of the true labels and the
 predicted anomaly scores.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.utils.metrics.OptimalF1.full_state_update">
+<span class="sig-name descname"><span class="pre">full_state_update</span></span><em class="property"><span class="w"> </span><span class="pre">:bool</span> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#anomalib.utils.metrics.OptimalF1.full_state_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.OptimalF1.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#anomalib.utils.metrics.OptimalF1.update" title="Permalink to this definition">¶</a></dt>
@@ -922,11 +930,13 @@ threshold as attribute and return the maximum value of the F1 score.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.MinMax">MinMax</a><ul>
+<li><a class="reference internal" href="#anomalib.utils.metrics.MinMax.full_state_update">full_state_update</a></li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.MinMax.update">update</a></li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.MinMax.compute">compute</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.OptimalF1">OptimalF1</a><ul>
+<li><a class="reference internal" href="#anomalib.utils.metrics.OptimalF1.full_state_update">full_state_update</a></li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.OptimalF1.update">update</a></li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.OptimalF1.compute">compute</a></li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.OptimalF1.reset">reset</a></li>

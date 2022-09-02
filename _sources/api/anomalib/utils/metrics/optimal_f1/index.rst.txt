@@ -31,6 +31,11 @@ Classes
    Compute the optimal F1 score at the adaptive threshold, based on the F1 metric of the true labels and the
    predicted anomaly scores.
 
+   .. py:attribute:: full_state_update
+      :annotation: :bool = False
+
+      
+
    .. py:method:: update(self, preds: torch.Tensor, target: torch.Tensor) -> None
 
       Update the precision-recall curve metric.

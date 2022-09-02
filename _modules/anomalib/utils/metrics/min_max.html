@@ -463,6 +463,8 @@
 <div class="viewcode-block" id="MinMax"><a class="viewcode-back" href="../../../../api/anomalib/utils/metrics/min_max/index.html#anomalib.utils.metrics.MinMax">[docs]</a><span class="k">class</span> <span class="nc">MinMax</span><span class="p">(</span><span class="n">Metric</span><span class="p">):</span>
     <span class="sd">"""Track the min and max values of the observations in each batch."""</span>
 
+<div class="viewcode-block" id="MinMax.full_state_update"><a class="viewcode-back" href="../../../../api/anomalib/utils/metrics/min_max/index.html#anomalib.utils.metrics.MinMax.full_state_update">[docs]</a>    <span class="n">full_state_update</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span></div>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_state</span><span class="p">(</span><span class="s2">"min"</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s2">"inf"</span><span class="p">)),</span> <span class="n">persistent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># pylint: disable=not-callable</span>
