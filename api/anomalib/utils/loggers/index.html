@@ -366,6 +366,7 @@
 </li>
 <li class="toctree-l4 current has-children current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-42" name="toctree-checkbox-42" role="switch" type="checkbox"/><label for="toctree-checkbox-42"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.base</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="comet/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.comet</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="tensorboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.tensorboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="wandb/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.wandb</span></code></a></li>
 </ul>
@@ -456,6 +457,7 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.base</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="comet/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.comet</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="tensorboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.tensorboard</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="wandb/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.wandb</span></code></a></li>
 </ul>
@@ -476,6 +478,9 @@
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#anomalib.utils.loggers.AnomalibWandbLogger" title="anomalib.utils.loggers.AnomalibWandbLogger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnomalibWandbLogger</span></code></a></p></td>
 <td><p>Logger for wandb.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.utils.loggers.AnomalibCometLogger" title="anomalib.utils.loggers.AnomalibCometLogger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnomalibCometLogger</span></code></a></p></td>
+<td><p>Logger for comet.</p></td>
 </tr>
 </tbody>
 </table></div>
@@ -630,6 +635,79 @@ on how to use W&amp;B with PyTorch Lightning</p></li>
 </div>
 </dd></dl>
 </dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.utils.loggers.AnomalibCometLogger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.loggers.</span></span><span class="sig-name descname"><span class="pre">AnomalibCometLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rest_api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/utils/loggers/comet.html#AnomalibCometLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.loggers.AnomalibCometLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="base/index.html#anomalib.utils.loggers.base.ImageLoggerBase" title="anomalib.utils.loggers.base.ImageLoggerBase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">anomalib.utils.loggers.base.ImageLoggerBase</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">pytorch_lightning.loggers.comet.CometLogger</span></code></p>
+<p>Logger for comet.</p>
+<p>Adds interface for <cite>add_image</cite> in the logger rather than calling the experiment object.
+.. note:: Same as the CometLogger provided by PyTorch Lightning and the doc string is reproduced below.</p>
+<p>Track your parameters, metrics, source code and more using
+<a class="reference external" href="https://www.comet.com/site/products/ml-experiment-tracking/?utm_source=anomalib&amp;utm_medium=referral">Comet</a>.</p>
+<p>Install it with pip:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install comet-ml
+</pre></div>
+</div>
+<p>Comet requires either an API Key (online mode) or a local directory path (offline mode).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>api_key</strong> – Required in online mode. API key, found on Comet.ml. If not given, this
+will be loaded from the environment variable COMET_API_KEY or ~/.comet.config
+if either exists.</p></li>
+<li><p><strong>save_dir</strong> – Required in offline mode. The path for the directory to save local
+comet logs. If given, this also sets the directory for saving checkpoints.</p></li>
+<li><p><strong>project_name</strong> – Optional. Send your experiment to a specific project.
+Otherwise will be sent to Uncategorized Experiments.
+If the project name does not already exist, Comet.ml will create a new project.</p></li>
+<li><p><strong>rest_api_key</strong> – Optional. Rest API key found in Comet.ml settings.
+This is used to determine version number</p></li>
+<li><p><strong>experiment_name</strong> – Optional. String representing the name for this particular experiment on Comet.ml.</p></li>
+<li><p><strong>experiment_key</strong> – Optional. If set, restores from existing experiment.</p></li>
+<li><p><strong>offline</strong> – If api_key and save_dir are both given, this determines whether
+the experiment will be in online or offline mode. This is useful if you use
+save_dir to control the checkpoints directory and have a ~/.comet.config
+file but still want to run offline experiments.</p></li>
+<li><p><strong>prefix</strong> – A string to put at the beginning of metric keys.</p></li>
+<li><p><strong>kwargs</strong> – Additional arguments like <cite>workspace</cite>, <cite>log_code</cite>, etc. used by
+<code class="xref py py-class docutils literal notranslate"><span class="pre">CometExperiment</span></code> can be passed as keyword arguments in this logger.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ModuleNotFoundError</strong> – If required Comet package is not installed on the device.</p></li>
+<li><p><strong>MisconfigurationException</strong> – If neither <code class="docutils literal notranslate"><span class="pre">api_key</span></code> nor <code class="docutils literal notranslate"><span class="pre">save_dir</span></code> are passed as arguments.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">anomalib.utils.loggers</span> <span class="kn">import</span> <span class="n">AnomalibCometLogger</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Trainer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comet_logger</span> <span class="o">=</span> <span class="n">AnomalibCometLogger</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">logger</span><span class="o">=</span><span class="n">comet_logger</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.comet.com/docs/v2/integrations/ml-frameworks/pytorch-lightning/">Comet Documentation</a></p></li>
+</ul>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.utils.loggers.AnomalibCometLogger.add_image">
+<span class="sig-name descname"><span class="pre">add_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">matplotlib.figure.Figure</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.utils.loggers.AnomalibCometLogger.add_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface to add image to comet logger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>Figure</em><em>]</em>) – Image to log</p></li>
+<li><p><strong>name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The tag of the image</p></li>
+<li><p><strong>kwargs</strong> – Accepts only <cite>global_step</cite> (int). The step at which to log the image.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="anomalib.utils.loggers.configure_logger">
 <span class="sig-prename descclassname"><span class="pre">anomalib.utils.loggers.</span></span><span class="sig-name descname"><span class="pre">configure_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">logging.INFO</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/utils/loggers.html#configure_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.loggers.configure_logger" title="Permalink to this definition">¶</a></dt>
@@ -735,6 +813,10 @@ on how to use W&amp;B with PyTorch Lightning</p></li>
 <li><a class="reference internal" href="#anomalib.utils.loggers.AnomalibWandbLogger">AnomalibWandbLogger</a><ul>
 <li><a class="reference internal" href="#anomalib.utils.loggers.AnomalibWandbLogger.add_image">add_image</a></li>
 <li><a class="reference internal" href="#anomalib.utils.loggers.AnomalibWandbLogger.save">save</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#anomalib.utils.loggers.AnomalibCometLogger">AnomalibCometLogger</a><ul>
+<li><a class="reference internal" href="#anomalib.utils.loggers.AnomalibCometLogger.add_image">add_image</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#anomalib.utils.loggers.configure_logger">configure_logger</a></li>

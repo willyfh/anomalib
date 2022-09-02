@@ -365,6 +365,7 @@
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../../../api/anomalib/utils/loggers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-42" name="toctree-checkbox-42" role="switch" type="checkbox"/><label for="toctree-checkbox-42"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/loggers/base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.base</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/loggers/comet/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.comet</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/loggers/tensorboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.tensorboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../api/anomalib/utils/loggers/wandb/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.wandb</span></code></a></li>
 </ul>
@@ -457,7 +458,7 @@
 <span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Callback</span><span class="p">,</span> <span class="n">LightningModule</span><span class="p">,</span> <span class="n">Trainer</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">CALLBACK_REGISTRY</span>
 
-<span class="kn">from</span> <span class="nn">anomalib.utils.loggers</span> <span class="kn">import</span> <span class="n">AnomalibTensorBoardLogger</span><span class="p">,</span> <span class="n">AnomalibWandbLogger</span>
+<span class="kn">from</span> <span class="nn">anomalib.utils.loggers</span> <span class="kn">import</span> <span class="n">AnomalibTensorBoardLogger</span><span class="p">,</span> <span class="n">AnomalibWandbLogger</span><span class="p">,</span> <span class="n">AnomalibCometLogger</span>
 
 
 <span class="nd">@CALLBACK_REGISTRY</span>
@@ -488,7 +489,7 @@
 <span class="sd">        """</span>
 
         <span class="k">for</span> <span class="n">logger</span> <span class="ow">in</span> <span class="n">trainer</span><span class="o">.</span><span class="n">loggers</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">AnomalibTensorBoardLogger</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="p">(</span><span class="n">AnomalibCometLogger</span><span class="p">,</span> <span class="n">AnomalibTensorBoardLogger</span><span class="p">)):</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">log_graph</span><span class="p">(</span><span class="n">pl_module</span><span class="p">,</span> <span class="n">input_array</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)))</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">AnomalibWandbLogger</span><span class="p">):</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">unwatch</span><span class="p">(</span><span class="n">pl_module</span><span class="p">)</span>  <span class="c1"># type: ignore</span></div></div>

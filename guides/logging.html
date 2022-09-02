@@ -366,6 +366,7 @@
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../api/anomalib/utils/loggers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-42" name="toctree-checkbox-42" role="switch" type="checkbox"/><label for="toctree-checkbox-42"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/utils/loggers/base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.base</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/anomalib/utils/loggers/comet/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.comet</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/utils/loggers/tensorboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.tensorboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../api/anomalib/utils/loggers/wandb/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.utils.loggers.wandb</span></code></a></li>
 </ul>
@@ -453,7 +454,7 @@
 <p>Anomalib offers various mechanisms for logging metrics and predicted masks.</p>
 <section id="enabling-logging">
 <h2>Enabling Logging<a class="headerlink" href="#enabling-logging" title="Permalink to this headline">¶</a></h2>
-<p>These can be enabled using the <code class="docutils literal notranslate"><span class="pre">logger</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">logging</span></code> section of each model configuration file. The available options are <code class="docutils literal notranslate"><span class="pre">tensorboard</span></code>, <code class="docutils literal notranslate"><span class="pre">wandb</span></code> and <code class="docutils literal notranslate"><span class="pre">csv</span></code>.
+<p>These can be enabled using the <code class="docutils literal notranslate"><span class="pre">logger</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">logging</span></code> section of each model configuration file. The available options are <code class="docutils literal notranslate"><span class="pre">comet</span></code>, <code class="docutils literal notranslate"><span class="pre">tensorboard</span></code>, <code class="docutils literal notranslate"><span class="pre">wandb</span></code> and <code class="docutils literal notranslate"><span class="pre">csv</span></code>.
 For example, to log to TensorBoard:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">logging</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="s">"tensorboard"</span><span class="w"></span>
@@ -461,34 +462,46 @@ For example, to log to TensorBoard:</p>
 </div>
 <p>You can also pass a list of loggers to enable multiple loggers. For example:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">logging</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">tensorboard</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wandb</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">  </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">comet</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">tensorboard</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wandb</span><span class="p p-Indicator">]</span><span class="w"></span>
 <span class="w">  </span><span class="nt">log_graph</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
 <section id="logging-images">
 <h2>Logging Images<a class="headerlink" href="#logging-images" title="Permalink to this headline">¶</a></h2>
-<p>Anomalib allows you to save predictions to the file system by setting <code class="docutils literal notranslate"><span class="pre">log_images_to:</span> <span class="pre">local</span></code>. As of the current version, Anomalib also supports TensorBoard and Weights and Biases loggers for logging images. These loggers extend upon the base loggers by providing a common interface for logging images. You can access the required logger from <code class="docutils literal notranslate"><span class="pre">trainer.loggers</span></code>. Then you can use <code class="docutils literal notranslate"><span class="pre">logger.add_image</span></code> method to log images. For a complete overview of this method refer to our <a class="reference external" href="https://openvinotoolkit.github.io/anomalib/api/anomalib/utils/loggers/index.html">API documentation</a>.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">logging</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">log_images_to</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"local"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"tensorboard"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"wandb"</span><span class="p p-Indicator">]</span><span class="w"></span>
-<span class="w">  </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">tensorboard</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wandb</span><span class="p p-Indicator">]</span><span class="w"></span>
+<p>Anomalib allows you to save predictions to the file system by setting <code class="docutils literal notranslate"><span class="pre">log_images:</span> <span class="pre">True</span></code> in the visualization section . As of the current version, Anomalib also supports Comet, TensorBoard and Weights and Biases loggers for logging images. These loggers extend upon the base loggers by providing a common interface for logging images. You can access the required logger from <code class="docutils literal notranslate"><span class="pre">trainer.loggers</span></code>. Then you can use <code class="docutils literal notranslate"><span class="pre">logger.add_image</span></code> method to log images. For a complete overview of this method refer to our <a class="reference external" href="https://openvinotoolkit.github.io/anomalib/api/anomalib/utils/loggers/index.html">API documentation</a>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">visualization</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">show_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"> </span><span class="c1"># show images on the screen</span><span class="w"></span>
+<span class="w">  </span><span class="nt">save_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"> </span><span class="c1"># save images to the file system</span><span class="w"></span>
+<span class="w">  </span><span class="nt">log_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"> </span><span class="c1"># log images to the available loggers (if any)</span><span class="w"></span>
+<span class="w">  </span><span class="nt">image_save_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># path to which images will be saved</span><span class="w"></span>
+<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">full</span><span class="w"> </span><span class="c1"># options: ["full", "simple"]</span><span class="w"></span>
+
+<span class="nt">logging</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">comet</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">tensorboard</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wandb</span><span class="p p-Indicator">]</span><span class="w"></span>
 <span class="w">  </span><span class="nt">log_graph</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Logging images to TensorBoard and wandb won’t work if you don’t have <code class="docutils literal notranslate"><span class="pre">logger:</span> <span class="pre">[tensorboard,</span> <span class="pre">wandb]</span></code> set as well. This ensures that the respective logger is passed to the trainer object.</p>
+<p>Logging images to Comet,TensorBoard and wandb won’t work if you don’t have <code class="docutils literal notranslate"><span class="pre">logger:</span> <span class="pre">[comet,</span> <span class="pre">tensorboard,</span> <span class="pre">wandb]</span></code> set as well. This ensures that the respective logger is passed to the trainer object.</p>
 </div>
 <figure class="align-default" id="id2">
-<img alt="tensorboard dashboard showing logged images" src="../_images/tensorboard_media.jpg"/>
+<img alt="comet dashboard showing logged images" src="images/logging/comet_media.jpg"/>
 <figcaption>
-<p><span class="caption-text">Logged Images in TensorBoard Dashboard</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">Comet Images in TensorBoard Dashboard</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <figure class="align-default" id="id3">
+<img alt="tensorboard dashboard showing logged images" src="../_images/tensorboard_media.jpg"/>
+<figcaption>
+<p><span class="caption-text">Logged Images in TensorBoard Dashboard</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id4">
 <img alt="wandb dashboard showing logged images" src="../_images/wandb_media.jpg"/>
 <figcaption>
-<p><span class="caption-text">Logged Images in wandb Dashboard</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">Logged Images in wandb Dashboard</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
@@ -499,16 +512,22 @@ For example, to log to TensorBoard:</p>
 <p class="admonition-title">Note</p>
 <p>When accessing the base <code class="docutils literal notranslate"><span class="pre">logger/logger.experiment</span></code> object, refer to the documentation of the respective logger for the list of available methods.</p>
 </div>
-<p>Anomalib makes it easier to log your model graph to TensorBoard or Weights and Biases. Just set <code class="docutils literal notranslate"><span class="pre">log_graph</span></code> to True under <code class="docutils literal notranslate"><span class="pre">logging</span></code> parameter of the model configuration file.</p>
+<p>Anomalib makes it easier to log your model graph to Comet, TensorBoard or Weights and Biases. Just set <code class="docutils literal notranslate"><span class="pre">log_graph</span></code> to True under <code class="docutils literal notranslate"><span class="pre">logging</span></code> parameter of the model configuration file.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">logging</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">tensorboard</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">  </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">comet</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">tensorboard</span><span class="p p-Indicator">]</span><span class="w"></span>
 <span class="w">  </span><span class="nt">log_graph</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 </pre></div>
 </div>
-<figure class="align-default" id="id4">
+<figure class="align-default" id="id5">
+<img alt="comet dashboard showing model graph" src="images/logging/comet_graph.jpg"/>
+<figcaption>
+<p><span class="caption-text">Model Graph in Comet Dashboard</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id6">
 <img alt="tensorboard dashboard showing model graph" src="../_images/tensorboard_graph.jpg"/>
 <figcaption>
-<p><span class="caption-text">Model Graph in TensorBoard Dashboard</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">Model Graph in TensorBoard Dashboard</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
