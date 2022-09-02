@@ -133,6 +133,18 @@ Classes
       Log computed performance metrics.
 
 
+   .. py:method:: _load_normalization_class(self, state_dict: OrderedDict[str, torch.Tensor])
+
+      Assigns the normalization method to use.
+
+
+   .. py:method:: load_state_dict(self, state_dict: OrderedDict[str, torch.Tensor], strict: bool = True)
+
+      Load state dict from checkpoint.
+
+      Ensures that normalization and thresholding attributes is properly setup before model is loaded.
+
+
 
 .. py:class:: DynamicBufferModule
 

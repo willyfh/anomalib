@@ -455,14 +455,20 @@
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
 
 <span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks.base</span> <span class="kn">import</span> <span class="n">Callback</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 <span class="kn">from</span> <span class="nn">torchmetrics</span> <span class="kn">import</span> <span class="n">Metric</span>
 
-<span class="kn">from</span> <span class="nn">anomalib.utils.metrics</span> <span class="kn">import</span> <span class="n">AdaptiveThreshold</span><span class="p">,</span> <span class="n">AnomalibMetricCollection</span>
+<span class="kn">from</span> <span class="nn">anomalib.utils.metrics</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AdaptiveThreshold</span><span class="p">,</span>
+    <span class="n">AnomalibMetricCollection</span><span class="p">,</span>
+    <span class="n">AnomalyScoreDistribution</span><span class="p">,</span>
+    <span class="n">MinMax</span><span class="p">,</span>
+<span class="p">)</span>
 
 <div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../../../api/anomalib/models/components/base/anomaly_module/index.html#anomalib.models.components.base.anomaly_module.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
 
@@ -615,7 +621,25 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">log_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pixel_metrics</span><span class="p">,</span> <span class="n">prog_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_metrics</span><span class="p">,</span> <span class="n">prog_bar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_metrics</span><span class="p">,</span> <span class="n">prog_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_metrics</span><span class="p">,</span> <span class="n">prog_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AnomalyModule._load_normalization_class"><a class="viewcode-back" href="../../../../../api/anomalib/models/components/base/anomaly_module/index.html#anomalib.models.components.base.anomaly_module.AnomalyModule._load_normalization_class">[docs]</a>    <span class="k">def</span> <span class="nf">_load_normalization_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">:</span> <span class="n">OrderedDict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]):</span>
+        <span class="sd">"""Assigns the normalization method to use."""</span>
+        <span class="k">if</span> <span class="s2">"normalization_metrics.max"</span> <span class="ow">in</span> <span class="n">state_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">normalization_metrics</span> <span class="o">=</span> <span class="n">MinMax</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="s2">"normalization_metrics.image_mean"</span> <span class="ow">in</span> <span class="n">state_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">normalization_metrics</span> <span class="o">=</span> <span class="n">AnomalyScoreDistribution</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">warn</span><span class="p">(</span><span class="s2">"No known normalization found in model weights."</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AnomalyModule.load_state_dict"><a class="viewcode-back" href="../../../../../api/anomalib/models/components/base/anomaly_module/index.html#anomalib.models.components.base.anomaly_module.AnomalyModule.load_state_dict">[docs]</a>    <span class="k">def</span> <span class="nf">load_state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">:</span> <span class="n">OrderedDict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">],</span> <span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="sd">"""Load state dict from checkpoint.</span>
+
+<span class="sd">        Ensures that normalization and thresholding attributes is properly setup before model is loaded.</span>
+<span class="sd">        """</span>
+        <span class="c1"># Used to load missing normalization and threshold parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_normalization_class</span><span class="p">(</span><span class="n">state_dict</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="n">strict</span><span class="p">)</span></div></div>
 </pre></div>
       </article>
       <footer>

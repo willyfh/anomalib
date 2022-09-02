@@ -593,6 +593,17 @@ These are required in <cite>validation_epoch_end</cite> for feature concatenatio
 <span class="sig-name descname"><span class="pre">_log_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.components.base.AnomalyModule._log_metrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log computed performance metrics.</p>
 </dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.components.base.AnomalyModule._load_normalization_class">
+<span class="sig-name descname"><span class="pre">_load_normalization_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">OrderedDict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.components.base.AnomalyModule._load_normalization_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assigns the normalization method to use.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.components.base.AnomalyModule.load_state_dict">
+<span class="sig-name descname"><span class="pre">load_state_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">OrderedDict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.models.components.base.AnomalyModule.load_state_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load state dict from checkpoint.</p>
+<p>Ensures that normalization and thresholding attributes is properly setup before model is loaded.</p>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.components.base.DynamicBufferModule">
@@ -710,6 +721,8 @@ These are required in <cite>validation_epoch_end</cite> for feature concatenatio
 <li><a class="reference internal" href="#anomalib.models.components.base.AnomalyModule._post_process">_post_process</a></li>
 <li><a class="reference internal" href="#anomalib.models.components.base.AnomalyModule._outputs_to_cpu">_outputs_to_cpu</a></li>
 <li><a class="reference internal" href="#anomalib.models.components.base.AnomalyModule._log_metrics">_log_metrics</a></li>
+<li><a class="reference internal" href="#anomalib.models.components.base.AnomalyModule._load_normalization_class">_load_normalization_class</a></li>
+<li><a class="reference internal" href="#anomalib.models.components.base.AnomalyModule.load_state_dict">load_state_dict</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#anomalib.models.components.base.DynamicBufferModule">DynamicBufferModule</a><ul>
