@@ -458,7 +458,11 @@
 <span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Callback</span><span class="p">,</span> <span class="n">LightningModule</span><span class="p">,</span> <span class="n">Trainer</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">CALLBACK_REGISTRY</span>
 
-<span class="kn">from</span> <span class="nn">anomalib.utils.loggers</span> <span class="kn">import</span> <span class="n">AnomalibTensorBoardLogger</span><span class="p">,</span> <span class="n">AnomalibWandbLogger</span><span class="p">,</span> <span class="n">AnomalibCometLogger</span>
+<span class="kn">from</span> <span class="nn">anomalib.utils.loggers</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AnomalibCometLogger</span><span class="p">,</span>
+    <span class="n">AnomalibTensorBoardLogger</span><span class="p">,</span>
+    <span class="n">AnomalibWandbLogger</span><span class="p">,</span>
+<span class="p">)</span>
 
 
 <span class="nd">@CALLBACK_REGISTRY</span>
