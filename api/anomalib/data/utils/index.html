@@ -509,7 +509,10 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#anomalib.data.utils.get_image_filenames" title="anomalib.data.utils.get_image_filenames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_image_filenames</span></code></a>(path: Union[str, pathlib.Path]) → List[pathlib.Path]</p></td>
 <td><p>Get image filenames.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.data.utils.read_image" title="anomalib.data.utils.read_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_image</span></code></a>(path: Union[str, pathlib.Path]) → numpy.ndarray</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.data.utils.get_image_height_and_width" title="anomalib.data.utils.get_image_height_and_width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_image_height_and_width</span></code></a>(image_size: Optional[Union[int, Tuple]] = None) → Tuple[Optional[int], Optional[int]]</p></td>
+<td><p>Get image height and width from <code class="docutils literal notranslate"><span class="pre">image_size</span></code> variable.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#anomalib.data.utils.read_image" title="anomalib.data.utils.read_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_image</span></code></a>(path: Union[str, pathlib.Path], image_size: Optional[Union[int, Tuple]] = None) → numpy.ndarray</p></td>
 <td><p>Read image from disk in RGB format.</p></td>
 </tr>
 </tbody>
@@ -727,8 +730,49 @@ Could be a filename or a directory.</p></li>
 </dl>
 </dd></dl>
 <dl class="py function">
+<dt class="sig sig-object py" id="anomalib.data.utils.get_image_height_and_width">
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">get_image_height_and_width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/utils/image.html#get_image_height_and_width"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.get_image_height_and_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get image height and width from <code class="docutils literal notranslate"><span class="pre">image_size</span></code> variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>image_size</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>int</em><em>, </em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Input image size.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – Image size not None, int or tuple.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_image_height_and_width</span><span class="p">(</span><span class="n">image_size</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+<span class="go">(256, 256)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_image_height_and_width</span><span class="p">(</span><span class="n">image_size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
+<span class="go">(256, 256)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_image_height_and_width</span><span class="p">(</span><span class="n">image_size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">(256, 256)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; get_image_height_and_width(image_size=256.)
+Traceback (most recent call last):
+File "&lt;string&gt;", line 1, in &lt;module&gt;
+File "&lt;string&gt;", line 18, in get_image_height_and_width
+ValueError: ``image_size`` could be either int or Tuple[int, int]
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A tuple containing image height and width values.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Tuple[Optional[int], Optional[int]]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
 <dt class="sig sig-object py" id="anomalib.data.utils.read_image">
-<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">read_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/utils/image.html#read_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.read_image" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">read_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/data/utils/image.html#read_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.read_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read image from disk in RGB format.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -817,6 +861,7 @@ Could be a filename or a directory.</p></li>
 <li><a class="reference internal" href="#anomalib.data.utils.random_2d_perlin">random_2d_perlin</a></li>
 <li><a class="reference internal" href="#anomalib.data.utils.generate_output_image_filename">generate_output_image_filename</a></li>
 <li><a class="reference internal" href="#anomalib.data.utils.get_image_filenames">get_image_filenames</a></li>
+<li><a class="reference internal" href="#anomalib.data.utils.get_image_height_and_width">get_image_height_and_width</a></li>
 <li><a class="reference internal" href="#anomalib.data.utils.read_image">read_image</a></li>
 </ul>
 </li>

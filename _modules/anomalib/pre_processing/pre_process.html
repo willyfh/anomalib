@@ -458,10 +458,110 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">albumentations</span> <span class="k">as</span> <span class="nn">A</span>
 <span class="kn">from</span> <span class="nn">albumentations.pytorch</span> <span class="kn">import</span> <span class="n">ToTensorV2</span>
+
+<span class="kn">from</span> <span class="nn">anomalib.data.utils</span> <span class="kn">import</span> <span class="n">get_image_height_and_width</span>
+
+<div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../api/anomalib/pre_processing/pre_process/index.html#anomalib.pre_processing.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_transforms"><a class="viewcode-back" href="../../../api/anomalib/pre_processing/pre_process/index.html#anomalib.pre_processing.get_transforms">[docs]</a><span class="k">def</span> <span class="nf">get_transforms</span><span class="p">(</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">image_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">to_tensor</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">:</span>
+    <span class="sd">"""Get transforms from config or image size.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config (Optional[Union[str, A.Compose]], optional): Albumentations transforms.</span>
+<span class="sd">            Either config or albumentations ``Compose`` object. Defaults to None.</span>
+<span class="sd">        image_size (Optional[Union[int, Tuple]], optional): Image size to transform. Defaults to None.</span>
+<span class="sd">        to_tensor (bool, optional): Boolean to convert the final transforms into Torch tensor. Defaults to True.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: When both ``config`` and ``image_size`` is ``None``.</span>
+<span class="sd">        ValueError: When ``config`` is not a ``str`` or `A.Compose`` object.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A.Compose: Albumentation ``Compose`` object containing the image transforms.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; import skimage</span>
+<span class="sd">        &gt;&gt;&gt; image = skimage.data.astronaut()</span>
+
+<span class="sd">        &gt;&gt;&gt; transforms = get_transforms(image_size=256, to_tensor=False)</span>
+<span class="sd">        &gt;&gt;&gt; output = transforms(image=image)</span>
+<span class="sd">        &gt;&gt;&gt; output["image"].shape</span>
+<span class="sd">        (256, 256, 3)</span>
+
+<span class="sd">        &gt;&gt;&gt; transforms = get_transforms(image_size=256, to_tensor=True)</span>
+<span class="sd">        &gt;&gt;&gt; output = transforms(image=image)</span>
+<span class="sd">        &gt;&gt;&gt; output["image"].shape</span>
+<span class="sd">        torch.Size([3, 256, 256])</span>
+
+
+<span class="sd">        Transforms could be read from albumentations Compose object.</span>
+<span class="sd">        &gt;&gt;&gt; import albumentations as A</span>
+<span class="sd">        &gt;&gt;&gt; from albumentations.pytorch import ToTensorV2</span>
+<span class="sd">        &gt;&gt;&gt; config = A.Compose([A.Resize(512, 512), ToTensorV2()])</span>
+<span class="sd">        &gt;&gt;&gt; transforms = get_transforms(config=config, to_tensor=False)</span>
+<span class="sd">        &gt;&gt;&gt; output = transforms(image=image)</span>
+<span class="sd">        &gt;&gt;&gt; output["image"].shape</span>
+<span class="sd">        (512, 512, 3)</span>
+<span class="sd">        &gt;&gt;&gt; type(output["image"])</span>
+<span class="sd">        numpy.ndarray</span>
+
+<span class="sd">        Transforms could be deserialized from a yaml file.</span>
+<span class="sd">        &gt;&gt;&gt; transforms = A.Compose([A.Resize(1024, 1024), ToTensorV2()])</span>
+<span class="sd">        &gt;&gt;&gt; A.save(transforms, "/tmp/transforms.yaml", data_format="yaml")</span>
+<span class="sd">        &gt;&gt;&gt; transforms = get_transforms(config="/tmp/transforms.yaml")</span>
+<span class="sd">        &gt;&gt;&gt; output = transforms(image=image)</span>
+<span class="sd">        &gt;&gt;&gt; output["image"].shape</span>
+<span class="sd">        torch.Size([3, 1024, 1024])</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">image_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">"Both config and image_size cannot be `None`. "</span>
+            <span class="s2">"Provide either config file to de-serialize transforms "</span>
+            <span class="s2">"or image_size to get the default transformations"</span>
+        <span class="p">)</span>
+
+    <span class="n">transforms</span><span class="p">:</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span>
+
+    <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">image_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"Transform configs has not been provided. Images will be normalized using ImageNet statistics."</span><span class="p">)</span>
+
+        <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">get_image_height_and_width</span><span class="p">(</span><span class="n">image_size</span><span class="p">)</span>
+        <span class="n">transforms</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">A</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">always_apply</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                <span class="n">A</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">(</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">),</span> <span class="n">std</span><span class="o">=</span><span class="p">(</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">)),</span>
+                <span class="n">ToTensorV2</span><span class="p">(),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">transforms</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s2">"yaml"</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">):</span>
+            <span class="n">transforms</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"config could be either ``str`` or ``A.Compose``"</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">to_tensor</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">ToTensorV2</span><span class="p">):</span>
+            <span class="n">transforms</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span><span class="n">transforms</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="c1"># always resize to specified image size</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">transform</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">Resize</span><span class="p">)</span> <span class="k">for</span> <span class="n">transform</span> <span class="ow">in</span> <span class="n">transforms</span><span class="p">)</span> <span class="ow">and</span> <span class="n">image_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">get_image_height_and_width</span><span class="p">(</span><span class="n">image_size</span><span class="p">)</span>
+        <span class="n">transforms</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span><span class="n">A</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">always_apply</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">transforms</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">transforms</span></div>
 
 
 <div class="viewcode-block" id="PreProcessor"><a class="viewcode-back" href="../../../api/anomalib/pre_processing/pre_process/index.html#anomalib.pre_processing.PreProcessor">[docs]</a><span class="k">class</span> <span class="nc">PreProcessor</span><span class="p">:</span>
@@ -525,66 +625,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">image_size</span> <span class="o">=</span> <span class="n">image_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">to_tensor</span> <span class="o">=</span> <span class="n">to_tensor</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">transforms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_transforms</span><span class="p">()</span>
-
-<div class="viewcode-block" id="PreProcessor.get_transforms"><a class="viewcode-back" href="../../../api/anomalib/pre_processing/pre_process/index.html#anomalib.pre_processing.PreProcessor.get_transforms">[docs]</a>    <span class="k">def</span> <span class="nf">get_transforms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">:</span>
-        <span class="sd">"""Get transforms from config or image size.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            A.Compose: List of albumentation transformations to apply to the</span>
-<span class="sd">                input image.</span>
-<span class="sd">        """</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">"Both config and image_size cannot be `None`. "</span>
-                <span class="s2">"Provide either config file to de-serialize transforms "</span>
-                <span class="s2">"or image_size to get the default transformations"</span>
-            <span class="p">)</span>
-
-        <span class="n">transforms</span><span class="p">:</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_height_and_width</span><span class="p">()</span>
-            <span class="n">transforms</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span>
-                <span class="p">[</span>
-                    <span class="n">A</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">always_apply</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-                    <span class="n">A</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">(</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">),</span> <span class="n">std</span><span class="o">=</span><span class="p">(</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">)),</span>
-                    <span class="n">ToTensorV2</span><span class="p">(),</span>
-                <span class="p">]</span>
-            <span class="p">)</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="n">transforms</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s2">"yaml"</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">):</span>
-                <span class="n">transforms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"config could be either ``str`` or ``A.Compose``"</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">transforms</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">ToTensorV2</span><span class="p">):</span>
-                <span class="n">transforms</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span><span class="n">transforms</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-
-        <span class="c1"># always resize to specified image size</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">transform</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">Resize</span><span class="p">)</span> <span class="k">for</span> <span class="n">transform</span> <span class="ow">in</span> <span class="n">transforms</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_height_and_width</span><span class="p">()</span>
-            <span class="n">transforms</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span><span class="n">A</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">always_apply</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">transforms</span><span class="p">])</span>
-
-        <span class="k">return</span> <span class="n">transforms</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transforms</span> <span class="o">=</span> <span class="n">get_transforms</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">image_size</span><span class="p">,</span> <span class="n">to_tensor</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PreProcessor.__call__"><a class="viewcode-back" href="../../../api/anomalib/pre_processing/pre_process/index.html#anomalib.pre_processing.PreProcessor.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">"""Return transformed arguments."""</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transforms</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="PreProcessor._get_height_and_width"><a class="viewcode-back" href="../../../api/anomalib/pre_processing/pre_process/index.html#anomalib.pre_processing.PreProcessor._get_height_and_width">[docs]</a>    <span class="k">def</span> <span class="nf">_get_height_and_width</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
-        <span class="sd">"""Extract height and width from image size attribute."""</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_size</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"``image_size`` could be either int or Tuple[int, int]"</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transforms</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
 </pre></div>
       </article>
       <footer>

@@ -551,31 +551,9 @@ into a tensor or not. Defaults to True.</p></li>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.pre_processing.PreProcessor.get_transforms">
-<span class="sig-name descname"><span class="pre">get_transforms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">albumentations.Compose</span></span></span><a class="headerlink" href="#anomalib.pre_processing.PreProcessor.get_transforms" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get transforms from config or image size.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>List of albumentation transformations to apply to the</dt><dd><p>input image.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>A.Compose</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
 <dt class="sig sig-object py" id="anomalib.pre_processing.PreProcessor.__call__">
 <span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#anomalib.pre_processing.PreProcessor.__call__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return transformed arguments.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.pre_processing.PreProcessor._get_height_and_width">
-<span class="sig-name descname"><span class="pre">_get_height_and_width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#anomalib.pre_processing.PreProcessor._get_height_and_width" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract height and width from image size attribute.</p>
 </dd></dl>
 </dd></dl>
 <dl class="py class">
@@ -777,9 +755,7 @@ and return the reconstructed image.</p>
 <li><a class="reference internal" href="#package-contents">Package Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
 <li><a class="reference internal" href="#anomalib.pre_processing.PreProcessor">PreProcessor</a><ul>
-<li><a class="reference internal" href="#anomalib.pre_processing.PreProcessor.get_transforms">get_transforms</a></li>
 <li><a class="reference internal" href="#anomalib.pre_processing.PreProcessor.__call__">__call__</a></li>
-<li><a class="reference internal" href="#anomalib.pre_processing.PreProcessor._get_height_and_width">_get_height_and_width</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#anomalib.pre_processing.Tiler">Tiler</a><ul>

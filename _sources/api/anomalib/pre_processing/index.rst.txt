@@ -96,25 +96,9 @@ Classes
        >>> output["image"].shape
        torch.Size([3, 1024, 1024])
 
-   .. py:method:: get_transforms(self) -> albumentations.Compose
-
-      Get transforms from config or image size.
-
-      :returns:
-
-                List of albumentation transformations to apply to the
-                    input image.
-      :rtype: A.Compose
-
-
    .. py:method:: __call__(self, *args, **kwargs)
 
       Return transformed arguments.
-
-
-   .. py:method:: _get_height_and_width(self) -> Tuple[Optional[int], Optional[int]]
-
-      Extract height and width from image size attribute.
 
 
 

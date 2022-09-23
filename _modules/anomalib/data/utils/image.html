@@ -457,7 +457,7 @@
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -592,7 +592,48 @@
     <span class="k">return</span> <span class="n">file_path</span></div>
 
 
-<div class="viewcode-block" id="read_image"><a class="viewcode-back" href="../../../../api/anomalib/data/utils/index.html#anomalib.data.utils.image.read_image">[docs]</a><span class="k">def</span> <span class="nf">read_image</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<div class="viewcode-block" id="get_image_height_and_width"><a class="viewcode-back" href="../../../../api/anomalib/data/utils/index.html#anomalib.data.utils.image.get_image_height_and_width">[docs]</a><span class="k">def</span> <span class="nf">get_image_height_and_width</span><span class="p">(</span><span class="n">image_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+    <span class="sd">"""Get image height and width from ``image_size`` variable.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        image_size (Optional[Union[int, Tuple[int, int]]], optional): Input image size.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: Image size not None, int or tuple.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; get_image_height_and_width(image_size=256)</span>
+<span class="sd">        (256, 256)</span>
+
+<span class="sd">        &gt;&gt;&gt; get_image_height_and_width(image_size=(256, 256))</span>
+<span class="sd">        (256, 256)</span>
+
+<span class="sd">        &gt;&gt;&gt; get_image_height_and_width(image_size=(256, 256, 3))</span>
+<span class="sd">        (256, 256)</span>
+
+<span class="sd">        &gt;&gt;&gt; get_image_height_and_width(image_size=256.)</span>
+<span class="sd">        Traceback (most recent call last):</span>
+<span class="sd">        File "&lt;string&gt;", line 1, in &lt;module&gt;</span>
+<span class="sd">        File "&lt;string&gt;", line 18, in get_image_height_and_width</span>
+<span class="sd">        ValueError: ``image_size`` could be either int or Tuple[int, int]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[Optional[int], Optional[int]]: A tuple containing image height and width values.</span>
+<span class="sd">    """</span>
+    <span class="n">height_and_width</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">height_and_width</span> <span class="o">=</span> <span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="n">height_and_width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">image_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">image_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">image_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">height_and_width</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"``image_size`` could be either int or Tuple[int, int]"</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">height_and_width</span></div>
+
+
+<div class="viewcode-block" id="read_image"><a class="viewcode-back" href="../../../../api/anomalib/data/utils/index.html#anomalib.data.utils.image.read_image">[docs]</a><span class="k">def</span> <span class="nf">read_image</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">image_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="sd">"""Read image from disk in RGB format.</span>
 
 <span class="sd">    Args:</span>
@@ -607,6 +648,13 @@
     <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">image_size</span><span class="p">:</span>
+        <span class="c1"># This part is optional, where the user wants to quickly resize the image</span>
+        <span class="c1"># with a one-liner code. This would particularly be useful especially when</span>
+        <span class="c1"># prototyping new ideas.</span>
+        <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">get_image_height_and_width</span><span class="p">(</span><span class="n">image_size</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">dsize</span><span class="o">=</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="n">interpolation</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">INTER_AREA</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">image</span></div>
 

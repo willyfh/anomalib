@@ -469,6 +469,99 @@ to an input image before the forward-pass stage.</p>
 </tr>
 </tbody>
 </table></div>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<div class="table-wrapper"><table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%"/>
+<col style="width: 90%"/>
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.pre_processing.pre_process.get_transforms" title="anomalib.pre_processing.pre_process.get_transforms"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_transforms</span></code></a>(config: Optional[Union[str, albumentations.Compose]] = None, image_size: Optional[Union[int, Tuple]] = None, to_tensor: bool = True) → albumentations.Compose</p></td>
+<td><p>Get transforms from config or image size.</p></td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h3>
+<div class="table-wrapper"><table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%"/>
+<col style="width: 90%"/>
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#anomalib.pre_processing.pre_process.logger" title="anomalib.pre_processing.pre_process.logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logger</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table></div>
+<dl class="py data">
+<dt class="sig sig-object py" id="anomalib.pre_processing.pre_process.logger">
+<span class="sig-prename descclassname"><span class="pre">anomalib.pre_processing.pre_process.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="reference internal" href="../../../../_modules/anomalib/pre_processing/pre_process.html#logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.pre_processing.pre_process.logger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.pre_processing.pre_process.get_transforms">
+<span class="sig-prename descclassname"><span class="pre">anomalib.pre_processing.pre_process.</span></span><span class="sig-name descname"><span class="pre">get_transforms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">albumentations.Compose</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_tensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">albumentations.Compose</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/pre_processing/pre_process.html#get_transforms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.pre_processing.pre_process.get_transforms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get transforms from config or image size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>A.Compose</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Albumentations transforms.
+Either config or albumentations <code class="docutils literal notranslate"><span class="pre">Compose</span></code> object. Defaults to None.</p></li>
+<li><p><strong>image_size</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>int</em><em>, </em><em>Tuple</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Image size to transform. Defaults to None.</p></li>
+<li><p><strong>to_tensor</strong> (<em>bool</em><em>, </em><em>optional</em>) – Boolean to convert the final transforms into Torch tensor. Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – When both <code class="docutils literal notranslate"><span class="pre">config</span></code> and <code class="docutils literal notranslate"><span class="pre">image_size</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>ValueError</strong> – When <code class="docutils literal notranslate"><span class="pre">config</span></code> is not a <code class="docutils literal notranslate"><span class="pre">str</span></code> or <cite>A.Compose`</cite> object.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Albumentation <code class="docutils literal notranslate"><span class="pre">Compose</span></code> object containing the image transforms.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>A.Compose</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">skimage</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astronaut</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span> <span class="o">=</span> <span class="n">get_transforms</span><span class="p">(</span><span class="n">image_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">to_tensor</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="n">transforms</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(256, 256, 3)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span> <span class="o">=</span> <span class="n">get_transforms</span><span class="p">(</span><span class="n">image_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">to_tensor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="n">transforms</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">torch.Size([3, 256, 256])</span>
+</pre></div>
+</div>
+<p>Transforms could be read from albumentations Compose object.
+&gt;&gt;&gt; import albumentations as A
+&gt;&gt;&gt; from albumentations.pytorch import ToTensorV2
+&gt;&gt;&gt; config = A.Compose([A.Resize(512, 512), ToTensorV2()])
+&gt;&gt;&gt; transforms = get_transforms(config=config, to_tensor=False)
+&gt;&gt;&gt; output = transforms(image=image)
+&gt;&gt;&gt; output[“image”].shape
+(512, 512, 3)
+&gt;&gt;&gt; type(output[“image”])
+numpy.ndarray</p>
+<p>Transforms could be deserialized from a yaml file.
+&gt;&gt;&gt; transforms = A.Compose([A.Resize(1024, 1024), ToTensorV2()])
+&gt;&gt;&gt; A.save(transforms, “/tmp/transforms.yaml”, data_format=”yaml”)
+&gt;&gt;&gt; transforms = get_transforms(config=”/tmp/transforms.yaml”)
+&gt;&gt;&gt; output = transforms(image=image)
+&gt;&gt;&gt; output[“image”].shape
+torch.Size([3, 1024, 1024])</p>
+</dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.pre_processing.pre_process.PreProcessor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.pre_processing.pre_process.</span></span><span class="sig-name descname"><span class="pre">PreProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">albumentations.Compose</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_tensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/pre_processing/pre_process.html#PreProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.pre_processing.pre_process.PreProcessor" title="Permalink to this definition">¶</a></dt>
@@ -530,31 +623,9 @@ into a tensor or not. Defaults to True.</p></li>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.pre_processing.pre_process.PreProcessor.get_transforms">
-<span class="sig-name descname"><span class="pre">get_transforms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">albumentations.Compose</span></span></span><a class="reference internal" href="../../../../_modules/anomalib/pre_processing/pre_process.html#PreProcessor.get_transforms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.pre_processing.pre_process.PreProcessor.get_transforms" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get transforms from config or image size.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>List of albumentation transformations to apply to the</dt><dd><p>input image.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>A.Compose</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
 <dt class="sig sig-object py" id="anomalib.pre_processing.pre_process.PreProcessor.__call__">
 <span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/anomalib/pre_processing/pre_process.html#PreProcessor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.pre_processing.pre_process.PreProcessor.__call__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return transformed arguments.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.pre_processing.pre_process.PreProcessor._get_height_and_width">
-<span class="sig-name descname"><span class="pre">_get_height_and_width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/anomalib/pre_processing/pre_process.html#PreProcessor._get_height_and_width"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.pre_processing.pre_process.PreProcessor._get_height_and_width" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract height and width from image size attribute.</p>
 </dd></dl>
 </dd></dl>
 </section>
@@ -617,11 +688,13 @@ into a tensor or not. Defaults to True.</p></li>
             <ul>
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">anomalib.pre_processing.pre_process</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
-<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a><ul>
+<li><a class="reference internal" href="#anomalib.pre_processing.pre_process.logger">logger</a></li>
+<li><a class="reference internal" href="#anomalib.pre_processing.pre_process.get_transforms">get_transforms</a></li>
 <li><a class="reference internal" href="#anomalib.pre_processing.pre_process.PreProcessor">PreProcessor</a><ul>
-<li><a class="reference internal" href="#anomalib.pre_processing.pre_process.PreProcessor.get_transforms">get_transforms</a></li>
 <li><a class="reference internal" href="#anomalib.pre_processing.pre_process.PreProcessor.__call__">__call__</a></li>
-<li><a class="reference internal" href="#anomalib.pre_processing.pre_process.PreProcessor._get_height_and_width">_get_height_and_width</a></li>
 </ul>
 </li>
 </ul>
