@@ -44,7 +44,7 @@ Classes
 
                 Embedding for training,
                     anomaly map and anomaly score for testing.
-      :rtype: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]
+      :rtype: Union[Tensor, Tuple[Tensor, Tensor]]
 
 
    .. py:method:: generate_embedding(self, features: Dict[str, torch.Tensor]) -> torch.Tensor
@@ -82,7 +82,7 @@ Classes
       :type sampling_ratio: float
 
 
-   .. py:method:: nearest_neighbors(self, embedding: torch.Tensor, n_neighbors: int = 9) -> torch.Tensor
+   .. py:method:: nearest_neighbors(self, embedding: torch.Tensor, n_neighbors: int) -> Tuple[torch.Tensor, torch.Tensor]
 
       Nearest Neighbours using brute force method and euclidean norm.
 
@@ -92,6 +92,20 @@ Classes
       :type n_neighbors: int
 
       :returns: Patch scores.
+                Tensor: Locations of the nearest neighbor(s).
+      :rtype: Tensor
+
+
+   .. py:method:: compute_anomaly_score(self, patch_scores: torch.Tensor, locations: torch.Tensor, embedding: torch.Tensor) -> torch.Tensor
+
+      Compute Image-Level Anomaly Score.
+
+      :param patch_scores: Patch-level anomaly scores
+      :type patch_scores: Tensor
+      :param locations: Memory bank locations of the nearest neighbor for each patch location
+      :param embedding: The feature embeddings that generated the patch scores
+
+      :returns: Image-level anomaly scores
       :rtype: Tensor
 
 

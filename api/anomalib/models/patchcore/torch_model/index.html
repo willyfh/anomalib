@@ -492,7 +492,7 @@
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]</p>
+<dd class="field-odd"><p>Union[Tensor, Tuple[Tensor, Tensor]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -545,7 +545,7 @@
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.patchcore.torch_model.PatchcoreModel.nearest_neighbors">
-<span class="sig-name descname"><span class="pre">nearest_neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">9</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/patchcore/torch_model.html#PatchcoreModel.nearest_neighbors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.patchcore.torch_model.PatchcoreModel.nearest_neighbors" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">nearest_neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/patchcore/torch_model.html#PatchcoreModel.nearest_neighbors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.patchcore.torch_model.PatchcoreModel.nearest_neighbors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Nearest Neighbours using brute force method and euclidean norm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -555,7 +555,28 @@
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Patch scores.</p>
+<dd class="field-even"><p>Patch scores.
+Tensor: Locations of the nearest neighbor(s).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.patchcore.torch_model.PatchcoreModel.compute_anomaly_score">
+<span class="sig-name descname"><span class="pre">compute_anomaly_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/patchcore/torch_model.html#PatchcoreModel.compute_anomaly_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.patchcore.torch_model.PatchcoreModel.compute_anomaly_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute Image-Level Anomaly Score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>patch_scores</strong> (<em>Tensor</em>) – Patch-level anomaly scores</p></li>
+<li><p><strong>locations</strong> – Memory bank locations of the nearest neighbor for each patch location</p></li>
+<li><p><strong>embedding</strong> – The feature embeddings that generated the patch scores</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Image-level anomaly scores</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>Tensor</p>
@@ -630,6 +651,7 @@
 <li><a class="reference internal" href="#anomalib.models.patchcore.torch_model.PatchcoreModel.reshape_embedding">reshape_embedding</a></li>
 <li><a class="reference internal" href="#anomalib.models.patchcore.torch_model.PatchcoreModel.subsample_embedding">subsample_embedding</a></li>
 <li><a class="reference internal" href="#anomalib.models.patchcore.torch_model.PatchcoreModel.nearest_neighbors">nearest_neighbors</a></li>
+<li><a class="reference internal" href="#anomalib.models.patchcore.torch_model.PatchcoreModel.compute_anomaly_score">compute_anomaly_score</a></li>
 </ul>
 </li>
 </ul>

@@ -474,14 +474,11 @@
 <p>Generate Anomaly Heatmap.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.compute_anomaly_map">
-<span class="sig-name descname"><span class="pre">compute_anomaly_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_map_shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Size</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/patchcore/anomaly_map.html#AnomalyMapGenerator.compute_anomaly_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.compute_anomaly_map" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute_anomaly_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/patchcore/anomaly_map.html#AnomalyMapGenerator.compute_anomaly_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.compute_anomaly_map" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pixel Level Anomaly Heatmap.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>patch_scores</strong> (<em>torch.Tensor</em>) – Patch-level anomaly scores</p></li>
-<li><p><strong>feature_map_shape</strong> (<em>torch.Size</em>) – 2-D feature map shape (width, height)</p></li>
-</ul>
+<dd class="field-odd"><p><strong>patch_scores</strong> (<em>Tensor</em>) – Patch-level anomaly scores</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Map of the pixel-level anomaly scores</p>
@@ -492,39 +489,23 @@
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.compute_anomaly_score">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compute_anomaly_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">patch_scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/patchcore/anomaly_map.html#AnomalyMapGenerator.compute_anomaly_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.compute_anomaly_score" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute Image-Level Anomaly Score.</p>
+<dt class="sig sig-object py" id="anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/patchcore/anomaly_map.html#AnomalyMapGenerator.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns anomaly_map and anomaly_score.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>patch_scores</strong> (<em>torch.Tensor</em>) – Patch-level anomaly scores</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Image-level anomaly scores</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>torch.Tensor</p>
+<dd class="field-odd"><p><strong>patch_scores</strong> (<em>Tensor</em>) – Patch-level anomaly scores</p>
 </dd>
 </dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/anomalib/models/patchcore/anomaly_map.html#AnomalyMapGenerator.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.forward" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns anomaly_map and anomaly_score.</p>
-<p>Expects <cite>patch_scores</cite> keyword to be passed explicitly
-Expects <cite>feature_map_shape</cite> keyword to be passed explicitly</p>
 <p>Example
 &gt;&gt;&gt; anomaly_map_generator = AnomalyMapGenerator(input_size=input_size)
-&gt;&gt;&gt; map, score = anomaly_map_generator(patch_scores=numpy_array, feature_map_shape=feature_map_shape)</p>
+&gt;&gt;&gt; map = anomaly_map_generator(patch_scores=patch_scores)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If <cite>patch_scores</cite> key is not found</p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>anomaly_map</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>anomaly_map, anomaly_score</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Tuple[torch.Tensor, torch.Tensor]</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Tensor</p>
 </dd>
 </dl>
 </dd></dl>
@@ -592,7 +573,6 @@ Expects <cite>feature_map_shape</cite> keyword to be passed explicitly</p>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
 <li><a class="reference internal" href="#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator">AnomalyMapGenerator</a><ul>
 <li><a class="reference internal" href="#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.compute_anomaly_map">compute_anomaly_map</a></li>
-<li><a class="reference internal" href="#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.compute_anomaly_score">compute_anomaly_score</a></li>
 <li><a class="reference internal" href="#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.forward">forward</a></li>
 </ul>
 </li>

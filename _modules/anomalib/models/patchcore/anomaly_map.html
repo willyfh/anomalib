@@ -459,7 +459,7 @@
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">ListConfig</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">GaussianBlur2d</span>
 
@@ -477,70 +477,35 @@
         <span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">blur</span> <span class="o">=</span> <span class="n">GaussianBlur2d</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span> <span class="n">channels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-<div class="viewcode-block" id="AnomalyMapGenerator.compute_anomaly_map"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/anomaly_map/index.html#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.compute_anomaly_map">[docs]</a>    <span class="k">def</span> <span class="nf">compute_anomaly_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patch_scores</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">feature_map_shape</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="AnomalyMapGenerator.compute_anomaly_map"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/anomaly_map/index.html#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.compute_anomaly_map">[docs]</a>    <span class="k">def</span> <span class="nf">compute_anomaly_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patch_scores</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Pixel Level Anomaly Heatmap.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            patch_scores (torch.Tensor): Patch-level anomaly scores</span>
-<span class="sd">            feature_map_shape (torch.Size): 2-D feature map shape (width, height)</span>
+<span class="sd">            patch_scores (Tensor): Patch-level anomaly scores</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            torch.Tensor: Map of the pixel-level anomaly scores</span>
 <span class="sd">        """</span>
-        <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">feature_map_shape</span>
-        <span class="n">batch_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">patch_scores</span><span class="p">)</span> <span class="o">//</span> <span class="p">(</span><span class="n">width</span> <span class="o">*</span> <span class="n">height</span><span class="p">)</span>
-
-        <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">patch_scores</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
-        <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-
+        <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">patch_scores</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
         <span class="n">anomaly_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">anomaly_map</span></div>
 
-    <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="AnomalyMapGenerator.compute_anomaly_score"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/anomaly_map/index.html#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.compute_anomaly_score">[docs]</a>    <span class="k">def</span> <span class="nf">compute_anomaly_score</span><span class="p">(</span><span class="n">patch_scores</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">"""Compute Image-Level Anomaly Score.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            patch_scores (torch.Tensor): Patch-level anomaly scores</span>
-<span class="sd">        Returns:</span>
-<span class="sd">            torch.Tensor: Image-level anomaly scores</span>
-<span class="sd">        """</span>
-        <span class="n">max_scores</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">patch_scores</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
-        <span class="n">confidence</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">index_select</span><span class="p">(</span><span class="n">patch_scores</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">max_scores</span><span class="p">)</span>
-        <span class="n">weights</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">confidence</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
-        <span class="n">score</span> <span class="o">=</span> <span class="n">weights</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">patch_scores</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">score</span></div>
-
-<div class="viewcode-block" id="AnomalyMapGenerator.forward"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/anomaly_map/index.html#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+<div class="viewcode-block" id="AnomalyMapGenerator.forward"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/anomaly_map/index.html#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patch_scores</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Returns anomaly_map and anomaly_score.</span>
 
-<span class="sd">        Expects `patch_scores` keyword to be passed explicitly</span>
-<span class="sd">        Expects `feature_map_shape` keyword to be passed explicitly</span>
+<span class="sd">        Args:</span>
+<span class="sd">            patch_scores (Tensor): Patch-level anomaly scores</span>
 
 <span class="sd">        Example</span>
 <span class="sd">        &gt;&gt;&gt; anomaly_map_generator = AnomalyMapGenerator(input_size=input_size)</span>
-<span class="sd">        &gt;&gt;&gt; map, score = anomaly_map_generator(patch_scores=numpy_array, feature_map_shape=feature_map_shape)</span>
-
-<span class="sd">        Raises:</span>
-<span class="sd">            ValueError: If `patch_scores` key is not found</span>
+<span class="sd">        &gt;&gt;&gt; map = anomaly_map_generator(patch_scores=patch_scores)</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Tuple[torch.Tensor, torch.Tensor]: anomaly_map, anomaly_score</span>
+<span class="sd">            Tensor: anomaly_map</span>
 <span class="sd">        """</span>
-
-        <span class="k">if</span> <span class="s2">"patch_scores"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Expected key `patch_scores`. Found </span><span class="si">{</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="s2">"feature_map_shape"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Expected key `feature_map_shape`. Found </span><span class="si">{</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-        <span class="n">patch_scores</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">"patch_scores"</span><span class="p">]</span>
-        <span class="n">feature_map_shape</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">"feature_map_shape"</span><span class="p">]</span>
-
-        <span class="n">anomaly_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_anomaly_map</span><span class="p">(</span><span class="n">patch_scores</span><span class="p">,</span> <span class="n">feature_map_shape</span><span class="p">)</span>
-        <span class="n">anomaly_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_anomaly_score</span><span class="p">(</span><span class="n">patch_scores</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">anomaly_map</span><span class="p">,</span> <span class="n">anomaly_score</span></div></div>
+        <span class="n">anomaly_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_anomaly_map</span><span class="p">(</span><span class="n">patch_scores</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">anomaly_map</span></div></div>
 </pre></div>
       </article>
       <footer>

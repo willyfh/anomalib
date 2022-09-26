@@ -492,10 +492,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">feature_pooler</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">AvgPool2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">anomaly_map_generator</span> <span class="o">=</span> <span class="n">AnomalyMapGenerator</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="n">input_size</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">"memory_bank"</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">memory_bank</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">"memory_bank"</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">memory_bank</span><span class="p">:</span> <span class="n">Tensor</span>
 
-<div class="viewcode-block" id="PatchcoreModel.forward"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/torch_model/index.html#anomalib.models.patchcore.torch_model.PatchcoreModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]:</span>
+<div class="viewcode-block" id="PatchcoreModel.forward"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/torch_model/index.html#anomalib.models.patchcore.torch_model.PatchcoreModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]]:</span>
         <span class="sd">"""Return Embedding during training, or a tuple of anomaly map and anomaly score during testing.</span>
 
 <span class="sd">        Steps performed:</span>
@@ -507,7 +507,7 @@
 <span class="sd">            input_tensor (Tensor): Input tensor</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]: Embedding for training,</span>
+<span class="sd">            Union[Tensor, Tuple[Tensor, Tensor]]: Embedding for training,</span>
 <span class="sd">                anomaly map and anomaly score for testing.</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tiler</span><span class="p">:</span>
@@ -522,21 +522,29 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tiler</span><span class="p">:</span>
             <span class="n">embedding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tiler</span><span class="o">.</span><span class="n">untile</span><span class="p">(</span><span class="n">embedding</span><span class="p">)</span>
 
-        <span class="n">feature_map_shape</span> <span class="o">=</span> <span class="n">embedding</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="n">batch_size</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">embedding</span><span class="o">.</span><span class="n">shape</span>
         <span class="n">embedding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reshape_embedding</span><span class="p">(</span><span class="n">embedding</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
             <span class="n">output</span> <span class="o">=</span> <span class="n">embedding</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">patch_scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nearest_neighbors</span><span class="p">(</span><span class="n">embedding</span><span class="o">=</span><span class="n">embedding</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_neighbors</span><span class="p">)</span>
-            <span class="n">anomaly_map</span><span class="p">,</span> <span class="n">anomaly_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">anomaly_map_generator</span><span class="p">(</span>
-                <span class="n">patch_scores</span><span class="o">=</span><span class="n">patch_scores</span><span class="p">,</span> <span class="n">feature_map_shape</span><span class="o">=</span><span class="n">feature_map_shape</span>
-            <span class="p">)</span>
+            <span class="c1"># apply nearest neighbor search</span>
+            <span class="n">patch_scores</span><span class="p">,</span> <span class="n">locations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nearest_neighbors</span><span class="p">(</span><span class="n">embedding</span><span class="o">=</span><span class="n">embedding</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1"># reshape to batch dimension</span>
+            <span class="n">patch_scores</span> <span class="o">=</span> <span class="n">patch_scores</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+            <span class="n">locations</span> <span class="o">=</span> <span class="n">locations</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+            <span class="c1"># compute anomaly score</span>
+            <span class="n">anomaly_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_anomaly_score</span><span class="p">(</span><span class="n">patch_scores</span><span class="p">,</span> <span class="n">locations</span><span class="p">,</span> <span class="n">embedding</span><span class="p">)</span>
+            <span class="c1"># reshape to w, h</span>
+            <span class="n">patch_scores</span> <span class="o">=</span> <span class="n">patch_scores</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+            <span class="c1"># get anomaly map</span>
+            <span class="n">anomaly_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">anomaly_map_generator</span><span class="p">(</span><span class="n">patch_scores</span><span class="p">)</span>
+
             <span class="n">output</span> <span class="o">=</span> <span class="p">(</span><span class="n">anomaly_map</span><span class="p">,</span> <span class="n">anomaly_score</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">output</span></div>
 
-<div class="viewcode-block" id="PatchcoreModel.generate_embedding"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/torch_model/index.html#anomalib.models.patchcore.torch_model.PatchcoreModel.generate_embedding">[docs]</a>    <span class="k">def</span> <span class="nf">generate_embedding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="PatchcoreModel.generate_embedding"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/torch_model/index.html#anomalib.models.patchcore.torch_model.PatchcoreModel.generate_embedding">[docs]</a>    <span class="k">def</span> <span class="nf">generate_embedding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">"""Generate embedding from hierarchical feature map.</span>
 
 <span class="sd">        Args:</span>
@@ -572,7 +580,7 @@
         <span class="n">embedding</span> <span class="o">=</span> <span class="n">embedding</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">embedding_size</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">embedding</span></div>
 
-<div class="viewcode-block" id="PatchcoreModel.subsample_embedding"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/torch_model/index.html#anomalib.models.patchcore.torch_model.PatchcoreModel.subsample_embedding">[docs]</a>    <span class="k">def</span> <span class="nf">subsample_embedding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedding</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">sampling_ratio</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="PatchcoreModel.subsample_embedding"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/torch_model/index.html#anomalib.models.patchcore.torch_model.PatchcoreModel.subsample_embedding">[docs]</a>    <span class="k">def</span> <span class="nf">subsample_embedding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedding</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">sampling_ratio</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""Subsample embedding based on coreset sampling and store to memory.</span>
 
 <span class="sd">        Args:</span>
@@ -585,7 +593,7 @@
         <span class="n">coreset</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">sample_coreset</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">memory_bank</span> <span class="o">=</span> <span class="n">coreset</span></div>
 
-<div class="viewcode-block" id="PatchcoreModel.nearest_neighbors"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/torch_model/index.html#anomalib.models.patchcore.torch_model.PatchcoreModel.nearest_neighbors">[docs]</a>    <span class="k">def</span> <span class="nf">nearest_neighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedding</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">9</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="PatchcoreModel.nearest_neighbors"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/torch_model/index.html#anomalib.models.patchcore.torch_model.PatchcoreModel.nearest_neighbors">[docs]</a>    <span class="k">def</span> <span class="nf">nearest_neighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedding</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
         <span class="sd">"""Nearest Neighbours using brute force method and euclidean norm.</span>
 
 <span class="sd">        Args:</span>
@@ -594,10 +602,38 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Tensor: Patch scores.</span>
+<span class="sd">            Tensor: Locations of the nearest neighbor(s).</span>
 <span class="sd">        """</span>
         <span class="n">distances</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span><span class="n">embedding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory_bank</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>  <span class="c1"># euclidean norm</span>
-        <span class="n">patch_scores</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">distances</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">,</span> <span class="n">largest</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">patch_scores</span></div></div>
+        <span class="n">patch_scores</span><span class="p">,</span> <span class="n">locations</span> <span class="o">=</span> <span class="n">distances</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">,</span> <span class="n">largest</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">patch_scores</span><span class="p">,</span> <span class="n">locations</span></div>
+
+<div class="viewcode-block" id="PatchcoreModel.compute_anomaly_score"><a class="viewcode-back" href="../../../../api/anomalib/models/patchcore/torch_model/index.html#anomalib.models.patchcore.torch_model.PatchcoreModel.compute_anomaly_score">[docs]</a>    <span class="k">def</span> <span class="nf">compute_anomaly_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patch_scores</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">locations</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">embedding</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="sd">"""Compute Image-Level Anomaly Score.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            patch_scores (Tensor): Patch-level anomaly scores</span>
+<span class="sd">            locations: Memory bank locations of the nearest neighbor for each patch location</span>
+<span class="sd">            embedding: The feature embeddings that generated the patch scores</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Tensor: Image-level anomaly scores</span>
+<span class="sd">        """</span>
+
+        <span class="c1"># 1. Find the patch with the largest distance to it's nearest neighbor in each image</span>
+        <span class="n">max_patches</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">patch_scores</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (m^test,* in the paper)</span>
+        <span class="c1"># 2. Find the distance of the patch to it's nearest neighbor, and the location of the nn in the membank</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="n">patch_scores</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">patch_scores</span><span class="p">)),</span> <span class="n">max_patches</span><span class="p">]</span>  <span class="c1"># s in the paper</span>
+        <span class="n">nn_index</span> <span class="o">=</span> <span class="n">locations</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">patch_scores</span><span class="p">)),</span> <span class="n">max_patches</span><span class="p">]</span>  <span class="c1"># m^* in the paper</span>
+        <span class="c1"># 3. Find the support samples of the nearest neighbor in the membank</span>
+        <span class="n">nn_sample</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory_bank</span><span class="p">[</span><span class="n">nn_index</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">support_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nearest_neighbors</span><span class="p">(</span><span class="n">nn_sample</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_neighbors</span><span class="p">)</span>  <span class="c1"># N_b(m^*) in the paper</span>
+        <span class="c1"># 4. Find the distance of the patch features to each of the support samples</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span><span class="n">embedding</span><span class="p">[</span><span class="n">max_patches</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory_bank</span><span class="p">[</span><span class="n">support_samples</span><span class="p">],</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+        <span class="c1"># 5. Apply softmax to find the weights</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">distances</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()))[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># 6. Apply the weight factor to the score</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="n">weights</span> <span class="o">*</span> <span class="n">score</span>  <span class="c1"># S^* in the paper</span>
+        <span class="k">return</span> <span class="n">score</span></div></div>
 </pre></div>
       </article>
       <footer>
