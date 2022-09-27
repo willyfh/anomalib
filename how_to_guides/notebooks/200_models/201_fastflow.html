@@ -1,0 +1,1169 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Short walkthrough on Benchmarking in Anomalib" href="../300_benchmarking/301_benchmarking.html" /><link rel="prev" title="Use Folder Dataset (for Custom Datasets) via API" href="../100_datamodules/103_folder.html" />
+
+    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
+        <title>Train a Model via API - Anomalib v0.3.6</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=93475b62d1c3bc01323a0eefdc14a62d77b12690" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style>
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../../_static/pygments_dark.css"></head>
+  <body>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../index.html"><div class="brand">Anomalib v0.3.6</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../../_static/anomalib-icon.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../tutorials/index.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/training.html">Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/inference.html">Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/export.html">Export &amp; Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/logging.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/hyperparameter_optimization.html">Hyperparameter Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../../index.html">How to Guides</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../train_custom_data.html">Training with Custom Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../adding_a_new_model.html">Adding a New Model to Anomalib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Train a Model via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference_guide/api/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/api/cli.html">CLI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/api/config.html">Configuration</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../reference_guide/api/data/index.html">Dataset</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../reference_guide/api/data/btech.html">Btech Dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../reference_guide/api/data/mvtec.html">MVTec Dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../reference_guide/api/data/folder.html">Folder Dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../reference_guide/api/data/utils.html">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../reference_guide/api/model/index.html">Model</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../reference_guide/api/model/base.html">Base Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../reference_guide/api/model/dimensionality_reduction.html">Dimensionality Reduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../reference_guide/api/model/feature_extractors.html">Feature Extractors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../reference_guide/api/model/filters.html">Filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../reference_guide/api/model/layers.html">Layers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../reference_guide/api/model/sampling.html">Sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../reference_guide/api/model/stats.html">Stats</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/api/post_processing.html">Post Processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/api/metrics.html">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/api/loggers.html">Loggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/api/sweep.html">Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/api/callbacks.html">Callbacks</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference_guide/algorithms/index.html">Algorithms</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/algorithms/cflow.html">CFlow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/algorithms/dfkde.html">DFKDE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/algorithms/dfm.html">DFM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/algorithms/draem.html">Draem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/algorithms/fastflow.html">Fast-Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/algorithms/ganomaly.html">GANomaly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/algorithms/padim.html">Padim</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/algorithms/patchcore.html">PatchCore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/algorithms/reverse_distillation.html">Reverse Distillation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference_guide/algorithms/stfpm.html">STFPM</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../developer_guide/index.html">Developer Guide</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer_guide/getting_started.html">Getting Started with Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer_guide/pre_commit_hooks.html">Pre-commit Hooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer_guide/using_tox.html">Using Tox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer_guide/developing_on_docker.html">Developing on Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer_guide/developing_on_docker.html#build-the-docker-image">Build the Docker Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer_guide/developing_on_docker.html#run-the-docker-image">Run the Docker Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer_guide/developing_on_docker.html#using-vscode">Using VSCode</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <article role="main">
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+.jp-RenderedHTMLCommon thead,
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+.jp-RenderedHTMLCommon th,
+div.rendered_html th {
+  font-weight: bold;
+}
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.jp-RenderedHTMLCommon tbody tr:hover,
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<section id="Train-a-Model-via-API">
+<h1>Train a Model via API<a class="headerlink" href="#Train-a-Model-via-API" title="Permalink to this headline">¶</a></h1>
+<p>This notebook demonstrates how to train, test and infer the FastFlow model via Anomalib API. Compared to the CLI entrypoints such as `tools/&lt;train, test, inference&gt;.py, the API offers more flexibility such as modifying the existing model or designing custom approaches.</p>
+<section id="Imports">
+<h2>Imports<a class="headerlink" href="#Imports" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span><span class="p">,</span> <span class="n">update_wrapper</span>
+<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">MethodType</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">LightningModule</span><span class="p">,</span> <span class="n">Trainer</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">EarlyStopping</span><span class="p">,</span> <span class="n">ModelCheckpoint</span>
+<span class="kn">from</span> <span class="nn">torch.optim</span> <span class="kn">import</span> <span class="n">Optimizer</span>
+<span class="kn">from</span> <span class="nn">torch.optim.adam</span> <span class="kn">import</span> <span class="n">Adam</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+
+<span class="kn">from</span> <span class="nn">anomalib.data</span> <span class="kn">import</span> <span class="n">InferenceDataset</span>
+<span class="kn">from</span> <span class="nn">anomalib.data.mvtec</span> <span class="kn">import</span> <span class="n">MVTec</span>
+<span class="kn">from</span> <span class="nn">anomalib.models.fastflow.lightning_model</span> <span class="kn">import</span> <span class="n">Fastflow</span>
+<span class="kn">from</span> <span class="nn">anomalib.post_processing</span> <span class="kn">import</span> <span class="n">superimpose_anomaly_map</span>
+<span class="kn">from</span> <span class="nn">anomalib.pre_processing.transforms</span> <span class="kn">import</span> <span class="n">Denormalize</span>
+<span class="kn">from</span> <span class="nn">anomalib.utils.callbacks</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ImageVisualizerCallback</span><span class="p">,</span>
+    <span class="n">MetricsConfigurationCallback</span><span class="p">,</span>
+    <span class="n">MetricVisualizerCallback</span><span class="p">,</span>
+    <span class="n">MinMaxNormalizationCallback</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Data-Module">
+<h2>Data Module<a class="headerlink" href="#Data-Module" title="Permalink to this headline">¶</a></h2>
+<p>To train the model end-to-end, we do need to have a dataset. In our <a class="reference external" href="https://github.com/openvinotoolkit/anomalib/tree/main/notebooks/100_datamodules">previous notebooks</a>, we demonstrate how to initialize benchmark- and custom datasets. In this tutorial, we will use MVTec AD DataModule. We assume that <code class="docutils literal notranslate"><span class="pre">datasets</span></code> directory is created in the <code class="docutils literal notranslate"><span class="pre">anomalib</span></code> root directory and <code class="docutils literal notranslate"><span class="pre">MVTec</span></code> dataset is located in <code class="docutils literal notranslate"><span class="pre">datasets</span></code> directory.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datamodule</span> <span class="o">=</span> <span class="n">MVTec</span><span class="p">(</span>
+    <span class="n">root</span><span class="o">=</span><span class="s2">"../../datasets/MVTec/"</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="s2">"bottle"</span><span class="p">,</span>
+    <span class="n">image_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+    <span class="n">train_batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+    <span class="n">test_batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">task</span><span class="o">=</span><span class="s2">"segmentation"</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">datamodule</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+<span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">datamodule</span><span class="o">.</span><span class="n">test_dataloader</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Image Shape: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1"> Mask Shape: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Image Shape: torch.Size([32, 3, 256, 256]) Mask Shape: torch.Size([32, 256, 256])
+</pre></div></div>
+</div>
+</section>
+<section id="FastFlow-Model">
+<h2>FastFlow Model<a class="headerlink" href="#FastFlow-Model" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have created the MVTec datamodule, we could create the FastFlow model. We could start with printing its docstring.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Fastflow<span class="o">??</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Fastflow</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">],</span> <span class="n">backbone</span><span class="o">=</span><span class="s2">"resnet18"</span><span class="p">,</span> <span class="n">flow_steps</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Depending on the <code class="docutils literal notranslate"><span class="pre">training</span></code> mode, <code class="docutils literal notranslate"><span class="pre">model</span></code> returns two different outputs. If the model is in <code class="docutils literal notranslate"><span class="pre">training</span></code> mode, it returns the hidden variable and the log of the jacobian, based on the feature maps.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">training</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">train_output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"image"</span><span class="p">])</span>
+<span class="n">hidden_variables</span><span class="p">,</span> <span class="n">log_jacobian</span> <span class="o">=</span> <span class="n">train_output</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Hidden Variable Shape: </span><span class="si">{</span><span class="n">hidden_variables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Hidden Variable Shape: torch.Size([32, 64, 64, 64])
+</pre></div></div>
+</div>
+<p>During the test/inference mode, the model returns an anomaly heatmap localizing the anomalous regions.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">training</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"image"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Anomaly Map Shape: </span><span class="si">{</span><span class="n">anomaly_map</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Anomaly Map Shape: torch.Size([32, 1, 256, 256])
+</pre></div></div>
+</div>
+</section>
+<section id="Optimizer">
+<h2>Optimizer<a class="headerlink" href="#Optimizer" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">LightningModule</span></code> has <code class="docutils literal notranslate"><span class="pre">configure_optimizer</span></code> method that returns the optimizer object. This is not implemented in the FastFlow model. Instead, it is left to the user to make it configurable by either CLI or API. Here we will be configuring it via the API. To do so, we first need to create the optimizer object, wrap it around a function and finally inject this function into the model class.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="n">lightning_module</span><span class="p">:</span> <span class="n">LightningModule</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">:</span> <span class="n">Optimizer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>  <span class="c1"># pylint: disable=W0613,W0621</span>
+    <span class="sd">"""Override to customize the LightningModule.configure_optimizers` method."""</span>
+    <span class="k">return</span> <span class="n">optimizer</span>
+
+
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">Adam</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">),</span> <span class="n">weight_decay</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+<span class="n">fn</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">configure_optimizers</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">)</span>
+<span class="n">update_wrapper</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">configure_optimizers</span><span class="p">)</span>  <span class="c1"># necessary for `is_overridden`</span>
+<span class="n">model</span><span class="o">.</span><span class="n">configure_optimizers</span> <span class="o">=</span> <span class="n">MethodType</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Callbacks">
+<h2>Callbacks<a class="headerlink" href="#Callbacks" title="Permalink to this headline">¶</a></h2>
+<p>To train the model properly, we will to add some other “non-essential” logic such as saving the weights, early-stopping, normalizing the anomaly scores and visualizing the input/output images. To achieve these we use <code class="docutils literal notranslate"><span class="pre">Callbacks</span></code>. Anomalib has its own callbacks and also supports PyTorch Lightning’s native callbacks. So, let’s create the list of callbacks we want to execute during the training.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">callbacks</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">MetricsConfigurationCallback</span><span class="p">(</span>
+        <span class="n">adaptive_threshold</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">image_metric_names</span><span class="o">=</span><span class="p">[</span><span class="s2">"AUROC"</span><span class="p">],</span>
+        <span class="n">pixel_metric_names</span><span class="o">=</span><span class="p">[</span><span class="s2">"AUROC"</span><span class="p">],</span>
+    <span class="p">),</span>
+    <span class="n">ModelCheckpoint</span><span class="p">(</span>
+        <span class="n">mode</span><span class="o">=</span><span class="s2">"max"</span><span class="p">,</span>
+        <span class="n">monitor</span><span class="o">=</span><span class="s2">"pixel_AUROC"</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">EarlyStopping</span><span class="p">(</span>
+        <span class="n">monitor</span><span class="o">=</span><span class="s2">"pixel_AUROC"</span><span class="p">,</span>
+        <span class="n">mode</span><span class="o">=</span><span class="s2">"max"</span><span class="p">,</span>
+        <span class="n">patience</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">MinMaxNormalizationCallback</span><span class="p">(),</span>
+    <span class="n">ImageVisualizerCallback</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">"full"</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s2">"segmentation"</span><span class="p">,</span> <span class="n">image_save_path</span><span class="o">=</span><span class="s2">"./results/images"</span><span class="p">),</span>
+    <span class="n">MetricVisualizerCallback</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">"full"</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s2">"segmentation"</span><span class="p">,</span> <span class="n">image_save_path</span><span class="o">=</span><span class="s2">"./results/images"</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Training">
+<h2>Training<a class="headerlink" href="#Training" title="Permalink to this headline">¶</a></h2>
+<p>Now that we set up the datamodule, model, optimizer and the callbacks, we could now train the model.</p>
+<p>The final component to train the model is <code class="docutils literal notranslate"><span class="pre">pytorch_lightning</span></code> <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> object, which handles train/test/predict pipeline. Let’s create the trainer object to train the model.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+    <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">,</span>
+    <span class="n">accelerator</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">,</span>  <span class="c1"># \&lt;"cpu", "gpu", "tpu", "ipu", "hpu", "auto"&gt;,</span>
+    <span class="n">devices</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">max_epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+GPU available: True, used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Trainer</span></code> object has number of options that suit all specific needs. For more details, refer to <a class="reference external" href="https://pytorch-lightning.readthedocs.io/en/stable/common/trainer.html">Lightning Documentation</a> to see how it could be tweaked to your needs.</p>
+<p>Let’s train the model now.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">datamodule</span><span class="o">=</span><span class="n">datamodule</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/sakcay/miniconda3/envs/anomalib/lib/python3.8/site-packages/torchmetrics/utilities/prints.py:36: UserWarning: Metric `ROC` will save all targets and predictions in buffer. For large datasets this may lead to large memory footprint.
+  warnings.warn(*args, **kwargs)
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+
+  | Name                  | Type                     | Params
+-------------------------------------------------------------------
+0 | image_threshold       | AdaptiveThreshold        | 0
+1 | pixel_threshold       | AdaptiveThreshold        | 0
+2 | training_distribution | AnomalyScoreDistribution | 0
+3 | min_max               | MinMax                   | 0
+4 | model                 | FastflowModel            | 7.7 M
+5 | loss                  | FastflowLoss             | 0
+6 | image_metrics         | AnomalibMetricCollection | 0
+7 | pixel_metrics         | AnomalibMetricCollection | 0
+-------------------------------------------------------------------
+3.5 M     Trainable params
+4.2 M     Non-trainable params
+7.7 M     Total params
+30.678    Total estimated model params size (MB)
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/sakcay/miniconda3/envs/anomalib/lib/python3.8/site-packages/torchmetrics/utilities/prints.py:36: UserWarning: Torchmetrics v0.9 introduced a new argument class property called `full_state_update` that has
+                not been set for this class (_ResultMetric). The property determines if `update` by
+                default needs access to the full metric state. If this is not the case, significant speedups can be
+                achieved and we recommend setting this to `False`.
+                We provide an checking function
+                `from torchmetrics.utilities import check_forward_no_full_state`
+                that can be used to check if the `full_state_update=True` (old and potential slower behaviour,
+                default for now) or if `full_state_update=False` can be used safely.
+
+  warnings.warn(*args, **kwargs)
+/home/sakcay/miniconda3/envs/anomalib/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py:1927: PossibleUserWarning: The number of training batches (7) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+  rank_zero_warn(
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Epoch 11: 100%|██████████| 10/10 [02:14&lt;00:00, 13.47s/it, loss=-4.27e+05, v_num=2, pixel_AUROC=0.974]
+</pre></div></div>
+</div>
+<p>The training has finished after 12 epochs. This is because, we set the <code class="docutils literal notranslate"><span class="pre">EarlyStopping</span></code> criteria with a patience of 3, which terminated the training after <code class="docutils literal notranslate"><span class="pre">pixel_AUROC</span></code> stopped improving. If we increased the <code class="docutils literal notranslate"><span class="pre">patience</span></code>, the training would continue further.</p>
+</section>
+<section id="Testing">
+<h2>Testing<a class="headerlink" href="#Testing" title="Permalink to this headline">¶</a></h2>
+<p>Now that we trained the model, we could test the model to check the overall performance on the test set. We will also be writing the output of the test images to a file since we set <code class="docutils literal notranslate"><span class="pre">VisualizerCallback</span></code> in <code class="docutils literal notranslate"><span class="pre">callbacks</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainer</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">datamodule</span><span class="o">=</span><span class="n">datamodule</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Testing DataLoader 0: 100%|██████████| 3/3 [00:23&lt;00:00,  7.93s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold">        Test metric        </span>┃<span style="font-weight: bold">       DataLoader 0        </span>┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│<span style="color: #008080; text-decoration-color: #008080">        image_AUROC        </span>│<span style="color: #800080; text-decoration-color: #800080">            1.0            </span>│
+│<span style="color: #008080; text-decoration-color: #008080">        pixel_AUROC        </span>│<span style="color: #800080; text-decoration-color: #800080">    0.9744887351989746     </span>│
+└───────────────────────────┴───────────────────────────┘
+</pre></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[{'pixel_AUROC': 0.9744887351989746, 'image_AUROC': 1.0}]
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">trainer.test</span></code> returns the <code class="docutils literal notranslate"><span class="pre">pixel_AUROC</span></code> and <code class="docutils literal notranslate"><span class="pre">image_AUROC</span></code> results. We could also find the saved output in <code class="docutils literal notranslate"><span class="pre">images</span></code> directory.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span> ls images
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+broken_large  broken_small  contamination  good
+</pre></div></div>
+</div>
+</section>
+<section id="Inference">
+<h2>Inference<a class="headerlink" href="#Inference" title="Permalink to this headline">¶</a></h2>
+<p>Since we have a trained model, we could infer the model on an individual image or folder of images. Anomalib has an <code class="docutils literal notranslate"><span class="pre">InferenceDataset</span></code> to let you create an inference dataset. So let’s try it.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inference_dataset</span> <span class="o">=</span> <span class="n">InferenceDataset</span><span class="p">(</span>
+    <span class="n">path</span><span class="o">=</span><span class="s2">"../../datasets/MVTec/bottle/test/broken_large/000.png"</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">inference_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">inference_dataset</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>We could utilize <code class="docutils literal notranslate"><span class="pre">Trainer</span></code>’s <code class="docutils literal notranslate"><span class="pre">predict</span></code> method to infer, and get the outputs to visualize</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">dataloaders</span><span class="o">=</span><span class="n">inference_dataloader</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+/home/sakcay/miniconda3/envs/anomalib/lib/python3.8/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:240: PossibleUserWarning: The dataloader, predict_dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 96 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  rank_zero_warn(
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Predicting DataLoader 0: 100%|██████████| 1/1 [00:00&lt;00:00, -48.12it/s]
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">predictions</span></code> contain image, anomaly maps, predicted scores, labels and masks. These are all stored in a dictionary. We could check this by printing the <code class="docutils literal notranslate"><span class="pre">prediction</span></code> keys.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">predictions</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+dict_keys(['image', 'anomaly_maps', 'pred_scores', 'pred_labels', 'pred_masks'])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">'Image Shape: </span><span class="si">{</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">,</span><span class="se">\n</span><span class="s1">'</span>
+    <span class="s1">'Anomaly Map Shape: </span><span class="si">{predictions["anomaly_maps"].shape}</span><span class="s1">, </span><span class="se">\n</span><span class="s1">'</span>
+    <span class="s1">'Predicted Mask Shape: </span><span class="si">{predictions["pred_masks"].shape}</span><span class="s1">'</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+torch.Size([1, 3, 256, 256]) torch.Size([1, 1, 256, 256]) torch.Size([1, 1, 256, 256])
+</pre></div></div>
+</div>
+</section>
+<section id="Visualization">
+<h2>Visualization<a class="headerlink" href="#Visualization" title="Permalink to this headline">¶</a></h2>
+<p>To properly visualize the predictions, we will need to perform some post-processing operations.</p>
+<p>Let’s post-process each output one by one. We could start with the image. Each <code class="docutils literal notranslate"><span class="pre">image</span></code> is a tensor and within (0, 1) range. To visualize it, we need to denormalize it to (0, 255) scale. Anomalib already has a class for this. Let’s use it.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"image"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">Denormalize</span><span class="p">()(</span><span class="n">image</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Image Shape: </span><span class="si">{</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="se">\n</span><span class="s2"> Min Pixel: </span><span class="si">{</span><span class="n">image</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2"> Max Pixel: </span><span class="si">{</span><span class="n">image</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Shape of the Image: (256, 256, 3)
+ Min Pixel Value: 29
+ Max Pixel Value: 255
+</pre></div></div>
+</div>
+<p>We could now see that <code class="docutils literal notranslate"><span class="pre">image</span></code> is of a numpy array and within the range of [0, 255]. It’s ready to be visualized now.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.image.AxesImage at 0x7f766139b220&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_34_1.png" src="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_34_1.png"/>
+</div>
+</div>
+<p>The second output of the predictions is the anomaly map. As can be seen above, it’s also a torch tensor and of size <code class="docutils literal notranslate"><span class="pre">torch.Size([1,</span> <span class="pre">1,</span> <span class="pre">256,</span> <span class="pre">256])</span></code>. We therefore need to convert it to numpy and squeeze the dimensions to make it <code class="docutils literal notranslate"><span class="pre">256x256</span></code> output to visualize.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"anomaly_maps"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">anomaly_map</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.image.AxesImage at 0x7f766110f4c0&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_36_1.png" src="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_36_1.png"/>
+</div>
+</div>
+<p>We could superimpose (overlay) the anomaly map on top of the original image to get a heat map. Anomalib has a built-in function to achieve this. Let’s try it.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heat_map</span> <span class="o">=</span> <span class="n">superimpose_anomaly_map</span><span class="p">(</span><span class="n">anomaly_map</span><span class="o">=</span><span class="n">anomaly_map</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">heat_map</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.image.AxesImage at 0x7f7661317460&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_38_1.png" src="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_38_1.png"/>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">predictions</span></code> also contains prediction scores and labels.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_score</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">pred_labels</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"pred_labels"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pred_score</span><span class="p">,</span> <span class="n">pred_labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+tensor(0.7830) tensor(True)
+</pre></div></div>
+</div>
+<p>The last part of the predictions is the mask that is predicted by the model. This is a boolean mask containing True/False for the abnormal/normal pixels, respectively.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_masks</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"pred_masks"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">pred_masks</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.image.AxesImage at 0x7f7661283a00&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_42_1.png" src="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_42_1.png"/>
+</div>
+</div>
+<p>That wraps it! In this notebook, we show how we could train, test and finally infer a FastFlow model using Anomalib API.</p>
+</section>
+</section>
+
+      </article>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../300_benchmarking/301_benchmarking.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Short walkthrough on Benchmarking in Anomalib</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../100_datamodules/103_folder.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Use Folder Dataset (for Custom Datasets) via API</div>
+                
+              </div>
+            </a>
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; 
+            |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+            |
+            <a class="muted-link" href="../../../_sources/how_to_guides/notebooks/200_models/201_fastflow.ipynb.txt"
+               rel="nofollow">
+              Show Source
+            </a>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Train a Model via API</a><ul>
+<li><a class="reference internal" href="#Imports">Imports</a></li>
+<li><a class="reference internal" href="#Data-Module">Data Module</a></li>
+<li><a class="reference internal" href="#FastFlow-Model">FastFlow Model</a></li>
+<li><a class="reference internal" href="#Optimizer">Optimizer</a></li>
+<li><a class="reference internal" href="#Callbacks">Callbacks</a></li>
+<li><a class="reference internal" href="#Training">Training</a></li>
+<li><a class="reference internal" href="#Testing">Testing</a></li>
+<li><a class="reference internal" href="#Inference">Inference</a></li>
+<li><a class="reference internal" href="#Visualization">Visualization</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/scripts/main.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>
