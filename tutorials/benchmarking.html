@@ -294,6 +294,37 @@
 <span class="w">  </span><span class="nt">image_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span><span class="w"></span>
 </pre></div>
 </div>
+<p>Additionally, it is possible to pass a single value instead of an array for any specific parameter. This will overwrite the parameter in each of the model configs and thereby ensures that the parameter is kept constant between all runs in the sweep. For example, to ensure that the same dataset is used between runs the configuration file can be modified as shown below.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">42</span><span class="w"></span>
+<span class="nt">compute_openvino</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="nt">hardware</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cpu</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpu</span><span class="w"></span>
+<span class="nt">writer</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">comet</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wandb</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorboard</span><span class="w"></span>
+<span class="nt">grid_search</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">dataset</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hazelnut</span><span class="w"></span>
+<span class="w">    </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">folder</span><span class="w"></span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">path/hazelnut_toy</span><span class="w"></span>
+<span class="w">    </span><span class="nt">normal_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">good</span><span class="w"> </span><span class="c1"># name of the folder containing normal images.</span><span class="w"></span>
+<span class="w">    </span><span class="nt">abnormal_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">colour</span><span class="w"> </span><span class="c1"># name of the folder containing abnormal images.</span><span class="w"></span>
+<span class="w">    </span><span class="nt">normal_test_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
+<span class="w">    </span><span class="nt">task</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segmentation</span><span class="w"> </span><span class="c1"># classification or segmentation</span><span class="w"></span>
+<span class="w">    </span><span class="nt">mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">path/hazelnut_toy/mask/colour</span><span class="w"></span>
+<span class="w">    </span><span class="nt">extensions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.jpg</span><span class="w"></span>
+<span class="w">    </span><span class="nt">split_ratio</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.2</span><span class="w"></span>
+<span class="w">    </span><span class="nt">category</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">colour</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">crack</span><span class="w"></span>
+<span class="w">    </span><span class="nt">image_size</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">128</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">256</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">  </span><span class="nt">model_name</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">padim</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">stfpm</span><span class="w"></span>
+</pre></div>
+</div>
 <p>By default, <code class="docutils literal notranslate"><span class="pre">compute_openvino</span></code> is set to <code class="docutils literal notranslate"><span class="pre">False</span></code> to support instances where OpenVINO requirements are not installed in the environment. Once installed, this flag can be set to <code class="docutils literal notranslate"><span class="pre">True</span></code> to get the throughput on OpenVINO optimized models. The <code class="docutils literal notranslate"><span class="pre">writer</span></code> parameter is optional and can be set to <code class="docutils literal notranslate"><span class="pre">writer:</span> <span class="pre">[]</span></code> in case the user only requires a csv file without logging to each respective logger. It is a good practice to set a value of seed to ensure reproducibility across runs and thus, is set to a non-zero value by default.</p>
 <p>Once a configuration is decided, benchmarking can easily be performed by calling</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python tools/benchmarking/benchmark.py --config &lt;relative/absolute path&gt;/&lt;paramfile&gt;.yaml
