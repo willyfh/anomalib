@@ -273,6 +273,164 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python tools/train.py --model stfpm
 </pre></div>
 </div>
+<span class="target" id="module-anomalib.models.stfpm.torch_model"></span><p>PyTorch model for the STFPM model implementation.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.models.stfpm.torch_model.STFPMModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.stfpm.torch_model.</span></span><span class="sig-name descname"><span class="pre">STFPMModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backbone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'resnet18'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/torch_model.html#STFPMModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.torch_model.STFPMModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>STFPM: Student-Teacher Feature Pyramid Matching for Unsupervised Anomaly Detection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layers</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Layers used for feature extraction</p></li>
+<li><p><strong>input_size</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – Input size for the model.</p></li>
+<li><p><strong>backbone</strong> (<em>str</em><em>, </em><em>optional</em>) – Pre-trained model backbone. Defaults to “resnet18”.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.stfpm.torch_model.STFPMModel.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/torch_model.html#STFPMModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.torch_model.STFPMModel.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forward-pass images into the network.</p>
+<p>During the training mode the model extracts the features from the teacher and student networks.
+During the evaluation mode, it returns the predicted anomaly map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>images</strong> (<em>Tensor</em>) – Batch of images.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Teacher and student features when in training mode, otherwise the predicted anomaly maps.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.models.stfpm.torch_model.STFPMModel.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.stfpm.torch_model.STFPMModel.training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<span class="target" id="module-anomalib.models.stfpm.lightning_model"></span><p>STFPM: Student-Teacher Feature Pyramid Matching for Unsupervised Anomaly Detection.</p>
+<p><a class="reference external" href="https://arxiv.org/abs/2103.04257">https://arxiv.org/abs/2103.04257</a></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.models.stfpm.lightning_model.StfpmLightning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.stfpm.lightning_model.</span></span><span class="sig-name descname"><span class="pre">StfpmLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.dictconfig.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/lightning_model.html#StfpmLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.lightning_model.StfpmLightning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">anomalib.models.stfpm.lightning_model.Stfpm</span></code></p>
+<p>PL Lightning Module for the STFPM algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hparams</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model params</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.stfpm.lightning_model.StfpmLightning.configure_callbacks">
+<span class="sig-name descname"><span class="pre">configure_callbacks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/lightning_model.html#StfpmLightning.configure_callbacks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.lightning_model.StfpmLightning.configure_callbacks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure model-specific callbacks.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is used for the existing CLI.
+When PL CLI is introduced, configure callback method will be</p>
+<blockquote>
+<div><p>deprecated, and callbacks will be configured from either
+config.yaml file or from CLI.</p>
+</div></blockquote>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.stfpm.lightning_model.StfpmLightning.configure_optimizers">
+<span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.optim.optimizer.Optimizer</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/lightning_model.html#StfpmLightning.configure_optimizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.lightning_model.StfpmLightning.configure_optimizers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configures optimizers for each decoder.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is used for the existing CLI.
+When PL CLI is introduced, configure optimizers method will be</p>
+<blockquote>
+<div><p>deprecated, and optimizers will be configured from either
+config.yaml file or from CLI.</p>
+</div></blockquote>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Adam optimizer for each decoder</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Optimizer</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.models.stfpm.lightning_model.StfpmLightning.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.stfpm.lightning_model.StfpmLightning.training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<span class="target" id="module-anomalib.models.stfpm.anomaly_map"></span><p>Anomaly Map Generator for the STFPM model implementation.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.stfpm.anomaly_map.</span></span><span class="sig-name descname"><span class="pre">AnomalyMapGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/anomaly_map.html#AnomalyMapGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>Generate Anomaly Heatmap.</p>
+<p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.compute_anomaly_map">
+<span class="sig-name descname"><span class="pre">compute_anomaly_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">teacher_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">student_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/anomaly_map.html#AnomalyMapGenerator.compute_anomaly_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.compute_anomaly_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the overall anomaly map via element-wise production the interpolated anomaly maps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>teacher_features</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Tensor</em><em>]</em>) – Teacher features</p></li>
+<li><p><strong>student_features</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Tensor</em><em>]</em>) – Student features</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Final anomaly map</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.compute_layer_map">
+<span class="sig-name descname"><span class="pre">compute_layer_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">teacher_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">student_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/anomaly_map.html#AnomalyMapGenerator.compute_layer_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.compute_layer_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the layer map based on cosine similarity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>teacher_features</strong> (<em>Tensor</em>) – Teacher features</p></li>
+<li><p><strong>student_features</strong> (<em>Tensor</em>) – Student features</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Anomaly score based on cosine similarity.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/anomaly_map.html#AnomalyMapGenerator.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns anomaly map.</p>
+<p>Expects <cite>teach_features</cite> and <cite>student_features</cite> keywords to be passed explicitly.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">anomaly_map_generator</span> <span class="o">=</span> <span class="n">AnomalyMapGenerator</span><span class="p">(</span><span class="n">image_size</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_size</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">anomaly_map_generator</span><span class="p">(</span>
+<span class="go">        teacher_features=teacher_features,</span>
+<span class="go">        student_features=student_features</span>
+<span class="go">    )</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – <cite>teach_features</cite> and <cite>student_features</cite> keys are not found</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>anomaly map</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
 </section>
 </section>
 

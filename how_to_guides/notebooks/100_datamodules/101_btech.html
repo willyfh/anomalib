@@ -517,13 +517,13 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">ToPILImage</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+from PIL import Image
+from torchvision.transforms import ToPILImage
 
-<span class="kn">from</span> <span class="nn">anomalib.data.btech</span> <span class="kn">import</span> <span class="n">BTech</span><span class="p">,</span> <span class="n">BTechDataset</span>
-<span class="kn">from</span> <span class="nn">anomalib.pre_processing</span> <span class="kn">import</span> <span class="n">PreProcessor</span>
-<span class="kn">from</span> <span class="nn">anomalib.pre_processing.transforms</span> <span class="kn">import</span> <span class="n">Denormalize</span>
+from anomalib.data.btech import BTech, BTechDataset
+from anomalib.pre_processing import PreProcessor
+from anomalib.pre_processing.transforms import Denormalize
 </pre></div>
 </div>
 </div>
@@ -533,7 +533,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>BTechDataset<span class="o">??</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>BTechDataset??
 </pre></div>
 </div>
 </div>
@@ -542,7 +542,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>PreProcessor<span class="o">??</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>PreProcessor??
 </pre></div>
 </div>
 </div>
@@ -550,7 +550,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pre_process</span> <span class="o">=</span> <span class="n">PreProcessor</span><span class="p">(</span><span class="n">image_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">to_tensor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pre_process = PreProcessor(image_size=256, to_tensor=True)
 </pre></div>
 </div>
 </div>
@@ -560,15 +560,15 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># BTechDataset Classification Train Set</span>
-<span class="n">btech_dataset_classification_train</span> <span class="o">=</span> <span class="n">BTechDataset</span><span class="p">(</span>
-    <span class="n">root</span><span class="o">=</span><span class="s2">"../../datasets/BTech"</span><span class="p">,</span>
-    <span class="n">category</span><span class="o">=</span><span class="s2">"01"</span><span class="p">,</span>
-    <span class="n">pre_process</span><span class="o">=</span><span class="n">pre_process</span><span class="p">,</span>
-    <span class="n">split</span><span class="o">=</span><span class="s2">"train"</span><span class="p">,</span>
-    <span class="n">task</span><span class="o">=</span><span class="s2">"classification"</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">btech_dataset_classification_train</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># BTechDataset Classification Train Set
+btech_dataset_classification_train = BTechDataset(
+    root="../../datasets/BTech",
+    category="01",
+    pre_process=pre_process,
+    split="train",
+    task="classification",
+)
+btech_dataset_classification_train.samples.head()
 </pre></div>
 </div>
 </div>
@@ -657,8 +657,8 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">btech_dataset_classification_train</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">sample</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">sample</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sample = btech_dataset_classification_train[0]
+sample.keys(), sample["image"].shape
 </pre></div>
 </div>
 </div>
@@ -676,16 +676,16 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># BTech Classification Test Set</span>
-<span class="n">btech_dataset_classification_test</span> <span class="o">=</span> <span class="n">BTechDataset</span><span class="p">(</span>
-    <span class="n">root</span><span class="o">=</span><span class="s2">"../../datasets/BTech"</span><span class="p">,</span>
-    <span class="n">category</span><span class="o">=</span><span class="s2">"01"</span><span class="p">,</span>
-    <span class="n">pre_process</span><span class="o">=</span><span class="n">pre_process</span><span class="p">,</span>
-    <span class="n">split</span><span class="o">=</span><span class="s2">"test"</span><span class="p">,</span>
-    <span class="n">task</span><span class="o">=</span><span class="s2">"classification"</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">sample</span> <span class="o">=</span> <span class="n">btech_dataset_classification_test</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">sample</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">sample</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">sample</span><span class="p">[</span><span class="s2">"image_path"</span><span class="p">],</span> <span class="n">sample</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># BTech Classification Test Set
+btech_dataset_classification_test = BTechDataset(
+    root="../../datasets/BTech",
+    category="01",
+    pre_process=pre_process,
+    split="test",
+    task="classification",
+)
+sample = btech_dataset_classification_test[0]
+sample.keys(), sample["image"].shape, sample["image_path"], sample["label"]
 </pre></div>
 </div>
 </div>
@@ -710,15 +710,15 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># BTech Segmentation Train Set</span>
-<span class="n">btech_dataset_segmentation_train</span> <span class="o">=</span> <span class="n">BTechDataset</span><span class="p">(</span>
-    <span class="n">root</span><span class="o">=</span><span class="s2">"../../datasets/BTech"</span><span class="p">,</span>
-    <span class="n">category</span><span class="o">=</span><span class="s2">"01"</span><span class="p">,</span>
-    <span class="n">pre_process</span><span class="o">=</span><span class="n">pre_process</span><span class="p">,</span>
-    <span class="n">split</span><span class="o">=</span><span class="s2">"train"</span><span class="p">,</span>
-    <span class="n">task</span><span class="o">=</span><span class="s2">"segmentation"</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">btech_dataset_segmentation_train</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># BTech Segmentation Train Set
+btech_dataset_segmentation_train = BTechDataset(
+    root="../../datasets/BTech",
+    category="01",
+    pre_process=pre_process,
+    split="train",
+    task="segmentation",
+)
+btech_dataset_segmentation_train.samples.head()
 </pre></div>
 </div>
 </div>
@@ -808,16 +808,16 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># BTech Segmentation Test Set</span>
-<span class="n">btech_dataset_segmentation_test</span> <span class="o">=</span> <span class="n">BTechDataset</span><span class="p">(</span>
-    <span class="n">root</span><span class="o">=</span><span class="s2">"../../datasets/BTech"</span><span class="p">,</span>
-    <span class="n">category</span><span class="o">=</span><span class="s2">"01"</span><span class="p">,</span>
-    <span class="n">pre_process</span><span class="o">=</span><span class="n">pre_process</span><span class="p">,</span>
-    <span class="n">split</span><span class="o">=</span><span class="s2">"test"</span><span class="p">,</span>
-    <span class="n">task</span><span class="o">=</span><span class="s2">"segmentation"</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">sample</span> <span class="o">=</span> <span class="n">btech_dataset_segmentation_test</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span>
-<span class="n">sample</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">sample</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">sample</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># BTech Segmentation Test Set
+btech_dataset_segmentation_test = BTechDataset(
+    root="../../datasets/BTech",
+    category="01",
+    pre_process=pre_process,
+    split="test",
+    task="segmentation",
+)
+sample = btech_dataset_segmentation_test[20]
+sample.keys(), sample["image"].shape, sample["mask"].shape
 </pre></div>
 </div>
 </div>
@@ -837,10 +837,10 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">ToPILImage</span><span class="p">()(</span><span class="n">Denormalize</span><span class="p">()(</span><span class="n">sample</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()))</span>
-<span class="n">msk</span> <span class="o">=</span> <span class="n">ToPILImage</span><span class="p">()(</span><span class="n">sample</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">])</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">"RGB"</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>img = ToPILImage()(Denormalize()(sample["image"].clone()))
+msk = ToPILImage()(sample["mask"]).convert("RGB")
 
-<span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">msk</span><span class="p">))))</span>
+Image.fromarray(np.hstack((np.array(img), np.array(msk))))
 </pre></div>
 </div>
 </div>
@@ -861,16 +861,16 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">btech_datamodule</span> <span class="o">=</span> <span class="n">BTech</span><span class="p">(</span>
-    <span class="n">root</span><span class="o">=</span><span class="s2">"../../datasets/BTech"</span><span class="p">,</span>
-    <span class="n">category</span><span class="o">=</span><span class="s2">"01"</span><span class="p">,</span>
-    <span class="n">image_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
-    <span class="n">train_batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
-    <span class="n">test_batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
-    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
-    <span class="n">task</span><span class="o">=</span><span class="s2">"segmentation"</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">btech_datamodule</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>btech_datamodule = BTech(
+    root="../../datasets/BTech",
+    category="01",
+    image_size=256,
+    train_batch_size=32,
+    test_batch_size=32,
+    num_workers=8,
+    task="segmentation",
+)
+btech_datamodule.setup()
 </pre></div>
 </div>
 </div>
@@ -878,9 +878,9 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Train images</span>
-<span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">btech_datamodule</span><span class="o">.</span><span class="n">train_dataloader</span><span class="p">()))</span>
-<span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">data</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Train images
+i, data = next(enumerate(btech_datamodule.train_dataloader()))
+data.keys(), data["image"].shape
 </pre></div>
 </div>
 </div>
@@ -897,9 +897,9 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test images</span>
-<span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">btech_datamodule</span><span class="o">.</span><span class="n">test_dataloader</span><span class="p">()))</span>
-<span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">data</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Test images
+i, data = next(enumerate(btech_datamodule.test_dataloader()))
+data.keys(), data["image"].shape, data["mask"].shape
 </pre></div>
 </div>
 </div>
@@ -919,10 +919,10 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">ToPILImage</span><span class="p">()(</span><span class="n">Denormalize</span><span class="p">()(</span><span class="n">data</span><span class="p">[</span><span class="s2">"image"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()))</span>
-<span class="n">msk</span> <span class="o">=</span> <span class="n">ToPILImage</span><span class="p">()(</span><span class="n">data</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">"RGB"</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>img = ToPILImage()(Denormalize()(data["image"][0].clone()))
+msk = ToPILImage()(data["mask"][0]).convert("RGB")
 
-<span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">msk</span><span class="p">))))</span>
+Image.fromarray(np.hstack((np.array(img), np.array(msk))))
 </pre></div>
 </div>
 </div>

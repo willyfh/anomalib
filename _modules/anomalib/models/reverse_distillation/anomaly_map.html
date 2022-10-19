@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
     <link rel="shortcut icon" href="../../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
-        <title>anomalib.utils.metrics.adaptive_threshold - Anomalib v0.3.6</title>
+        <title>anomalib.models.reverse_distillation.anomaly_map - Anomalib v0.3.6</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?digest=93475b62d1c3bc01323a0eefdc14a62d77b12690" />
@@ -254,51 +254,83 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <h1>Source code for anomalib.utils.metrics.adaptive_threshold</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Implementation of Optimal F1 score based on TorchMetrics."""</span>
+        <h1>Source code for anomalib.models.reverse_distillation.anomaly_map</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Compute Anomaly map."""</span>
 
+<span class="c1"># Original Code</span>
+<span class="c1"># Copyright (c) 2022 hq-deng</span>
+<span class="c1"># https://github.com/hq-deng/RD4AD</span>
+<span class="c1"># SPDX-License-Identifier: MIT</span>
+<span class="c1">#</span>
+<span class="c1"># Modified</span>
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
 <span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">torchmetrics</span> <span class="kn">import</span> <span class="n">PrecisionRecallCurve</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">kornia.filters</span> <span class="kn">import</span> <span class="n">gaussian_blur2d</span>
+<span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">ListConfig</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
 
-<div class="viewcode-block" id="AdaptiveThreshold"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.AdaptiveThreshold">[docs]</a><span class="k">class</span> <span class="nc">AdaptiveThreshold</span><span class="p">(</span><span class="n">PrecisionRecallCurve</span><span class="p">):</span>
-    <span class="sd">"""Optimal F1 Metric.</span>
+<div class="viewcode-block" id="AnomalyMapGenerator"><a class="viewcode-back" href="../../../../reference_guide/algorithms/reverse_distillation.html#anomalib.models.reverse_distillation.anomaly_map.AnomalyMapGenerator">[docs]</a><span class="k">class</span> <span class="nc">AnomalyMapGenerator</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">"""Generate Anomaly Heatmap.</span>
 
-<span class="sd">    Compute the optimal F1 score at the adaptive threshold, based on the F1 metric of the true labels and the</span>
-<span class="sd">    predicted anomaly scores.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        image_size (Union[ListConfig, Tuple]): Size of original image used for upscaling the anomaly map.</span>
+<span class="sd">        sigma (int): Standard deviation of the gaussian kernel used to smooth anomaly map.</span>
+<span class="sd">        mode (str, optional): Operation used to generate anomaly map. Options are `add` and `multiply`.</span>
+<span class="sd">                Defaults to "multiply".</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: In case modes other than multiply and add are passed.</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_size</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ListConfig</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">],</span> <span class="n">sigma</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"multiply"</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_size</span> <span class="o">=</span> <span class="n">image_size</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">image_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_state</span><span class="p">(</span><span class="s2">"value"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">default_value</span><span class="p">),</span> <span class="n">persistent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># pylint: disable=not-callable</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">default_value</span><span class="p">)</span>  <span class="c1"># pylint: disable=not-callable</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"add"</span><span class="p">,</span> <span class="s2">"multiply"</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Found mode </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2">. Only multiply and add are supported."</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
 
-<div class="viewcode-block" id="AdaptiveThreshold.compute"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.AdaptiveThreshold.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">"""Compute the threshold that yields the optimal F1 score.</span>
+<div class="viewcode-block" id="AnomalyMapGenerator.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/reverse_distillation.html#anomalib.models.reverse_distillation.anomaly_map.AnomalyMapGenerator.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student_features</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">teacher_features</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="sd">"""Computes anomaly map given encoder and decoder features.</span>
 
-<span class="sd">        Compute the F1 scores while varying the threshold. Store the optimal</span>
-<span class="sd">        threshold as attribute and return the maximum value of the F1 score.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            student_features (List[Tensor]): List of encoder features</span>
+<span class="sd">            teacher_features (List[Tensor]): List of decoder features</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Value of the F1 score at the optimal threshold.</span>
+<span class="sd">            Tensor: Anomaly maps of length batch.</span>
 <span class="sd">        """</span>
-        <span class="n">precision</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
-        <span class="n">recall</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
-        <span class="n">thresholds</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">"multiply"</span><span class="p">:</span>
+            <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">student_features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">student_features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">device</span>
+            <span class="p">)</span>  <span class="c1"># b c h w</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">"add"</span><span class="p">:</span>
+            <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">student_features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">student_features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">device</span>
+            <span class="p">)</span>
 
-        <span class="n">precision</span><span class="p">,</span> <span class="n">recall</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
-        <span class="n">f1_score</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">precision</span> <span class="o">*</span> <span class="n">recall</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">precision</span> <span class="o">+</span> <span class="n">recall</span> <span class="o">+</span> <span class="mf">1e-10</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">thresholds</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="c1"># special case where recall is 1.0 even for the highest threshold.</span>
-            <span class="c1"># In this case 'thresholds' will be scalar.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">thresholds</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">thresholds</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">f1_score</span><span class="p">)]</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span></div></div>
+        <span class="k">for</span> <span class="n">student_feature</span><span class="p">,</span> <span class="n">teacher_feature</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">student_features</span><span class="p">,</span> <span class="n">teacher_features</span><span class="p">):</span>
+            <span class="n">distance_map</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">F</span><span class="o">.</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">student_feature</span><span class="p">,</span> <span class="n">teacher_feature</span><span class="p">)</span>
+            <span class="n">distance_map</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="n">distance_map</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">distance_map</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">distance_map</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"bilinear"</span><span class="p">,</span> <span class="n">align_corners</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">"multiply"</span><span class="p">:</span>
+                <span class="n">anomaly_map</span> <span class="o">*=</span> <span class="n">distance_map</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">"add"</span><span class="p">:</span>
+                <span class="n">anomaly_map</span> <span class="o">+=</span> <span class="n">distance_map</span>
+
+        <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">gaussian_blur2d</span><span class="p">(</span>
+            <span class="n">anomaly_map</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">anomaly_map</span></div></div>
 </pre></div>
       </article>
       <footer>

@@ -255,8 +255,381 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <section id="utils">
-<h1>Utils<a class="headerlink" href="#utils" title="Permalink to this headline">¶</a></h1>
+        <section id="module-anomalib.data.utils">
+<span id="utils"></span><h1>Utils<a class="headerlink" href="#module-anomalib.data.utils" title="Permalink to this headline">¶</a></h1>
+<p>Helper utilities for data.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.data.utils.DownloadProgressBar">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">DownloadProgressBar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">_</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">__</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/anomalib/data/utils/download.html#DownloadProgressBar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.DownloadProgressBar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tqdm.std.tqdm</span></code></p>
+<p>Create progress bar for urlretrieve. Subclasses <cite>tqdm</cite>.</p>
+<p>For information about the parameters in constructor, refer to <cite>tqdm</cite>’s documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iterable</strong> (<em>Optional</em><em>[</em><em>Iterable</em><em>]</em>) – Iterable to decorate with a progressbar.
+Leave blank to manually manage the updates.</p></li>
+<li><p><strong>desc</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Prefix for the progressbar.</p></li>
+<li><p><strong>total</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>]</em>) – The number of expected iterations. If unspecified,
+len(iterable) is used if possible. If float(“inf”) or as a last
+resort, only basic progress statistics are displayed
+(no ETA, no progressbar).
+If <cite>gui</cite> is True and this parameter needs subsequent updating,
+specify an initial arbitrary large positive number,
+e.g. 9e9.</p></li>
+<li><p><strong>leave</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – upon termination of iteration. If <cite>None</cite>, will leave only if <cite>position</cite> is <cite>0</cite>.</p></li>
+<li><p><strong>file</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>io.TextIOWrapper</em><em>, </em><em>io.StringIO</em><em>]</em><em>]</em>) – Specifies where to output the progress messages
+(default: sys.stderr). Uses <cite>file.write(str)</cite> and
+<cite>file.flush()</cite> methods.  For encoding, see
+<cite>write_bytes</cite>.</p></li>
+<li><p><strong>ncols</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – The width of the entire output message. If specified,
+dynamically resizes the progressbar to stay within this bound.
+If unspecified, attempts to use environment width. The
+fallback is a meter width of 10 and no limit for the counter and
+statistics. If 0, will not print any meter (only stats).</p></li>
+<li><p><strong>mininterval</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – Minimum progress display update interval [default: 0.1] seconds.</p></li>
+<li><p><strong>maxinterval</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – Maximum progress display update interval [default: 10] seconds.
+Automatically adjusts <cite>miniters</cite> to correspond to <cite>mininterval</cite>
+after long display update lag. Only works if <cite>dynamic_miniters</cite>
+or monitor thread is enabled.</p></li>
+<li><p><strong>miniters</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>]</em>) – Minimum progress display update interval, in iterations.
+If 0 and <cite>dynamic_miniters</cite>, will automatically adjust to equal
+<cite>mininterval</cite> (more CPU efficient, good for tight loops).
+If &gt; 0, will skip display of specified number of iterations.
+Tweak this and <cite>mininterval</cite> to get very efficient loops.
+If your progress is erratic with both fast and slow iterations
+(network, skipping items, etc) you should set miniters=1.</p></li>
+<li><p><strong>use_ascii</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bool</em><em>, </em><em>str</em><em>]</em><em>]</em>) – If unspecified or False, use unicode (smooth blocks) to fill
+the meter. The fallback is to use ASCII characters ” 123456789#”.</p></li>
+<li><p><strong>disable</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – Whether to disable the entire progressbar wrapper
+[default: False]. If set to None, disable on non-TTY.</p></li>
+<li><p><strong>unit</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – String that will be used to define the unit of each iteration
+[default: it].</p></li>
+<li><p><strong>unit_scale</strong> (<em>Union</em><em>[</em><em>bool</em><em>, </em><em>int</em><em>, </em><em>float</em><em>]</em>) – If 1 or True, the number of iterations will be reduced/scaled
+automatically and a metric prefix following the
+International System of Units standard will be added
+(kilo, mega, etc.) [default: False]. If any other non-zero
+number, will scale <cite>total</cite> and <cite>n</cite>.</p></li>
+<li><p><strong>dynamic_ncols</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – If set, constantly alters <cite>ncols</cite> and <cite>nrows</cite> to the
+environment (allowing for window resizes) [default: False].</p></li>
+<li><p><strong>smoothing</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – Exponential moving average smoothing factor for speed estimates
+(ignored in GUI mode). Ranges from 0 (average speed) to 1
+(current/instantaneous speed) [default: 0.3].</p></li>
+<li><p><strong>bar_format</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Specify a custom bar string formatting. May impact performance.
+[default: ‘{l_bar}{bar}{r_bar}’], where
+l_bar=’{desc}: {percentage:3.0f}%|’ and
+r_bar=’| {n_fmt}/{total_fmt} [{elapsed}&lt;{remaining}, ‘
+‘{rate_fmt}{postfix}]’
+Possible vars: l_bar, bar, r_bar, n, n_fmt, total, total_fmt,
+percentage, elapsed, elapsed_s, ncols, nrows, desc, unit,
+rate, rate_fmt, rate_noinv, rate_noinv_fmt,
+rate_inv, rate_inv_fmt, postfix, unit_divisor,
+remaining, remaining_s, eta.
+Note that a trailing “: ” is automatically removed after {desc}
+if the latter is empty.</p></li>
+<li><p><strong>initial</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>]</em>) – The initial counter value. Useful when restarting a progress
+bar [default: 0]. If using float, consider specifying <cite>{n:.3f}</cite>
+or similar in <cite>bar_format</cite>, or specifying <cite>unit_scale</cite>.</p></li>
+<li><p><strong>position</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Specify the line offset to print this bar (starting from 0)
+Automatic if unspecified.
+Useful to manage multiple bars at once (eg, from threads).</p></li>
+<li><p><strong>postfix</strong> (<em>Optional</em><em>[</em><em>Dict</em><em>]</em>) – Specify additional stats to display at the end of the bar.
+Calls <cite>set_postfix(**postfix)</cite> if possible (dict).</p></li>
+<li><p><strong>unit_divisor</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – [default: 1000], ignored unless <cite>unit_scale</cite> is True.</p></li>
+<li><p><strong>write_bytes</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – If (default: None) and <cite>file</cite> is unspecified,
+bytes will be written in Python 2. If <cite>True</cite> will also write
+bytes. In all other cases will default to unicode.</p></li>
+<li><p><strong>lock_args</strong> (<em>Optional</em><em>[</em><em>tuple</em><em>]</em>) – Passed to <cite>refresh</cite> for intermediate output
+(initialisation, iterating, and updating).
+nrows (Optional[int]): The screen height. If specified, hides nested bars
+outside this bound. If unspecified, attempts to use environment height.
+The fallback is 20.</p></li>
+<li><p><strong>colour</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Bar colour (e.g. ‘green’, ‘#00ff00’).</p></li>
+<li><p><strong>delay</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – Don’t display until [default: 0] seconds have elapsed.</p></li>
+<li><p><strong>gui</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – WARNING: internal parameter - do not use.
+Use tqdm.gui.tqdm(…) instead. If set, will attempt to use
+matplotlib animations for a graphical output [default: False].</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">DownloadProgressBar</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="s1">'B'</span><span class="p">,</span> <span class="n">unit_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">miniters</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">as</span> <span class="n">p_bar</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="n">reporthook</span><span class="o">=</span><span class="n">p_bar</span><span class="o">.</span><span class="n">update_to</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iterable</strong> (<em>iterable</em><em>, </em><em>optional</em>) – Iterable to decorate with a progressbar.
+Leave blank to manually manage the updates.</p></li>
+<li><p><strong>desc</strong> (<em>str</em><em>, </em><em>optional</em>) – Prefix for the progressbar.</p></li>
+<li><p><strong>total</strong> (<em>int</em><em> or </em><em>float</em><em>, </em><em>optional</em>) – The number of expected iterations. If unspecified,
+len(iterable) is used if possible. If float(“inf”) or as a last
+resort, only basic progress statistics are displayed
+(no ETA, no progressbar).
+If <cite>gui</cite> is True and this parameter needs subsequent updating,
+specify an initial arbitrary large positive number,
+e.g. 9e9.</p></li>
+<li><p><strong>leave</strong> (<em>bool</em><em>, </em><em>optional</em>) – If [default: True], keeps all traces of the progressbar
+upon termination of iteration.
+If <cite>None</cite>, will leave only if <cite>position</cite> is <cite>0</cite>.</p></li>
+<li><p><strong>file</strong> (<cite>io.TextIOWrapper</cite> or <cite>io.StringIO</cite>, optional) – Specifies where to output the progress messages
+(default: sys.stderr). Uses <cite>file.write(str)</cite> and <cite>file.flush()</cite>
+methods.  For encoding, see <cite>write_bytes</cite>.</p></li>
+<li><p><strong>ncols</strong> (<em>int</em><em>, </em><em>optional</em>) – The width of the entire output message. If specified,
+dynamically resizes the progressbar to stay within this bound.
+If unspecified, attempts to use environment width. The
+fallback is a meter width of 10 and no limit for the counter and
+statistics. If 0, will not print any meter (only stats).</p></li>
+<li><p><strong>mininterval</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum progress display update interval [default: 0.1] seconds.</p></li>
+<li><p><strong>maxinterval</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum progress display update interval [default: 10] seconds.
+Automatically adjusts <cite>miniters</cite> to correspond to <cite>mininterval</cite>
+after long display update lag. Only works if <cite>dynamic_miniters</cite>
+or monitor thread is enabled.</p></li>
+<li><p><strong>miniters</strong> (<em>int</em><em> or </em><em>float</em><em>, </em><em>optional</em>) – Minimum progress display update interval, in iterations.
+If 0 and <cite>dynamic_miniters</cite>, will automatically adjust to equal
+<cite>mininterval</cite> (more CPU efficient, good for tight loops).
+If &gt; 0, will skip display of specified number of iterations.
+Tweak this and <cite>mininterval</cite> to get very efficient loops.
+If your progress is erratic with both fast and slow iterations
+(network, skipping items, etc) you should set miniters=1.</p></li>
+<li><p><strong>ascii</strong> (<em>bool</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – If unspecified or False, use unicode (smooth blocks) to fill
+the meter. The fallback is to use ASCII characters ” 123456789#”.</p></li>
+<li><p><strong>disable</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to disable the entire progressbar wrapper
+[default: False]. If set to None, disable on non-TTY.</p></li>
+<li><p><strong>unit</strong> (<em>str</em><em>, </em><em>optional</em>) – String that will be used to define the unit of each iteration
+[default: it].</p></li>
+<li><p><strong>unit_scale</strong> (<em>bool</em><em> or </em><em>int</em><em> or </em><em>float</em><em>, </em><em>optional</em>) – If 1 or True, the number of iterations will be reduced/scaled
+automatically and a metric prefix following the
+International System of Units standard will be added
+(kilo, mega, etc.) [default: False]. If any other non-zero
+number, will scale <cite>total</cite> and <cite>n</cite>.</p></li>
+<li><p><strong>dynamic_ncols</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set, constantly alters <cite>ncols</cite> and <cite>nrows</cite> to the
+environment (allowing for window resizes) [default: False].</p></li>
+<li><p><strong>smoothing</strong> (<em>float</em><em>, </em><em>optional</em>) – Exponential moving average smoothing factor for speed estimates
+(ignored in GUI mode). Ranges from 0 (average speed) to 1
+(current/instantaneous speed) [default: 0.3].</p></li>
+<li><p><strong>bar_format</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>Specify a custom bar string formatting. May impact performance.
+[default: ‘{l_bar}{bar}{r_bar}’], where
+l_bar=’{desc}: {percentage:3.0f}%|’ and
+r_bar=’| {n_fmt}/{total_fmt} [{elapsed}&lt;{remaining}, ‘</p>
+<blockquote>
+<div><p>’{rate_fmt}{postfix}]’</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Possible vars: l_bar, bar, r_bar, n, n_fmt, total, total_fmt,</dt><dd><p>percentage, elapsed, elapsed_s, ncols, nrows, desc, unit,
+rate, rate_fmt, rate_noinv, rate_noinv_fmt,
+rate_inv, rate_inv_fmt, postfix, unit_divisor,
+remaining, remaining_s, eta.</p>
+</dd>
+</dl>
+<p>Note that a trailing “: ” is automatically removed after {desc}
+if the latter is empty.</p>
+</p></li>
+<li><p><strong>initial</strong> (<em>int</em><em> or </em><em>float</em><em>, </em><em>optional</em>) – The initial counter value. Useful when restarting a progress
+bar [default: 0]. If using float, consider specifying <cite>{n:.3f}</cite>
+or similar in <cite>bar_format</cite>, or specifying <cite>unit_scale</cite>.</p></li>
+<li><p><strong>position</strong> (<em>int</em><em>, </em><em>optional</em>) – Specify the line offset to print this bar (starting from 0)
+Automatic if unspecified.
+Useful to manage multiple bars at once (eg, from threads).</p></li>
+<li><p><strong>postfix</strong> (dict or <a href="#id1"><span class="problematic" id="id2">*</span></a>, optional) – Specify additional stats to display at the end of the bar.
+Calls <cite>set_postfix(**postfix)</cite> if possible (dict).</p></li>
+<li><p><strong>unit_divisor</strong> (<em>float</em><em>, </em><em>optional</em>) – [default: 1000], ignored unless <cite>unit_scale</cite> is True.</p></li>
+<li><p><strong>write_bytes</strong> (<em>bool</em><em>, </em><em>optional</em>) – If (default: None) and <cite>file</cite> is unspecified,
+bytes will be written in Python 2. If <cite>True</cite> will also write
+bytes. In all other cases will default to unicode.</p></li>
+<li><p><strong>lock_args</strong> (<em>tuple</em><em>, </em><em>optional</em>) – Passed to <cite>refresh</cite> for intermediate output
+(initialisation, iterating, and updating).</p></li>
+<li><p><strong>nrows</strong> (<em>int</em><em>, </em><em>optional</em>) – The screen height. If specified, hides nested bars outside this
+bound. If unspecified, attempts to use environment height.
+The fallback is 20.</p></li>
+<li><p><strong>colour</strong> (<em>str</em><em>, </em><em>optional</em>) – Bar colour (e.g. ‘green’, ‘#00ff00’).</p></li>
+<li><p><strong>delay</strong> (<em>float</em><em>, </em><em>optional</em>) – Don’t display until [default: 0] seconds have elapsed.</p></li>
+<li><p><strong>gui</strong> (<em>bool</em><em>, </em><em>optional</em>) – WARNING: internal parameter - do not use.
+Use tqdm.gui.tqdm(…) instead. If set, will attempt to use
+matplotlib animations for a graphical output [default: False].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>decorated iterator.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.data.utils.DownloadProgressBar.update_to">
+<span class="sig-name descname"><span class="pre">update_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chunk_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_chunk_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/anomalib/data/utils/download.html#DownloadProgressBar.update_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.DownloadProgressBar.update_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Progress bar hook for tqdm.</p>
+<p>Based on <a class="reference external" href="https://stackoverflow.com/a/53877507">https://stackoverflow.com/a/53877507</a>
+The implementor does not have to bother about passing parameters to this as it gets them from urlretrieve.
+However the context needs a few parameters. Refer to the example.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chunk_number</strong> (<em>int</em><em>, </em><em>optional</em>) – The current chunk being processed. Defaults to 1.</p></li>
+<li><p><strong>max_chunk_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum size of each chunk. Defaults to 1.</p></li>
+<li><p><strong>total_size</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – Total download size. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.data.utils.generate_output_image_filename">
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">generate_output_image_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">pathlib.Path</span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/utils/image.html#generate_output_image_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.generate_output_image_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an output filename to save the inference image.</p>
+<p>This function generates an output filaname by checking the input and output filenames. Input path is
+the input to infer, and output path is the path to save the output predictions specified by the user.</p>
+<p>The function expects <code class="docutils literal notranslate"><span class="pre">input_path</span></code> to always be a file, not a directory. <code class="docutils literal notranslate"><span class="pre">output_path</span></code> could be a
+filename or directory. If it is a filename, the function checks if the specified filename exists on
+the file system. If yes, the function calls <code class="docutils literal notranslate"><span class="pre">duplicate_filename</span></code> to duplicate the filename to avoid
+overwriting the existing file. If <code class="docutils literal notranslate"><span class="pre">output_path</span></code> is a directory, this function adds the parent and
+filenames of <code class="docutils literal notranslate"><span class="pre">input_path</span></code> to <code class="docutils literal notranslate"><span class="pre">output_path</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_path</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em>) – Path to the input image to infer.</p></li>
+<li><p><strong>output_path</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em>) – Path to output to save the predictions.
+Could be a filename or a directory.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">input_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"datasets/MVTec/bottle/test/broken_large/000.png"</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"datasets/MVTec/bottle/test/broken_large/000.png"</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generate_output_image_filename</span><span class="p">(</span><span class="n">input_path</span><span class="p">,</span> <span class="n">output_path</span><span class="p">)</span>
+<span class="go">PosixPath('datasets/MVTec/bottle/test/broken_large/000_1.png')</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">input_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"datasets/MVTec/bottle/test/broken_large/000.png"</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"results/images"</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generate_output_image_filename</span><span class="p">(</span><span class="n">input_path</span><span class="p">,</span> <span class="n">output_path</span><span class="p">)</span>
+<span class="go">PosixPath('results/images/broken_large/000.png')</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – When the <code class="docutils literal notranslate"><span class="pre">input_path</span></code> is not a file.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The output filename to save the output predictions from the inferencer.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Path</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.data.utils.get_image_filenames">
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">get_image_filenames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/utils/image.html#get_image_filenames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.get_image_filenames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get image filenames.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em>) – Path to image or image-folder.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of image filenames</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[Path]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.data.utils.get_image_height_and_width">
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">get_image_height_and_width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/utils/image.html#get_image_height_and_width"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.get_image_height_and_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get image height and width from <code class="docutils literal notranslate"><span class="pre">image_size</span></code> variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>image_size</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>int</em><em>, </em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Input image size.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – Image size not None, int or tuple.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_image_height_and_width</span><span class="p">(</span><span class="n">image_size</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+<span class="go">(256, 256)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_image_height_and_width</span><span class="p">(</span><span class="n">image_size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
+<span class="go">(256, 256)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_image_height_and_width</span><span class="p">(</span><span class="n">image_size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">(256, 256)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; get_image_height_and_width(image_size=256.)
+Traceback (most recent call last):
+File "&lt;string&gt;", line 1, in &lt;module&gt;
+File "&lt;string&gt;", line 18, in get_image_height_and_width
+ValueError: ``image_size`` could be either int or Tuple[int, int]
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A tuple containing image height and width values.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Tuple[Optional[int], Optional[int]]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.data.utils.hash_check">
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">hash_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/anomalib/data/utils/download.html#hash_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.hash_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise assert error if hash does not match the calculated hash of the file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> (<em>Path</em>) – Path to file.</p></li>
+<li><p><strong>expected_hash</strong> (<em>str</em>) – Expected hash of the file.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.data.utils.random_2d_perlin">
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">random_2d_perlin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">shape:</span> <span class="pre">typing.Tuple,</span> <span class="pre">res:</span> <span class="pre">typing.Tuple[typing.Union[int,</span> <span class="pre">torch.Tensor],</span> <span class="pre">typing.Union[int,</span> <span class="pre">torch.Tensor]],</span> <span class="pre">fade=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/utils/generators/perlin.html#random_2d_perlin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.random_2d_perlin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a random 2d perlin noise array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<em>Tuple</em>) – Shape of the 2d map.</p></li>
+<li><p><strong>res</strong> (<em>Tuple</em><em>[</em><em>Union</em><em>[</em><em>int</em><em>, </em><em>Tensor</em><em>]</em><em>]</em>) – Tuple of scales for perlin noise for height and width dimension.</p></li>
+<li><p><strong>fade</strong> (<em>_type_</em><em>, </em><em>optional</em>) – Function used for fading the resulting 2d map.
+Defaults to equation 6*t**5-15*t**4+10*t**3.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Random 2d-array/tensor generated using perlin noise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Union[np.ndarray, Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.data.utils.read_image">
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">read_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/utils/image.html#read_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.read_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read image from disk in RGB format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em><em>, </em><em>Path</em>) – path to the image file</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="s2">"test_image.jpg"</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>image as numpy array</p>
+</dd>
+</dl>
+</dd></dl>
 </section>
 
       </article>

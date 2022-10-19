@@ -255,8 +255,251 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <section id="loggers">
-<h1>Loggers<a class="headerlink" href="#loggers" title="Permalink to this headline">¶</a></h1>
+        <section id="module-anomalib.utils.loggers">
+<span id="loggers"></span><h1>Loggers<a class="headerlink" href="#module-anomalib.utils.loggers" title="Permalink to this headline">¶</a></h1>
+<p>Load PyTorch Lightning Loggers.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.utils.loggers.AnomalibCometLogger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.loggers.</span></span><span class="sig-name descname"><span class="pre">AnomalibCometLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rest_api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/loggers/comet.html#AnomalibCometLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.loggers.AnomalibCometLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">anomalib.utils.loggers.base.ImageLoggerBase</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">pytorch_lightning.loggers.comet.CometLogger</span></code></p>
+<p>Logger for comet.</p>
+<p>Adds interface for <cite>add_image</cite> in the logger rather than calling the experiment object.
+.. note:: Same as the CometLogger provided by PyTorch Lightning and the doc string is reproduced below.</p>
+<p>Track your parameters, metrics, source code and more using
+<a class="reference external" href="https://www.comet.com/site/products/ml-experiment-tracking/?utm_source=anomalib&amp;utm_medium=referral">Comet</a>.</p>
+<p>Install it with pip:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install comet-ml
+</pre></div>
+</div>
+<p>Comet requires either an API Key (online mode) or a local directory path (offline mode).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>api_key</strong> – Required in online mode. API key, found on Comet.ml. If not given, this
+will be loaded from the environment variable COMET_API_KEY or ~/.comet.config
+if either exists.</p></li>
+<li><p><strong>save_dir</strong> – Required in offline mode. The path for the directory to save local
+comet logs. If given, this also sets the directory for saving checkpoints.</p></li>
+<li><p><strong>project_name</strong> – Optional. Send your experiment to a specific project.
+Otherwise will be sent to Uncategorized Experiments.
+If the project name does not already exist, Comet.ml will create a new project.</p></li>
+<li><p><strong>rest_api_key</strong> – Optional. Rest API key found in Comet.ml settings.
+This is used to determine version number</p></li>
+<li><p><strong>experiment_name</strong> – Optional. String representing the name for this particular experiment on Comet.ml.</p></li>
+<li><p><strong>experiment_key</strong> – Optional. If set, restores from existing experiment.</p></li>
+<li><p><strong>offline</strong> – If api_key and save_dir are both given, this determines whether
+the experiment will be in online or offline mode. This is useful if you use
+save_dir to control the checkpoints directory and have a ~/.comet.config
+file but still want to run offline experiments.</p></li>
+<li><p><strong>prefix</strong> – A string to put at the beginning of metric keys.</p></li>
+<li><p><strong>kwargs</strong> – Additional arguments like <cite>workspace</cite>, <cite>log_code</cite>, etc. used by
+<code class="xref py py-class docutils literal notranslate"><span class="pre">CometExperiment</span></code> can be passed as keyword arguments in this logger.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ModuleNotFoundError</strong> – If required Comet package is not installed on the device.</p></li>
+<li><p><strong>MisconfigurationException</strong> – If neither <code class="docutils literal notranslate"><span class="pre">api_key</span></code> nor <code class="docutils literal notranslate"><span class="pre">save_dir</span></code> are passed as arguments.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">anomalib.utils.loggers</span> <span class="kn">import</span> <span class="n">AnomalibCometLogger</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Trainer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comet_logger</span> <span class="o">=</span> <span class="n">AnomalibCometLogger</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">logger</span><span class="o">=</span><span class="n">comet_logger</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.comet.com/docs/v2/integrations/ml-frameworks/pytorch-lightning/">Comet Documentation</a></p></li>
+</ul>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.utils.loggers.AnomalibCometLogger.add_image">
+<span class="sig-name descname"><span class="pre">add_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">matplotlib.figure.Figure</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/loggers/comet.html#AnomalibCometLogger.add_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.loggers.AnomalibCometLogger.add_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface to add image to comet logger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>Figure</em><em>]</em>) – Image to log</p></li>
+<li><p><strong>name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The tag of the image</p></li>
+<li><p><strong>kwargs</strong> – Accepts only <cite>global_step</cite> (int). The step at which to log the image.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.utils.loggers.AnomalibTensorBoardLogger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.loggers.</span></span><span class="sig-name descname"><span class="pre">AnomalibTensorBoardLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_graph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_hp_metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/loggers/tensorboard.html#AnomalibTensorBoardLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.loggers.AnomalibTensorBoardLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">anomalib.utils.loggers.base.ImageLoggerBase</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">pytorch_lightning.loggers.tensorboard.TensorBoardLogger</span></code></p>
+<p>Logger for tensorboard.</p>
+<p>Adds interface for <cite>add_image</cite> in the logger rather than calling the experiment object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Same as the Tensorboard Logger provided by PyTorch Lightning and the doc string is reproduced below.</p>
+</div>
+<p>Logs are saved to
+<code class="docutils literal notranslate"><span class="pre">os.path.join(save_dir,</span> <span class="pre">name,</span> <span class="pre">version)</span></code>. This is the default logger in Lightning, it comes
+preinstalled.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Trainer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">anomalib.utils.loggers</span> <span class="kn">import</span> <span class="n">AnomalibTensorBoardLogger</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">AnomalibTensorBoardLogger</span><span class="p">(</span><span class="s2">"tb_logs"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"my_model"</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>save_dir</strong> (<em>str</em>) – Save directory</p></li>
+<li><p><strong>name</strong> (<em>Optional</em><em>, </em><em>str</em>) – Experiment name. Defaults to <code class="docutils literal notranslate"><span class="pre">'default'</span></code>. If it is the empty string then no
+per-experiment subdirectory is used.</p></li>
+<li><p><strong>version</strong> (<em>Optional</em><em>, </em><em>int</em><em>, </em><em>str</em>) – Experiment version. If version is not specified the logger inspects the save
+directory for existing versions, then automatically assigns the next available version.
+If it is a string then it is used as the run-specific subdirectory name,
+otherwise <code class="docutils literal notranslate"><span class="pre">'version_${version}'</span></code> is used.</p></li>
+<li><p><strong>log_graph</strong> (<em>bool</em>) – Adds the computational graph to tensorboard. This requires that
+the user has defined the <cite>self.example_input_array</cite> attribute in their
+model.</p></li>
+<li><p><strong>default_hp_metric</strong> (<em>bool</em>) – Enables a placeholder metric with key <cite>hp_metric</cite> when <cite>log_hyperparams</cite> is
+called without a metric (otherwise calls to log_hyperparams without a metric are ignored).</p></li>
+<li><p><strong>prefix</strong> (<em>str</em>) – A string to put at the beginning of metric keys.</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments like <cite>comment</cite>, <cite>filename_suffix</cite>, etc. used by
+<code class="xref py py-class docutils literal notranslate"><span class="pre">SummaryWriter</span></code> can be passed as keyword arguments in this logger.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.utils.loggers.AnomalibTensorBoardLogger.add_image">
+<span class="sig-name descname"><span class="pre">add_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">matplotlib.figure.Figure</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/loggers/tensorboard.html#AnomalibTensorBoardLogger.add_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.loggers.AnomalibTensorBoardLogger.add_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface to add image to tensorboard logger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>Figure</em><em>]</em>) – Image to log</p></li>
+<li><p><strong>name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The tag of the image</p></li>
+<li><p><strong>kwargs</strong> – Accepts only <cite>global_step</cite> (int). The step at which to log the image.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.utils.loggers.AnomalibWandbLogger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.loggers.</span></span><span class="sig-name descname"><span class="pre">AnomalibWandbLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anonymous</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/loggers/wandb.html#AnomalibWandbLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.loggers.AnomalibWandbLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">anomalib.utils.loggers.base.ImageLoggerBase</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">pytorch_lightning.loggers.wandb.WandbLogger</span></code></p>
+<p>Logger for wandb.</p>
+<p>Adds interface for <cite>add_image</cite> in the logger rather than calling the experiment object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Same as the wandb Logger provided by PyTorch Lightning and the doc string is reproduced below.</p>
+</div>
+<p>Log using <a class="reference external" href="https://www.wandb.com/">Weights and Biases</a>.</p>
+<p>Install it with pip:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install wandb
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Display name for the run.</p></li>
+<li><p><strong>save_dir</strong> – Path where data is saved (wandb dir by default).</p></li>
+<li><p><strong>offline</strong> – Run offline (data can be streamed later to wandb servers).</p></li>
+<li><p><strong>id</strong> – Sets the version, mainly used to resume a previous run.</p></li>
+<li><p><strong>version</strong> – Same as id.</p></li>
+<li><p><strong>anonymous</strong> – Enables or explicitly disables anonymous logging.</p></li>
+<li><p><strong>project</strong> – The name of the project to which this run will belong.</p></li>
+<li><p><strong>log_model</strong> – Save checkpoints in wandb dir to upload on W&amp;B servers.</p></li>
+<li><p><strong>prefix</strong> – A string to put at the beginning of metric keys.</p></li>
+<li><p><strong>experiment</strong> – WandB experiment object. Automatically set when creating a run.</p></li>
+<li><p><strong>**kwargs</strong> – Arguments passed to <code class="xref py py-func docutils literal notranslate"><span class="pre">wandb.init()</span></code> like <cite>entity</cite>, <cite>group</cite>, <cite>tags</cite>, etc.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ImportError</strong> – If required WandB package is not installed on the device.</p></li>
+<li><p><strong>MisconfigurationException</strong> – If both <code class="docutils literal notranslate"><span class="pre">log_model</span></code> and <code class="docutils literal notranslate"><span class="pre">offline``is</span> <span class="pre">set</span> <span class="pre">to</span> <span class="pre">``True</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">anomalib.utils.loggers</span> <span class="kn">import</span> <span class="n">AnomalibWandbLogger</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Trainer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wandb_logger</span> <span class="o">=</span> <span class="n">AnomalibWandbLogger</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">logger</span><span class="o">=</span><span class="n">wandb_logger</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note: When logging manually through <cite>wandb.log</cite> or <cite>trainer.logger.experiment.log</cite>,
+make sure to use <cite>commit=False</cite> so the logging step does not increase.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://colab.research.google.com/drive/16d1uctGaw2y9KhGBlINNTsWpmlXdJwRW?usp=sharing">Tutorial</a>
+on how to use W&amp;B with PyTorch Lightning</p></li>
+<li><p><a class="reference external" href="https://docs.wandb.ai/integrations/lightning">W&amp;B Documentation</a></p></li>
+</ul>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.utils.loggers.AnomalibWandbLogger.add_image">
+<span class="sig-name descname"><span class="pre">add_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">matplotlib.figure.Figure</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/loggers/wandb.html#AnomalibWandbLogger.add_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.loggers.AnomalibWandbLogger.add_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface to add image to wandb logger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>Figure</em><em>]</em>) – Image to log</p></li>
+<li><p><strong>name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The tag of the image</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.utils.loggers.AnomalibWandbLogger.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/loggers/wandb.html#AnomalibWandbLogger.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.loggers.AnomalibWandbLogger.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upload images to wandb server.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There is a limit on the number of images that can be logged together to the <cite>wandb</cite> server.</p>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.utils.loggers.configure_logger">
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.loggers.</span></span><span class="sig-name descname"><span class="pre">configure_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/loggers.html#configure_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.loggers.configure_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get console logger by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>level</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Logger Level. Defaults to logging.INFO.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The expected logger.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Logger</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.utils.loggers.get_experiment_logger">
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.loggers.</span></span><span class="sig-name descname"><span class="pre">get_experiment_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.dictconfig.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pytorch_lightning.loggers.base.LightningLoggerBase</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">pytorch_lightning.loggers.base.LightningLoggerBase</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/loggers.html#get_experiment_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.loggers.get_experiment_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a logger based on the choice of logger in the config file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>DictConfig</em>) – config.yaml file for the corresponding anomalib model.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – for any logger types apart from false and tensorboard</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Logger</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Union[LightningLoggerBase, Iterable[LightningLoggerBase], bool]</p>
+</dd>
+</dl>
+</dd></dl>
 </section>
 
       </article>

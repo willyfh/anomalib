@@ -520,28 +520,28 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span><span class="p">,</span> <span class="n">update_wrapper</span>
-<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">MethodType</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from functools import partial, update_wrapper
+from types import MethodType
+from typing import Any
 
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">LightningModule</span><span class="p">,</span> <span class="n">Trainer</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">EarlyStopping</span><span class="p">,</span> <span class="n">ModelCheckpoint</span>
-<span class="kn">from</span> <span class="nn">torch.optim</span> <span class="kn">import</span> <span class="n">Optimizer</span>
-<span class="kn">from</span> <span class="nn">torch.optim.adam</span> <span class="kn">import</span> <span class="n">Adam</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+from matplotlib import pyplot as plt
+from pytorch_lightning import LightningModule, Trainer
+from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
+from torch.optim import Optimizer
+from torch.optim.adam import Adam
+from torch.utils.data import DataLoader
 
-<span class="kn">from</span> <span class="nn">anomalib.data</span> <span class="kn">import</span> <span class="n">InferenceDataset</span>
-<span class="kn">from</span> <span class="nn">anomalib.data.mvtec</span> <span class="kn">import</span> <span class="n">MVTec</span>
-<span class="kn">from</span> <span class="nn">anomalib.models.fastflow.lightning_model</span> <span class="kn">import</span> <span class="n">Fastflow</span>
-<span class="kn">from</span> <span class="nn">anomalib.post_processing</span> <span class="kn">import</span> <span class="n">superimpose_anomaly_map</span>
-<span class="kn">from</span> <span class="nn">anomalib.pre_processing.transforms</span> <span class="kn">import</span> <span class="n">Denormalize</span>
-<span class="kn">from</span> <span class="nn">anomalib.utils.callbacks</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">ImageVisualizerCallback</span><span class="p">,</span>
-    <span class="n">MetricsConfigurationCallback</span><span class="p">,</span>
-    <span class="n">MetricVisualizerCallback</span><span class="p">,</span>
-    <span class="n">MinMaxNormalizationCallback</span><span class="p">,</span>
-<span class="p">)</span>
+from anomalib.data import InferenceDataset
+from anomalib.data.mvtec import MVTec
+from anomalib.models.fastflow.lightning_model import Fastflow
+from anomalib.post_processing import superimpose_anomaly_map
+from anomalib.pre_processing.transforms import Denormalize
+from anomalib.utils.callbacks import (
+    ImageVisualizerCallback,
+    MetricsConfigurationCallback,
+    MetricVisualizerCallback,
+    MinMaxNormalizationCallback,
+)
 </pre></div>
 </div>
 </div>
@@ -553,18 +553,18 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datamodule</span> <span class="o">=</span> <span class="n">MVTec</span><span class="p">(</span>
-    <span class="n">root</span><span class="o">=</span><span class="s2">"../../datasets/MVTec/"</span><span class="p">,</span>
-    <span class="n">category</span><span class="o">=</span><span class="s2">"bottle"</span><span class="p">,</span>
-    <span class="n">image_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
-    <span class="n">train_batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
-    <span class="n">test_batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
-    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
-    <span class="n">task</span><span class="o">=</span><span class="s2">"segmentation"</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">datamodule</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
-<span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">datamodule</span><span class="o">.</span><span class="n">test_dataloader</span><span class="p">()))</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Image Shape: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1"> Mask Shape: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>datamodule = MVTec(
+    root="../../datasets/MVTec/",
+    category="bottle",
+    image_size=256,
+    train_batch_size=32,
+    test_batch_size=32,
+    num_workers=8,
+    task="segmentation",
+)
+datamodule.setup()
+i, data = next(enumerate(datamodule.test_dataloader()))
+print(f'Image Shape: {data["image"].shape} Mask Shape: {data["mask"].shape}')
 </pre></div>
 </div>
 </div>
@@ -584,7 +584,7 @@ Image Shape: torch.Size([32, 3, 256, 256]) Mask Shape: torch.Size([32, 256, 256]
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Fastflow<span class="o">??</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Fastflow??
 </pre></div>
 </div>
 </div>
@@ -592,7 +592,7 @@ Image Shape: torch.Size([32, 3, 256, 256]) Mask Shape: torch.Size([32, 256, 256]
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Fastflow</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">],</span> <span class="n">backbone</span><span class="o">=</span><span class="s2">"resnet18"</span><span class="p">,</span> <span class="n">flow_steps</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model = Fastflow(input_size=[256, 256], backbone="resnet18", flow_steps=8)
 </pre></div>
 </div>
 </div>
@@ -601,10 +601,10 @@ Image Shape: torch.Size([32, 3, 256, 256]) Mask Shape: torch.Size([32, 256, 256]
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">training</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">train_output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"image"</span><span class="p">])</span>
-<span class="n">hidden_variables</span><span class="p">,</span> <span class="n">log_jacobian</span> <span class="o">=</span> <span class="n">train_output</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Hidden Variable Shape: </span><span class="si">{</span><span class="n">hidden_variables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model.training = True
+train_output = model(data["image"])
+hidden_variables, log_jacobian = train_output
+print(f"Hidden Variable Shape: {hidden_variables[0].shape}")
 </pre></div>
 </div>
 </div>
@@ -621,9 +621,9 @@ Hidden Variable Shape: torch.Size([32, 64, 64, 64])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">training</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"image"</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Anomaly Map Shape: </span><span class="si">{</span><span class="n">anomaly_map</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model.model.training = False
+anomaly_map = model(data["image"])
+print(f"Anomaly Map Shape: {anomaly_map.shape}")
 </pre></div>
 </div>
 </div>
@@ -643,15 +643,15 @@ Anomaly Map Shape: torch.Size([32, 1, 256, 256])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="n">lightning_module</span><span class="p">:</span> <span class="n">LightningModule</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">:</span> <span class="n">Optimizer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>  <span class="c1"># pylint: disable=W0613,W0621</span>
-    <span class="sd">"""Override to customize the LightningModule.configure_optimizers` method."""</span>
-    <span class="k">return</span> <span class="n">optimizer</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def configure_optimizers(lightning_module: LightningModule, optimizer: Optimizer) -&gt; Any:  # pylint: disable=W0613,W0621
+    """Override to customize the LightningModule.configure_optimizers` method."""
+    return optimizer
 
 
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">Adam</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">),</span> <span class="n">weight_decay</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
-<span class="n">fn</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">configure_optimizers</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">)</span>
-<span class="n">update_wrapper</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">configure_optimizers</span><span class="p">)</span>  <span class="c1"># necessary for `is_overridden`</span>
-<span class="n">model</span><span class="o">.</span><span class="n">configure_optimizers</span> <span class="o">=</span> <span class="n">MethodType</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+optimizer = Adam(params=model.parameters(), lr=0.001, betas=(0.9, 0.999), weight_decay=1e-5)
+fn = partial(configure_optimizers, optimizer=optimizer)
+update_wrapper(fn, configure_optimizers)  # necessary for `is_overridden`
+model.configure_optimizers = MethodType(fn, model)
 </pre></div>
 </div>
 </div>
@@ -663,25 +663,25 @@ Anomaly Map Shape: torch.Size([32, 1, 256, 256])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">callbacks</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">MetricsConfigurationCallback</span><span class="p">(</span>
-        <span class="n">adaptive_threshold</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">image_metric_names</span><span class="o">=</span><span class="p">[</span><span class="s2">"AUROC"</span><span class="p">],</span>
-        <span class="n">pixel_metric_names</span><span class="o">=</span><span class="p">[</span><span class="s2">"AUROC"</span><span class="p">],</span>
-    <span class="p">),</span>
-    <span class="n">ModelCheckpoint</span><span class="p">(</span>
-        <span class="n">mode</span><span class="o">=</span><span class="s2">"max"</span><span class="p">,</span>
-        <span class="n">monitor</span><span class="o">=</span><span class="s2">"pixel_AUROC"</span><span class="p">,</span>
-    <span class="p">),</span>
-    <span class="n">EarlyStopping</span><span class="p">(</span>
-        <span class="n">monitor</span><span class="o">=</span><span class="s2">"pixel_AUROC"</span><span class="p">,</span>
-        <span class="n">mode</span><span class="o">=</span><span class="s2">"max"</span><span class="p">,</span>
-        <span class="n">patience</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="p">),</span>
-    <span class="n">MinMaxNormalizationCallback</span><span class="p">(),</span>
-    <span class="n">ImageVisualizerCallback</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">"full"</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s2">"segmentation"</span><span class="p">,</span> <span class="n">image_save_path</span><span class="o">=</span><span class="s2">"./results/images"</span><span class="p">),</span>
-    <span class="n">MetricVisualizerCallback</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">"full"</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s2">"segmentation"</span><span class="p">,</span> <span class="n">image_save_path</span><span class="o">=</span><span class="s2">"./results/images"</span><span class="p">),</span>
-<span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>callbacks = [
+    MetricsConfigurationCallback(
+        adaptive_threshold=True,
+        image_metric_names=["AUROC"],
+        pixel_metric_names=["AUROC"],
+    ),
+    ModelCheckpoint(
+        mode="max",
+        monitor="pixel_AUROC",
+    ),
+    EarlyStopping(
+        monitor="pixel_AUROC",
+        mode="max",
+        patience=3,
+    ),
+    MinMaxNormalizationCallback(),
+    ImageVisualizerCallback(mode="full", task="segmentation", image_save_path="./results/images"),
+    MetricVisualizerCallback(mode="full", task="segmentation", image_save_path="./results/images"),
+]
 </pre></div>
 </div>
 </div>
@@ -694,12 +694,12 @@ Anomaly Map Shape: torch.Size([32, 1, 256, 256])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
-    <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">,</span>
-    <span class="n">accelerator</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">,</span>  <span class="c1"># \&lt;"cpu", "gpu", "tpu", "ipu", "hpu", "auto"&gt;,</span>
-    <span class="n">devices</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">max_epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-<span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>trainer = Trainer(
+    callbacks=callbacks,
+    accelerator="auto",  # \&lt;"cpu", "gpu", "tpu", "ipu", "hpu", "auto"&gt;,
+    devices=1,
+    max_epochs=100,
+)
 </pre></div>
 </div>
 </div>
@@ -720,7 +720,7 @@ HPU available: False, using: 0 HPUs
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">datamodule</span><span class="o">=</span><span class="n">datamodule</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>trainer.fit(datamodule=datamodule, model=model)
 </pre></div>
 </div>
 </div>
@@ -794,7 +794,7 @@ Epoch 11: 100%|██████████| 10/10 [02:14&lt;00:00, 13.47s/it,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainer</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">datamodule</span><span class="o">=</span><span class="n">datamodule</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>trainer.test(datamodule=datamodule, model=model)
 </pre></div>
 </div>
 </div>
@@ -840,7 +840,7 @@ Testing DataLoader 0: 100%|██████████| 3/3 [00:23&lt;00:00, 
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span> ls images
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>! ls images
 </pre></div>
 </div>
 </div>
@@ -860,10 +860,10 @@ broken_large  broken_small  contamination  good
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inference_dataset</span> <span class="o">=</span> <span class="n">InferenceDataset</span><span class="p">(</span>
-    <span class="n">path</span><span class="o">=</span><span class="s2">"../../datasets/MVTec/bottle/test/broken_large/000.png"</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
-<span class="p">)</span>
-<span class="n">inference_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">inference_dataset</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>inference_dataset = InferenceDataset(
+    path="../../datasets/MVTec/bottle/test/broken_large/000.png", image_size=(256, 256)
+)
+inference_dataloader = DataLoader(dataset=inference_dataset)
 </pre></div>
 </div>
 </div>
@@ -872,7 +872,7 @@ broken_large  broken_small  contamination  good
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">dataloaders</span><span class="o">=</span><span class="n">inference_dataloader</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>predictions = trainer.predict(model=model, dataloaders=inference_dataloader)[0]
 </pre></div>
 </div>
 </div>
@@ -899,7 +899,7 @@ Predicting DataLoader 0: 100%|██████████| 1/1 [00:00&lt;00:0
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">predictions</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(predictions.keys())
 </pre></div>
 </div>
 </div>
@@ -915,11 +915,11 @@ dict_keys(['image', 'anomaly_maps', 'pred_scores', 'pred_labels', 'pred_masks'])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s1">'Image Shape: </span><span class="si">{</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">,</span><span class="se">\n</span><span class="s1">'</span>
-    <span class="s1">'Anomaly Map Shape: </span><span class="si">{predictions["anomaly_maps"].shape}</span><span class="s1">, </span><span class="se">\n</span><span class="s1">'</span>
-    <span class="s1">'Predicted Mask Shape: </span><span class="si">{predictions["pred_masks"].shape}</span><span class="s1">'</span>
-<span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(
+    f'Image Shape: {predictions["image"].shape},\n'
+    'Anomaly Map Shape: {predictions["anomaly_maps"].shape}, \n'
+    'Predicted Mask Shape: {predictions["pred_masks"].shape}'
+)
 </pre></div>
 </div>
 </div>
@@ -940,9 +940,9 @@ torch.Size([1, 3, 256, 256]) torch.Size([1, 1, 256, 256]) torch.Size([1, 1, 256,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"image"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">image</span> <span class="o">=</span> <span class="n">Denormalize</span><span class="p">()(</span><span class="n">image</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Image Shape: </span><span class="si">{</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="se">\n</span><span class="s2"> Min Pixel: </span><span class="si">{</span><span class="n">image</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2"> Max Pixel: </span><span class="si">{</span><span class="n">image</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>image = predictions["image"][0]
+image = Denormalize()(image)
+print(f"Image Shape: {image.shape}\n Min Pixel: {image.min()} \n Max Pixel: {image.max()}")
 </pre></div>
 </div>
 </div>
@@ -961,7 +961,7 @@ Shape of the Image: (256, 256, 3)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.imshow(image)
 </pre></div>
 </div>
 </div>
@@ -986,9 +986,9 @@ Shape of the Image: (256, 256, 3)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"anomaly_maps"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">anomaly_map</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>anomaly_map = predictions["anomaly_maps"][0]
+anomaly_map = anomaly_map.cpu().numpy().squeeze()
+plt.imshow(anomaly_map)
 </pre></div>
 </div>
 </div>
@@ -1013,8 +1013,8 @@ Shape of the Image: (256, 256, 3)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heat_map</span> <span class="o">=</span> <span class="n">superimpose_anomaly_map</span><span class="p">(</span><span class="n">anomaly_map</span><span class="o">=</span><span class="n">anomaly_map</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">heat_map</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>heat_map = superimpose_anomaly_map(anomaly_map=anomaly_map, image=image, normalize=True)
+plt.imshow(heat_map)
 </pre></div>
 </div>
 </div>
@@ -1039,9 +1039,9 @@ Shape of the Image: (256, 256, 3)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_score</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"pred_scores"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">pred_labels</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"pred_labels"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">pred_score</span><span class="p">,</span> <span class="n">pred_labels</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pred_score = predictions["pred_scores"][0]
+pred_labels = predictions["pred_labels"][0]
+print(pred_score, pred_labels)
 </pre></div>
 </div>
 </div>
@@ -1058,8 +1058,8 @@ tensor(0.7830) tensor(True)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_masks</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"pred_masks"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">pred_masks</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pred_masks = predictions["pred_masks"][0].squeeze().cpu().numpy()
+plt.imshow(pred_masks)
 </pre></div>
 </div>
 </div>

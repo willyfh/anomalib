@@ -255,8 +255,157 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <section id="sweep">
-<h1>Sweep<a class="headerlink" href="#sweep" title="Permalink to this headline">¶</a></h1>
+        <section id="module-anomalib.utils.sweep">
+<span id="sweep"></span><h1>Sweep<a class="headerlink" href="#module-anomalib.utils.sweep" title="Permalink to this headline">¶</a></h1>
+<p>Utils for Benchmarking and Sweep.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.utils.sweep.flatten_sweep_params">
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.</span></span><span class="sig-name descname"><span class="pre">flatten_sweep_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">omegaconf.dictconfig.DictConfig</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">omegaconf.dictconfig.DictConfig</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/sweep/config.html#flatten_sweep_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.sweep.flatten_sweep_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flatten the nested parameters section of the config object.</p>
+<p>We need to flatten the params so that all the nested keys are concatenated into a single string.
+This is useful when
+- We need to do a cartesian product of all the combinations of the configuration for grid search.
+- Save keys as headers for csv
+- Add the config to <cite>wandb</cite> sweep.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>params_dict</strong> – DictConfig: The dictionary containing the hpo parameters in the original, nested, structure.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>flattened version of the parameter dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.utils.sweep.get_openvino_throughput">
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.</span></span><span class="sig-name descname"><span class="pre">get_openvino_throughput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.dictconfig.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.utils.data.dataloader.DataLoader</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/sweep/helpers/inference.html#get_openvino_throughput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.sweep.get_openvino_throughput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the generated OpenVINO model on a dummy dataset to get throughput.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model config.</p></li>
+<li><p><strong>model_path</strong> (<em>Path</em>) – Path to folder containing the OpenVINO models. It then searches <cite>model.xml</cite> in the folder.</p></li>
+<li><p><strong>test_dataset</strong> (<em>DataLoader</em>) – The test dataset used as a reference for the mock dataset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Inference throughput</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.utils.sweep.get_run_config">
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.</span></span><span class="sig-name descname"><span class="pre">get_run_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">omegaconf.dictconfig.DictConfig</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.dictconfig.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/sweep/config.html#get_run_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.sweep.get_run_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yields configuration for a single run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>params_dict</strong> (<em>DictConfig</em>) – Configuration for grid search.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dummy_config</span> <span class="o">=</span> <span class="n">DictConfig</span><span class="p">({</span>
+<span class="go">    "parent1":{</span>
+<span class="go">        "child1": ['a', 'b', 'c'],</span>
+<span class="go">        "child2": [1, 2, 3]</span>
+<span class="go">    },</span>
+<span class="go">    "parent2":['model1', 'model2'],</span>
+<span class="go">    "parent3": 'replacement_value'</span>
+<span class="go">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">run_config</span> <span class="ow">in</span> <span class="n">get_run_config</span><span class="p">(</span><span class="n">dummy_config</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="nb">print</span><span class="p">(</span><span class="n">run_config</span><span class="p">)</span>
+<span class="go">{'parent1.child1': 'a', 'parent1.child2': 1, 'parent2': 'model1', 'parent3': 'replacement_value'}</span>
+<span class="go">{'parent1.child1': 'a', 'parent1.child2': 1, 'parent2': 'model2', 'parent3': 'replacement_value'}</span>
+<span class="go">{'parent1.child1': 'a', 'parent1.child2': 2, 'parent2': 'model1', 'parent3': 'replacement_value'}</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Yields</dt>
+<dd class="field-odd"><p><em>Generator[DictConfig]</em> – Dictionary containing flattened keys
+and values for current run.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.utils.sweep.get_sweep_callbacks">
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.</span></span><span class="sig-name descname"><span class="pre">get_sweep_callbacks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.dictconfig.DictConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">pytorch_lightning.callbacks.base.Callback</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/sweep/helpers/callbacks.html#get_sweep_callbacks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.sweep.get_sweep_callbacks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets callbacks relevant to sweep.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model config loaded from anomalib</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of callbacks</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[Callback]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.utils.sweep.get_torch_throughput">
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.</span></span><span class="sig-name descname"><span class="pre">get_torch_throughput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.dictconfig.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="model/base.html#anomalib.models.components.base.AnomalyModule" title="anomalib.models.components.base.anomaly_module.AnomalyModule"><span class="pre">anomalib.models.components.base.anomaly_module.AnomalyModule</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.utils.data.dataloader.DataLoader</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/sweep/helpers/inference.html#get_torch_throughput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.sweep.get_torch_throughput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests the model on dummy data. Images are passed sequentially to make the comparision with OpenVINO model fair.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model config.</p></li>
+<li><p><strong>model</strong> (<em>Path</em>) – Model on which inference is called.</p></li>
+<li><p><strong>test_dataset</strong> (<em>DataLoader</em>) – The test dataset used as a reference for the mock dataset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Inference throughput</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="anomalib.utils.sweep.set_in_nested_config">
+<span class="sig-prename descclassname"><span class="pre">anomalib.utils.sweep.</span></span><span class="sig-name descname"><span class="pre">set_in_nested_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">omegaconf.dictconfig.DictConfig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keymap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/sweep/config.html#set_in_nested_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.sweep.set_in_nested_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set an item in a nested config object using a list of keys.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> – DictConfig: nested DictConfig object</p></li>
+<li><p><strong>keymap</strong> – List[str]: list of keys corresponding to item that should be set.</p></li>
+<li><p><strong>value</strong> – Any: Value that should be assigned to the dictionary item at the specified location.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dummy_config</span> <span class="o">=</span> <span class="n">DictConfig</span><span class="p">({</span>
+<span class="go">    "parent1":{</span>
+<span class="go">        "child1": ['a', 'b', 'c'],</span>
+<span class="go">        "child2": [1, 2, 3]</span>
+<span class="go">    },</span>
+<span class="go">    "parent2":['model1', 'model2']</span>
+<span class="go">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model_config</span> <span class="o">=</span> <span class="n">DictConfig</span><span class="p">({</span>
+<span class="go">    "parent1":{</span>
+<span class="go">        "child1": 'e',</span>
+<span class="go">        "child2": 4,</span>
+<span class="go">    },</span>
+<span class="go">    "parent3": False</span>
+<span class="go">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">run_config</span> <span class="ow">in</span> <span class="n">get_run_config</span><span class="p">(</span><span class="n">dummy_config</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="nb">print</span><span class="p">(</span><span class="s2">"Original model config"</span><span class="p">,</span> <span class="n">model_config</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="nb">print</span><span class="p">(</span><span class="s2">"Suggested config"</span><span class="p">,</span> <span class="n">run_config</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">run_config</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+<span class="gp">&gt;&gt;&gt; </span>       <span class="n">set_in_nested_config</span><span class="p">(</span><span class="n">model_config</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">),</span> <span class="n">run_config</span><span class="p">[</span><span class="n">param</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="nb">print</span><span class="p">(</span><span class="s2">"Replaced model config"</span><span class="p">,</span> <span class="n">model_config</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="k">break</span>
+<span class="go">Original model config {'parent1': {'child1': 'e', 'child2': 4}, 'parent3': False}</span>
+<span class="go">Suggested config {'parent1.child1': 'a', 'parent1.child2': 1, 'parent2': 'model1'}</span>
+<span class="go">Replaced model config {'parent1': {'child1': 'a', 'child2': 1}, 'parent3': False, 'parent2': 'model1'}</span>
+</pre></div>
+</div>
+</dd></dl>
 </section>
 
       </article>

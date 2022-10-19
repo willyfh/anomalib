@@ -255,8 +255,80 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <section id="cli">
-<h1>CLI<a class="headerlink" href="#cli" title="Permalink to this headline">¶</a></h1>
+        <section id="module-anomalib.utils.cli">
+<span id="cli"></span><h1>CLI<a class="headerlink" href="#module-anomalib.utils.cli" title="Permalink to this headline">¶</a></h1>
+<p>Anomalib CLI.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="anomalib.utils.cli.AnomalibCLI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.cli.</span></span><span class="sig-name descname"><span class="pre">AnomalibCLI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">model_class:</span> <span class="pre">typing.Optional[typing.Union[typing.Type[pytorch_lightning.core.lightning.LightningModule],</span> <span class="pre">typing.Callable[[...],</span> <span class="pre">pytorch_lightning.core.lightning.LightningModule]]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">datamodule_class:</span> <span class="pre">typing.Optional[typing.Union[typing.Type[pytorch_lightning.core.datamodule.LightningDataModule],</span> <span class="pre">typing.Callable[[...],</span> <span class="pre">pytorch_lightning.core.datamodule.LightningDataModule]]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">save_config_callback:</span> <span class="pre">typing.Optional[typing.Type[pytorch_lightning.utilities.cli.SaveConfigCallback]]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'pytorch_lightning.utilities.cli.SaveConfigCallback'&gt;,</span> <span class="pre">save_config_filename:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'config.yaml',</span> <span class="pre">save_config_overwrite:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">save_config_multifile:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">trainer_class:</span> <span class="pre">typing.Union[typing.Type[pytorch_lightning.trainer.trainer.Trainer],</span> <span class="pre">typing.Callable[[...],</span> <span class="pre">pytorch_lightning.trainer.trainer.Trainer]]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'pytorch_lightning.trainer.trainer.Trainer'&gt;,</span> <span class="pre">trainer_defaults:</span> <span class="pre">typing.Optional[typing.Dict[str,</span> <span class="pre">typing.Any]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">seed_everything_default:</span> <span class="pre">typing.Optional[int]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">description:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'Anomalib</span> <span class="pre">trainer</span> <span class="pre">command</span> <span class="pre">line</span> <span class="pre">tool',</span> <span class="pre">env_prefix:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'Anomalib',</span> <span class="pre">env_parse:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">parser_kwargs:</span> <span class="pre">typing.Optional[typing.Union[typing.Dict[str,</span> <span class="pre">typing.Any],</span> <span class="pre">typing.Dict[str,</span> <span class="pre">typing.Dict[str,</span> <span class="pre">typing.Any]]]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">subclass_mode_model:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">subclass_mode_data:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">run:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">auto_registry:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/cli/cli.html#AnomalibCLI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.cli.AnomalibCLI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pytorch_lightning.utilities.cli.LightningCLI</span></code></p>
+<p>Implementation of a fully configurable CLI tool for anomalib.</p>
+<p>The advantage of this tool is its flexibility to configure the pipeline
+from both the CLI and a configuration file (.yaml or .json). It is even
+possible to use both the CLI and a configuration file simultaneously.
+For more details, the reader could refer to PyTorch Lightning CLI documentation.</p>
+<p>Receives as input pytorch-lightning classes (or callables which return pytorch-lightning classes), which
+are called / instantiated using a parsed configuration file and / or command line args.</p>
+<p>Parsing of configuration from environment variables can be enabled by setting <code class="docutils literal notranslate"><span class="pre">env_parse=True</span></code>.
+A full configuration yaml would be parsed from <code class="docutils literal notranslate"><span class="pre">PL_CONFIG</span></code> if set.
+Individual settings are so parsed from variables named for example <code class="docutils literal notranslate"><span class="pre">PL_TRAINER__MAX_EPOCHS</span></code>.</p>
+<p>For more info, read <span class="xref std std-ref">the CLI docs</span>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">LightningCLI</span></code> is in beta and subject to change.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_class</strong> – An optional <code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code> class to train on or a
+callable which returns a <code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code> instance when
+called. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, you can pass a registered model with <code class="docutils literal notranslate"><span class="pre">--model=MyModel</span></code>.</p></li>
+<li><p><strong>datamodule_class</strong> – An optional <code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code> class or a
+callable which returns a <code class="xref py py-class docutils literal notranslate"><span class="pre">LightningDataModule</span></code> instance when
+called. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, you can pass a registered datamodule with <code class="docutils literal notranslate"><span class="pre">--data=MyDataModule</span></code>.</p></li>
+<li><p><strong>save_config_callback</strong> – A callback class to save the training config.</p></li>
+<li><p><strong>save_config_filename</strong> – Filename for the config file.</p></li>
+<li><p><strong>save_config_overwrite</strong> – Whether to overwrite an existing config file.</p></li>
+<li><p><strong>save_config_multifile</strong> – When input is multiple config files, saved config preserves this structure.</p></li>
+<li><p><strong>trainer_class</strong> – An optional subclass of the <code class="xref py py-class docutils literal notranslate"><span class="pre">Trainer</span></code> class or a
+callable which returns a <code class="xref py py-class docutils literal notranslate"><span class="pre">Trainer</span></code> instance when called.</p></li>
+<li><p><strong>trainer_defaults</strong> – Set to override Trainer defaults or add persistent callbacks. The callbacks added through
+this argument will not be configurable from a configuration file and will always be present for
+this particular CLI. Alternatively, configurable callbacks can be added as explained in
+<span class="xref std std-ref">the CLI docs</span>.</p></li>
+<li><p><strong>seed_everything_default</strong> – Default value for the <code class="xref py py-func docutils literal notranslate"><span class="pre">seed_everything()</span></code>
+seed argument.</p></li>
+<li><p><strong>description</strong> – Description of the tool shown when running <code class="docutils literal notranslate"><span class="pre">--help</span></code>.</p></li>
+<li><p><strong>env_prefix</strong> – Prefix for environment variables.</p></li>
+<li><p><strong>env_parse</strong> – Whether environment variable parsing is enabled.</p></li>
+<li><p><strong>parser_kwargs</strong> – Additional arguments to instantiate each <code class="docutils literal notranslate"><span class="pre">LightningArgumentParser</span></code>.</p></li>
+<li><p><strong>subclass_mode_model</strong> – Whether model can be any <a class="reference external" href="https://jsonargparse.readthedocs.io/en/stable/#class-type-and-sub-classes">subclass</a>
+of the given class.</p></li>
+<li><p><strong>subclass_mode_data</strong> – <p>Whether datamodule can be any <a class="reference external" href="https://jsonargparse.readthedocs.io/en/stable/#class-type-and-sub-classes">subclass</a>
+of the given class.</p>
+</p></li>
+<li><p><strong>run</strong> – Whether subcommands should be added to run a <code class="xref py py-class docutils literal notranslate"><span class="pre">Trainer</span></code>
+method. If set to <code class="docutils literal notranslate"><span class="pre">False</span></code>, the trainer and model classes will be instantiated only.</p></li>
+<li><p><strong>auto_registry</strong> – Whether to automatically fill up the registries with all defined subclasses.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.utils.cli.AnomalibCLI.add_arguments_to_parser">
+<span class="sig-name descname"><span class="pre">add_arguments_to_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.utilities.cli.LightningArgumentParser</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/cli/cli.html#AnomalibCLI.add_arguments_to_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.cli.AnomalibCLI.add_arguments_to_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add default arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parser</strong> (<em>LightningArgumentParser</em>) – Lightning Argument Parser.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.utils.cli.AnomalibCLI.before_instantiate_classes">
+<span class="sig-name descname"><span class="pre">before_instantiate_classes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/cli/cli.html#AnomalibCLI.before_instantiate_classes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.cli.AnomalibCLI.before_instantiate_classes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modify the configuration to properly instantiate classes.</p>
+</dd></dl>
+</dd></dl>
 </section>
 
       </article>

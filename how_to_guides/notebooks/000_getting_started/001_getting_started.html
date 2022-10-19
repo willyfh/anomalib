@@ -528,7 +528,7 @@ Those who would like to reproduce the results via CLI could use <code class="doc
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install anomalib
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%pip install anomalib
 </pre></div>
 </div>
 </div>
@@ -539,20 +539,20 @@ Those who would like to reproduce the results via CLI could use <code class="doc
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from pathlib import Path
+from typing import Any, Dict
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Trainer</span>
-<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">ToPILImage</span>
+import numpy as np
+from IPython.display import display
+from PIL import Image
+from pytorch_lightning import Trainer
+from torchvision.transforms import ToPILImage
 
-<span class="kn">from</span> <span class="nn">anomalib.config</span> <span class="kn">import</span> <span class="n">get_configurable_parameters</span>
-<span class="kn">from</span> <span class="nn">anomalib.data</span> <span class="kn">import</span> <span class="n">get_datamodule</span>
-<span class="kn">from</span> <span class="nn">anomalib.models</span> <span class="kn">import</span> <span class="n">get_model</span>
-<span class="kn">from</span> <span class="nn">anomalib.pre_processing.transforms</span> <span class="kn">import</span> <span class="n">Denormalize</span>
-<span class="kn">from</span> <span class="nn">anomalib.utils.callbacks</span> <span class="kn">import</span> <span class="n">LoadModelCallback</span><span class="p">,</span> <span class="n">get_callbacks</span>
+from anomalib.config import get_configurable_parameters
+from anomalib.data import get_datamodule
+from anomalib.models import get_model
+from anomalib.pre_processing.transforms import Denormalize
+from anomalib.utils.callbacks import LoadModelCallback, get_callbacks
 </pre></div>
 </div>
 </div>
@@ -578,10 +578,10 @@ Those who would like to reproduce the results via CLI could use <code class="doc
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MODEL</span> <span class="o">=</span> <span class="s2">"padim"</span>  <span class="c1"># 'padim', 'cflow', 'stfpm', 'ganomaly', 'dfkde', 'patchcore'</span>
-<span class="n">CONFIG_PATH</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"../../anomalib/models/</span><span class="si">{</span><span class="n">MODEL</span><span class="si">}</span><span class="s2">/config.yaml"</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">CONFIG_PATH</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"r"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>MODEL = "padim"  # 'padim', 'cflow', 'stfpm', 'ganomaly', 'dfkde', 'patchcore'
+CONFIG_PATH = f"../../anomalib/models/{MODEL}/config.yaml"
+with open(file=CONFIG_PATH, mode="r", encoding="utf-8") as file:
+    print(file.read())
 </pre></div>
 </div>
 </div>
@@ -590,9 +590,9 @@ Those who would like to reproduce the results via CLI could use <code class="doc
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># pass the config file to model, callbacks and datamodule</span>
-<span class="n">config</span> <span class="o">=</span> <span class="n">get_configurable_parameters</span><span class="p">(</span><span class="n">config_path</span><span class="o">=</span><span class="n">CONFIG_PATH</span><span class="p">)</span>
-<span class="n">config</span><span class="p">[</span><span class="s2">"dataset"</span><span class="p">][</span><span class="s2">"path"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"../../datasets/MVTec"</span>  <span class="c1"># or wherever the MVTec dataset is stored.</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># pass the config file to model, callbacks and datamodule
+config = get_configurable_parameters(config_path=CONFIG_PATH)
+config["dataset"]["path"] = "../../datasets/MVTec"  # or wherever the MVTec dataset is stored.
 </pre></div>
 </div>
 </div>
@@ -605,12 +605,12 @@ Those who would like to reproduce the results via CLI could use <code class="doc
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datamodule</span> <span class="o">=</span> <span class="n">get_datamodule</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-<span class="n">datamodule</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>  <span class="c1"># Downloads the dataset if it's not in the specified `root` directory</span>
-<span class="n">datamodule</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">()</span>  <span class="c1"># Create train/val/test/prediction sets.</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>datamodule = get_datamodule(config)
+datamodule.setup()  # Downloads the dataset if it's not in the specified `root` directory
+datamodule.prepare_data()  # Create train/val/test/prediction sets.
 
-<span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">datamodule</span><span class="o">.</span><span class="n">val_dataloader</span><span class="p">()))</span>
-<span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+i, data = next(enumerate(datamodule.val_dataloader()))
+data.keys()
 </pre></div>
 </div>
 </div>
@@ -628,7 +628,7 @@ dict_keys(['image', 'image_path', 'label', 'mask_path', 'mask'])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"image"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(data["image"].shape, data["mask"].shape)
 </pre></div>
 </div>
 </div>
@@ -645,15 +645,15 @@ torch.Size([32, 3, 256, 256]) torch.Size([32, 256, 256])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">show_image_and_mask</span><span class="p">(</span><span class="n">sample</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Image</span><span class="p">:</span>
-    <span class="n">img</span> <span class="o">=</span> <span class="n">ToPILImage</span><span class="p">()(</span><span class="n">Denormalize</span><span class="p">()(</span><span class="n">sample</span><span class="p">[</span><span class="s2">"image"</span><span class="p">][</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()))</span>
-    <span class="n">msk</span> <span class="o">=</span> <span class="n">ToPILImage</span><span class="p">()(</span><span class="n">sample</span><span class="p">[</span><span class="s2">"mask"</span><span class="p">][</span><span class="n">index</span><span class="p">])</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">"RGB"</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def show_image_and_mask(sample: Dict[str, Any], index: int) -&gt; Image:
+    img = ToPILImage()(Denormalize()(sample["image"][index].clone()))
+    msk = ToPILImage()(sample["mask"][index]).convert("RGB")
 
-    <span class="k">return</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">msk</span><span class="p">))))</span>
+    return Image.fromarray(np.hstack((np.array(img), np.array(msk))))
 
 
-<span class="c1"># Visualize a normal image-mask</span>
-<span class="n">show_image_and_mask</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+# Visualize a normal image-mask
+show_image_and_mask(data, index=0)
 </pre></div>
 </div>
 </div>
@@ -669,8 +669,8 @@ torch.Size([32, 3, 256, 256]) torch.Size([32, 256, 256])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualize an abnormal image-mask</span>
-<span class="n">show_image_and_mask</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Visualize an abnormal image-mask
+show_image_and_mask(data, index=20)
 </pre></div>
 </div>
 </div>
@@ -690,8 +690,8 @@ torch.Size([32, 3, 256, 256]) torch.Size([32, 256, 256])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-<span class="n">callbacks</span> <span class="o">=</span> <span class="n">get_callbacks</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model = get_model(config)
+callbacks = get_callbacks(config)
 </pre></div>
 </div>
 </div>
@@ -699,9 +699,9 @@ torch.Size([32, 3, 256, 256]) torch.Size([32, 256, 256])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># start training</span>
-<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">)</span>
-<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">datamodule</span><span class="o">=</span><span class="n">datamodule</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># start training
+trainer = Trainer(**config.trainer, callbacks=callbacks)
+trainer.fit(model=model, datamodule=datamodule)
 </pre></div>
 </div>
 </div>
@@ -803,10 +803,10 @@ Epoch 0: 100%|██████████| 10/10 [00:10&lt;00:00,  1.01s/it, 
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load best model from checkpoint before evaluating</span>
-<span class="n">load_model_callback</span> <span class="o">=</span> <span class="n">LoadModelCallback</span><span class="p">(</span><span class="n">weights_path</span><span class="o">=</span><span class="n">trainer</span><span class="o">.</span><span class="n">checkpoint_callback</span><span class="o">.</span><span class="n">best_model_path</span><span class="p">)</span>
-<span class="n">trainer</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">load_model_callback</span><span class="p">)</span>
-<span class="n">trainer</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">datamodule</span><span class="o">=</span><span class="n">datamodule</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># load best model from checkpoint before evaluating
+load_model_callback = LoadModelCallback(weights_path=trainer.checkpoint_callback.best_model_path)
+trainer.callbacks.insert(0, load_model_callback)
+trainer.test(model=model, datamodule=datamodule)
 </pre></div>
 </div>
 </div>
@@ -857,7 +857,7 @@ Testing DataLoader 0: 100%|██████████| 3/3 [00:22&lt;00:00, 
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">"project"</span><span class="p">][</span><span class="s2">"path"</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(config["project"]["path"])
 </pre></div>
 </div>
 </div>
@@ -873,8 +873,8 @@ results/padim/mvtec/bottle
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image_filenames</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">"project"</span><span class="p">][</span><span class="s2">"path"</span><span class="p">])</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"**/*.png"</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">image_filenames</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>image_filenames = list(Path(config["project"]["path"]).glob("**/*.png"))
+print(image_filenames[0])
 </pre></div>
 </div>
 </div>
@@ -890,9 +890,9 @@ results/padim/mvtec/bottle/images/contamination/017.png
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">image_filenames</span><span class="p">:</span>
-    <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for filename in image_filenames:
+    image = Image.open(filename)
+    display(image)
 </pre></div>
 </div>
 </div>
