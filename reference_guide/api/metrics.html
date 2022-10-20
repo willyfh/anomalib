@@ -5,11 +5,11 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Loggers" href="loggers.html" /><link rel="prev" title="Post Processing" href="post_processing.html" />
 
-    <link rel="shortcut icon" href="../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
+    <link rel="shortcut icon" href="../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
         <title>Metrics - Anomalib v0.3.6</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=93475b62d1c3bc01323a0eefdc14a62d77b12690" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
 
@@ -20,36 +20,38 @@
   --color-code-foreground: black;
   
   }
-  body[data-theme="dark"] {
-    --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
-  
-  }
-  @media (prefers-color-scheme: dark) {
-    body:not([data-theme="light"]) {
+  @media not print {
+    body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
   
     }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
   }
-</style>
-    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../_static/pygments_dark.css"></head>
+</style></head>
   <body>
     
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="svg-toc" viewBox="0 0 24 24">
     <title>Contents</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path stroke="none" d="M0 0h24v24H0z" />
-      <line x1="4" y1="6" x2="20" y2="6" />
-      <line x1="10" y1="12" x2="20" y2="12" />
-      <line x1="6" y1="18" x2="20" y2="18" />
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
     </svg>
   </symbol>
   <symbol id="svg-menu" viewBox="0 0 24 24">
     <title>Menu</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
       <line x1="3" y1="12" x2="21" y2="12"></line>
       <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -58,14 +60,14 @@
   </symbol>
   <symbol id="svg-arrow-right" viewBox="0 0 24 24">
     <title>Expand</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
       <polyline points="9 18 15 12 9 6"></polyline>
     </svg>
   </symbol>
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -80,7 +82,7 @@
   </symbol>
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
@@ -88,7 +90,7 @@
   </symbol>
   <symbol id="svg-sun-half" viewBox="0 0 24 24">
     <title>Auto light/dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <circle cx="12" cy="12" r="9" />
@@ -234,15 +236,23 @@
 
 </div>
 </div>
+
       </div>
       
     </div>
   </aside>
   <div class="main">
     <div class="content">
-      <article role="main">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -255,7 +265,8 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <section id="module-anomalib.utils.metrics">
+        <article role="main">
+          <section id="module-anomalib.utils.metrics">
 <span id="metrics"></span><h1>Metrics<a class="headerlink" href="#module-anomalib.utils.metrics" title="Permalink to this headline">¶</a></h1>
 <p>Custom anomaly evaluation metrics.</p>
 <dl class="py class">
@@ -266,7 +277,7 @@
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUPR.compute">
-<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupr.html#AUPR.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPR.compute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupr.html#AUPR.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPR.compute" title="Permalink to this definition">¶</a></dt>
 <dd><p>First compute PR curve, then compute area under the curve.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -274,9 +285,10 @@
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUPR.generate_figure">
-<span class="sig-name descname"><span class="pre">generate_figure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">matplotlib.figure.Figure</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupr.html#AUPR.generate_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPR.generate_figure" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">generate_figure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">matplotlib.figure.Figure</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupr.html#AUPR.generate_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPR.generate_figure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a figure containing the PR curve as well as the random baseline and the AUC.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -287,9 +299,10 @@
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUPR.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupr.html#AUPR.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPR.update" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupr.html#AUPR.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPR.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update state with new values.</p>
 <p>Need to flatten new values as PrecicionRecallCurve expects them in this format for binary classification.</p>
 <dl class="field-list simple">
@@ -301,15 +314,19 @@
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUPR.preds">
 <span class="sig-name descname"><span class="pre">preds</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.utils.metrics.AUPR.preds" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUPR.target">
 <span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.utils.metrics.AUPR.target" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 </dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUPRO">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.metrics.</span></span><span class="sig-name descname"><span class="pre">AUPRO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compute_on_step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_sync_on_step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_sync_fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fpr_limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupro.html#AUPRO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPRO" title="Permalink to this definition">¶</a></dt>
@@ -318,7 +335,7 @@
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUPRO.compute">
-<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupro.html#AUPRO.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPRO.compute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupro.html#AUPRO.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPRO.compute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fist compute PRO curve, then compute and scale area under the curve.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -329,9 +346,10 @@
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUPRO.generate_figure">
-<span class="sig-name descname"><span class="pre">generate_figure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">matplotlib.figure.Figure</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupro.html#AUPRO.generate_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPRO.generate_figure" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">generate_figure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">matplotlib.figure.Figure</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupro.html#AUPRO.generate_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPRO.generate_figure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a figure containing the PRO curve and the AUPRO.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -342,9 +360,10 @@
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUPRO.interp1d">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">interp1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupro.html#AUPRO.interp1d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPRO.interp1d" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">interp1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupro.html#AUPRO.interp1d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPRO.interp1d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to interpolate a 1D signal linearly to new sampling points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -362,9 +381,10 @@
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUPRO.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupro.html#AUPRO.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPRO.update" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupro.html#AUPRO.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPRO.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update state with new values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -375,27 +395,34 @@
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUPRO.full_state_update">
 <span class="sig-name descname"><span class="pre">full_state_update</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#anomalib.utils.metrics.AUPRO.full_state_update" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUPRO.higher_is_better">
 <span class="sig-name descname"><span class="pre">higher_is_better</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#anomalib.utils.metrics.AUPRO.higher_is_better" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUPRO.is_differentiable">
 <span class="sig-name descname"><span class="pre">is_differentiable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#anomalib.utils.metrics.AUPRO.is_differentiable" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUPRO.preds">
 <span class="sig-name descname"><span class="pre">preds</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.utils.metrics.AUPRO.preds" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUPRO.target">
 <span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.utils.metrics.AUPRO.target" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 </dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUROC">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.metrics.</span></span><span class="sig-name descname"><span class="pre">AUROC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/auroc.html#AUROC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUROC" title="Permalink to this definition">¶</a></dt>
@@ -404,7 +431,7 @@
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUROC.compute">
-<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/auroc.html#AUROC.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUROC.compute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/auroc.html#AUROC.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUROC.compute" title="Permalink to this definition">¶</a></dt>
 <dd><p>First compute ROC curve, then compute area under the curve.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -415,9 +442,10 @@
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUROC.generate_figure">
-<span class="sig-name descname"><span class="pre">generate_figure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">matplotlib.figure.Figure</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/auroc.html#AUROC.generate_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUROC.generate_figure" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">generate_figure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">matplotlib.figure.Figure</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/auroc.html#AUROC.generate_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUROC.generate_figure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a figure containing the ROC curve, the baseline and the AUROC.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -428,9 +456,10 @@
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUROC.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/auroc.html#AUROC.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUROC.update" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/auroc.html#AUROC.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUROC.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update state with new values.</p>
 <p>Need to flatten new values as ROC expects them in this format for binary classification.</p>
 <dl class="field-list simple">
@@ -442,15 +471,19 @@
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUROC.preds">
 <span class="sig-name descname"><span class="pre">preds</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.utils.metrics.AUROC.preds" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUROC.target">
 <span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.utils.metrics.AUROC.target" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 </dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AnomalyScoreDistribution">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.metrics.</span></span><span class="sig-name descname"><span class="pre">AnomalyScoreDistribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/anomaly_score_distribution.html#AnomalyScoreDistribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AnomalyScoreDistribution" title="Permalink to this definition">¶</a></dt>
@@ -459,15 +492,18 @@
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AnomalyScoreDistribution.compute">
-<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/anomaly_score_distribution.html#AnomalyScoreDistribution.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AnomalyScoreDistribution.compute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/anomaly_score_distribution.html#AnomalyScoreDistribution.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AnomalyScoreDistribution.compute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute stats.</p>
 </dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AnomalyScoreDistribution.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anomaly_scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anomaly_maps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/anomaly_score_distribution.html#AnomalyScoreDistribution.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AnomalyScoreDistribution.update" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anomaly_scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anomaly_maps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/anomaly_score_distribution.html#AnomalyScoreDistribution.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AnomalyScoreDistribution.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the precision-recall curve metric.</p>
 </dd></dl>
+
 </dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AnomalyScoreThreshold">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.metrics.</span></span><span class="sig-name descname"><span class="pre">AnomalyScoreThreshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/anomaly_score_threshold.html#AnomalyScoreThreshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AnomalyScoreThreshold" title="Permalink to this definition">¶</a></dt>
@@ -482,7 +518,7 @@ adaptive threshold value.</p>
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AnomalyScoreThreshold.compute">
-<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/anomaly_score_threshold.html#AnomalyScoreThreshold.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AnomalyScoreThreshold.compute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/anomaly_score_threshold.html#AnomalyScoreThreshold.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AnomalyScoreThreshold.compute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the threshold that yields the optimal F1 score.</p>
 <p>Compute the F1 scores while varying the threshold. Store the optimal
 threshold as attribute and return the maximum value of the F1 score.</p>
@@ -492,15 +528,19 @@ threshold as attribute and return the maximum value of the F1 score.</p>
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AnomalyScoreThreshold.preds">
 <span class="sig-name descname"><span class="pre">preds</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.utils.metrics.AnomalyScoreThreshold.preds" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AnomalyScoreThreshold.target">
 <span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.utils.metrics.AnomalyScoreThreshold.target" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 </dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.MinMax">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.metrics.</span></span><span class="sig-name descname"><span class="pre">MinMax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/min_max.html#MinMax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.MinMax" title="Permalink to this definition">¶</a></dt>
@@ -509,19 +549,23 @@ threshold as attribute and return the maximum value of the F1 score.</p>
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.MinMax.compute">
-<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/min_max.html#MinMax.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.MinMax.compute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/min_max.html#MinMax.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.MinMax.compute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return min and max values.</p>
 </dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.MinMax.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/min_max.html#MinMax.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.MinMax.update" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/min_max.html#MinMax.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.MinMax.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the min and max values.</p>
 </dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.MinMax.full_state_update">
 <span class="sig-name descname"><span class="pre">full_state_update</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#anomalib.utils.metrics.MinMax.full_state_update" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 </dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.OptimalF1">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.metrics.</span></span><span class="sig-name descname"><span class="pre">OptimalF1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/optimal_f1.html#OptimalF1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.OptimalF1" title="Permalink to this definition">¶</a></dt>
@@ -532,7 +576,7 @@ predicted anomaly scores.</p>
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.OptimalF1.compute">
-<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/optimal_f1.html#OptimalF1.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.OptimalF1.compute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/optimal_f1.html#OptimalF1.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.OptimalF1.compute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the value of the optimal F1 score.</p>
 <p>Compute the F1 scores while varying the threshold. Store the optimal
 threshold as attribute and return the maximum value of the F1 score.</p>
@@ -542,21 +586,26 @@ threshold as attribute and return the maximum value of the F1 score.</p>
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.OptimalF1.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/optimal_f1.html#OptimalF1.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.OptimalF1.reset" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/optimal_f1.html#OptimalF1.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.OptimalF1.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reset the metric.</p>
 </dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.OptimalF1.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/optimal_f1.html#OptimalF1.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.OptimalF1.update" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/optimal_f1.html#OptimalF1.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.OptimalF1.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the precision-recall curve metric.</p>
 </dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.OptimalF1.full_state_update">
 <span class="sig-name descname"><span class="pre">full_state_update</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#anomalib.utils.metrics.OptimalF1.full_state_update" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 </dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.PRO">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.metrics.</span></span><span class="sig-name descname"><span class="pre">PRO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/pro.html#PRO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.PRO" title="Permalink to this definition">¶</a></dt>
@@ -565,26 +614,32 @@ threshold as attribute and return the maximum value of the F1 score.</p>
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.PRO.compute">
-<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/pro.html#PRO.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.PRO.compute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/pro.html#PRO.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.PRO.compute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the macro average of the PRO score across all regions in all batches.</p>
 </dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.PRO.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/pro.html#PRO.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.PRO.update" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/pro.html#PRO.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.PRO.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the PRO score for the current batch.</p>
 </dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.PRO.preds">
 <span class="sig-name descname"><span class="pre">preds</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.utils.metrics.PRO.preds" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.PRO.target">
 <span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.utils.metrics.PRO.target" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 </dd></dl>
+
 </section>
 
-      </article>
+        </article>
+      </div>
       <footer>
         
         <div class="related-pages">
@@ -595,10 +650,10 @@ threshold as attribute and return the maximum value of the F1 score.</p>
                 </div>
                 <div class="title">Loggers</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="post_processing.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -609,19 +664,21 @@ threshold as attribute and return the maximum value of the F1 score.</p>
               </div>
             </a>
         </div>
-
-        <div class="related-information">
-              Copyright &#169; 
-            |
-            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
-              and
-              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
-              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
-            |
-            <a class="muted-link" href="../../_sources/reference_guide/api/metrics.rst.txt"
-               rel="nofollow">
-              Show Source
-            </a>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
         </div>
         
       </footer>
@@ -636,7 +693,7 @@ threshold as attribute and return the maximum value of the F1 score.</p>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/scripts/main.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>
 </html>

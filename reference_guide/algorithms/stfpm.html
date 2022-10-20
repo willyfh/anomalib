@@ -5,11 +5,11 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Developer Guide" href="../../developer_guide/index.html" /><link rel="prev" title="Reverse Distillation" href="reverse_distillation.html" />
 
-    <link rel="shortcut icon" href="../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
+    <link rel="shortcut icon" href="../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
         <title>STFPM - Anomalib v0.3.6</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=93475b62d1c3bc01323a0eefdc14a62d77b12690" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
 
@@ -20,36 +20,38 @@
   --color-code-foreground: black;
   
   }
-  body[data-theme="dark"] {
-    --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
-  
-  }
-  @media (prefers-color-scheme: dark) {
-    body:not([data-theme="light"]) {
+  @media not print {
+    body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
   
     }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
   }
-</style>
-    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../_static/pygments_dark.css"></head>
+</style></head>
   <body>
     
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="svg-toc" viewBox="0 0 24 24">
     <title>Contents</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path stroke="none" d="M0 0h24v24H0z" />
-      <line x1="4" y1="6" x2="20" y2="6" />
-      <line x1="10" y1="12" x2="20" y2="12" />
-      <line x1="6" y1="18" x2="20" y2="18" />
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
     </svg>
   </symbol>
   <symbol id="svg-menu" viewBox="0 0 24 24">
     <title>Menu</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
       <line x1="3" y1="12" x2="21" y2="12"></line>
       <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -58,14 +60,14 @@
   </symbol>
   <symbol id="svg-arrow-right" viewBox="0 0 24 24">
     <title>Expand</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
       <polyline points="9 18 15 12 9 6"></polyline>
     </svg>
   </symbol>
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -80,7 +82,7 @@
   </symbol>
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
@@ -88,7 +90,7 @@
   </symbol>
   <symbol id="svg-sun-half" viewBox="0 0 24 24">
     <title>Auto light/dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <circle cx="12" cy="12" r="9" />
@@ -234,15 +236,23 @@
 
 </div>
 </div>
+
       </div>
       
     </div>
   </aside>
   <div class="main">
     <div class="content">
-      <article role="main">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -255,7 +265,8 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <section id="stfpm">
+        <article role="main">
+          <section id="stfpm">
 <h1>STFPM<a class="headerlink" href="#stfpm" title="Permalink to this headline">¶</a></h1>
 <p>This is the implementation of the <a class="reference external" href="https://arxiv.org/pdf/2103.04257.pdf">STFPM</a> paper.</p>
 <p>Model Type: Segmentation</p>
@@ -266,7 +277,7 @@
 </section>
 <section id="architecture">
 <h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
-<img alt="STFPM Architecture" src="../../_images/architecture4.jpg"/>
+<img alt="STFPM Architecture" src="../../_images/architecture4.jpg" />
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
@@ -304,11 +315,14 @@ During the evaluation mode, it returns the predicted anomaly map.</p>
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.models.stfpm.torch_model.STFPMModel.training">
 <span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.stfpm.torch_model.STFPMModel.training" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 </dd></dl>
+
 <span class="target" id="module-anomalib.models.stfpm.lightning_model"></span><p>STFPM: Student-Teacher Feature Pyramid Matching for Unsupervised Anomaly Detection.</p>
 <p><a class="reference external" href="https://arxiv.org/abs/2103.04257">https://arxiv.org/abs/2103.04257</a></p>
 <dl class="py class">
@@ -335,9 +349,10 @@ config.yaml file or from CLI.</p>
 </div></blockquote>
 </div>
 </dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.stfpm.lightning_model.StfpmLightning.configure_optimizers">
-<span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.optim.optimizer.Optimizer</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/lightning_model.html#StfpmLightning.configure_optimizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.lightning_model.StfpmLightning.configure_optimizers" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.optim.optimizer.Optimizer</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/lightning_model.html#StfpmLightning.configure_optimizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.lightning_model.StfpmLightning.configure_optimizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Configures optimizers for each decoder.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -357,11 +372,14 @@ config.yaml file or from CLI.</p>
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.models.stfpm.lightning_model.StfpmLightning.training">
 <span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.stfpm.lightning_model.StfpmLightning.training" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 </dd></dl>
+
 <span class="target" id="module-anomalib.models.stfpm.anomaly_map"></span><p>Anomaly Map Generator for the STFPM model implementation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator">
@@ -371,7 +389,7 @@ config.yaml file or from CLI.</p>
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.compute_anomaly_map">
-<span class="sig-name descname"><span class="pre">compute_anomaly_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">teacher_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">student_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/anomaly_map.html#AnomalyMapGenerator.compute_anomaly_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.compute_anomaly_map" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute_anomaly_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">teacher_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">student_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/anomaly_map.html#AnomalyMapGenerator.compute_anomaly_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.compute_anomaly_map" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the overall anomaly map via element-wise production the interpolated anomaly maps.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -385,9 +403,10 @@ config.yaml file or from CLI.</p>
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.compute_layer_map">
-<span class="sig-name descname"><span class="pre">compute_layer_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">teacher_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">student_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/anomaly_map.html#AnomalyMapGenerator.compute_layer_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.compute_layer_map" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute_layer_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">teacher_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">student_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/anomaly_map.html#AnomalyMapGenerator.compute_layer_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.compute_layer_map" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the layer map based on cosine similarity.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -401,9 +420,10 @@ config.yaml file or from CLI.</p>
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/anomaly_map.html#AnomalyMapGenerator.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.forward" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/stfpm/anomaly_map.html#AnomalyMapGenerator.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns anomaly map.</p>
 <p>Expects <cite>teach_features</cite> and <cite>student_features</cite> keywords to be passed explicitly.</p>
 <p class="rubric">Example</p>
@@ -426,15 +446,19 @@ config.yaml file or from CLI.</p>
 </dd>
 </dl>
 </dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.training">
 <span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.training" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
 </dd></dl>
+
 </section>
 </section>
 
-      </article>
+        </article>
+      </div>
       <footer>
         
         <div class="related-pages">
@@ -445,10 +469,10 @@ config.yaml file or from CLI.</p>
                 </div>
                 <div class="title">Developer Guide</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="reverse_distillation.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -459,19 +483,21 @@ config.yaml file or from CLI.</p>
               </div>
             </a>
         </div>
-
-        <div class="related-information">
-              Copyright &#169; 
-            |
-            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
-              and
-              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
-              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
-            |
-            <a class="muted-link" href="../../_sources/reference_guide/algorithms/stfpm.rst.txt"
-               rel="nofollow">
-              Show Source
-            </a>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
         </div>
         
       </footer>
@@ -482,7 +508,7 @@ config.yaml file or from CLI.</p>
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            Contents
+            On this page
           </span>
         </div>
         <div class="toc-tree-container">
@@ -507,7 +533,7 @@ config.yaml file or from CLI.</p>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/scripts/main.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>
 </html>
