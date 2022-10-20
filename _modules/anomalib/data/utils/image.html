@@ -4,11 +4,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
-    <link rel="shortcut icon" href="../../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
         <title>anomalib.data.utils.image - Anomalib v0.3.6</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?digest=93475b62d1c3bc01323a0eefdc14a62d77b12690" />
     
     
 
@@ -19,38 +19,36 @@
   --color-code-foreground: black;
   
   }
-  @media not print {
-    body[data-theme="dark"] {
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
   
     }
-    @media (prefers-color-scheme: dark) {
-      body:not([data-theme="light"]) {
-        --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
-  
-      }
-    }
   }
-</style></head>
+</style>
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../../../_static/pygments_dark.css"></head>
   <body>
     
-    <script>
-      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
-    </script>
-    
-
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="svg-toc" viewBox="0 0 24 24">
     <title>Contents</title>
-    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
-      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
     </svg>
   </symbol>
   <symbol id="svg-menu" viewBox="0 0 24 24">
     <title>Menu</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
       <line x1="3" y1="12" x2="21" y2="12"></line>
       <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -59,14 +57,14 @@
   </symbol>
   <symbol id="svg-arrow-right" viewBox="0 0 24 24">
     <title>Expand</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
       <polyline points="9 18 15 12 9 6"></polyline>
     </svg>
   </symbol>
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -81,7 +79,7 @@
   </symbol>
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
@@ -89,7 +87,7 @@
   </symbol>
   <symbol id="svg-sun-half" viewBox="0 0 24 24">
     <title>Auto light/dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <circle cx="12" cy="12" r="9" />
@@ -235,20 +233,13 @@
 
 </div>
 </div>
-
       </div>
       
     </div>
   </aside>
   <div class="main">
     <div class="content">
-      <div class="article-container">
-        <a href="#" class="back-to-top muted-link">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
-          </svg>
-          <span>Back to top</span>
-        </a>
+      <article role="main">
         <div class="content-icon-container">
           <div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
@@ -263,9 +254,8 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
-          <h1>Source code for anomalib.data.utils.image</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Image Utils.&quot;&quot;&quot;</span>
+        <h1>Source code for anomalib.data.utils.image</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Image Utils."""</span>
 
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
@@ -283,7 +273,7 @@
 
 
 <div class="viewcode-block" id="get_image_filenames"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.get_image_filenames">[docs]</a><span class="k">def</span> <span class="nf">get_image_filenames</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Get image filenames.</span>
+    <span class="sd">"""Get image filenames.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path (Union[str, Path]): Path to image or image-folder.</span>
@@ -291,7 +281,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        List[Path]: List of image filenames</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">image_filenames</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -301,16 +291,16 @@
         <span class="n">image_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">path</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
-        <span class="n">image_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;**/*&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="n">IMG_EXTENSIONS</span><span class="p">]</span>
+        <span class="n">image_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"**/*"</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="n">IMG_EXTENSIONS</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">image_filenames</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found 0 images in </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Found 0 images in </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">image_filenames</span></div>
 
 
 <span class="k">def</span> <span class="nf">duplicate_filename</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Check and duplicate filename.</span>
+    <span class="sd">"""Check and duplicate filename.</span>
 
 <span class="sd">    This function checks the path and adds a suffix if it already exists on the file system.</span>
 
@@ -318,24 +308,24 @@
 <span class="sd">        path (Union[str, Path]): Input Path</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; path = Path(&quot;datasets/MVTec/bottle/test/broken_large/000.png&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; path = Path("datasets/MVTec/bottle/test/broken_large/000.png")</span>
 <span class="sd">        &gt;&gt;&gt; path.exists()</span>
 <span class="sd">        True</span>
 
 <span class="sd">        If we pass this to ``duplicate_filename`` function we would get the following:</span>
 <span class="sd">        &gt;&gt;&gt; duplicate_filename(path)</span>
-<span class="sd">        PosixPath(&#39;datasets/MVTec/bottle/test/broken_large/000_1.png&#39;)</span>
+<span class="sd">        PosixPath('datasets/MVTec/bottle/test/broken_large/000_1.png')</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Path: Duplicated output path.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">duplicated_path</span> <span class="o">=</span> <span class="n">path</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">path</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="p">)</span>
+        <span class="n">duplicated_path</span> <span class="o">=</span> <span class="n">path</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">path</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">"_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="o">+</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">duplicated_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
             <span class="k">break</span>
         <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -344,7 +334,7 @@
 
 
 <div class="viewcode-block" id="generate_output_image_filename"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.generate_output_image_filename">[docs]</a><span class="k">def</span> <span class="nf">generate_output_image_filename</span><span class="p">(</span><span class="n">input_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">output_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Generate an output filename to save the inference image.</span>
+    <span class="sd">"""Generate an output filename to save the inference image.</span>
 
 <span class="sd">    This function generates an output filaname by checking the input and output filenames. Input path is</span>
 <span class="sd">    the input to infer, and output path is the path to save the output predictions specified by the user.</span>
@@ -361,22 +351,22 @@
 <span class="sd">            Could be a filename or a directory.</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; input_path = Path(&quot;datasets/MVTec/bottle/test/broken_large/000.png&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; output_path = Path(&quot;datasets/MVTec/bottle/test/broken_large/000.png&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; input_path = Path("datasets/MVTec/bottle/test/broken_large/000.png")</span>
+<span class="sd">        &gt;&gt;&gt; output_path = Path("datasets/MVTec/bottle/test/broken_large/000.png")</span>
 <span class="sd">        &gt;&gt;&gt; generate_output_image_filename(input_path, output_path)</span>
-<span class="sd">        PosixPath(&#39;datasets/MVTec/bottle/test/broken_large/000_1.png&#39;)</span>
+<span class="sd">        PosixPath('datasets/MVTec/bottle/test/broken_large/000_1.png')</span>
 
-<span class="sd">        &gt;&gt;&gt; input_path = Path(&quot;datasets/MVTec/bottle/test/broken_large/000.png&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; output_path = Path(&quot;results/images&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; input_path = Path("datasets/MVTec/bottle/test/broken_large/000.png")</span>
+<span class="sd">        &gt;&gt;&gt; output_path = Path("results/images")</span>
 <span class="sd">        &gt;&gt;&gt; generate_output_image_filename(input_path, output_path)</span>
-<span class="sd">        PosixPath(&#39;results/images/broken_large/000.png&#39;)</span>
+<span class="sd">        PosixPath('results/images/broken_large/000.png')</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: When the ``input_path`` is not a file.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Path: The output filename to save the output predictions from the inferencer.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">input_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">input_path</span><span class="p">)</span>
@@ -386,10 +376,10 @@
 
     <span class="c1"># This function expects an ``input_path`` that is a file. This is to check if output_path</span>
     <span class="k">if</span> <span class="n">input_path</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;input_path is expected to be a file to generate a proper output filename.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"input_path is expected to be a file to generate a proper output filename."</span><span class="p">)</span>
 
     <span class="n">file_path</span><span class="p">:</span> <span class="n">Path</span>
-    <span class="k">if</span> <span class="n">output_path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">output_path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">""</span><span class="p">:</span>
         <span class="c1"># If the output is a directory, then add parent directory name</span>
         <span class="c1"># and filename to the path. This is to ensure we do not overwrite</span>
         <span class="c1"># images and organize based on the categories.</span>
@@ -402,14 +392,14 @@
     <span class="n">file_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">file_path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2"> already exists. Renaming the file to avoid overwriting.&quot;</span><span class="p">)</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2"> already exists. Renaming the file to avoid overwriting."</span><span class="p">)</span>
         <span class="n">file_path</span> <span class="o">=</span> <span class="n">duplicate_filename</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">file_path</span></div>
 
 
 <div class="viewcode-block" id="get_image_height_and_width"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.get_image_height_and_width">[docs]</a><span class="k">def</span> <span class="nf">get_image_height_and_width</span><span class="p">(</span><span class="n">image_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
-    <span class="sd">&quot;&quot;&quot;Get image height and width from ``image_size`` variable.</span>
+    <span class="sd">"""Get image height and width from ``image_size`` variable.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image_size (Optional[Union[int, Tuple[int, int]]], optional): Input image size.</span>
@@ -429,13 +419,13 @@
 
 <span class="sd">        &gt;&gt;&gt; get_image_height_and_width(image_size=256.)</span>
 <span class="sd">        Traceback (most recent call last):</span>
-<span class="sd">        File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;</span>
-<span class="sd">        File &quot;&lt;string&gt;&quot;, line 18, in get_image_height_and_width</span>
+<span class="sd">        File "&lt;string&gt;", line 1, in &lt;module&gt;</span>
+<span class="sd">        File "&lt;string&gt;", line 18, in get_image_height_and_width</span>
 <span class="sd">        ValueError: ``image_size`` could be either int or Tuple[int, int]</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Tuple[Optional[int], Optional[int]]: A tuple containing image height and width values.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">height_and_width</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
         <span class="n">height_and_width</span> <span class="o">=</span> <span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">)</span>
@@ -444,23 +434,23 @@
     <span class="k">elif</span> <span class="n">image_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">height_and_width</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;``image_size`` could be either int or Tuple[int, int]&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"``image_size`` could be either int or Tuple[int, int]"</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">height_and_width</span></div>
 
 
 <div class="viewcode-block" id="read_image"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.read_image">[docs]</a><span class="k">def</span> <span class="nf">read_image</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">image_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Read image from disk in RGB format.</span>
+    <span class="sd">"""Read image from disk in RGB format.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path (str, Path): path to the image file</span>
 
 <span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; image = read_image(&quot;test_image.jpg&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; image = read_image("test_image.jpg")</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        image as numpy array</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
@@ -476,7 +466,7 @@
 
 
 <span class="k">def</span> <span class="nf">pad_nextpow2</span><span class="p">(</span><span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Compute required padding from input size and return padded images.</span>
+    <span class="sd">"""Compute required padding from input size and return padded images.</span>
 
 <span class="sd">    Finds the largest dimension and computes a square image of dimensions that are of the power of 2.</span>
 <span class="sd">    In case the image dimension is odd, it returns the image with an extra padding on one side.</span>
@@ -486,7 +476,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        batch: Padded batch</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># find the largest dimension</span>
     <span class="n">l_dim</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="o">*</span><span class="n">batch</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]),</span> <span class="mi">2</span><span class="p">))</span>
     <span class="n">padding_w</span> <span class="o">=</span> <span class="p">[</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">l_dim</span> <span class="o">-</span> <span class="n">batch</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">l_dim</span> <span class="o">-</span> <span class="n">batch</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]</span>
@@ -494,29 +484,21 @@
     <span class="n">padded_batch</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="p">[</span><span class="o">*</span><span class="n">padding_h</span><span class="p">,</span> <span class="o">*</span><span class="n">padding_w</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">padded_batch</span>
 </pre></div>
-        </article>
-      </div>
+      </article>
       <footer>
         
         <div class="related-pages">
           
           
         </div>
-        <div class="bottom-of-page">
-          <div class="left-details">
-            <div class="copyright">
-                Copyright &#169; 
-            </div>
-            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
-            
-            <a href="https://github.com/pradyunsg/furo">Furo</a>
-            
-          </div>
-          <div class="right-details">
-            <div class="icons">
-              
-            </div>
-          </div>
+
+        <div class="related-information">
+              Copyright &#169; 
+            |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
         </div>
         
       </footer>
@@ -531,7 +513,7 @@
     <script src="../../../../_static/jquery.js"></script>
     <script src="../../../../_static/underscore.js"></script>
     <script src="../../../../_static/doctools.js"></script>
-    <script src="../../../../_static/scripts/furo.js"></script>
+    <script src="../../../../_static/scripts/main.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>
 </html>

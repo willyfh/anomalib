@@ -5,11 +5,11 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 <link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Use MVTec AD Dataset via API" href="102_mvtec.html" /><link rel="prev" title="Adding a New Model to Anomalib" href="../../adding_a_new_model.html" />
 
-    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
         <title>Use BeanTech Dataset via API - Anomalib v0.3.6</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=93475b62d1c3bc01323a0eefdc14a62d77b12690" />
     
     
 
@@ -20,38 +20,36 @@
   --color-code-foreground: black;
   
   }
-  @media not print {
-    body[data-theme="dark"] {
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
   
     }
-    @media (prefers-color-scheme: dark) {
-      body:not([data-theme="light"]) {
-        --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
-  
-      }
-    }
   }
-</style></head>
+</style>
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../../_static/pygments_dark.css"></head>
   <body>
     
-    <script>
-      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
-    </script>
-    
-
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="svg-toc" viewBox="0 0 24 24">
     <title>Contents</title>
-    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
-      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
     </svg>
   </symbol>
   <symbol id="svg-menu" viewBox="0 0 24 24">
     <title>Menu</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
       <line x1="3" y1="12" x2="21" y2="12"></line>
       <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -60,14 +58,14 @@
   </symbol>
   <symbol id="svg-arrow-right" viewBox="0 0 24 24">
     <title>Expand</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
       <polyline points="9 18 15 12 9 6"></polyline>
     </svg>
   </symbol>
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -82,7 +80,7 @@
   </symbol>
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
@@ -90,7 +88,7 @@
   </symbol>
   <symbol id="svg-sun-half" viewBox="0 0 24 24">
     <title>Auto light/dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <circle cx="12" cy="12" r="9" />
@@ -236,23 +234,15 @@
 
 </div>
 </div>
-
       </div>
       
     </div>
   </aside>
   <div class="main">
     <div class="content">
-      <div class="article-container">
-        <a href="#" class="back-to-top muted-link">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
-          </svg>
-          <span>Back to top</span>
-        </a>
+      <article role="main">
         <div class="content-icon-container">
-          
-<div class="theme-toggle-container theme-toggle-content">
+          <div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -265,8 +255,7 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
-          
+        
 <style>
 /* CSS for nbsphinx extension */
 
@@ -573,11 +562,11 @@ from anomalib.pre_processing.transforms import Denormalize
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># BTechDataset Classification Train Set
 btech_dataset_classification_train = BTechDataset(
-    root=&quot;../../datasets/BTech&quot;,
-    category=&quot;01&quot;,
+    root="../../datasets/BTech",
+    category="01",
     pre_process=pre_process,
-    split=&quot;train&quot;,
-    task=&quot;classification&quot;,
+    split="train",
+    task="classification",
 )
 btech_dataset_classification_train.samples.head()
 </pre></div>
@@ -589,7 +578,7 @@ btech_dataset_classification_train.samples.head()
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
-<style scoped>
+<style scoped="">
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -602,66 +591,66 @@ btech_dataset_classification_train.samples.head()
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>path</th>
-      <th>split</th>
-      <th>label</th>
-      <th>image_path</th>
-      <th>mask_path</th>
-      <th>label_index</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>../../datasets/BTech/01</td>
-      <td>train</td>
-      <td>ok</td>
-      <td>../../datasets/BTech/01/train/ok/0299.png</td>
-      <td>../../datasets/BTech/01/ground_truth/ok/0299.png</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>../../datasets/BTech/01</td>
-      <td>train</td>
-      <td>ok</td>
-      <td>../../datasets/BTech/01/train/ok/0202.png</td>
-      <td>../../datasets/BTech/01/ground_truth/ok/0202.png</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>../../datasets/BTech/01</td>
-      <td>train</td>
-      <td>ok</td>
-      <td>../../datasets/BTech/01/train/ok/0031.png</td>
-      <td>../../datasets/BTech/01/ground_truth/ok/0031.png</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>../../datasets/BTech/01</td>
-      <td>train</td>
-      <td>ok</td>
-      <td>../../datasets/BTech/01/train/ok/0189.png</td>
-      <td>../../datasets/BTech/01/ground_truth/ok/0189.png</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>../../datasets/BTech/01</td>
-      <td>train</td>
-      <td>ok</td>
-      <td>../../datasets/BTech/01/train/ok/0171.png</td>
-      <td>../../datasets/BTech/01/ground_truth/ok/0171.png</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-wrapper"><table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>path</th>
+<th>split</th>
+<th>label</th>
+<th>image_path</th>
+<th>mask_path</th>
+<th>label_index</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>../../datasets/BTech/01</td>
+<td>train</td>
+<td>ok</td>
+<td>../../datasets/BTech/01/train/ok/0299.png</td>
+<td>../../datasets/BTech/01/ground_truth/ok/0299.png</td>
+<td>0</td>
+</tr>
+<tr>
+<th>1</th>
+<td>../../datasets/BTech/01</td>
+<td>train</td>
+<td>ok</td>
+<td>../../datasets/BTech/01/train/ok/0202.png</td>
+<td>../../datasets/BTech/01/ground_truth/ok/0202.png</td>
+<td>0</td>
+</tr>
+<tr>
+<th>2</th>
+<td>../../datasets/BTech/01</td>
+<td>train</td>
+<td>ok</td>
+<td>../../datasets/BTech/01/train/ok/0031.png</td>
+<td>../../datasets/BTech/01/ground_truth/ok/0031.png</td>
+<td>0</td>
+</tr>
+<tr>
+<th>3</th>
+<td>../../datasets/BTech/01</td>
+<td>train</td>
+<td>ok</td>
+<td>../../datasets/BTech/01/train/ok/0189.png</td>
+<td>../../datasets/BTech/01/ground_truth/ok/0189.png</td>
+<td>0</td>
+</tr>
+<tr>
+<th>4</th>
+<td>../../datasets/BTech/01</td>
+<td>train</td>
+<td>ok</td>
+<td>../../datasets/BTech/01/train/ok/0171.png</td>
+<td>../../datasets/BTech/01/ground_truth/ok/0171.png</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
 </div></div>
 </div>
 <div class="nbinput docutils container">
@@ -669,7 +658,7 @@ btech_dataset_classification_train.samples.head()
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sample = btech_dataset_classification_train[0]
-sample.keys(), sample[&quot;image&quot;].shape
+sample.keys(), sample["image"].shape
 </pre></div>
 </div>
 </div>
@@ -679,7 +668,7 @@ sample.keys(), sample[&quot;image&quot;].shape
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(dict_keys([&#39;image&#39;]), torch.Size([3, 256, 256]))
+(dict_keys(['image']), torch.Size([3, 256, 256]))
 </pre></div></div>
 </div>
 <p>As can be seen above, when we choose <code class="docutils literal notranslate"><span class="pre">classification</span></code> task and <code class="docutils literal notranslate"><span class="pre">train</span></code> split, the dataset only returns <code class="docutils literal notranslate"><span class="pre">image</span></code>. This is mainly because training only requires normal images and no labels. Now let’s try <code class="docutils literal notranslate"><span class="pre">test</span></code> split for the <code class="docutils literal notranslate"><span class="pre">classification</span></code> task</p>
@@ -689,14 +678,14 @@ sample.keys(), sample[&quot;image&quot;].shape
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># BTech Classification Test Set
 btech_dataset_classification_test = BTechDataset(
-    root=&quot;../../datasets/BTech&quot;,
-    category=&quot;01&quot;,
+    root="../../datasets/BTech",
+    category="01",
     pre_process=pre_process,
-    split=&quot;test&quot;,
-    task=&quot;classification&quot;,
+    split="test",
+    task="classification",
 )
 sample = btech_dataset_classification_test[0]
-sample.keys(), sample[&quot;image&quot;].shape, sample[&quot;image_path&quot;], sample[&quot;label&quot;]
+sample.keys(), sample["image"].shape, sample["image_path"], sample["label"]
 </pre></div>
 </div>
 </div>
@@ -706,9 +695,9 @@ sample.keys(), sample[&quot;image&quot;].shape, sample[&quot;image_path&quot;], 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(dict_keys([&#39;image&#39;, &#39;image_path&#39;, &#39;label&#39;]),
+(dict_keys(['image', 'image_path', 'label']),
  torch.Size([3, 256, 256]),
- &#39;../../datasets/BTech/01/test/ko/0031.png&#39;,
+ '../../datasets/BTech/01/test/ko/0031.png',
  1)
 </pre></div></div>
 </div>
@@ -723,11 +712,11 @@ sample.keys(), sample[&quot;image&quot;].shape, sample[&quot;image_path&quot;], 
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># BTech Segmentation Train Set
 btech_dataset_segmentation_train = BTechDataset(
-    root=&quot;../../datasets/BTech&quot;,
-    category=&quot;01&quot;,
+    root="../../datasets/BTech",
+    category="01",
     pre_process=pre_process,
-    split=&quot;train&quot;,
-    task=&quot;segmentation&quot;,
+    split="train",
+    task="segmentation",
 )
 btech_dataset_segmentation_train.samples.head()
 </pre></div>
@@ -739,7 +728,7 @@ btech_dataset_segmentation_train.samples.head()
 </div>
 <div class="output_area rendered_html docutils container">
 <div>
-<style scoped>
+<style scoped="">
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -752,66 +741,66 @@ btech_dataset_segmentation_train.samples.head()
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>path</th>
-      <th>split</th>
-      <th>label</th>
-      <th>image_path</th>
-      <th>mask_path</th>
-      <th>label_index</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>../../datasets/BTech/01</td>
-      <td>train</td>
-      <td>ok</td>
-      <td>../../datasets/BTech/01/train/ok/0299.png</td>
-      <td>../../datasets/BTech/01/ground_truth/ok/0299.png</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>../../datasets/BTech/01</td>
-      <td>train</td>
-      <td>ok</td>
-      <td>../../datasets/BTech/01/train/ok/0202.png</td>
-      <td>../../datasets/BTech/01/ground_truth/ok/0202.png</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>../../datasets/BTech/01</td>
-      <td>train</td>
-      <td>ok</td>
-      <td>../../datasets/BTech/01/train/ok/0031.png</td>
-      <td>../../datasets/BTech/01/ground_truth/ok/0031.png</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>../../datasets/BTech/01</td>
-      <td>train</td>
-      <td>ok</td>
-      <td>../../datasets/BTech/01/train/ok/0189.png</td>
-      <td>../../datasets/BTech/01/ground_truth/ok/0189.png</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>../../datasets/BTech/01</td>
-      <td>train</td>
-      <td>ok</td>
-      <td>../../datasets/BTech/01/train/ok/0171.png</td>
-      <td>../../datasets/BTech/01/ground_truth/ok/0171.png</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-wrapper"><table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>path</th>
+<th>split</th>
+<th>label</th>
+<th>image_path</th>
+<th>mask_path</th>
+<th>label_index</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>../../datasets/BTech/01</td>
+<td>train</td>
+<td>ok</td>
+<td>../../datasets/BTech/01/train/ok/0299.png</td>
+<td>../../datasets/BTech/01/ground_truth/ok/0299.png</td>
+<td>0</td>
+</tr>
+<tr>
+<th>1</th>
+<td>../../datasets/BTech/01</td>
+<td>train</td>
+<td>ok</td>
+<td>../../datasets/BTech/01/train/ok/0202.png</td>
+<td>../../datasets/BTech/01/ground_truth/ok/0202.png</td>
+<td>0</td>
+</tr>
+<tr>
+<th>2</th>
+<td>../../datasets/BTech/01</td>
+<td>train</td>
+<td>ok</td>
+<td>../../datasets/BTech/01/train/ok/0031.png</td>
+<td>../../datasets/BTech/01/ground_truth/ok/0031.png</td>
+<td>0</td>
+</tr>
+<tr>
+<th>3</th>
+<td>../../datasets/BTech/01</td>
+<td>train</td>
+<td>ok</td>
+<td>../../datasets/BTech/01/train/ok/0189.png</td>
+<td>../../datasets/BTech/01/ground_truth/ok/0189.png</td>
+<td>0</td>
+</tr>
+<tr>
+<th>4</th>
+<td>../../datasets/BTech/01</td>
+<td>train</td>
+<td>ok</td>
+<td>../../datasets/BTech/01/train/ok/0171.png</td>
+<td>../../datasets/BTech/01/ground_truth/ok/0171.png</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
 </div></div>
 </div>
 <p>The above dataframe stores all the necessary information regarding the dataset. <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> method returns the corresponding information depending on the task type or train/test split.</p>
@@ -821,14 +810,14 @@ btech_dataset_segmentation_train.samples.head()
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># BTech Segmentation Test Set
 btech_dataset_segmentation_test = BTechDataset(
-    root=&quot;../../datasets/BTech&quot;,
-    category=&quot;01&quot;,
+    root="../../datasets/BTech",
+    category="01",
     pre_process=pre_process,
-    split=&quot;test&quot;,
-    task=&quot;segmentation&quot;,
+    split="test",
+    task="segmentation",
 )
 sample = btech_dataset_segmentation_test[20]
-sample.keys(), sample[&quot;image&quot;].shape, sample[&quot;mask&quot;].shape
+sample.keys(), sample["image"].shape, sample["mask"].shape
 </pre></div>
 </div>
 </div>
@@ -838,7 +827,7 @@ sample.keys(), sample[&quot;image&quot;].shape, sample[&quot;mask&quot;].shape
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(dict_keys([&#39;image&#39;, &#39;image_path&#39;, &#39;label&#39;, &#39;mask_path&#39;, &#39;mask&#39;]),
+(dict_keys(['image', 'image_path', 'label', 'mask_path', 'mask']),
  torch.Size([3, 256, 256]),
  torch.Size([256, 256]))
 </pre></div></div>
@@ -848,8 +837,8 @@ sample.keys(), sample[&quot;image&quot;].shape, sample[&quot;mask&quot;].shape
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>img = ToPILImage()(Denormalize()(sample[&quot;image&quot;].clone()))
-msk = ToPILImage()(sample[&quot;mask&quot;]).convert(&quot;RGB&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>img = ToPILImage()(Denormalize()(sample["image"].clone()))
+msk = ToPILImage()(sample["mask"]).convert("RGB")
 
 Image.fromarray(np.hstack((np.array(img), np.array(msk))))
 </pre></div>
@@ -860,7 +849,7 @@ Image.fromarray(np.hstack((np.array(img), np.array(msk))))
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/how_to_guides_notebooks_100_datamodules_101_btech_17_0.png" src="../../../_images/how_to_guides_notebooks_100_datamodules_101_btech_17_0.png" />
+<img alt="../../../_images/how_to_guides_notebooks_100_datamodules_101_btech_17_0.png" src="../../../_images/how_to_guides_notebooks_100_datamodules_101_btech_17_0.png"/>
 </div>
 </div>
 </section>
@@ -873,13 +862,13 @@ Image.fromarray(np.hstack((np.array(img), np.array(msk))))
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>btech_datamodule = BTech(
-    root=&quot;../../datasets/BTech&quot;,
-    category=&quot;01&quot;,
+    root="../../datasets/BTech",
+    category="01",
     image_size=256,
     train_batch_size=32,
     test_batch_size=32,
     num_workers=8,
-    task=&quot;segmentation&quot;,
+    task="segmentation",
 )
 btech_datamodule.setup()
 </pre></div>
@@ -891,7 +880,7 @@ btech_datamodule.setup()
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Train images
 i, data = next(enumerate(btech_datamodule.train_dataloader()))
-data.keys(), data[&quot;image&quot;].shape
+data.keys(), data["image"].shape
 </pre></div>
 </div>
 </div>
@@ -901,7 +890,7 @@ data.keys(), data[&quot;image&quot;].shape
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(dict_keys([&#39;image&#39;]), torch.Size([32, 3, 256, 256]))
+(dict_keys(['image']), torch.Size([32, 3, 256, 256]))
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -910,7 +899,7 @@ data.keys(), data[&quot;image&quot;].shape
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Test images
 i, data = next(enumerate(btech_datamodule.test_dataloader()))
-data.keys(), data[&quot;image&quot;].shape, data[&quot;mask&quot;].shape
+data.keys(), data["image"].shape, data["mask"].shape
 </pre></div>
 </div>
 </div>
@@ -920,7 +909,7 @@ data.keys(), data[&quot;image&quot;].shape, data[&quot;mask&quot;].shape
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(dict_keys([&#39;image&#39;, &#39;image_path&#39;, &#39;label&#39;, &#39;mask_path&#39;, &#39;mask&#39;]),
+(dict_keys(['image', 'image_path', 'label', 'mask_path', 'mask']),
  torch.Size([32, 3, 256, 256]),
  torch.Size([32, 256, 256]))
 </pre></div></div>
@@ -930,8 +919,8 @@ data.keys(), data[&quot;image&quot;].shape, data[&quot;mask&quot;].shape
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>img = ToPILImage()(Denormalize()(data[&quot;image&quot;][0].clone()))
-msk = ToPILImage()(data[&quot;mask&quot;][0]).convert(&quot;RGB&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>img = ToPILImage()(Denormalize()(data["image"][0].clone()))
+msk = ToPILImage()(data["mask"][0]).convert("RGB")
 
 Image.fromarray(np.hstack((np.array(img), np.array(msk))))
 </pre></div>
@@ -942,14 +931,13 @@ Image.fromarray(np.hstack((np.array(img), np.array(msk))))
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/how_to_guides_notebooks_100_datamodules_101_btech_23_0.png" src="../../../_images/how_to_guides_notebooks_100_datamodules_101_btech_23_0.png" />
+<img alt="../../../_images/how_to_guides_notebooks_100_datamodules_101_btech_23_0.png" src="../../../_images/how_to_guides_notebooks_100_datamodules_101_btech_23_0.png"/>
 </div>
 </div>
 </section>
 </section>
 
-        </article>
-      </div>
+      </article>
       <footer>
         
         <div class="related-pages">
@@ -960,10 +948,10 @@ Image.fromarray(np.hstack((np.array(img), np.array(msk))))
                 </div>
                 <div class="title">Use MVTec AD Dataset via API</div>
               </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <svg><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="../../adding_a_new_model.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -974,21 +962,19 @@ Image.fromarray(np.hstack((np.array(img), np.array(msk))))
               </div>
             </a>
         </div>
-        <div class="bottom-of-page">
-          <div class="left-details">
-            <div class="copyright">
-                Copyright &#169; 
-            </div>
-            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
-            
-            <a href="https://github.com/pradyunsg/furo">Furo</a>
-            
-          </div>
-          <div class="right-details">
-            <div class="icons">
-              
-            </div>
-          </div>
+
+        <div class="related-information">
+              Copyright &#169; 
+            |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+            |
+            <a class="muted-link" href="../../../_sources/how_to_guides/notebooks/100_datamodules/101_btech.ipynb.txt"
+               rel="nofollow">
+              Show Source
+            </a>
         </div>
         
       </footer>
@@ -999,7 +985,7 @@ Image.fromarray(np.hstack((np.array(img), np.array(msk))))
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            On this page
+            Contents
           </span>
         </div>
         <div class="toc-tree-container">
@@ -1027,7 +1013,7 @@ Image.fromarray(np.hstack((np.array(img), np.array(msk))))
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/scripts/furo.js"></script>
+    <script src="../../../_static/scripts/main.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
