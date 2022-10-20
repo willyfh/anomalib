@@ -4,11 +4,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
-    <link rel="shortcut icon" href="../../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2021.07.31.beta41"/>
+    <link rel="shortcut icon" href="../../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
         <title>anomalib.utils.cli.cli - Anomalib v0.3.6</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?digest=daa650a7760fac3eee23aa959745d2c866b74cb3" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?digest=93475b62d1c3bc01323a0eefdc14a62d77b12690" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
 
@@ -19,36 +19,38 @@
   --color-code-foreground: black;
   
   }
-  body[data-theme="dark"] {
-    --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
-  
-  }
-  @media (prefers-color-scheme: dark) {
-    body:not([data-theme="light"]) {
+  @media not print {
+    body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
   
     }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
   }
-</style>
-    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../../../../_static/pygments_dark.css"></head>
+</style></head>
   <body>
     
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="svg-toc" viewBox="0 0 24 24">
     <title>Contents</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path stroke="none" d="M0 0h24v24H0z" />
-      <line x1="4" y1="6" x2="20" y2="6" />
-      <line x1="10" y1="12" x2="20" y2="12" />
-      <line x1="6" y1="18" x2="20" y2="18" />
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
     </svg>
   </symbol>
   <symbol id="svg-menu" viewBox="0 0 24 24">
     <title>Menu</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
       <line x1="3" y1="12" x2="21" y2="12"></line>
       <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -57,14 +59,14 @@
   </symbol>
   <symbol id="svg-arrow-right" viewBox="0 0 24 24">
     <title>Expand</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
       <polyline points="9 18 15 12 9 6"></polyline>
     </svg>
   </symbol>
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -79,7 +81,7 @@
   </symbol>
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
@@ -87,7 +89,7 @@
   </symbol>
   <symbol id="svg-sun-half" viewBox="0 0 24 24">
     <title>Auto light/dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <circle cx="12" cy="12" r="9" />
@@ -233,13 +235,20 @@
 
 </div>
 </div>
+
       </div>
       
     </div>
   </aside>
   <div class="main">
     <div class="content">
-      <article role="main">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
         <div class="content-icon-container">
           <div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
@@ -254,8 +263,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <h1>Source code for anomalib.utils.cli.cli</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Anomalib CLI."""</span>
+        <article role="main">
+          <h1>Source code for anomalib.utils.cli.cli</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Anomalib CLI.&quot;&quot;&quot;</span>
 
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
@@ -290,31 +300,31 @@
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">anomalib.utils.loggers</span> <span class="kn">import</span> <span class="n">configure_logger</span>
 
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">"anomalib.cli"</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;anomalib.cli&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="AnomalibCLI"><a class="viewcode-back" href="../../../../reference_guide/api/cli.html#anomalib.utils.cli.AnomalibCLI">[docs]</a><span class="k">class</span> <span class="nc">AnomalibCLI</span><span class="p">(</span><span class="n">LightningCLI</span><span class="p">):</span>
-    <span class="sd">"""Implementation of a fully configurable CLI tool for anomalib.</span>
+    <span class="sd">&quot;&quot;&quot;Implementation of a fully configurable CLI tool for anomalib.</span>
 
 <span class="sd">    The advantage of this tool is its flexibility to configure the pipeline</span>
 <span class="sd">    from both the CLI and a configuration file (.yaml or .json). It is even</span>
 <span class="sd">    possible to use both the CLI and a configuration file simultaneously.</span>
 <span class="sd">    For more details, the reader could refer to PyTorch Lightning CLI documentation.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>  <span class="c1"># pylint: disable=too-many-function-args</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">model_class</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">LightningModule</span><span class="p">],</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">LightningModule</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">datamodule_class</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">LightningDataModule</span><span class="p">],</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">LightningDataModule</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">save_config_callback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">SaveConfigCallback</span><span class="p">]]</span> <span class="o">=</span> <span class="n">SaveConfigCallback</span><span class="p">,</span>
-        <span class="n">save_config_filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"config.yaml"</span><span class="p">,</span>
+        <span class="n">save_config_filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;config.yaml&quot;</span><span class="p">,</span>
         <span class="n">save_config_overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">save_config_multifile</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">trainer_class</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Trainer</span><span class="p">],</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Trainer</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">,</span>
         <span class="n">trainer_defaults</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">seed_everything_default</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"Anomalib trainer command line tool"</span><span class="p">,</span>
-        <span class="n">env_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"Anomalib"</span><span class="p">,</span>
+        <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Anomalib trainer command line tool&quot;</span><span class="p">,</span>
+        <span class="n">env_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Anomalib&quot;</span><span class="p">,</span>
         <span class="n">env_parse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">parser_kwargs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">subclass_mode_model</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -343,72 +353,72 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="AnomalibCLI.add_arguments_to_parser"><a class="viewcode-back" href="../../../../reference_guide/api/cli.html#anomalib.utils.cli.AnomalibCLI.add_arguments_to_parser">[docs]</a>    <span class="k">def</span> <span class="nf">add_arguments_to_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">:</span> <span class="n">LightningArgumentParser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Add default arguments.</span>
+        <span class="sd">&quot;&quot;&quot;Add default arguments.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            parser (LightningArgumentParser): Lightning Argument Parser.</span>
-<span class="sd">        """</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># TODO: https://github.com/openvinotoolkit/anomalib/issues/20</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s2">"--export_mode"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Select export mode to ONNX or OpenVINO IR format."</span>
+            <span class="s2">&quot;--export_mode&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Select export mode to ONNX or OpenVINO IR format.&quot;</span>
         <span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--nncf"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Path to NNCF config to enable quantized training."</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--nncf&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to NNCF config to enable quantized training.&quot;</span><span class="p">)</span>
 
         <span class="c1"># ADD CUSTOM CALLBACKS TO CONFIG</span>
         <span class="c1"># NOTE: MyPy gives the following error:</span>
-        <span class="c1"># Argument 1 to "add_lightning_class_args" of "LightningArgumentParser"</span>
-        <span class="c1"># has incompatible type "Type[TilerCallback]"; expected "Union[Type[Trainer],</span>
-        <span class="c1"># Type[LightningModule], Type[LightningDataModule]]"  [arg-type]</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_lightning_class_args</span><span class="p">(</span><span class="n">TilerConfigurationCallback</span><span class="p">,</span> <span class="s2">"tiling"</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">({</span><span class="s2">"tiling.enable"</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+        <span class="c1"># Argument 1 to &quot;add_lightning_class_args&quot; of &quot;LightningArgumentParser&quot;</span>
+        <span class="c1"># has incompatible type &quot;Type[TilerCallback]&quot;; expected &quot;Union[Type[Trainer],</span>
+        <span class="c1"># Type[LightningModule], Type[LightningDataModule]]&quot;  [arg-type]</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_lightning_class_args</span><span class="p">(</span><span class="n">TilerConfigurationCallback</span><span class="p">,</span> <span class="s2">&quot;tiling&quot;</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">({</span><span class="s2">&quot;tiling.enable&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
 
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_lightning_class_args</span><span class="p">(</span><span class="n">PostProcessingConfigurationCallback</span><span class="p">,</span> <span class="s2">"post_processing"</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_lightning_class_args</span><span class="p">(</span><span class="n">PostProcessingConfigurationCallback</span><span class="p">,</span> <span class="s2">&quot;post_processing&quot;</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span>
             <span class="p">{</span>
-                <span class="s2">"post_processing.normalization_method"</span><span class="p">:</span> <span class="s2">"min_max"</span><span class="p">,</span>
-                <span class="s2">"post_processing.threshold_method"</span><span class="p">:</span> <span class="s2">"adaptive"</span><span class="p">,</span>
-                <span class="s2">"post_processing.manual_image_threshold"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                <span class="s2">"post_processing.manual_pixel_threshold"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s2">&quot;post_processing.normalization_method&quot;</span><span class="p">:</span> <span class="s2">&quot;min_max&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;post_processing.threshold_method&quot;</span><span class="p">:</span> <span class="s2">&quot;adaptive&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;post_processing.manual_image_threshold&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s2">&quot;post_processing.manual_pixel_threshold&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
             <span class="p">}</span>
         <span class="p">)</span>
 
         <span class="c1"># TODO: Assign these default values within the MetricsConfigurationCallback</span>
         <span class="c1">#   - https://github.com/openvinotoolkit/anomalib/issues/384</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_lightning_class_args</span><span class="p">(</span><span class="n">MetricsConfigurationCallback</span><span class="p">,</span> <span class="s2">"metrics"</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_lightning_class_args</span><span class="p">(</span><span class="n">MetricsConfigurationCallback</span><span class="p">,</span> <span class="s2">&quot;metrics&quot;</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span>
             <span class="p">{</span>
-                <span class="s2">"metrics.task"</span><span class="p">:</span> <span class="s2">"segmentation"</span><span class="p">,</span>
-                <span class="s2">"metrics.image_metrics"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"F1Score"</span><span class="p">,</span> <span class="s2">"AUROC"</span><span class="p">],</span>
-                <span class="s2">"metrics.pixel_metrics"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"F1Score"</span><span class="p">,</span> <span class="s2">"AUROC"</span><span class="p">],</span>
+                <span class="s2">&quot;metrics.task&quot;</span><span class="p">:</span> <span class="s2">&quot;segmentation&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;metrics.image_metrics&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;F1Score&quot;</span><span class="p">,</span> <span class="s2">&quot;AUROC&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;metrics.pixel_metrics&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;F1Score&quot;</span><span class="p">,</span> <span class="s2">&quot;AUROC&quot;</span><span class="p">],</span>
             <span class="p">}</span>
         <span class="p">)</span>
 
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_lightning_class_args</span><span class="p">(</span><span class="n">ImageVisualizerCallback</span><span class="p">,</span> <span class="s2">"visualization"</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_lightning_class_args</span><span class="p">(</span><span class="n">ImageVisualizerCallback</span><span class="p">,</span> <span class="s2">&quot;visualization&quot;</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span>
             <span class="p">{</span>
-                <span class="s2">"visualization.mode"</span><span class="p">:</span> <span class="s2">"full"</span><span class="p">,</span>
-                <span class="s2">"visualization.task"</span><span class="p">:</span> <span class="s2">"segmentation"</span><span class="p">,</span>
-                <span class="s2">"visualization.image_save_path"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
-                <span class="s2">"visualization.save_images"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="s2">"visualization.show_images"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="s2">"visualization.log_images"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;visualization.mode&quot;</span><span class="p">:</span> <span class="s2">&quot;full&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;visualization.task&quot;</span><span class="p">:</span> <span class="s2">&quot;segmentation&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;visualization.image_save_path&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;visualization.save_images&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;visualization.show_images&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;visualization.log_images&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
             <span class="p">}</span>
         <span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__set_default_root_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Sets the default root directory depending on the subcommand type. &lt;train, fit, predict, tune.&gt;."""</span>
+        <span class="sd">&quot;&quot;&quot;Sets the default root directory depending on the subcommand type. &lt;train, fit, predict, tune.&gt;.&quot;&quot;&quot;</span>
         <span class="c1"># Get configs.</span>
-        <span class="n">subcommand</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"subcommand"</span><span class="p">]</span>
+        <span class="n">subcommand</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;subcommand&quot;</span><span class="p">]</span>
         <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">subcommand</span><span class="p">]</span>
 
         <span class="c1"># If `resume_from_checkpoint` is not specified, it means that the project has not been created before.</span>
         <span class="c1"># Therefore, we need to create the project directory first.</span>
         <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">resume_from_checkpoint</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">root_dir</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">default_root_dir</span> <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">default_root_dir</span> <span class="k">else</span> <span class="s2">"./results"</span>
-            <span class="n">model_name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">class_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-            <span class="n">data_name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">class_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-            <span class="n">category</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">init_args</span><span class="o">.</span><span class="n">category</span> <span class="k">if</span> <span class="s2">"category"</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">init_args</span> <span class="k">else</span> <span class="s2">""</span>
-            <span class="n">time_stamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">_%H-%M-%S"</span><span class="p">)</span>
+            <span class="n">root_dir</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">default_root_dir</span> <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">default_root_dir</span> <span class="k">else</span> <span class="s2">&quot;./results&quot;</span>
+            <span class="n">model_name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">class_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="n">data_name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">class_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="n">category</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">init_args</span><span class="o">.</span><span class="n">category</span> <span class="k">if</span> <span class="s2">&quot;category&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">init_args</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+            <span class="n">time_stamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">_%H-%M-%S&quot;</span><span class="p">)</span>
             <span class="n">default_root_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_dir</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">data_name</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">time_stamp</span><span class="p">)</span>
 
         <span class="c1"># Otherwise, the assumption is that the project directory has alrady been created.</span>
@@ -419,36 +429,36 @@
             <span class="c1">#   that is two-level up.</span>
             <span class="n">default_root_dir</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">resume_from_checkpoint</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">image_save_path</span> <span class="o">==</span> <span class="s2">""</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">subcommand</span><span class="p">]</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">image_save_path</span> <span class="o">=</span> <span class="n">default_root_dir</span> <span class="o">+</span> <span class="s2">"/images"</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">image_save_path</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">subcommand</span><span class="p">]</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">image_save_path</span> <span class="o">=</span> <span class="n">default_root_dir</span> <span class="o">+</span> <span class="s2">&quot;/images&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">subcommand</span><span class="p">]</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">default_root_dir</span> <span class="o">=</span> <span class="n">default_root_dir</span>
 
     <span class="k">def</span> <span class="nf">__set_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Sets the default callbacks used within the pipeline."""</span>
-        <span class="n">subcommand</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"subcommand"</span><span class="p">]</span>
+        <span class="sd">&quot;&quot;&quot;Sets the default callbacks used within the pipeline.&quot;&quot;&quot;</span>
+        <span class="n">subcommand</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;subcommand&quot;</span><span class="p">]</span>
         <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">subcommand</span><span class="p">]</span>
 
         <span class="n">callbacks</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="c1"># Model Checkpoint.</span>
         <span class="n">monitor</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">mode</span> <span class="o">=</span> <span class="s2">"max"</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;max&quot;</span>
         <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">callbacks</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># If trainer has callbacks defined from the config file, they have the</span>
             <span class="c1"># following format:</span>
-            <span class="c1"># [{'class_path': 'pytorch_lightning.ca...lyStopping', 'init_args': {...}}]</span>
+            <span class="c1"># [{&#39;class_path&#39;: &#39;pytorch_lightning.ca...lyStopping&#39;, &#39;init_args&#39;: {...}}]</span>
             <span class="n">callbacks</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">callbacks</span>
 
             <span class="c1"># Convert to the following format to get `monitor` and `mode` variables</span>
-            <span class="c1"># {'EarlyStopping': {'monitor': 'pixel_AUROC', 'mode': 'max', ...}}</span>
-            <span class="n">callback_args</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">[</span><span class="s2">"class_path"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span> <span class="n">c</span><span class="p">[</span><span class="s2">"init_args"</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">callbacks</span><span class="p">}</span>
-            <span class="k">if</span> <span class="s2">"EarlyStopping"</span> <span class="ow">in</span> <span class="n">callback_args</span><span class="p">:</span>
-                <span class="n">monitor</span> <span class="o">=</span> <span class="n">callback_args</span><span class="p">[</span><span class="s2">"EarlyStopping"</span><span class="p">][</span><span class="s2">"monitor"</span><span class="p">]</span>
-                <span class="n">mode</span> <span class="o">=</span> <span class="n">callback_args</span><span class="p">[</span><span class="s2">"EarlyStopping"</span><span class="p">][</span><span class="s2">"mode"</span><span class="p">]</span>
+            <span class="c1"># {&#39;EarlyStopping&#39;: {&#39;monitor&#39;: &#39;pixel_AUROC&#39;, &#39;mode&#39;: &#39;max&#39;, ...}}</span>
+            <span class="n">callback_args</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">[</span><span class="s2">&quot;class_path&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span> <span class="n">c</span><span class="p">[</span><span class="s2">&quot;init_args&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">callbacks</span><span class="p">}</span>
+            <span class="k">if</span> <span class="s2">&quot;EarlyStopping&quot;</span> <span class="ow">in</span> <span class="n">callback_args</span><span class="p">:</span>
+                <span class="n">monitor</span> <span class="o">=</span> <span class="n">callback_args</span><span class="p">[</span><span class="s2">&quot;EarlyStopping&quot;</span><span class="p">][</span><span class="s2">&quot;monitor&quot;</span><span class="p">]</span>
+                <span class="n">mode</span> <span class="o">=</span> <span class="n">callback_args</span><span class="p">[</span><span class="s2">&quot;EarlyStopping&quot;</span><span class="p">][</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span>
 
         <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">ModelCheckpoint</span><span class="p">(</span>
-            <span class="n">dirpath</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">default_root_dir</span><span class="p">,</span> <span class="s2">"weights"</span><span class="p">),</span>
-            <span class="n">filename</span><span class="o">=</span><span class="s2">"model"</span><span class="p">,</span>
+            <span class="n">dirpath</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">default_root_dir</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">),</span>
+            <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span>
             <span class="n">monitor</span><span class="o">=</span><span class="n">monitor</span><span class="p">,</span>
             <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
             <span class="n">auto_insert_metric_name</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -468,13 +478,13 @@
         <span class="c1"># Normalization.</span>
         <span class="n">normalization</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">post_processing</span><span class="o">.</span><span class="n">normalization_method</span>
         <span class="k">if</span> <span class="n">normalization</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">normalization</span> <span class="o">==</span> <span class="s2">"min_max"</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">normalization</span> <span class="o">==</span> <span class="s2">&quot;min_max&quot;</span><span class="p">:</span>
                 <span class="n">callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MinMaxNormalizationCallback</span><span class="p">())</span>
-            <span class="k">elif</span> <span class="n">normalization</span> <span class="o">==</span> <span class="s2">"cdf"</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">normalization</span> <span class="o">==</span> <span class="s2">&quot;cdf&quot;</span><span class="p">:</span>
                 <span class="n">callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CdfNormalizationCallback</span><span class="p">())</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">"Unknown normalization type </span><span class="si">{</span><span class="n">normalization</span><span class="si">}</span><span class="s2">. </span><span class="se">\n</span><span class="s2">"</span> <span class="s2">"Available types are either None, min_max or cdf"</span>
+                    <span class="sa">f</span><span class="s2">&quot;Unknown normalization type </span><span class="si">{</span><span class="n">normalization</span><span class="si">}</span><span class="s2">. </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="s2">&quot;Available types are either None, min_max or cdf&quot;</span>
                 <span class="p">)</span>
 
         <span class="n">add_visualizer_callback</span><span class="p">(</span><span class="n">callbacks</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
@@ -486,64 +496,72 @@
                 <span class="n">ExportCallback</span><span class="p">,</span>
             <span class="p">)</span>
 
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Setting model export to </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">export_mode</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Setting model export to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">export_mode</span><span class="p">)</span>
             <span class="n">callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                 <span class="n">ExportCallback</span><span class="p">(</span>
                     <span class="n">input_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">init_args</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span>
-                    <span class="n">dirpath</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">default_root_dir</span><span class="p">,</span> <span class="s2">"compressed"</span><span class="p">),</span>
-                    <span class="n">filename</span><span class="o">=</span><span class="s2">"model"</span><span class="p">,</span>
+                    <span class="n">dirpath</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">default_root_dir</span><span class="p">,</span> <span class="s2">&quot;compressed&quot;</span><span class="p">),</span>
+                    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span>
                     <span class="n">export_mode</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">export_mode</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Export option: </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">export_mode</span><span class="si">}</span><span class="s2"> not found. Defaulting to no model export"</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Export option: </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">export_mode</span><span class="si">}</span><span class="s2"> not found. Defaulting to no model export&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">nncf</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">nncf</span><span class="p">)</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">nncf</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".yaml"</span><span class="p">):</span>
-                <span class="n">nncf_module</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="s2">"anomalib.core.callbacks.nncf_callback"</span><span class="p">)</span>
-                <span class="n">nncf_callback</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">nncf_module</span><span class="p">,</span> <span class="s2">"NNCFCallback"</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">nncf</span><span class="p">)</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">nncf</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.yaml&quot;</span><span class="p">):</span>
+                <span class="n">nncf_module</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;anomalib.core.callbacks.nncf_callback&quot;</span><span class="p">)</span>
+                <span class="n">nncf_callback</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">nncf_module</span><span class="p">,</span> <span class="s2">&quot;NNCFCallback&quot;</span><span class="p">)</span>
                 <span class="n">callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                     <span class="n">nncf_callback</span><span class="p">(</span>
                         <span class="n">config</span><span class="o">=</span><span class="n">OmegaConf</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">nncf</span><span class="p">),</span>
-                        <span class="n">dirpath</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">default_root_dir</span><span class="p">,</span> <span class="s2">"compressed"</span><span class="p">),</span>
-                        <span class="n">filename</span><span class="o">=</span><span class="s2">"model"</span><span class="p">,</span>
+                        <span class="n">dirpath</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">default_root_dir</span><span class="p">,</span> <span class="s2">&quot;compressed&quot;</span><span class="p">),</span>
+                        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span>
                     <span class="p">)</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"--nncf expects a path to nncf config which is a yaml file, but got </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">nncf</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;--nncf expects a path to nncf config which is a yaml file, but got </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">nncf</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">subcommand</span><span class="p">]</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">callbacks</span> <span class="o">=</span> <span class="n">callbacks</span>
 
 <div class="viewcode-block" id="AnomalibCLI.before_instantiate_classes"><a class="viewcode-back" href="../../../../reference_guide/api/cli.html#anomalib.utils.cli.AnomalibCLI.before_instantiate_classes">[docs]</a>    <span class="k">def</span> <span class="nf">before_instantiate_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""Modify the configuration to properly instantiate classes."""</span>
+        <span class="sd">&quot;&quot;&quot;Modify the configuration to properly instantiate classes.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__set_default_root_dir</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__set_callbacks</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"done."</span><span class="p">)</span></div></div>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;done.&quot;</span><span class="p">)</span></div></div>
 
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">"""Trainer via Anomalib CLI."""</span>
+    <span class="sd">&quot;&quot;&quot;Trainer via Anomalib CLI.&quot;&quot;&quot;</span>
     <span class="n">configure_logger</span><span class="p">()</span>
     <span class="n">AnomalibCLI</span><span class="p">()</span>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
-      </article>
+        </article>
+      </div>
       <footer>
         
         <div class="related-pages">
           
           
         </div>
-
-        <div class="related-information">
-              Copyright &#169; 
-            |
-            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
-              and
-              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
-              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
         </div>
         
       </footer>
@@ -558,7 +576,7 @@
     <script src="../../../../_static/jquery.js"></script>
     <script src="../../../../_static/underscore.js"></script>
     <script src="../../../../_static/doctools.js"></script>
-    <script src="../../../../_static/scripts/main.js"></script>
+    <script src="../../../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>
 </html>
