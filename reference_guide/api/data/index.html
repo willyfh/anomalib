@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Btech Dataset" href="btech.html" /><link rel="prev" title="Configuration" href="../config.html" />
 
-    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>Dataset - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -267,14 +267,64 @@
         </div>
         <article role="main">
           <section id="dataset">
-<h1>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h1>
+<h1>Dataset<a class="headerlink" href="#dataset" title="Permalink to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="btech.html">Btech Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mvtec.html">MVTec Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="folder.html">Folder Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="btech.html">Btech Dataset</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="btech.html#anomalib.data.btech.BTech"><code class="docutils literal notranslate"><span class="pre">BTech</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="btech.html#anomalib.data.btech.BTech.predict_dataloader"><code class="docutils literal notranslate"><span class="pre">BTech.predict_dataloader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="btech.html#anomalib.data.btech.BTech.prepare_data"><code class="docutils literal notranslate"><span class="pre">BTech.prepare_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="btech.html#anomalib.data.btech.BTech.setup"><code class="docutils literal notranslate"><span class="pre">BTech.setup()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="btech.html#anomalib.data.btech.BTech.test_dataloader"><code class="docutils literal notranslate"><span class="pre">BTech.test_dataloader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="btech.html#anomalib.data.btech.BTech.train_dataloader"><code class="docutils literal notranslate"><span class="pre">BTech.train_dataloader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="btech.html#anomalib.data.btech.BTech.val_dataloader"><code class="docutils literal notranslate"><span class="pre">BTech.val_dataloader()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="btech.html#anomalib.data.btech.BTechDataset"><code class="docutils literal notranslate"><span class="pre">BTechDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="btech.html#anomalib.data.btech.make_btech_dataset"><code class="docutils literal notranslate"><span class="pre">make_btech_dataset()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mvtec.html">MVTec Dataset</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvtec.html#anomalib.data.mvtec.MVTec"><code class="docutils literal notranslate"><span class="pre">MVTec</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvtec.html#anomalib.data.mvtec.MVTec.predict_dataloader"><code class="docutils literal notranslate"><span class="pre">MVTec.predict_dataloader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mvtec.html#anomalib.data.mvtec.MVTec.prepare_data"><code class="docutils literal notranslate"><span class="pre">MVTec.prepare_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mvtec.html#anomalib.data.mvtec.MVTec.setup"><code class="docutils literal notranslate"><span class="pre">MVTec.setup()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mvtec.html#anomalib.data.mvtec.MVTec.test_dataloader"><code class="docutils literal notranslate"><span class="pre">MVTec.test_dataloader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mvtec.html#anomalib.data.mvtec.MVTec.train_dataloader"><code class="docutils literal notranslate"><span class="pre">MVTec.train_dataloader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mvtec.html#anomalib.data.mvtec.MVTec.val_dataloader"><code class="docutils literal notranslate"><span class="pre">MVTec.val_dataloader()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvtec.html#anomalib.data.mvtec.MVTecDataset"><code class="docutils literal notranslate"><span class="pre">MVTecDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvtec.html#anomalib.data.mvtec.make_mvtec_dataset"><code class="docutils literal notranslate"><span class="pre">make_mvtec_dataset()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="folder.html">Folder Dataset</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="folder.html#anomalib.data.folder.Folder"><code class="docutils literal notranslate"><span class="pre">Folder</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="folder.html#anomalib.data.folder.Folder.predict_dataloader"><code class="docutils literal notranslate"><span class="pre">Folder.predict_dataloader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="folder.html#anomalib.data.folder.Folder.setup"><code class="docutils literal notranslate"><span class="pre">Folder.setup()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="folder.html#anomalib.data.folder.Folder.test_dataloader"><code class="docutils literal notranslate"><span class="pre">Folder.test_dataloader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="folder.html#anomalib.data.folder.Folder.train_dataloader"><code class="docutils literal notranslate"><span class="pre">Folder.train_dataloader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="folder.html#anomalib.data.folder.Folder.val_dataloader"><code class="docutils literal notranslate"><span class="pre">Folder.val_dataloader()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="folder.html#anomalib.data.folder.FolderDataset"><code class="docutils literal notranslate"><span class="pre">FolderDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="folder.html#anomalib.data.folder.make_dataset"><code class="docutils literal notranslate"><span class="pre">make_dataset()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#anomalib.data.utils.DownloadProgressBar"><code class="docutils literal notranslate"><span class="pre">DownloadProgressBar</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#anomalib.data.utils.DownloadProgressBar.update_to"><code class="docutils literal notranslate"><span class="pre">DownloadProgressBar.update_to()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#anomalib.data.utils.generate_output_image_filename"><code class="docutils literal notranslate"><span class="pre">generate_output_image_filename()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#anomalib.data.utils.get_image_filenames"><code class="docutils literal notranslate"><span class="pre">get_image_filenames()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#anomalib.data.utils.get_image_height_and_width"><code class="docutils literal notranslate"><span class="pre">get_image_height_and_width()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#anomalib.data.utils.hash_check"><code class="docutils literal notranslate"><span class="pre">hash_check()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#anomalib.data.utils.random_2d_perlin"><code class="docutils literal notranslate"><span class="pre">random_2d_perlin()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#anomalib.data.utils.read_image"><code class="docutils literal notranslate"><span class="pre">read_image()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -333,7 +383,9 @@
 </div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>

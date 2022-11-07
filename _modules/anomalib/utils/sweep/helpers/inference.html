@@ -1,10 +1,10 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" />
 
-    <link rel="shortcut icon" href="../../../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>anomalib.utils.sweep.helpers.inference - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -272,44 +272,14 @@
 
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.deploy</span> <span class="kn">import</span> <span class="n">OpenVINOInferencer</span><span class="p">,</span> <span class="n">TorchInferencer</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
-
-
-<span class="k">class</span> <span class="nc">MockImageLoader</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Create mock images for inference on CPU based on the specifics of the original torch test dataset.</span>
-
-<span class="sd">    Uses yield so as to avoid storing everything in the memory.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        image_size (List[int]): Size of input image</span>
-<span class="sd">        total_count (int): Total images in the test dataset</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_size</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">total_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">total_count</span> <span class="o">=</span> <span class="n">total_count</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">image_size</span> <span class="o">=</span> <span class="n">image_size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get total count of images.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_count</span>
-
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Yield batch of generated images.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            idx (int): Unused</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_count</span><span class="p">):</span>
-            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span>
 
 
 <div class="viewcode-block" id="get_torch_throughput"><a class="viewcode-back" href="../../../../../reference_guide/api/sweep.html#anomalib.utils.sweep.get_torch_throughput">[docs]</a><span class="k">def</span> <span class="nf">get_torch_throughput</span><span class="p">(</span>
@@ -327,12 +297,15 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">set_grad_enabled</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-    <span class="n">inferencer</span> <span class="o">=</span> <span class="n">TorchInferencer</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
-    <span class="n">torch_dataloader</span> <span class="o">=</span> <span class="n">MockImageLoader</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">))</span>
+
+    <span class="n">device</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">accelerator</span>
+    <span class="k">if</span> <span class="n">device</span> <span class="o">==</span> <span class="s2">&quot;gpu&quot;</span><span class="p">:</span>
+        <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span>
+
+    <span class="n">inferencer</span> <span class="o">=</span> <span class="n">TorchInferencer</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="c1"># Since we don&#39;t care about performance metrics and just the throughput, use mock data.</span>
-    <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">torch_dataloader</span><span class="p">():</span>
-        <span class="n">inferencer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">image_path</span> <span class="ow">in</span> <span class="n">test_dataset</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">image_path</span><span class="p">:</span>
+        <span class="n">inferencer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>
 
     <span class="c1"># get throughput</span>
     <span class="n">inference_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
@@ -356,11 +329,9 @@
     <span class="n">inferencer</span> <span class="o">=</span> <span class="n">OpenVINOInferencer</span><span class="p">(</span>
         <span class="n">config</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">/</span> <span class="s2">&quot;openvino&quot;</span> <span class="o">/</span> <span class="s2">&quot;model.xml&quot;</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">/</span> <span class="s2">&quot;openvino&quot;</span> <span class="o">/</span> <span class="s2">&quot;meta_data.json&quot;</span>
     <span class="p">)</span>
-    <span class="n">openvino_dataloader</span> <span class="o">=</span> <span class="n">MockImageLoader</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span> <span class="n">total_count</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">))</span>
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="c1"># Create test images on CPU. Since we don&#39;t care about performance metrics and just the throughput, use mock data.</span>
-    <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">openvino_dataloader</span><span class="p">():</span>
-        <span class="n">inferencer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">image_path</span> <span class="ow">in</span> <span class="n">test_dataset</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">image_path</span><span class="p">:</span>
+        <span class="n">inferencer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>
 
     <span class="c1"># get throughput</span>
     <span class="n">inference_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
@@ -404,7 +375,9 @@
 </div><script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
     <script src="../../../../../_static/jquery.js"></script>
     <script src="../../../../../_static/underscore.js"></script>
+    <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/sphinx_highlight.js"></script>
     <script src="../../../../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>

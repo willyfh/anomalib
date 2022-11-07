@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Reference Guide" href="../../../reference_guide/index.html" /><link rel="prev" title="Short walkthrough on Benchmarking in Anomalib" href="301_benchmarking.html" />
 
-    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>Walkthrough on Hyperparameter Optimization using Weights and Biases - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -523,9 +523,9 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Walkthrough-on-Hyperparameter-Optimization-using-Weights-and-Biases">
-<h1>Walkthrough on Hyperparameter Optimization using Weights and Biases<a class="headerlink" href="#Walkthrough-on-Hyperparameter-Optimization-using-Weights-and-Biases" title="Permalink to this headline">¶</a></h1>
+<h1>Walkthrough on Hyperparameter Optimization using Weights and Biases<a class="headerlink" href="#Walkthrough-on-Hyperparameter-Optimization-using-Weights-and-Biases" title="Permalink to this heading">¶</a></h1>
 <section id="Clone-and-Install-Anomalib">
-<h2>Clone and Install Anomalib<a class="headerlink" href="#Clone-and-Install-Anomalib" title="Permalink to this headline">¶</a></h2>
+<h2>Clone and Install Anomalib<a class="headerlink" href="#Clone-and-Install-Anomalib" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -577,7 +577,7 @@ Resolving deltas: 100% (12658/12658), done.
 </div></blockquote>
 </section>
 <section id="Download-and-Setup-Dataset">
-<h2>Download and Setup Dataset<a class="headerlink" href="#Download-and-Setup-Dataset" title="Permalink to this headline">¶</a></h2>
+<h2>Download and Setup Dataset<a class="headerlink" href="#Download-and-Setup-Dataset" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -612,7 +612,7 @@ Resolving deltas: 100% (12658/12658), done.
 </div>
 </section>
 <section id="Creating-training-configuration">
-<h2>Creating training configuration<a class="headerlink" href="#Creating-training-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Creating training configuration<a class="headerlink" href="#Creating-training-configuration" title="Permalink to this heading">¶</a></h2>
 <p>Since we are using our <a class="reference external" href="https://openvinotoolkit.github.io/anomalib/how_to_guides/train_custom_data.html">custom dataset</a> we need to modify the default configuration file. The following configuration is based on the one available here <code class="docutils literal notranslate"><span class="pre">anomalib/anomalib/models/stfpm/config.yaml</span></code></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
@@ -747,7 +747,7 @@ Resolving deltas: 100% (12658/12658), done.
 </div>
 </section>
 <section id="Create-sweep-configuration">
-<h2>Create sweep configuration<a class="headerlink" href="#Create-sweep-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Create sweep configuration<a class="headerlink" href="#Create-sweep-configuration" title="Permalink to this heading">¶</a></h2>
 <p>The following configuration file is based on the one available at <code class="docutils literal notranslate"><span class="pre">anomalib/tools/hpo/configs/stfpm.yaml</span></code>. For this example we will use the STFPM model.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
@@ -869,7 +869,9 @@ Resolving deltas: 100% (12658/12658), done.
 </div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>

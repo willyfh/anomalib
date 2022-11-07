@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Walkthrough on Hyperparameter Optimization using Weights and Biases" href="302_hpo_wandb.html" /><link rel="prev" title="Train a Model via API" href="../200_models/201_fastflow.html" />
 
-    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>Short walkthrough on Benchmarking in Anomalib - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -523,7 +523,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Short-walkthrough-on-Benchmarking-in-Anomalib">
-<h1>Short walkthrough on Benchmarking in Anomalib<a class="headerlink" href="#Short-walkthrough-on-Benchmarking-in-Anomalib" title="Permalink to this headline">¶</a></h1>
+<h1>Short walkthrough on Benchmarking in Anomalib<a class="headerlink" href="#Short-walkthrough-on-Benchmarking-in-Anomalib" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -533,7 +533,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <section id="Install-Anomalib">
-<h2>Install Anomalib<a class="headerlink" href="#Install-Anomalib" title="Permalink to this headline">¶</a></h2>
+<h2>Install Anomalib<a class="headerlink" href="#Install-Anomalib" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -571,7 +571,7 @@ div.rendered_html tbody tr:hover {
 </div></blockquote>
 </section>
 <section id="Download-and-setup-dataset">
-<h2>Download and setup dataset<a class="headerlink" href="#Download-and-setup-dataset" title="Permalink to this headline">¶</a></h2>
+<h2>Download and setup dataset<a class="headerlink" href="#Download-and-setup-dataset" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -598,7 +598,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </section>
 <section id="Create-configuration-file-for-training-using-Folder-Dataset">
-<h2>Create configuration file for training using Folder Dataset<a class="headerlink" href="#Create-configuration-file-for-training-using-Folder-Dataset" title="Permalink to this headline">¶</a></h2>
+<h2>Create configuration file for training using Folder Dataset<a class="headerlink" href="#Create-configuration-file-for-training-using-Folder-Dataset" title="Permalink to this heading">¶</a></h2>
 <p>The following configuration file is based on the one at <code class="docutils literal notranslate"><span class="pre">anomalib/models/padim/config.yaml</span></code>. The configuration file at that location uses the MVTec dataset for training. Since we are working with a custom dataset, we will use the <code class="docutils literal notranslate"><span class="pre">Folder</span></code> datset format. In this format, the images are divided among folders such as <em>good</em>, and <em>colour</em>. Optionally, it can also contain a <em>mask</em> folder as shown below.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hazelnut_toy
 ├── colour
@@ -749,7 +749,7 @@ with open(&quot;config.yaml&quot;, &quot;w&quot;, encoding=&quot;utf8&quot;) as 
 </div>
 </section>
 <section id="Train-the-model-to-see-if-it-is-working">
-<h2>Train the model to see if it is working<a class="headerlink" href="#Train-the-model-to-see-if-it-is-working" title="Permalink to this headline">¶</a></h2>
+<h2>Train the model to see if it is working<a class="headerlink" href="#Train-the-model-to-see-if-it-is-working" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -760,7 +760,7 @@ with open(&quot;config.yaml&quot;, &quot;w&quot;, encoding=&quot;utf8&quot;) as 
 </div>
 </section>
 <section id="Create-Benchmarking-config">
-<h2>Create Benchmarking config<a class="headerlink" href="#Create-Benchmarking-config" title="Permalink to this headline">¶</a></h2>
+<h2>Create Benchmarking config<a class="headerlink" href="#Create-Benchmarking-config" title="Permalink to this heading">¶</a></h2>
 <p>Benchmarking runs are configured using a yaml file. It contains five sections. The first one is <code class="docutils literal notranslate"><span class="pre">seed:</span></code> it is used to reproducibility across benchmarking runs. One of the uniqueness of Anomalib is that it supports deployment to edge devices using <a class="reference external" href="https://docs.openvino.ai/latest/index.html">OpenVINO</a>. This enables optimized performance and faster inference on majority of Intel devices. The benchmarking script can be used to compute OpenVINO inference throughput. To do this,
 <code class="docutils literal notranslate"><span class="pre">compute_openvino:</span></code> should be set to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
 <blockquote>
@@ -902,7 +902,9 @@ df.head()
 </div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>

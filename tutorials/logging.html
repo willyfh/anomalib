@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Hyperparameter Optimization" href="hyperparameter_optimization.html" /><link rel="prev" title="Benchmarking" href="benchmarking.html" />
 
-    <link rel="shortcut icon" href="../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>Logging - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -267,10 +267,10 @@
         </div>
         <article role="main">
           <section id="logging">
-<span id="id1"></span><h1>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Logging<a class="headerlink" href="#logging" title="Permalink to this heading">¶</a></h1>
 <p>Anomalib offers various mechanisms for logging metrics and predicted masks.</p>
 <section id="enabling-logging">
-<h2>Enabling Logging<a class="headerlink" href="#enabling-logging" title="Permalink to this headline">¶</a></h2>
+<h2>Enabling Logging<a class="headerlink" href="#enabling-logging" title="Permalink to this heading">¶</a></h2>
 <p>These can be enabled using the <code class="docutils literal notranslate"><span class="pre">logger</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">logging</span></code> section of each model configuration file. The available options are <code class="docutils literal notranslate"><span class="pre">comet</span></code>, <code class="docutils literal notranslate"><span class="pre">tensorboard</span></code>, <code class="docutils literal notranslate"><span class="pre">wandb</span></code> and <code class="docutils literal notranslate"><span class="pre">csv</span></code>.
 For example, to log to TensorBoard:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">logging</span><span class="p">:</span><span class="w"></span>
@@ -285,7 +285,7 @@ For example, to log to TensorBoard:</p>
 </div>
 </section>
 <section id="logging-images">
-<h2>Logging Images<a class="headerlink" href="#logging-images" title="Permalink to this headline">¶</a></h2>
+<h2>Logging Images<a class="headerlink" href="#logging-images" title="Permalink to this heading">¶</a></h2>
 <p>Anomalib allows you to save predictions to the file system by setting <code class="docutils literal notranslate"><span class="pre">log_images:</span> <span class="pre">True</span></code> in the visualization section . As of the current version, Anomalib also supports Comet, TensorBoard and Weights and Biases loggers for logging images. These loggers extend upon the base loggers by providing a common interface for logging images. You can access the required logger from <code class="docutils literal notranslate"><span class="pre">trainer.loggers</span></code>. Then you can use <code class="docutils literal notranslate"><span class="pre">logger.add_image</span></code> method to log images. For a complete overview of this method refer to our <a class="reference external" href="https://openvinotoolkit.github.io/anomalib/api/anomalib/utils/loggers/index.html">API documentation</a>.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">visualization</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="nt">show_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"> </span><span class="c1"># show images on the screen</span><span class="w"></span>
@@ -323,7 +323,7 @@ For example, to log to TensorBoard:</p>
 </figure>
 </section>
 <section id="logging-other-artifacts">
-<h2>Logging Other Artifacts<a class="headerlink" href="#logging-other-artifacts" title="Permalink to this headline">¶</a></h2>
+<h2>Logging Other Artifacts<a class="headerlink" href="#logging-other-artifacts" title="Permalink to this heading">¶</a></h2>
 <p>To log other artifacts to the logger, you can directly access the logger object and call its respective method. Some of the examples mentioned here might require making changes to parts of anomalib outside the lightning model such as <code class="docutils literal notranslate"><span class="pre">train.py</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -425,7 +425,9 @@ For example, to log to TensorBoard:</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>

@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Model" href="../model/index.html" /><link rel="prev" title="Folder Dataset" href="folder.html" />
 
-    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>Utils - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -134,7 +134,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -260,23 +260,23 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
           <section id="module-anomalib.data.utils">
-<span id="utils"></span><h1>Utils<a class="headerlink" href="#module-anomalib.data.utils" title="Permalink to this headline">¶</a></h1>
+<span id="utils"></span><h1>Utils<a class="headerlink" href="#module-anomalib.data.utils" title="Permalink to this heading">¶</a></h1>
 <p>Helper utilities for data.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.data.utils.DownloadProgressBar">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">DownloadProgressBar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">_</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">__</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/anomalib/data/utils/download.html#DownloadProgressBar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.DownloadProgressBar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tqdm.std.tqdm</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tqdm</span></code></p>
 <p>Create progress bar for urlretrieve. Subclasses <cite>tqdm</cite>.</p>
 <p>For information about the parameters in constructor, refer to <cite>tqdm</cite>’s documentation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>iterable</strong> (<em>Optional</em><em>[</em><em>Iterable</em><em>]</em>) – Iterable to decorate with a progressbar.
 Leave blank to manually manage the updates.</p></li>
@@ -311,7 +311,7 @@ Tweak this and <cite>mininterval</cite> to get very efficient loops.
 If your progress is erratic with both fast and slow iterations
 (network, skipping items, etc) you should set miniters=1.</p></li>
 <li><p><strong>use_ascii</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>bool</em><em>, </em><em>str</em><em>]</em><em>]</em>) – If unspecified or False, use unicode (smooth blocks) to fill
-the meter. The fallback is to use ASCII characters ” 123456789#”.</p></li>
+the meter. The fallback is to use ASCII characters “ 123456789#”.</p></li>
 <li><p><strong>disable</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – Whether to disable the entire progressbar wrapper
 [default: False]. If set to None, disable on non-TTY.</p></li>
 <li><p><strong>unit</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – String that will be used to define the unit of each iteration
@@ -336,7 +336,7 @@ percentage, elapsed, elapsed_s, ncols, nrows, desc, unit,
 rate, rate_fmt, rate_noinv, rate_noinv_fmt,
 rate_inv, rate_inv_fmt, postfix, unit_divisor,
 remaining, remaining_s, eta.
-Note that a trailing “: ” is automatically removed after {desc}
+Note that a trailing “: “ is automatically removed after {desc}
 if the latter is empty.</p></li>
 <li><p><strong>initial</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>]</em>) – The initial counter value. Useful when restarting a progress
 bar [default: 0]. If using float, consider specifying <cite>{n:.3f}</cite>
@@ -369,7 +369,7 @@ matplotlib animations for a graphical output [default: False].</p></li>
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>iterable</strong> (<em>iterable</em><em>, </em><em>optional</em>) – Iterable to decorate with a progressbar.
 Leave blank to manually manage the updates.</p></li>
@@ -405,7 +405,7 @@ Tweak this and <cite>mininterval</cite> to get very efficient loops.
 If your progress is erratic with both fast and slow iterations
 (network, skipping items, etc) you should set miniters=1.</p></li>
 <li><p><strong>ascii</strong> (<em>bool</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – If unspecified or False, use unicode (smooth blocks) to fill
-the meter. The fallback is to use ASCII characters ” 123456789#”.</p></li>
+the meter. The fallback is to use ASCII characters “ 123456789#”.</p></li>
 <li><p><strong>disable</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to disable the entire progressbar wrapper
 [default: False]. If set to None, disable on non-TTY.</p></li>
 <li><p><strong>unit</strong> (<em>str</em><em>, </em><em>optional</em>) – String that will be used to define the unit of each iteration
@@ -434,7 +434,7 @@ rate_inv, rate_inv_fmt, postfix, unit_divisor,
 remaining, remaining_s, eta.</p>
 </dd>
 </dl>
-<p>Note that a trailing “: ” is automatically removed after {desc}
+<p>Note that a trailing “: “ is automatically removed after {desc}
 if the latter is empty.</p>
 </p></li>
 <li><p><strong>initial</strong> (<em>int</em><em> or </em><em>float</em><em>, </em><em>optional</em>) – The initial counter value. Useful when restarting a progress
@@ -461,10 +461,10 @@ Use tqdm.gui.tqdm(…) instead. If set, will attempt to use
 matplotlib animations for a graphical output [default: False].</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>out</strong></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>decorated iterator.</p>
 </dd>
 </dl>
@@ -476,7 +476,7 @@ matplotlib animations for a graphical output [default: False].</p></li>
 The implementor does not have to bother about passing parameters to this as it gets them from urlretrieve.
 However the context needs a few parameters. Refer to the example.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>chunk_number</strong> (<em>int</em><em>, </em><em>optional</em>) – The current chunk being processed. Defaults to 1.</p></li>
 <li><p><strong>max_chunk_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum size of each chunk. Defaults to 1.</p></li>
@@ -490,7 +490,7 @@ However the context needs a few parameters. Refer to the example.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anomalib.data.utils.generate_output_image_filename">
-<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">generate_output_image_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pathlib.Path</span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/utils/image.html#generate_output_image_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.generate_output_image_filename" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">generate_output_image_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/utils/image.html#generate_output_image_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.generate_output_image_filename" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate an output filename to save the inference image.</p>
 <p>This function generates an output filaname by checking the input and output filenames. Input path is
 the input to infer, and output path is the path to save the output predictions specified by the user.</p>
@@ -500,7 +500,7 @@ the file system. If yes, the function calls <code class="docutils literal notran
 overwriting the existing file. If <code class="docutils literal notranslate"><span class="pre">output_path</span></code> is a directory, this function adds the parent and
 filenames of <code class="docutils literal notranslate"><span class="pre">input_path</span></code> to <code class="docutils literal notranslate"><span class="pre">output_path</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input_path</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em>) – Path to the input image to infer.</p></li>
 <li><p><strong>output_path</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em>) – Path to output to save the predictions.
@@ -522,13 +522,13 @@ Could be a filename or a directory.</p></li>
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Raises</dt>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>ValueError</strong> – When the <code class="docutils literal notranslate"><span class="pre">input_path</span></code> is not a file.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The output filename to save the output predictions from the inferencer.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Path</p>
 </dd>
 </dl>
@@ -536,16 +536,16 @@ Could be a filename or a directory.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anomalib.data.utils.get_image_filenames">
-<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">get_image_filenames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/utils/image.html#get_image_filenames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.get_image_filenames" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">get_image_filenames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/utils/image.html#get_image_filenames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.get_image_filenames" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get image filenames.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>path</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em>) – Path to image or image-folder.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of image filenames</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>List[Path]</p>
 </dd>
 </dl>
@@ -556,10 +556,10 @@ Could be a filename or a directory.</p></li>
 <span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">get_image_height_and_width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/utils/image.html#get_image_height_and_width"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.get_image_height_and_width" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get image height and width from <code class="docutils literal notranslate"><span class="pre">image_size</span></code> variable.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>image_size</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>int</em><em>, </em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Input image size.</p>
 </dd>
-<dt class="field-even">Raises</dt>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>ValueError</strong> – Image size not None, int or tuple.</p>
 </dd>
 </dl>
@@ -584,10 +584,10 @@ ValueError: ``image_size`` could be either int or Tuple[int, int]
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A tuple containing image height and width values.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Tuple[Optional[int], Optional[int]]</p>
 </dd>
 </dl>
@@ -595,10 +595,10 @@ ValueError: ``image_size`` could be either int or Tuple[int, int]
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anomalib.data.utils.hash_check">
-<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">hash_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/anomalib/data/utils/download.html#hash_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.hash_check" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">hash_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/anomalib/data/utils/download.html#hash_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.hash_check" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raise assert error if hash does not match the calculated hash of the file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>file_path</strong> (<em>Path</em>) – Path to file.</p></li>
 <li><p><strong>expected_hash</strong> (<em>str</em>) – Expected hash of the file.</p></li>
@@ -609,10 +609,10 @@ ValueError: ``image_size`` could be either int or Tuple[int, int]
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anomalib.data.utils.random_2d_perlin">
-<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">random_2d_perlin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">shape:</span> <span class="pre">typing.Tuple,</span> <span class="pre">res:</span> <span class="pre">typing.Tuple[typing.Union[int,</span> <span class="pre">torch.Tensor],</span> <span class="pre">typing.Union[int,</span> <span class="pre">torch.Tensor]],</span> <span class="pre">fade=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/utils/generators/perlin.html#random_2d_perlin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.random_2d_perlin" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">random_2d_perlin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">shape:</span> <span class="pre">~typing.Tuple,</span> <span class="pre">res:</span> <span class="pre">~typing.Tuple[~typing.Union[int,</span> <span class="pre">~torch.Tensor],</span> <span class="pre">~typing.Union[int,</span> <span class="pre">~torch.Tensor]],</span> <span class="pre">fade=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/utils/generators/perlin.html#random_2d_perlin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.random_2d_perlin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a random 2d perlin noise array.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>shape</strong> (<em>Tuple</em>) – Shape of the 2d map.</p></li>
 <li><p><strong>res</strong> (<em>Tuple</em><em>[</em><em>Union</em><em>[</em><em>int</em><em>, </em><em>Tensor</em><em>]</em><em>]</em>) – Tuple of scales for perlin noise for height and width dimension.</p></li>
@@ -620,10 +620,10 @@ ValueError: ``image_size`` could be either int or Tuple[int, int]
 Defaults to equation 6*t**5-15*t**4+10*t**3.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Random 2d-array/tensor generated using perlin noise.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Union[np.ndarray, Tensor]</p>
 </dd>
 </dl>
@@ -631,10 +631,10 @@ Defaults to equation 6*t**5-15*t**4+10*t**3.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anomalib.data.utils.read_image">
-<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">read_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/utils/image.html#read_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.read_image" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">read_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/utils/image.html#read_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.read_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read image from disk in RGB format.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>path</strong> (<em>str</em><em>, </em><em>Path</em>) – path to the image file</p>
 </dd>
 </dl>
@@ -643,7 +643,7 @@ Defaults to equation 6*t**5-15*t**4+10*t**3.</p></li>
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>image as numpy array</p>
 </dd>
 </dl>
@@ -696,8 +696,36 @@ Defaults to equation 6*t**5-15*t**4+10*t**3.</p></li>
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Utils</a><ul>
+<li><a class="reference internal" href="#anomalib.data.utils.DownloadProgressBar"><code class="docutils literal notranslate"><span class="pre">DownloadProgressBar</span></code></a><ul>
+<li><a class="reference internal" href="#anomalib.data.utils.DownloadProgressBar.update_to"><code class="docutils literal notranslate"><span class="pre">DownloadProgressBar.update_to()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#anomalib.data.utils.generate_output_image_filename"><code class="docutils literal notranslate"><span class="pre">generate_output_image_filename()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.data.utils.get_image_filenames"><code class="docutils literal notranslate"><span class="pre">get_image_filenames()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.data.utils.get_image_height_and_width"><code class="docutils literal notranslate"><span class="pre">get_image_height_and_width()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.data.utils.hash_check"><code class="docutils literal notranslate"><span class="pre">hash_check()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.data.utils.random_2d_perlin"><code class="docutils literal notranslate"><span class="pre">random_2d_perlin()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.data.utils.read_image"><code class="docutils literal notranslate"><span class="pre">read_image()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
@@ -705,7 +733,9 @@ Defaults to equation 6*t**5-15*t**4+10*t**3.</p></li>
 </div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>
