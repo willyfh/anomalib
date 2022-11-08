@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 <link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Feature Extractors" href="feature_extractors.html" /><link rel="prev" title="Base Model" href="base.html" />
 
-    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
         <title>Dimensionality Reduction - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -134,7 +134,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -260,22 +260,22 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
           <section id="module-anomalib.models.components.dimensionality_reduction">
-<span id="dimensionality-reduction"></span><h1>Dimensionality Reduction<a class="headerlink" href="#module-anomalib.models.components.dimensionality_reduction" title="Permalink to this heading">¶</a></h1>
+<span id="dimensionality-reduction"></span><h1>Dimensionality Reduction<a class="headerlink" href="#module-anomalib.models.components.dimensionality_reduction" title="Permalink to this headline">¶</a></h1>
 <p>Algorithms for decomposition and dimensionality reduction.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.components.dimensionality_reduction.PCA">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.components.dimensionality_reduction.</span></span><span class="sig-name descname"><span class="pre">PCA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/anomalib/models/components/dimensionality_reduction/pca.html#PCA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.dimensionality_reduction.PCA" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="base.html#anomalib.models.components.base.DynamicBufferModule" title="anomalib.models.components.base.dynamic_module.DynamicBufferModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicBufferModule</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="base.html#anomalib.models.components.base.DynamicBufferModule" title="anomalib.models.components.base.dynamic_module.DynamicBufferModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">anomalib.models.components.base.dynamic_module.DynamicBufferModule</span></code></a></p>
 <p>Principle Component Analysis (PCA).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>n_components</strong> (<em>float</em>) – Number of components. Can be either integer number of components
 or a ratio between 0-1.</p>
 </dd>
@@ -283,10 +283,10 @@ or a ratio between 0-1.</p>
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.components.dimensionality_reduction.PCA.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/dimensionality_reduction/pca.html#PCA.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.dimensionality_reduction.PCA.fit" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/dimensionality_reduction/pca.html#PCA.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.dimensionality_reduction.PCA.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fits the PCA model to the dataset.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>dataset</strong> (<em>Tensor</em>) – Input dataset to fit the model.</p>
 </dd>
 </dl>
@@ -294,13 +294,13 @@ or a ratio between 0-1.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.components.dimensionality_reduction.PCA.fit_transform">
-<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/dimensionality_reduction/pca.html#PCA.fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.dimensionality_reduction.PCA.fit_transform" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/dimensionality_reduction/pca.html#PCA.fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.dimensionality_reduction.PCA.fit_transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit and transform PCA to dataset.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>dataset</strong> (<em>Tensor</em>) – Dataset to which the PCA if fit and transformed</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Transformed dataset</p>
 </dd>
 </dl>
@@ -308,13 +308,13 @@ or a ratio between 0-1.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.components.dimensionality_reduction.PCA.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/dimensionality_reduction/pca.html#PCA.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.dimensionality_reduction.PCA.forward" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/dimensionality_reduction/pca.html#PCA.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.dimensionality_reduction.PCA.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transforms the features.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>features</strong> (<em>Tensor</em>) – Input features</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Transformed features</p>
 </dd>
 </dl>
@@ -322,10 +322,10 @@ or a ratio between 0-1.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.components.dimensionality_reduction.PCA.inverse_transform">
-<span class="sig-name descname"><span class="pre">inverse_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/dimensionality_reduction/pca.html#PCA.inverse_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.dimensionality_reduction.PCA.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">inverse_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/dimensionality_reduction/pca.html#PCA.inverse_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.dimensionality_reduction.PCA.inverse_transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inverses the transformed features.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>features</strong> (<em>Tensor</em>) – Transformed features</p>
 </dd>
 </dl>
@@ -334,13 +334,13 @@ or a ratio between 0-1.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.components.dimensionality_reduction.PCA.transform">
-<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/dimensionality_reduction/pca.html#PCA.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.dimensionality_reduction.PCA.transform" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/dimensionality_reduction/pca.html#PCA.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.dimensionality_reduction.PCA.transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transforms the features based on singular vectors calculated earlier.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>features</strong> (<em>Tensor</em>) – Input features</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Transformed features</p>
 </dd>
 </dl>
@@ -359,7 +359,7 @@ or a ratio between 0-1.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Sparse Random Projection using PyTorch operations.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>eps</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum distortion rate parameter for calculating
 Johnson-Lindenstrauss minimum dimensions. Defaults to 0.1.</p></li>
@@ -370,18 +370,18 @@ state for sample_without_replacement function. Defaults to None.</p></li>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.components.dimensionality_reduction.SparseRandomProjection.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#anomalib.models.components.dimensionality_reduction.SparseRandomProjection" title="anomalib.models.components.dimensionality_reduction.random_projection.SparseRandomProjection"><span class="pre">SparseRandomProjection</span></a></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/dimensionality_reduction/random_projection.html#SparseRandomProjection.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.dimensionality_reduction.SparseRandomProjection.fit" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#anomalib.models.components.dimensionality_reduction.SparseRandomProjection" title="anomalib.models.components.dimensionality_reduction.random_projection.SparseRandomProjection"><span class="pre">anomalib.models.components.dimensionality_reduction.random_projection.SparseRandomProjection</span></a></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/dimensionality_reduction/random_projection.html#SparseRandomProjection.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.dimensionality_reduction.SparseRandomProjection.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates sparse matrix from the embedding tensor.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>embedding</strong> (<em>Tensor</em>) – embedding tensor for generating embedding</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Return self to be used as
 &gt;&gt;&gt; generator = SparseRandomProjection()
 &gt;&gt;&gt; generator = generator.fit()</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>(<a class="reference internal" href="#anomalib.models.components.dimensionality_reduction.SparseRandomProjection" title="anomalib.models.components.dimensionality_reduction.SparseRandomProjection">SparseRandomProjection</a>)</p>
 </dd>
 </dl>
@@ -393,7 +393,7 @@ state for sample_without_replacement function. Defaults to None.</p></li>
 <dd><p>Find a ‘safe’ number of components to randomly project to.</p>
 <p>Ref eqn 2.1 <a class="reference external" href="https://cseweb.ucsd.edu/~dasgupta/papers/jl.pdf">https://cseweb.ucsd.edu/~dasgupta/papers/jl.pdf</a></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_samples</strong> (<em>int</em>) – Number of samples used to compute safe components</p></li>
 <li><p><strong>eps</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum distortion rate. Defaults to 0.1.</p></li>
@@ -404,21 +404,21 @@ state for sample_without_replacement function. Defaults to None.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.components.dimensionality_reduction.SparseRandomProjection.transform">
-<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/dimensionality_reduction/random_projection.html#SparseRandomProjection.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.dimensionality_reduction.SparseRandomProjection.transform" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/dimensionality_reduction/random_projection.html#SparseRandomProjection.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.dimensionality_reduction.SparseRandomProjection.transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Project the data by using matrix product with the random matrix.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>embedding</strong> (<em>Tensor</em>) – Embedding of shape (n_samples, n_features)
 The input data to project into a smaller dimensional space</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
 <dt>Sparse matrix of shape</dt><dd><p>(n_samples, n_components) Projected array.</p>
 </dd>
 </dl>
 </p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>projected_embedding (Tensor)</p>
 </dd>
 </dl>
@@ -473,41 +473,8 @@ The input data to project into a smaller dimensional space</p>
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">Dimensionality Reduction</a><ul>
-<li><a class="reference internal" href="#anomalib.models.components.dimensionality_reduction.PCA"><code class="docutils literal notranslate"><span class="pre">PCA</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.components.dimensionality_reduction.PCA.fit"><code class="docutils literal notranslate"><span class="pre">PCA.fit()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.components.dimensionality_reduction.PCA.fit_transform"><code class="docutils literal notranslate"><span class="pre">PCA.fit_transform()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.components.dimensionality_reduction.PCA.forward"><code class="docutils literal notranslate"><span class="pre">PCA.forward()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.components.dimensionality_reduction.PCA.inverse_transform"><code class="docutils literal notranslate"><span class="pre">PCA.inverse_transform()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.components.dimensionality_reduction.PCA.transform"><code class="docutils literal notranslate"><span class="pre">PCA.transform()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.components.dimensionality_reduction.PCA.training"><code class="docutils literal notranslate"><span class="pre">PCA.training</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#anomalib.models.components.dimensionality_reduction.SparseRandomProjection"><code class="docutils literal notranslate"><span class="pre">SparseRandomProjection</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.components.dimensionality_reduction.SparseRandomProjection.fit"><code class="docutils literal notranslate"><span class="pre">SparseRandomProjection.fit()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.components.dimensionality_reduction.SparseRandomProjection.johnson_lindenstrauss_min_dim"><code class="docutils literal notranslate"><span class="pre">SparseRandomProjection.johnson_lindenstrauss_min_dim()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.components.dimensionality_reduction.SparseRandomProjection.transform"><code class="docutils literal notranslate"><span class="pre">SparseRandomProjection.transform()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>
@@ -515,9 +482,7 @@ The input data to project into a smaller dimensional space</p>
 </div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>

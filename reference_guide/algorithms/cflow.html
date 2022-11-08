@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="DFKDE" href="dfkde.html" /><link rel="prev" title="Algorithms" href="index.html" />
 
-    <link rel="shortcut icon" href="../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
         <title>CFlow - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -267,19 +267,19 @@
         </div>
         <article role="main">
           <section id="cflow">
-<h1>CFlow<a class="headerlink" href="#cflow" title="Permalink to this heading">¶</a></h1>
+<h1>CFlow<a class="headerlink" href="#cflow" title="Permalink to this headline">¶</a></h1>
 <p>This is the implementation of the <a class="reference external" href="https://arxiv.org/pdf/2107.12571v1.pdf">CFlow</a> paper.</p>
 <p>Model Type: Segmentation</p>
 <section id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading">¶</a></h2>
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>CFLOW model is based on a conditional normalizing flow framework adopted for anomaly detection with localization. It consists of a discriminatively pretrained encoder followed by a multi-scale generative decoders. The encoder extracts features with multi-scale pyramid pooling to capture both global and local semantic information with the growing from top to bottom receptive fields. Pooled features are processed by a set of decoders to explicitly estimate likelihood of the encoded features. The estimated multi-scale likelyhoods are upsampled to input size and added up to produce the anomaly map.</p>
 </section>
 <section id="architecture">
-<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this heading">¶</a></h2>
+<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
 <img alt="CFlow Architecture" src="../../_images/architecture.jpg" />
 </section>
 <section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python tools/train.py --model cflow
 </pre></div>
 </div>
@@ -287,7 +287,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.cflow.torch_model.CflowModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.cflow.torch_model.</span></span><span class="sig-name descname"><span class="pre">CflowModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backbone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_trained</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber_batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'freia-cflow'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition_vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupling_blocks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clamp_alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permute_soft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/cflow/torch_model.html#CflowModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.torch_model.CflowModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
 <p>CFLOW: Conditional Normalizing Flows.</p>
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
@@ -295,10 +295,10 @@
 <span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/cflow/torch_model.html#CflowModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.torch_model.CflowModel.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Forward-pass images into the network to extract encoder features and compute probability.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>images</strong> – Batch of images.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Predicted anomaly maps.</p>
 </dd>
 </dl>
@@ -316,11 +316,11 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.Cflow">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.cflow.lightning_model.</span></span><span class="sig-name descname"><span class="pre">Cflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backbone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_trained</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber_batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'freia-cflow'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition_vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupling_blocks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clamp_alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permute_soft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0001</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/cflow/lightning_model.html#Cflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.lightning_model.Cflow" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/model/base.html#anomalib.models.components.base.AnomalyModule" title="anomalib.models.components.base.anomaly_module.AnomalyModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnomalyModule</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/model/base.html#anomalib.models.components.base.AnomalyModule" title="anomalib.models.components.base.anomaly_module.AnomalyModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">anomalib.models.components.base.anomaly_module.AnomalyModule</span></code></a></p>
 <p>PL Lightning Module for the CFLOW algorithm.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.Cflow.configure_optimizers">
-<span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optimizer</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/cflow/lightning_model.html#Cflow.configure_optimizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.lightning_model.Cflow.configure_optimizers" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.optim.optimizer.Optimizer</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/cflow/lightning_model.html#Cflow.configure_optimizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.lightning_model.Cflow.configure_optimizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Configures optimizers for each decoder.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -332,10 +332,10 @@ config.yaml file or from CLI.</p>
 </div></blockquote>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Adam optimizer for each decoder</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>Optimizer</p>
 </dd>
 </dl>
@@ -351,13 +351,13 @@ Training step is performed manually as multiple training steps are involved</p>
 <div><p>per batch of input images</p>
 </div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>batch</strong> – Input batch</p></li>
 <li><p><strong>_</strong> – Index of the batch.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Loss value for the batch</p>
 </dd>
 </dl>
@@ -373,13 +373,13 @@ are extracted from the CNN for each batch, and anomaly
 map is computed.</p>
 </div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>batch</strong> – Input batch</p></li>
 <li><p><strong>_</strong> – Index of the batch.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Dictionary containing images, anomaly maps, true labels and masks.
 These are required in <cite>validation_epoch_end</cite> for feature concatenation.</p>
 </dd>
@@ -395,11 +395,11 @@ These are required in <cite>validation_epoch_end</cite> for feature concatenatio
 
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.cflow.lightning_model.</span></span><span class="sig-name descname"><span class="pre">CflowLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/cflow/lightning_model.html#CflowLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anomalib.models.cflow.lightning_model.Cflow" title="anomalib.models.cflow.lightning_model.Cflow"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cflow</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.cflow.lightning_model.</span></span><span class="sig-name descname"><span class="pre">CflowLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.dictconfig.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/cflow/lightning_model.html#CflowLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anomalib.models.cflow.lightning_model.Cflow" title="anomalib.models.cflow.lightning_model.Cflow"><code class="xref py py-class docutils literal notranslate"><span class="pre">anomalib.models.cflow.lightning_model.Cflow</span></code></a></p>
 <p>PL Lightning Module for the CFLOW algorithm.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>hparams</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model params</p>
 </dd>
 </dl>
@@ -483,23 +483,23 @@ config.yaml file or from CLI.</p>
 <span class="target" id="module-anomalib.models.cflow.anomaly_map"></span><p>Anomaly Map Generator for CFlow model implementation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.cflow.anomaly_map.AnomalyMapGenerator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.cflow.anomaly_map.</span></span><span class="sig-name descname"><span class="pre">AnomalyMapGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ListConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/cflow/anomaly_map.html#AnomalyMapGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.cflow.anomaly_map.</span></span><span class="sig-name descname"><span class="pre">AnomalyMapGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/cflow/anomaly_map.html#AnomalyMapGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
 <p>Generate Anomaly Heatmap.</p>
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.cflow.anomaly_map.AnomalyMapGenerator.compute_anomaly_map">
-<span class="sig-name descname"><span class="pre">compute_anomaly_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/cflow/anomaly_map.html#AnomalyMapGenerator.compute_anomaly_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator.compute_anomaly_map" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute_anomaly_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distribution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/cflow/anomaly_map.html#AnomalyMapGenerator.compute_anomaly_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator.compute_anomaly_map" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the layer map based on likelihood estimation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>distribution</strong> – Probability distribution for each decoder block</p></li>
 <li><p><strong>height</strong> – blocks height</p></li>
 <li><p><strong>width</strong> – blocks width</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Final Anomaly Map</p>
 </dd>
 </dl>
@@ -507,7 +507,7 @@ config.yaml file or from CLI.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.cflow.anomaly_map.AnomalyMapGenerator.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/cflow/anomaly_map.html#AnomalyMapGenerator.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator.forward" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/cflow/anomaly_map.html#AnomalyMapGenerator.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns anomaly_map.</p>
 <p>Expects <cite>distribution</cite>, <cite>height</cite> and ‘width’ keywords to be passed explicitly</p>
 <p>Example
@@ -515,13 +515,13 @@ config.yaml file or from CLI.</p>
 &gt;&gt;&gt;        pool_layers=pool_layers)
 &gt;&gt;&gt; output = self.anomaly_map_generator(distribution=dist, height=height, width=width)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dt class="field-odd">Raises</dt>
 <dd class="field-odd"><p><strong>ValueError</strong> – <cite>distribution</cite>, <cite>height</cite> and ‘width’ keys are not found</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>anomaly map</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>torch.Tensor</p>
 </dd>
 </dl>
@@ -597,43 +597,7 @@ config.yaml file or from CLI.</p>
 <li><a class="reference internal" href="#">CFlow</a><ul>
 <li><a class="reference internal" href="#description">Description</a></li>
 <li><a class="reference internal" href="#architecture">Architecture</a></li>
-<li><a class="reference internal" href="#usage">Usage</a><ul>
-<li><a class="reference internal" href="#anomalib.models.cflow.torch_model.CflowModel"><code class="docutils literal notranslate"><span class="pre">CflowModel</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.cflow.torch_model.CflowModel.forward"><code class="docutils literal notranslate"><span class="pre">CflowModel.forward()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.torch_model.CflowModel.training"><code class="docutils literal notranslate"><span class="pre">CflowModel.training</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.Cflow"><code class="docutils literal notranslate"><span class="pre">Cflow</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.Cflow.configure_optimizers"><code class="docutils literal notranslate"><span class="pre">Cflow.configure_optimizers()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.Cflow.training_step"><code class="docutils literal notranslate"><span class="pre">Cflow.training_step()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.Cflow.validation_step"><code class="docutils literal notranslate"><span class="pre">Cflow.validation_step()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.Cflow.training"><code class="docutils literal notranslate"><span class="pre">Cflow.training</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning"><code class="docutils literal notranslate"><span class="pre">CflowLightning</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.configure_callbacks"><code class="docutils literal notranslate"><span class="pre">CflowLightning.configure_callbacks()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.allow_zero_length_dataloader_with_multiple_devices"><code class="docutils literal notranslate"><span class="pre">CflowLightning.allow_zero_length_dataloader_with_multiple_devices</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.callbacks"><code class="docutils literal notranslate"><span class="pre">CflowLightning.callbacks</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.image_metrics"><code class="docutils literal notranslate"><span class="pre">CflowLightning.image_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.loss"><code class="docutils literal notranslate"><span class="pre">CflowLightning.loss</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.model"><code class="docutils literal notranslate"><span class="pre">CflowLightning.model</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.normalization_metrics"><code class="docutils literal notranslate"><span class="pre">CflowLightning.normalization_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.pixel_metrics"><code class="docutils literal notranslate"><span class="pre">CflowLightning.pixel_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.precision"><code class="docutils literal notranslate"><span class="pre">CflowLightning.precision</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.prepare_data_per_node"><code class="docutils literal notranslate"><span class="pre">CflowLightning.prepare_data_per_node</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.threshold_method"><code class="docutils literal notranslate"><span class="pre">CflowLightning.threshold_method</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.trainer"><code class="docutils literal notranslate"><span class="pre">CflowLightning.trainer</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.training"><code class="docutils literal notranslate"><span class="pre">CflowLightning.training</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator"><code class="docutils literal notranslate"><span class="pre">AnomalyMapGenerator</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator.compute_anomaly_map"><code class="docutils literal notranslate"><span class="pre">AnomalyMapGenerator.compute_anomaly_map()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator.forward"><code class="docutils literal notranslate"><span class="pre">AnomalyMapGenerator.forward()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator.training"><code class="docutils literal notranslate"><span class="pre">AnomalyMapGenerator.training</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
 </ul>
 </li>
 </ul>
@@ -648,9 +612,7 @@ config.yaml file or from CLI.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>

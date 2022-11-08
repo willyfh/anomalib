@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Developing on Docker" href="developing_on_docker.html" /><link rel="prev" title="Pre-commit Hooks" href="pre_commit_hooks.html" />
 
-    <link rel="shortcut icon" href="../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
         <title>Using Tox - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -267,7 +267,7 @@
         </div>
         <article role="main">
           <section id="using-tox">
-<span id="id1"></span><h1>Using Tox<a class="headerlink" href="#using-tox" title="Permalink to this heading">¶</a></h1>
+<span id="id1"></span><h1>Using Tox<a class="headerlink" href="#using-tox" title="Permalink to this headline">¶</a></h1>
 <p>The quality of code for <code class="docutils literal notranslate"><span class="pre">anomalib</span></code> maintained by using tools such as <code class="docutils literal notranslate"><span class="pre">black</span></code>, <code class="docutils literal notranslate"><span class="pre">mypy</span></code>, and <code class="docutils literal notranslate"><span class="pre">flake8</span></code>. In order to enforce these, we use Tox. This is also the reason why we don’t have dependencies such as <code class="docutils literal notranslate"><span class="pre">pytest</span></code> in the <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file.</p>
 <p>What is tox?:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>``tox`` aims to automate and standardize testing in Python. It is part of a
@@ -282,7 +282,7 @@ It is a generic virtualenv management and test command line tool you can use for
 </pre></div>
 </div>
 <section id="setting-up-and-getting-started">
-<h2>Setting-up and Getting Started<a class="headerlink" href="#setting-up-and-getting-started" title="Permalink to this heading">¶</a></h2>
+<h2>Setting-up and Getting Started<a class="headerlink" href="#setting-up-and-getting-started" title="Permalink to this headline">¶</a></h2>
 <p>Setting up tox is easy.</p>
 <ol class="arabic simple">
 <li><p>Create new Conda environment</p></li>
@@ -313,7 +313,7 @@ It should setup the environments and install the dependencies.</p>
 </div>
 </section>
 <section id="brief-explanation-of-tox-ini">
-<h2>Brief Explanation of <code class="docutils literal notranslate"><span class="pre">tox.ini</span></code><a class="headerlink" href="#brief-explanation-of-tox-ini" title="Permalink to this heading">¶</a></h2>
+<h2>Brief Explanation of <code class="docutils literal notranslate"><span class="pre">tox.ini</span></code><a class="headerlink" href="#brief-explanation-of-tox-ini" title="Permalink to this headline">¶</a></h2>
 <p>Here is a brief explanation of <code class="docutils literal notranslate"><span class="pre">tox.ini</span></code> for those who are interested. However, for more details, the readers are directed to the [official docs](<a class="reference external" href="https://tox.readthedocs.io/">https://tox.readthedocs.io/</a>).</p>
 <p>All <code class="docutils literal notranslate"><span class="pre">tox</span></code> files start with
 <code class="docutils literal notranslate"><span class="pre">[tox]</span></code></p>
@@ -334,7 +334,7 @@ It should setup the environments and install the dependencies.</p>
 <p>For a more elaborate setup, refer to the <cite>tox.ini</cite> file in this repository.</p>
 </section>
 <section id="useful-tox-cheatsheet">
-<h2>Useful Tox CheatSheet<a class="headerlink" href="#useful-tox-cheatsheet" title="Permalink to this heading">¶</a></h2>
+<h2>Useful Tox CheatSheet<a class="headerlink" href="#useful-tox-cheatsheet" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><cite>tox -e envname[,name1,name2]</cite> - to run only those environments</p></li>
 <li><p><cite>tox -r [envname..]</cite> - to recreate all/specific environments. Handy when the requirements have changed</p></li>
@@ -418,9 +418,7 @@ It should setup the environments and install the dependencies.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>

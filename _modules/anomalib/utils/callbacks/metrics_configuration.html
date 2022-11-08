@@ -1,10 +1,10 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
-    <link rel="shortcut icon" href="../../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
         <title>anomalib.utils.callbacks.metrics_configuration - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -279,7 +279,7 @@
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">CALLBACK_REGISTRY</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components.base.anomaly_module</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
-<span class="kn">from</span> <span class="nn">anomalib.utils.metrics</span> <span class="kn">import</span> <span class="n">metric_collection_from_names</span>
+<span class="kn">from</span> <span class="nn">anomalib.utils.metrics</span> <span class="kn">import</span> <span class="n">create_metric_collection</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -341,8 +341,8 @@
             <span class="n">pixel_metric_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixel_metric_names</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pl_module</span><span class="p">,</span> <span class="n">AnomalyModule</span><span class="p">):</span>
-            <span class="n">pl_module</span><span class="o">.</span><span class="n">image_metrics</span> <span class="o">=</span> <span class="n">metric_collection_from_names</span><span class="p">(</span><span class="n">image_metric_names</span><span class="p">,</span> <span class="s2">&quot;image_&quot;</span><span class="p">)</span>
-            <span class="n">pl_module</span><span class="o">.</span><span class="n">pixel_metrics</span> <span class="o">=</span> <span class="n">metric_collection_from_names</span><span class="p">(</span><span class="n">pixel_metric_names</span><span class="p">,</span> <span class="s2">&quot;pixel_&quot;</span><span class="p">)</span>
+            <span class="n">pl_module</span><span class="o">.</span><span class="n">image_metrics</span> <span class="o">=</span> <span class="n">create_metric_collection</span><span class="p">(</span><span class="n">image_metric_names</span><span class="p">,</span> <span class="s2">&quot;image_&quot;</span><span class="p">)</span>
+            <span class="n">pl_module</span><span class="o">.</span><span class="n">pixel_metrics</span> <span class="o">=</span> <span class="n">create_metric_collection</span><span class="p">(</span><span class="n">pixel_metric_names</span><span class="p">,</span> <span class="s2">&quot;pixel_&quot;</span><span class="p">)</span>
 
             <span class="n">pl_module</span><span class="o">.</span><span class="n">image_metrics</span><span class="o">.</span><span class="n">set_threshold</span><span class="p">(</span><span class="n">pl_module</span><span class="o">.</span><span class="n">image_threshold</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
             <span class="n">pl_module</span><span class="o">.</span><span class="n">pixel_metrics</span><span class="o">.</span><span class="n">set_threshold</span><span class="p">(</span><span class="n">pl_module</span><span class="o">.</span><span class="n">pixel_threshold</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div></div>
@@ -383,9 +383,7 @@
 </div><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
     <script src="../../../../_static/jquery.js"></script>
     <script src="../../../../_static/underscore.js"></script>
-    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../../_static/doctools.js"></script>
-    <script src="../../../../_static/sphinx_highlight.js"></script>
     <script src="../../../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>

@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 <link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Train a Model via API" href="../200_models/201_fastflow.html" /><link rel="prev" title="Use MVTec AD Dataset via API" href="102_mvtec.html" />
 
-    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
         <title>Use Folder Dataset (for Custom Datasets) via API - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -523,7 +523,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Use-Folder-Dataset-(for-Custom-Datasets)-via-API">
-<h1>Use Folder Dataset (for Custom Datasets) via API<a class="headerlink" href="#Use-Folder-Dataset-(for-Custom-Datasets)-via-API" title="Permalink to this heading">¶</a></h1>
+<h1>Use Folder Dataset (for Custom Datasets) via API<a class="headerlink" href="#Use-Folder-Dataset-(for-Custom-Datasets)-via-API" title="Permalink to this headline">¶</a></h1>
 <p>Here we show how one can utilize custom datasets to train anomalib models. A custom dataset in this model can be of the following types:</p>
 <ul class="simple">
 <li><p>A dataset with good and bad images.</p></li>
@@ -546,7 +546,7 @@ from anomalib.pre_processing.transforms import Denormalize
 </div>
 </div>
 <section id="Torch-Dataset">
-<h2>Torch Dataset<a class="headerlink" href="#Torch-Dataset" title="Permalink to this heading">¶</a></h2>
+<h2>Torch Dataset<a class="headerlink" href="#Torch-Dataset" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -573,7 +573,7 @@ from anomalib.pre_processing.transforms import Denormalize
 </div>
 </div>
 <section id="Classification-Task">
-<h3>Classification Task<a class="headerlink" href="#Classification-Task" title="Permalink to this heading">¶</a></h3>
+<h3>Classification Task<a class="headerlink" href="#Classification-Task" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
@@ -784,7 +784,7 @@ data.keys(), data[&quot;image&quot;].shape, data[&quot;image_path&quot;], data[&
 </div>
 </section>
 <section id="Segmentation-Task">
-<h3>Segmentation Task<a class="headerlink" href="#Segmentation-Task" title="Permalink to this heading">¶</a></h3>
+<h3>Segmentation Task<a class="headerlink" href="#Segmentation-Task" title="Permalink to this headline">¶</a></h3>
 <p>It is also possible to configure the Folder dataset for the segmentation task, where the dataset object returns image and ground-truth mask.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
@@ -1052,7 +1052,7 @@ Image.fromarray(np.hstack((np.array(img), np.array(msk))))
 </section>
 </section>
 <section id="DataModule">
-<h2>DataModule<a class="headerlink" href="#DataModule" title="Permalink to this heading">¶</a></h2>
+<h2>DataModule<a class="headerlink" href="#DataModule" title="Permalink to this headline">¶</a></h2>
 <p>So far, we have shown the Torch Dataset implementation of Folder dataset. This is quite useful to get a sample. However, when we train models end-to-end fashion, we do need much more than this such as downloading the dataset, creating train/val/test/inference dataloaders. To handle all these, we have the PyTorch Lightning DataModule implementation, which is shown below</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
@@ -1212,9 +1212,7 @@ Image.fromarray(np.hstack((np.array(img), np.array(msk))))
 </div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>

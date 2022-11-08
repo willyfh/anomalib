@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Configuration" href="config.html" /><link rel="prev" title="API Reference" href="index.html" />
 
-    <link rel="shortcut icon" href="../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
         <title>CLI - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -134,7 +134,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -260,19 +260,19 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
           <section id="module-anomalib.utils.cli">
-<span id="cli"></span><h1>CLI<a class="headerlink" href="#module-anomalib.utils.cli" title="Permalink to this heading">¶</a></h1>
+<span id="cli"></span><h1>CLI<a class="headerlink" href="#module-anomalib.utils.cli" title="Permalink to this headline">¶</a></h1>
 <p>Anomalib CLI.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.utils.cli.AnomalibCLI">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.cli.</span></span><span class="sig-name descname"><span class="pre">AnomalibCLI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">model_class:</span> <span class="pre">~typing.Optional[~typing.Union[~typing.Type[~pytorch_lightning.core.lightning.LightningModule],</span> <span class="pre">~typing.Callable[[...],</span> <span class="pre">~pytorch_lightning.core.lightning.LightningModule]]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">datamodule_class:</span> <span class="pre">~typing.Optional[~typing.Union[~typing.Type[~pytorch_lightning.core.datamodule.LightningDataModule],</span> <span class="pre">~typing.Callable[[...],</span> <span class="pre">~pytorch_lightning.core.datamodule.LightningDataModule]]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">save_config_callback:</span> <span class="pre">~typing.Optional[~typing.Type[~pytorch_lightning.utilities.cli.SaveConfigCallback]]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'pytorch_lightning.utilities.cli.SaveConfigCallback'&gt;,</span> <span class="pre">save_config_filename:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'config.yaml',</span> <span class="pre">save_config_overwrite:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">save_config_multifile:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">trainer_class:</span> <span class="pre">~typing.Union[~typing.Type[~pytorch_lightning.trainer.trainer.Trainer],</span> <span class="pre">~typing.Callable[[...],</span> <span class="pre">~pytorch_lightning.trainer.trainer.Trainer]]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'pytorch_lightning.trainer.trainer.Trainer'&gt;,</span> <span class="pre">trainer_defaults:</span> <span class="pre">~typing.Optional[~typing.Dict[str,</span> <span class="pre">~typing.Any]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">seed_everything_default:</span> <span class="pre">~typing.Optional[int]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">description:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'Anomalib</span> <span class="pre">trainer</span> <span class="pre">command</span> <span class="pre">line</span> <span class="pre">tool',</span> <span class="pre">env_prefix:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'Anomalib',</span> <span class="pre">env_parse:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">parser_kwargs:</span> <span class="pre">~typing.Optional[~typing.Union[~typing.Dict[str,</span> <span class="pre">~typing.Any],</span> <span class="pre">~typing.Dict[str,</span> <span class="pre">~typing.Dict[str,</span> <span class="pre">~typing.Any]]]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">subclass_mode_model:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">subclass_mode_data:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">run:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">auto_registry:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/cli/cli.html#AnomalibCLI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.cli.AnomalibCLI" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LightningCLI</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.utils.cli.</span></span><span class="sig-name descname"><span class="pre">AnomalibCLI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">model_class:</span> <span class="pre">typing.Optional[typing.Union[typing.Type[pytorch_lightning.core.lightning.LightningModule],</span> <span class="pre">typing.Callable[[...],</span> <span class="pre">pytorch_lightning.core.lightning.LightningModule]]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">datamodule_class:</span> <span class="pre">typing.Optional[typing.Union[typing.Type[pytorch_lightning.core.datamodule.LightningDataModule],</span> <span class="pre">typing.Callable[[...],</span> <span class="pre">pytorch_lightning.core.datamodule.LightningDataModule]]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">save_config_callback:</span> <span class="pre">typing.Optional[typing.Type[pytorch_lightning.utilities.cli.SaveConfigCallback]]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'pytorch_lightning.utilities.cli.SaveConfigCallback'&gt;,</span> <span class="pre">save_config_filename:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'config.yaml',</span> <span class="pre">save_config_overwrite:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">save_config_multifile:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">trainer_class:</span> <span class="pre">typing.Union[typing.Type[pytorch_lightning.trainer.trainer.Trainer],</span> <span class="pre">typing.Callable[[...],</span> <span class="pre">pytorch_lightning.trainer.trainer.Trainer]]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'pytorch_lightning.trainer.trainer.Trainer'&gt;,</span> <span class="pre">trainer_defaults:</span> <span class="pre">typing.Optional[typing.Dict[str,</span> <span class="pre">typing.Any]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">seed_everything_default:</span> <span class="pre">typing.Optional[int]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">description:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'Anomalib</span> <span class="pre">trainer</span> <span class="pre">command</span> <span class="pre">line</span> <span class="pre">tool',</span> <span class="pre">env_prefix:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'Anomalib',</span> <span class="pre">env_parse:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">parser_kwargs:</span> <span class="pre">typing.Optional[typing.Union[typing.Dict[str,</span> <span class="pre">typing.Any],</span> <span class="pre">typing.Dict[str,</span> <span class="pre">typing.Dict[str,</span> <span class="pre">typing.Any]]]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">subclass_mode_model:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">subclass_mode_data:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">run:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">auto_registry:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/utils/cli/cli.html#AnomalibCLI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.cli.AnomalibCLI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pytorch_lightning.utilities.cli.LightningCLI</span></code></p>
 <p>Implementation of a fully configurable CLI tool for anomalib.</p>
 <p>The advantage of this tool is its flexibility to configure the pipeline
 from both the CLI and a configuration file (.yaml or .json). It is even
@@ -289,7 +289,7 @@ Individual settings are so parsed from variables named for example <code class="
 <p><code class="docutils literal notranslate"><span class="pre">LightningCLI</span></code> is in beta and subject to change.</p>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model_class</strong> – An optional <code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code> class to train on or a
 callable which returns a <code class="xref py py-class docutils literal notranslate"><span class="pre">LightningModule</span></code> instance when
@@ -326,10 +326,10 @@ method. If set to <code class="docutils literal notranslate"><span class="pre">F
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.cli.AnomalibCLI.add_arguments_to_parser">
-<span class="sig-name descname"><span class="pre">add_arguments_to_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LightningArgumentParser</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/cli/cli.html#AnomalibCLI.add_arguments_to_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.cli.AnomalibCLI.add_arguments_to_parser" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_arguments_to_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pytorch_lightning.utilities.cli.LightningArgumentParser</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/cli/cli.html#AnomalibCLI.add_arguments_to_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.cli.AnomalibCLI.add_arguments_to_parser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add default arguments.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>parser</strong> (<em>LightningArgumentParser</em>) – Lightning Argument Parser.</p>
 </dd>
 </dl>
@@ -390,31 +390,8 @@ method. If set to <code class="docutils literal notranslate"><span class="pre">F
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">CLI</a><ul>
-<li><a class="reference internal" href="#anomalib.utils.cli.AnomalibCLI"><code class="docutils literal notranslate"><span class="pre">AnomalibCLI</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.utils.cli.AnomalibCLI.add_arguments_to_parser"><code class="docutils literal notranslate"><span class="pre">AnomalibCLI.add_arguments_to_parser()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.utils.cli.AnomalibCLI.before_instantiate_classes"><code class="docutils literal notranslate"><span class="pre">AnomalibCLI.before_instantiate_classes()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>
@@ -422,9 +399,7 @@ method. If set to <code class="docutils literal notranslate"><span class="pre">F
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>

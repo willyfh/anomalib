@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="PatchCore" href="patchcore.html" /><link rel="prev" title="GANomaly" href="ganomaly.html" />
 
-    <link rel="shortcut icon" href="../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
         <title>Padim - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -267,20 +267,20 @@
         </div>
         <article role="main">
           <section id="padim">
-<h1>Padim<a class="headerlink" href="#padim" title="Permalink to this heading">¶</a></h1>
+<h1>Padim<a class="headerlink" href="#padim" title="Permalink to this headline">¶</a></h1>
 <p>This is the implementation of the <a class="reference external" href="https://arxiv.org/pdf/2011.08785.pdf">PaDiM</a> paper.</p>
 <p>Model Type: Segmentation</p>
 <section id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading">¶</a></h2>
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>PaDiM is a patch based algorithm. It relies on a pre-trained CNN feature extractor. The image is broken into patches and embeddings are extracted from each patch using different layers of the feature extractors. The activation vectors from different layers are concatenated to get embedding vectors carrying information from different semantic levels and resolutions. This helps encode fine grained and global contexts. However, since the generated embedding vectors may carry redundant information, dimensions are reduced using random selection. A multivariate gaussian distribution is generated for each patch embedding across the entire training batch. Thus, for each patch of the set of training images, we have a different multivariate gaussian distribution. These gaussian distributions are represented as a matrix of gaussian parameters.</p>
 <p>During inference, Mahalanobis distance is used to score each patch position of the test image. It uses the inverse of the covariance matrix calculated for the patch during training. The matrix of Mahalanobis distances forms the anomaly map with higher scores indicating anomalous regions.</p>
 </section>
 <section id="architecture">
-<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this heading">¶</a></h2>
+<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
 <img alt="PaDiM Architecture" src="../../_images/architecture2.jpg" />
 </section>
 <section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python tools/train.py --model padim
 </pre></div>
 </div>
@@ -288,10 +288,10 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.padim.torch_model.PadimModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.padim.torch_model.</span></span><span class="sig-name descname"><span class="pre">PadimModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backbone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'resnet18'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_trained</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/padim/torch_model.html#PadimModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.torch_model.PadimModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
 <p>Padim Module.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input_size</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – Input size for the model.</p></li>
 <li><p><strong>layers</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Layers used for feature extraction</p></li>
@@ -303,16 +303,16 @@
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.padim.torch_model.PadimModel.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_tensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/padim/torch_model.html#PadimModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.torch_model.PadimModel.forward" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_tensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/padim/torch_model.html#PadimModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.torch_model.PadimModel.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Forward-pass image-batch (N, C, H, W) into model to extract features.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input_tensor</strong> – Image-batch (N, C, H, W)</p></li>
 <li><p><strong>input_tensor</strong> – Tensor:</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Features from single/multiple layers.</p>
 </dd>
 </dl>
@@ -333,13 +333,13 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.padim.torch_model.PadimModel.generate_embedding">
-<span class="sig-name descname"><span class="pre">generate_embedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/padim/torch_model.html#PadimModel.generate_embedding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.torch_model.PadimModel.generate_embedding" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">generate_embedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/padim/torch_model.html#PadimModel.generate_embedding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.torch_model.PadimModel.generate_embedding" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate embedding from hierarchical feature map.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>features</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Tensor</em><em>]</em>) – Hierarchical feature map from a CNN (ResNet18 or WideResnet)</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Embedding vector</p>
 </dd>
 </dl>
@@ -357,10 +357,10 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.Padim">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.padim.lightning_model.</span></span><span class="sig-name descname"><span class="pre">Padim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backbone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_trained</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/padim/lightning_model.html#Padim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.lightning_model.Padim" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/model/base.html#anomalib.models.components.base.AnomalyModule" title="anomalib.models.components.base.anomaly_module.AnomalyModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnomalyModule</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/model/base.html#anomalib.models.components.base.AnomalyModule" title="anomalib.models.components.base.anomaly_module.AnomalyModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">anomalib.models.components.base.anomaly_module.AnomalyModule</span></code></a></p>
 <p>PaDiM: a Patch Distribution Modeling Framework for Anomaly Detection and Localization.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>layers</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Layers to extract features from the backbone CNN</p></li>
 <li><p><strong>input_size</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – Size of the model input.</p></li>
@@ -386,13 +386,13 @@
 <span class="sig-name descname"><span class="pre">training_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_batch_idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/padim/lightning_model.html#Padim.training_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.lightning_model.Padim.training_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Training Step of PADIM. For each batch, hierarchical features are extracted from the CNN.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>batch</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Batch containing image filename, image, label and mask</p></li>
 <li><p><strong>_batch_idx</strong> – Index of the batch.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Hierarchical feature map</p>
 </dd>
 </dl>
@@ -404,13 +404,13 @@
 <dd><p>Validation Step of PADIM.</p>
 <p>Similar to the training step, hierarchical features are extracted from the CNN for each batch.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>batch</strong> – Input batch</p></li>
 <li><p><strong>_</strong> – Index of the batch.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Dictionary containing images, features, true labels and masks.
 These are required in <cite>validation_epoch_end</cite> for feature concatenation.</p>
 </dd>
@@ -426,11 +426,11 @@ These are required in <cite>validation_epoch_end</cite> for feature concatenatio
 
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.PadimLightning">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.padim.lightning_model.</span></span><span class="sig-name descname"><span class="pre">PadimLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/padim/lightning_model.html#PadimLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.lightning_model.PadimLightning" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anomalib.models.padim.lightning_model.Padim" title="anomalib.models.padim.lightning_model.Padim"><code class="xref py py-class docutils literal notranslate"><span class="pre">Padim</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.padim.lightning_model.</span></span><span class="sig-name descname"><span class="pre">PadimLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.dictconfig.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/padim/lightning_model.html#PadimLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.lightning_model.PadimLightning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anomalib.models.padim.lightning_model.Padim" title="anomalib.models.padim.lightning_model.Padim"><code class="xref py py-class docutils literal notranslate"><span class="pre">anomalib.models.padim.lightning_model.Padim</span></code></a></p>
 <p>PaDiM: a Patch Distribution Modeling Framework for Anomaly Detection and Localization.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>hparams</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model params</p>
 </dd>
 </dl>
@@ -509,11 +509,11 @@ These are required in <cite>validation_epoch_end</cite> for feature concatenatio
 <span class="target" id="module-anomalib.models.padim.anomaly_map"></span><p>Anomaly Map Generator for the PaDiM model implementation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.padim.anomaly_map.AnomalyMapGenerator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.padim.anomaly_map.</span></span><span class="sig-name descname"><span class="pre">AnomalyMapGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ListConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/padim/anomaly_map.html#AnomalyMapGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.padim.anomaly_map.</span></span><span class="sig-name descname"><span class="pre">AnomalyMapGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/padim/anomaly_map.html#AnomalyMapGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
 <p>Generate Anomaly Heatmap.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>image_size</strong> (<em>Union</em><em>[</em><em>ListConfig</em><em>, </em><em>Tuple</em><em>]</em>) – Size of the input image. The anomaly map is upsampled to this dimension.</p></li>
 <li><p><strong>sigma</strong> (<em>int</em><em>, </em><em>optional</em>) – Standard deviation for Gaussian Kernel. Defaults to 4.</p></li>
@@ -523,19 +523,19 @@ These are required in <cite>validation_epoch_end</cite> for feature concatenatio
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.padim.anomaly_map.AnomalyMapGenerator.compute_anomaly_map">
-<span class="sig-name descname"><span class="pre">compute_anomaly_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inv_covariance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/padim/anomaly_map.html#AnomalyMapGenerator.compute_anomaly_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.compute_anomaly_map" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute_anomaly_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inv_covariance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/padim/anomaly_map.html#AnomalyMapGenerator.compute_anomaly_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.compute_anomaly_map" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute anomaly score.</p>
 <p>Scores are calculated based on embedding vector, mean and inv_covariance of the multivariate gaussian
 distribution.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>embedding</strong> (<em>Tensor</em>) – Embedding vector extracted from the test set.</p></li>
 <li><p><strong>mean</strong> (<em>Tensor</em>) – Mean of the multivariate gaussian distribution</p></li>
 <li><p><strong>inv_covariance</strong> (<em>Tensor</em>) – Inverse Covariance matrix of the multivariate gaussian distribution.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Output anomaly score.</p>
 </dd>
 </dl>
@@ -543,17 +543,17 @@ distribution.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.padim.anomaly_map.AnomalyMapGenerator.compute_distance">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compute_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/padim/anomaly_map.html#AnomalyMapGenerator.compute_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.compute_distance" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compute_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/padim/anomaly_map.html#AnomalyMapGenerator.compute_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.compute_distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute anomaly score to the patch in position(i,j) of a test image.</p>
 <p>Ref: Equation (2), Section III-C of the paper.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>embedding</strong> (<em>Tensor</em>) – Embedding Vector</p></li>
 <li><p><strong>stats</strong> (<em>List</em><em>[</em><em>Tensor</em><em>]</em>) – Mean and Covariance Matrix of the multivariate Gaussian distribution</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Anomaly score of a test image via mahalanobis distance.</p>
 </dd>
 </dl>
@@ -568,13 +568,13 @@ distribution.</p>
 &gt;&gt;&gt; anomaly_map_generator = AnomalyMapGenerator(image_size=input_size)
 &gt;&gt;&gt; output = anomaly_map_generator(embedding=embedding, mean=mean, covariance=covariance)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dt class="field-odd">Raises</dt>
 <dd class="field-odd"><p><strong>ValueError</strong> – <cite>embedding</cite>. <cite>mean</cite> or <cite>covariance</cite> keys are not found</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>anomaly map</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>torch.Tensor</p>
 </dd>
 </dl>
@@ -582,13 +582,13 @@ distribution.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.padim.anomaly_map.AnomalyMapGenerator.smooth_anomaly_map">
-<span class="sig-name descname"><span class="pre">smooth_anomaly_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anomaly_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/padim/anomaly_map.html#AnomalyMapGenerator.smooth_anomaly_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.smooth_anomaly_map" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">smooth_anomaly_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anomaly_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/padim/anomaly_map.html#AnomalyMapGenerator.smooth_anomaly_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.smooth_anomaly_map" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply gaussian smoothing to the anomaly map.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>anomaly_map</strong> (<em>Tensor</em>) – Anomaly score for the test image(s).</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Filtered anomaly scores</p>
 </dd>
 </dl>
@@ -596,13 +596,13 @@ distribution.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.padim.anomaly_map.AnomalyMapGenerator.up_sample">
-<span class="sig-name descname"><span class="pre">up_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/padim/anomaly_map.html#AnomalyMapGenerator.up_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.up_sample" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">up_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/padim/anomaly_map.html#AnomalyMapGenerator.up_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.up_sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Up sample anomaly score to match the input image size.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>distance</strong> (<em>Tensor</em>) – Anomaly score computed via the mahalanobis distance.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Resized distance matrix matching the input image size</p>
 </dd>
 </dl>
@@ -678,49 +678,7 @@ distribution.</p>
 <li><a class="reference internal" href="#">Padim</a><ul>
 <li><a class="reference internal" href="#description">Description</a></li>
 <li><a class="reference internal" href="#architecture">Architecture</a></li>
-<li><a class="reference internal" href="#usage">Usage</a><ul>
-<li><a class="reference internal" href="#anomalib.models.padim.torch_model.PadimModel"><code class="docutils literal notranslate"><span class="pre">PadimModel</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.padim.torch_model.PadimModel.forward"><code class="docutils literal notranslate"><span class="pre">PadimModel.forward()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.torch_model.PadimModel.generate_embedding"><code class="docutils literal notranslate"><span class="pre">PadimModel.generate_embedding()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.torch_model.PadimModel.training"><code class="docutils literal notranslate"><span class="pre">PadimModel.training</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.Padim"><code class="docutils literal notranslate"><span class="pre">Padim</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.Padim.configure_optimizers"><code class="docutils literal notranslate"><span class="pre">Padim.configure_optimizers()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.Padim.on_validation_start"><code class="docutils literal notranslate"><span class="pre">Padim.on_validation_start()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.Padim.training_step"><code class="docutils literal notranslate"><span class="pre">Padim.training_step()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.Padim.validation_step"><code class="docutils literal notranslate"><span class="pre">Padim.validation_step()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.Padim.training"><code class="docutils literal notranslate"><span class="pre">Padim.training</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning"><code class="docutils literal notranslate"><span class="pre">PadimLightning</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.allow_zero_length_dataloader_with_multiple_devices"><code class="docutils literal notranslate"><span class="pre">PadimLightning.allow_zero_length_dataloader_with_multiple_devices</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.callbacks"><code class="docutils literal notranslate"><span class="pre">PadimLightning.callbacks</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.embeddings"><code class="docutils literal notranslate"><span class="pre">PadimLightning.embeddings</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.image_metrics"><code class="docutils literal notranslate"><span class="pre">PadimLightning.image_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.loss"><code class="docutils literal notranslate"><span class="pre">PadimLightning.loss</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.model"><code class="docutils literal notranslate"><span class="pre">PadimLightning.model</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.normalization_metrics"><code class="docutils literal notranslate"><span class="pre">PadimLightning.normalization_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.pixel_metrics"><code class="docutils literal notranslate"><span class="pre">PadimLightning.pixel_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.precision"><code class="docutils literal notranslate"><span class="pre">PadimLightning.precision</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.prepare_data_per_node"><code class="docutils literal notranslate"><span class="pre">PadimLightning.prepare_data_per_node</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.stats"><code class="docutils literal notranslate"><span class="pre">PadimLightning.stats</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.threshold_method"><code class="docutils literal notranslate"><span class="pre">PadimLightning.threshold_method</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.trainer"><code class="docutils literal notranslate"><span class="pre">PadimLightning.trainer</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.training"><code class="docutils literal notranslate"><span class="pre">PadimLightning.training</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator"><code class="docutils literal notranslate"><span class="pre">AnomalyMapGenerator</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.compute_anomaly_map"><code class="docutils literal notranslate"><span class="pre">AnomalyMapGenerator.compute_anomaly_map()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.compute_distance"><code class="docutils literal notranslate"><span class="pre">AnomalyMapGenerator.compute_distance()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.forward"><code class="docutils literal notranslate"><span class="pre">AnomalyMapGenerator.forward()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.smooth_anomaly_map"><code class="docutils literal notranslate"><span class="pre">AnomalyMapGenerator.smooth_anomaly_map()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.up_sample"><code class="docutils literal notranslate"><span class="pre">AnomalyMapGenerator.up_sample()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.training"><code class="docutils literal notranslate"><span class="pre">AnomalyMapGenerator.training</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
 </ul>
 </li>
 </ul>
@@ -735,9 +693,7 @@ distribution.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>

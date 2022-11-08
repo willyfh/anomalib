@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Padim" href="padim.html" /><link rel="prev" title="Fast-Flow" href="fastflow.html" />
 
-    <link rel="shortcut icon" href="../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
         <title>GANomaly - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -267,15 +267,15 @@
         </div>
         <article role="main">
           <section id="ganomaly">
-<h1>GANomaly<a class="headerlink" href="#ganomaly" title="Permalink to this heading">¶</a></h1>
+<h1>GANomaly<a class="headerlink" href="#ganomaly" title="Permalink to this headline">¶</a></h1>
 <p>This is the implementation of the <a class="reference external" href="https://arxiv.org/abs/1805.06725">GANomaly</a> paper.</p>
 <section id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading">¶</a></h2>
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>GANomaly uses the conditional GAN approach to train a Generator to produce images of the normal data. This Generator consists of an encoder-decoder-encoder architecture to generate the normal images. The distance between the latent vector $z$ between the first encoder-decoder and the output vector $hat{z}$ is minimized during training.</p>
 <p>The key idea here is that, during inference, when an anomalous image is passed through the first encoder the latent vector $z$ will not be able to capture the data correctly. This would leave to poor reconstruction $hat{x}$ thus resulting in a very different $hat{z}$. The difference between $z$ and $hat{z}$ gives the anomaly score.</p>
 </section>
 <section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python tools/train.py --model ganomaly
 </pre></div>
 </div>
@@ -284,10 +284,10 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.ganomaly.torch_model.Decoder">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.ganomaly.torch_model.</span></span><span class="sig-name descname"><span class="pre">Decoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_vec_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_input_channels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/torch_model.html#Decoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.Decoder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
 <p>Decoder Network.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input_size</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – Size of input image</p></li>
 <li><p><strong>latent_vec_size</strong> (<em>int</em>) – Size of latent vector z</p></li>
@@ -315,13 +315,13 @@ Defaults to 0.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.ganomaly.torch_model.Discriminator">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.ganomaly.torch_model.</span></span><span class="sig-name descname"><span class="pre">Discriminator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_input_channels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/torch_model.html#Discriminator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.Discriminator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
 <p>Discriminator.</p>
 <blockquote>
 <div><p>Made of only one encoder layer which takes x and x_hat to produce a score.</p>
 </div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input_size</strong> (<em>Tuple</em><em>[</em><em>int</em><em>,</em><em>int</em><em>]</em>) – Input image size.</p></li>
 <li><p><strong>num_input_channels</strong> (<em>int</em>) – Number of image channels.</p></li>
@@ -347,10 +347,10 @@ Defaults to 0.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.ganomaly.torch_model.Encoder">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.ganomaly.torch_model.</span></span><span class="sig-name descname"><span class="pre">Encoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_vec_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_input_channels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_final_conv_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/torch_model.html#Encoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.Encoder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
 <p>Encoder Network.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input_size</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – Size of input image</p></li>
 <li><p><strong>latent_vec_size</strong> (<em>int</em>) – Size of latent vector z</p></li>
@@ -364,7 +364,7 @@ Defaults to 0.</p></li>
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.ganomaly.torch_model.Encoder.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_tensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/torch_model.html#Encoder.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.Encoder.forward" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_tensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/torch_model.html#Encoder.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.Encoder.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return latent vectors.</p>
 </dd></dl>
 
@@ -378,10 +378,10 @@ Defaults to 0.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.ganomaly.torch_model.GanomalyModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.ganomaly.torch_model.</span></span><span class="sig-name descname"><span class="pre">GanomalyModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_input_channels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_vec_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_final_conv_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/torch_model.html#GanomalyModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.GanomalyModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
 <p>Ganomaly Model.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input_size</strong> (<em>Tuple</em><em>[</em><em>int</em><em>,</em><em>int</em><em>]</em>) – Input dimension.</p></li>
 <li><p><strong>num_input_channels</strong> (<em>int</em>) – Number of input channels.</p></li>
@@ -395,16 +395,16 @@ Defaults to 0.</p></li>
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.ganomaly.torch_model.GanomalyModel.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/torch_model.html#GanomalyModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.GanomalyModel.forward" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/torch_model.html#GanomalyModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.GanomalyModel.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get scores for batch.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>batch</strong> (<em>Tensor</em>) – Images</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Regeneration scores.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>Tensor</p>
 </dd>
 </dl>
@@ -412,10 +412,10 @@ Defaults to 0.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.ganomaly.torch_model.GanomalyModel.weights_init">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">weights_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/torch_model.html#GanomalyModel.weights_init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.GanomalyModel.weights_init" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">weights_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.nn.modules.module.Module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/torch_model.html#GanomalyModel.weights_init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.GanomalyModel.weights_init" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize DCGAN weights.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>module</strong> (<em>nn.Module</em>) – [description]</p>
 </dd>
 </dl>
@@ -431,11 +431,11 @@ Defaults to 0.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.ganomaly.torch_model.Generator">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.ganomaly.torch_model.</span></span><span class="sig-name descname"><span class="pre">Generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_vec_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_input_channels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_final_conv_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/torch_model.html#Generator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.torch_model.Generator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
 <p>Generator model.</p>
 <p>Made of an encoder-decoder-encoder architecture.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input_size</strong> (<em>Tuple</em><em>[</em><em>int</em><em>,</em><em>int</em><em>]</em>) – Size of input data.</p></li>
 <li><p><strong>latent_vec_size</strong> (<em>int</em>) – Dimension of latent vector produced between the first encoder-decoder.</p></li>
@@ -465,10 +465,10 @@ Defaults to 0.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.Ganomaly">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.ganomaly.lightning_model.</span></span><span class="sig-name descname"><span class="pre">Ganomaly</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_vec_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_final_conv_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wadv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wcon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wenc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0002</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.999</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/lightning_model.html#Ganomaly"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.Ganomaly" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/model/base.html#anomalib.models.components.base.AnomalyModule" title="anomalib.models.components.base.anomaly_module.AnomalyModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnomalyModule</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/model/base.html#anomalib.models.components.base.AnomalyModule" title="anomalib.models.components.base.anomaly_module.AnomalyModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">anomalib.models.components.base.anomaly_module.AnomalyModule</span></code></a></p>
 <p>PL Lightning Module for the GANomaly Algorithm.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>batch_size</strong> (<em>int</em>) – Batch size.</p></li>
 <li><p><strong>input_size</strong> (<em>Tuple</em><em>[</em><em>int</em><em>,</em><em>int</em><em>]</em>) – Input dimension.</p></li>
@@ -484,7 +484,7 @@ Defaults to 0.</p></li>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.Ganomaly.configure_optimizers">
-<span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Optimizer</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/lightning_model.html#Ganomaly.configure_optimizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.configure_optimizers" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.optim.optimizer.Optimizer</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/lightning_model.html#Ganomaly.configure_optimizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.configure_optimizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Configures optimizers for each decoder.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -496,10 +496,10 @@ config.yaml file or from CLI.</p>
 </div></blockquote>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Adam optimizer for each decoder</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>Optimizer</p>
 </dd>
 </dl>
@@ -534,16 +534,16 @@ config.yaml file or from CLI.</p>
 <span class="sig-name descname"><span class="pre">training_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer_idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/lightning_model.html#Ganomaly.training_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.training_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Training step.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>batch</strong> (<em>Dict</em>) – Input batch containing images.</p></li>
 <li><p><strong>optimizer_idx</strong> (<em>int</em>) – Optimizer which is being called for current training step.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Loss</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>Dict[str, Tensor]</p>
 </dd>
 </dl>
@@ -557,16 +557,16 @@ config.yaml file or from CLI.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.Ganomaly.validation_step">
-<span class="sig-name descname"><span class="pre">validation_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/lightning_model.html#Ganomaly.validation_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.validation_step" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">validation_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/lightning_model.html#Ganomaly.validation_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.validation_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update min and max scores from the current step.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>batch</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Tensor</em><em>]</em>) – Predicted difference between z and z_hat.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>batch</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>Dict[str, Tensor]</p>
 </dd>
 </dl>
@@ -581,11 +581,11 @@ config.yaml file or from CLI.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.ganomaly.lightning_model.GanomalyLightning">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.ganomaly.lightning_model.</span></span><span class="sig-name descname"><span class="pre">GanomalyLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly" title="anomalib.models.ganomaly.lightning_model.Ganomaly"><code class="xref py py-class docutils literal notranslate"><span class="pre">Ganomaly</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.ganomaly.lightning_model.</span></span><span class="sig-name descname"><span class="pre">GanomalyLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.dictconfig.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/ganomaly/lightning_model.html#GanomalyLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly" title="anomalib.models.ganomaly.lightning_model.Ganomaly"><code class="xref py py-class docutils literal notranslate"><span class="pre">anomalib.models.ganomaly.lightning_model.Ganomaly</span></code></a></p>
 <p>PL Lightning Module for the GANomaly Algorithm.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>hparams</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model params</p>
 </dd>
 </dl>
@@ -738,65 +738,7 @@ config.yaml file or from CLI.</p>
             <ul>
 <li><a class="reference internal" href="#">GANomaly</a><ul>
 <li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#usage">Usage</a><ul>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Decoder.forward"><code class="docutils literal notranslate"><span class="pre">Decoder.forward()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Decoder.training"><code class="docutils literal notranslate"><span class="pre">Decoder.training</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Discriminator"><code class="docutils literal notranslate"><span class="pre">Discriminator</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Discriminator.forward"><code class="docutils literal notranslate"><span class="pre">Discriminator.forward()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Discriminator.training"><code class="docutils literal notranslate"><span class="pre">Discriminator.training</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Encoder"><code class="docutils literal notranslate"><span class="pre">Encoder</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Encoder.forward"><code class="docutils literal notranslate"><span class="pre">Encoder.forward()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Encoder.training"><code class="docutils literal notranslate"><span class="pre">Encoder.training</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.GanomalyModel"><code class="docutils literal notranslate"><span class="pre">GanomalyModel</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.GanomalyModel.forward"><code class="docutils literal notranslate"><span class="pre">GanomalyModel.forward()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.GanomalyModel.weights_init"><code class="docutils literal notranslate"><span class="pre">GanomalyModel.weights_init()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.GanomalyModel.training"><code class="docutils literal notranslate"><span class="pre">GanomalyModel.training</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Generator"><code class="docutils literal notranslate"><span class="pre">Generator</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Generator.forward"><code class="docutils literal notranslate"><span class="pre">Generator.forward()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.torch_model.Generator.training"><code class="docutils literal notranslate"><span class="pre">Generator.training</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly"><code class="docutils literal notranslate"><span class="pre">Ganomaly</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.configure_optimizers"><code class="docutils literal notranslate"><span class="pre">Ganomaly.configure_optimizers()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.on_test_start"><code class="docutils literal notranslate"><span class="pre">Ganomaly.on_test_start()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.on_validation_start"><code class="docutils literal notranslate"><span class="pre">Ganomaly.on_validation_start()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.test_epoch_end"><code class="docutils literal notranslate"><span class="pre">Ganomaly.test_epoch_end()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.test_step"><code class="docutils literal notranslate"><span class="pre">Ganomaly.test_step()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.training_step"><code class="docutils literal notranslate"><span class="pre">Ganomaly.training_step()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.validation_epoch_end"><code class="docutils literal notranslate"><span class="pre">Ganomaly.validation_epoch_end()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.validation_step"><code class="docutils literal notranslate"><span class="pre">Ganomaly.validation_step()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.Ganomaly.training"><code class="docutils literal notranslate"><span class="pre">Ganomaly.training</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning"><code class="docutils literal notranslate"><span class="pre">GanomalyLightning</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.configure_callbacks"><code class="docutils literal notranslate"><span class="pre">GanomalyLightning.configure_callbacks()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.allow_zero_length_dataloader_with_multiple_devices"><code class="docutils literal notranslate"><span class="pre">GanomalyLightning.allow_zero_length_dataloader_with_multiple_devices</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.callbacks"><code class="docutils literal notranslate"><span class="pre">GanomalyLightning.callbacks</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.image_metrics"><code class="docutils literal notranslate"><span class="pre">GanomalyLightning.image_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.loss"><code class="docutils literal notranslate"><span class="pre">GanomalyLightning.loss</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.max_scores"><code class="docutils literal notranslate"><span class="pre">GanomalyLightning.max_scores</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.min_scores"><code class="docutils literal notranslate"><span class="pre">GanomalyLightning.min_scores</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.model"><code class="docutils literal notranslate"><span class="pre">GanomalyLightning.model</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.normalization_metrics"><code class="docutils literal notranslate"><span class="pre">GanomalyLightning.normalization_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.pixel_metrics"><code class="docutils literal notranslate"><span class="pre">GanomalyLightning.pixel_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.precision"><code class="docutils literal notranslate"><span class="pre">GanomalyLightning.precision</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.prepare_data_per_node"><code class="docutils literal notranslate"><span class="pre">GanomalyLightning.prepare_data_per_node</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.threshold_method"><code class="docutils literal notranslate"><span class="pre">GanomalyLightning.threshold_method</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.trainer"><code class="docutils literal notranslate"><span class="pre">GanomalyLightning.trainer</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.ganomaly.lightning_model.GanomalyLightning.training"><code class="docutils literal notranslate"><span class="pre">GanomalyLightning.training</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
 </ul>
 </li>
 </ul>
@@ -811,9 +753,7 @@ config.yaml file or from CLI.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>

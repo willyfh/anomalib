@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 <link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
-    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
         <title>Anomalib DataModules - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -267,7 +267,7 @@
         </div>
         <article role="main">
           <section id="anomalib-datamodules">
-<h1>Anomalib DataModules<a class="headerlink" href="#anomalib-datamodules" title="Permalink to this heading">¶</a></h1>
+<h1>Anomalib DataModules<a class="headerlink" href="#anomalib-datamodules" title="Permalink to this headline">¶</a></h1>
 <p>The notebooks in this section demonstrate the mechanics of anomalib data modules, with a specific focus on benchmarks such as MVTec AD, BTech, and custom datasets via the Folder module. Anomalib data modules are structured as follows: Each data collection implements the Torch Dataset and the PyTorch Lightning DataModule objects.</p>
 <p>The Torch Dataset inherits <code class="docutils literal notranslate"><span class="pre">torch.utils.data.Dataset</span></code> and implement the <code class="docutils literal notranslate"><span class="pre">__len__</span></code> and <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> methods. This implementation might therefore be utilized not just for anomalib, but also for other implementations.</p>
 <p>The DataModule implementation inherits the PyTorch Lightning <code class="docutils literal notranslate"><span class="pre">DataModule</span></code> object. The advantage of this class is that it organizes each step of data from download to creating the Torch dataloader.</p>
@@ -328,9 +328,7 @@
 </div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>

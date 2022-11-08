@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Use BeanTech Dataset via API" href="notebooks/100_datamodules/101_btech.html" /><link rel="prev" title="Training with Custom Data" href="train_custom_data.html" />
 
-    <link rel="shortcut icon" href="../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
         <title>Adding a New Model to Anomalib - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -267,7 +267,7 @@
         </div>
         <article role="main">
           <section id="adding-a-new-model-to-anomalib">
-<h1>Adding a New Model to Anomalib<a class="headerlink" href="#adding-a-new-model-to-anomalib" title="Permalink to this heading">¶</a></h1>
+<h1>Adding a New Model to Anomalib<a class="headerlink" href="#adding-a-new-model-to-anomalib" title="Permalink to this headline">¶</a></h1>
 <p>Anomalib aims to have the implementation of the state-of-the-art algorithms published in the literature. To integrate an anomaly detection model into anomalib, the following steps should be followed:</p>
 <ul class="simple">
 <li><p>Create a new sub-package</p></li>
@@ -280,7 +280,7 @@
 <li><p>Create a <code class="docutils literal notranslate"><span class="pre">README.md</span></code> file.</p></li>
 </ul>
 <section id="create-a-new-sub-package">
-<h2>Create a New Sub Package<a class="headerlink" href="#create-a-new-sub-package" title="Permalink to this heading">¶</a></h2>
+<h2>Create a New Sub Package<a class="headerlink" href="#create-a-new-sub-package" title="Permalink to this headline">¶</a></h2>
 <p>This is a new directory to be created in <code class="docutils literal notranslate"><span class="pre">anomalib/models</span></code> to store the model-related files. The overall outline would be as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./anomalib/models/&lt;new-model&gt;
 ├── __init__.py
@@ -294,7 +294,7 @@
 </div>
 </section>
 <section id="create-a-config-yaml-file">
-<h2>Create a <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code> file<a class="headerlink" href="#create-a-config-yaml-file" title="Permalink to this heading">¶</a></h2>
+<h2>Create a <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code> file<a class="headerlink" href="#create-a-config-yaml-file" title="Permalink to this headline">¶</a></h2>
 <p>This file stores all the configurations, from data to optimization options. An exemplary yaml file is shown below. For a full configuration file, you could refer to one of the existing model implementations, such as <a class="reference external" href="https://github.com/openvinotoolkit/anomalib/blob/main/anomalib/models/patchcore/config.yaml">patchcore configuration.</a></p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">dataset</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mvtec</span><span class="w"> </span><span class="c1">#options: [mvtec, btech, folder]</span><span class="w"></span>
@@ -319,7 +319,7 @@
 </div>
 </section>
 <section id="create-a-torch-model-py-module">
-<h2>Create a <code class="docutils literal notranslate"><span class="pre">torch_model.py</span></code> Module<a class="headerlink" href="#create-a-torch-model-py-module" title="Permalink to this heading">¶</a></h2>
+<h2>Create a <code class="docutils literal notranslate"><span class="pre">torch_model.py</span></code> Module<a class="headerlink" href="#create-a-torch-model-py-module" title="Permalink to this headline">¶</a></h2>
 <p>This file contains the torch model implementation that inherits from <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>, defines the model architecture and performs a basic forward-pass. The advantage of storing the model in a separate <code class="docutils literal notranslate"><span class="pre">torch_model.py</span></code> file is that the model is de-coupled from the rest of the anomalib implementations and could be used outside the library as well. Basic implementation would look like as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NewModelModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;New Model Module.&quot;&quot;&quot;</span>
@@ -331,7 +331,7 @@
 </div>
 </section>
 <section id="create-a-lightning-model-py-module">
-<h2>Create a <code class="docutils literal notranslate"><span class="pre">lightning_model.py</span></code> Module<a class="headerlink" href="#create-a-lightning-model-py-module" title="Permalink to this heading">¶</a></h2>
+<h2>Create a <code class="docutils literal notranslate"><span class="pre">lightning_model.py</span></code> Module<a class="headerlink" href="#create-a-lightning-model-py-module" title="Permalink to this headline">¶</a></h2>
 <p>This module contains the lightning model implementation that inherits from the <code class="docutils literal notranslate"><span class="pre">AnomalModule</span></code>, which already has the <code class="docutils literal notranslate"><span class="pre">anomalib</span></code> related attributes and methods. The user does not need to worry about the boilerplate code and only needs to implement the training and validation logic of the algorithm.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NewModel</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;PL Lightning Module for the New Model.&quot;&quot;&quot;</span>
@@ -347,7 +347,7 @@
 </div>
 </section>
 <section id="create-a-loss-py-file-optional">
-<h2>Create a <code class="docutils literal notranslate"><span class="pre">loss.py</span></code> File - [Optional]<a class="headerlink" href="#create-a-loss-py-file-optional" title="Permalink to this heading">¶</a></h2>
+<h2>Create a <code class="docutils literal notranslate"><span class="pre">loss.py</span></code> File - [Optional]<a class="headerlink" href="#create-a-loss-py-file-optional" title="Permalink to this headline">¶</a></h2>
 <p>This module’s availability is dependent on the algorithm. If the algorithm requires a custom, complex loss function, this file may contain the subclass of the torch.nn.Module class implementation. This loss would subsequently be utilized by the lightning module.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NewModelLoss</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;NewModel Loss.&quot;&quot;&quot;</span>
@@ -359,7 +359,7 @@
 </div>
 </section>
 <section id="create-an-anomaly-map-py-file-optional">
-<h2>Create an <code class="docutils literal notranslate"><span class="pre">anomaly_map.py</span></code> File - [Optional]<a class="headerlink" href="#create-an-anomaly-map-py-file-optional" title="Permalink to this heading">¶</a></h2>
+<h2>Create an <code class="docutils literal notranslate"><span class="pre">anomaly_map.py</span></code> File - [Optional]<a class="headerlink" href="#create-an-anomaly-map-py-file-optional" title="Permalink to this headline">¶</a></h2>
 <p>Similar to the loss.py module, the anomaly map.py module is optional depending on the capabilities of the algorithm. This module may be implemented if the algorithm supports segmentation so that the location of the anomaly can be predicted pixel-by-pixel.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AnomalyMapGenerator</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generate Anomaly Heatmap.&quot;&quot;&quot;</span>
@@ -375,7 +375,7 @@
 </div>
 </section>
 <section id="create-a-readme-md-file">
-<h2>Create a <code class="docutils literal notranslate"><span class="pre">README.md</span></code> File<a class="headerlink" href="#create-a-readme-md-file" title="Permalink to this heading">¶</a></h2>
+<h2>Create a <code class="docutils literal notranslate"><span class="pre">README.md</span></code> File<a class="headerlink" href="#create-a-readme-md-file" title="Permalink to this headline">¶</a></h2>
 <p>Once the implementation is done, this readme file would describe the model using the following structure.</p>
 <div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="gh"># Name of the Model</span>
 
@@ -394,7 +394,7 @@ Benchmark results on MVTec categories.
 </div>
 </section>
 <section id="add-model-to-the-tests">
-<h2>Add Model to the Tests<a class="headerlink" href="#add-model-to-the-tests" title="Permalink to this heading">¶</a></h2>
+<h2>Add Model to the Tests<a class="headerlink" href="#add-model-to-the-tests" title="Permalink to this headline">¶</a></h2>
 <p>It is essential that newly added models do not disrupt the workflow and that their components are continually inspected. In this regard, the model will be added to our list of tested models.</p>
 <p>To test the model, you need to add the model name <a class="reference external" href="https://github.com/openvinotoolkit/anomalib/blob/main/tests/pre_merge/models/test_model_premerge.py#L18">here</a>.</p>
 <p>The list of models to test would then become,</p>
@@ -425,7 +425,7 @@ Benchmark results on MVTec categories.
 </div>
 </section>
 <section id="add-model-to-the-docs">
-<h2>Add Model to the Docs<a class="headerlink" href="#add-model-to-the-docs" title="Permalink to this heading">¶</a></h2>
+<h2>Add Model to the Docs<a class="headerlink" href="#add-model-to-the-docs" title="Permalink to this headline">¶</a></h2>
 <p>Final step would be to add the model to the docs. To do so, one would create a <code class="docutils literal notranslate"><span class="pre">newmodel.rst</span></code> file in <code class="docutils literal notranslate"><span class="pre">docs/reference_guide/algorithms</span></code>, and include it in <code class="docutils literal notranslate"><span class="pre">docs/reference_guide/algorithms/index.rst</span></code> as follows:</p>
 <div class="highlight-sphinx notranslate"><div class="highlight"><pre><span></span>.. _available models:
 
@@ -527,9 +527,7 @@ newmodel
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>
