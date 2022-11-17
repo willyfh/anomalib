@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="How to Guides" href="../how_to_guides/index.html" /><link rel="prev" title="Logging" href="logging.html" />
 
-    <link rel="shortcut icon" href="../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>Hyperparameter Optimization - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -267,10 +267,10 @@
         </div>
         <article role="main">
           <section id="hyperparameter-optimization">
-<h1>Hyperparameter Optimization<a class="headerlink" href="#hyperparameter-optimization" title="Permalink to this headline">¶</a></h1>
+<h1>Hyperparameter Optimization<a class="headerlink" href="#hyperparameter-optimization" title="Permalink to this heading">¶</a></h1>
 <p>The default configuration for the models will not always work on a new dataset. Additionally, to increase performance, learning rate, optimizers, activation functions, etc. need to be tuned/selected. To make it easier to run such broad experiments that isolate the right combination of hyperparameters, Anomalib supports hyperparameter optimization using Comet or weights and biases.</p>
 <section id="yaml-file">
-<h2>YAML file<a class="headerlink" href="#yaml-file" title="Permalink to this headline">¶</a></h2>
+<h2>YAML file<a class="headerlink" href="#yaml-file" title="Permalink to this heading">¶</a></h2>
 <p>A Sample configuration files for hyperparameter optimization with Comet is provided at <code class="docutils literal notranslate"><span class="pre">tools/hpo/configs/comet.yaml</span></code> and reproduced below:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bayes&quot;</span><span class="w"></span>
 <span class="nt">spec</span><span class="p">:</span><span class="w"></span>
@@ -310,7 +310,7 @@
 <p>Everything under the <code class="docutils literal notranslate"><span class="pre">parameters</span></code> key (in both configuration formats) overrides the default values defined in the model configuration. In these examples, only the dataset and model parameters are overridden for the HPO search.</p>
 </section>
 <section id="running-hpo">
-<h2>Running HPO<a class="headerlink" href="#running-hpo" title="Permalink to this headline">¶</a></h2>
+<h2>Running HPO<a class="headerlink" href="#running-hpo" title="Permalink to this heading">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You will need to have logged into a Comet or wandb account to use HPO search and view the results.</p>
@@ -327,7 +327,7 @@
 </div>
 </section>
 <section id="sample-output">
-<h2>Sample Output<a class="headerlink" href="#sample-output" title="Permalink to this headline">¶</a></h2>
+<h2>Sample Output<a class="headerlink" href="#sample-output" title="Permalink to this heading">¶</a></h2>
 <figure class="align-default" id="id1">
 <img alt="Sample configuration of a Comet sweep" src="../_images/comet_sweep.png" />
 <figcaption>
@@ -418,7 +418,9 @@
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>

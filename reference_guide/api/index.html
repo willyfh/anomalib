@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="CLI" href="cli.html" /><link rel="prev" title="Reference Guide" href="../index.html" />
 
-    <link rel="shortcut icon" href="../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>API Reference - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -267,12 +267,20 @@
         </div>
         <article role="main">
           <section id="api-reference">
-<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="cli.html">CLI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">CLI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cli.html#anomalib.utils.cli.AnomalibCLI"><code class="docutils literal notranslate"><span class="pre">AnomalibCLI</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#anomalib.config.get_configurable_parameters"><code class="docutils literal notranslate"><span class="pre">get_configurable_parameters()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#anomalib.config.update_input_size_config"><code class="docutils literal notranslate"><span class="pre">update_input_size_config()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#anomalib.config.update_nncf_config"><code class="docutils literal notranslate"><span class="pre">update_nncf_config()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="data/index.html">Dataset</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="data/btech.html">Btech Dataset</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data/mvtec.html">MVTec Dataset</a></li>
@@ -290,15 +298,53 @@
 <li class="toctree-l2"><a class="reference internal" href="model/stats.html">Stats</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="post_processing.html">Post Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="post_processing.html">Post Processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="post_processing.html#anomalib.post_processing.ImageResult"><code class="docutils literal notranslate"><span class="pre">ImageResult</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="post_processing.html#anomalib.post_processing.NormalizationMethod"><code class="docutils literal notranslate"><span class="pre">NormalizationMethod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="post_processing.html#anomalib.post_processing.ThresholdMethod"><code class="docutils literal notranslate"><span class="pre">ThresholdMethod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="post_processing.html#anomalib.post_processing.Visualizer"><code class="docutils literal notranslate"><span class="pre">Visualizer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="post_processing.html#anomalib.post_processing.add_anomalous_label"><code class="docutils literal notranslate"><span class="pre">add_anomalous_label()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="post_processing.html#anomalib.post_processing.add_normal_label"><code class="docutils literal notranslate"><span class="pre">add_normal_label()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="post_processing.html#anomalib.post_processing.anomaly_map_to_color_map"><code class="docutils literal notranslate"><span class="pre">anomaly_map_to_color_map()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="post_processing.html#anomalib.post_processing.compute_mask"><code class="docutils literal notranslate"><span class="pre">compute_mask()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="post_processing.html#anomalib.post_processing.superimpose_anomaly_map"><code class="docutils literal notranslate"><span class="pre">superimpose_anomaly_map()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="metrics.html#list-of-metric-names">List of metric names</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metrics.html#mapping-of-metric-names-to-class-path-and-init-args">Mapping of metric names to class path and init args</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="loggers.html">Loggers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sweep.html">Sweep</a></li>
-<li class="toctree-l1"><a class="reference internal" href="callbacks.html">Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loggers.html">Loggers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="loggers.html#anomalib.utils.loggers.AnomalibCometLogger"><code class="docutils literal notranslate"><span class="pre">AnomalibCometLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="loggers.html#anomalib.utils.loggers.AnomalibTensorBoardLogger"><code class="docutils literal notranslate"><span class="pre">AnomalibTensorBoardLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="loggers.html#anomalib.utils.loggers.AnomalibWandbLogger"><code class="docutils literal notranslate"><span class="pre">AnomalibWandbLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="loggers.html#anomalib.utils.loggers.configure_logger"><code class="docutils literal notranslate"><span class="pre">configure_logger()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="loggers.html#anomalib.utils.loggers.get_experiment_logger"><code class="docutils literal notranslate"><span class="pre">get_experiment_logger()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sweep.html">Sweep</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sweep.html#anomalib.utils.sweep.flatten_sweep_params"><code class="docutils literal notranslate"><span class="pre">flatten_sweep_params()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sweep.html#anomalib.utils.sweep.get_openvino_throughput"><code class="docutils literal notranslate"><span class="pre">get_openvino_throughput()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sweep.html#anomalib.utils.sweep.get_run_config"><code class="docutils literal notranslate"><span class="pre">get_run_config()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sweep.html#anomalib.utils.sweep.get_sweep_callbacks"><code class="docutils literal notranslate"><span class="pre">get_sweep_callbacks()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sweep.html#anomalib.utils.sweep.get_torch_throughput"><code class="docutils literal notranslate"><span class="pre">get_torch_throughput()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sweep.html#anomalib.utils.sweep.set_in_nested_config"><code class="docutils literal notranslate"><span class="pre">set_in_nested_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="callbacks.html">Callbacks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="callbacks.html#anomalib.utils.callbacks.CdfNormalizationCallback"><code class="docutils literal notranslate"><span class="pre">CdfNormalizationCallback</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="callbacks.html#anomalib.utils.callbacks.GraphLogger"><code class="docutils literal notranslate"><span class="pre">GraphLogger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="callbacks.html#anomalib.utils.callbacks.ImageVisualizerCallback"><code class="docutils literal notranslate"><span class="pre">ImageVisualizerCallback</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="callbacks.html#anomalib.utils.callbacks.LoadModelCallback"><code class="docutils literal notranslate"><span class="pre">LoadModelCallback</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="callbacks.html#anomalib.utils.callbacks.MetricVisualizerCallback"><code class="docutils literal notranslate"><span class="pre">MetricVisualizerCallback</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="callbacks.html#anomalib.utils.callbacks.MetricsConfigurationCallback"><code class="docutils literal notranslate"><span class="pre">MetricsConfigurationCallback</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="callbacks.html#anomalib.utils.callbacks.MinMaxNormalizationCallback"><code class="docutils literal notranslate"><span class="pre">MinMaxNormalizationCallback</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="callbacks.html#anomalib.utils.callbacks.PostProcessingConfigurationCallback"><code class="docutils literal notranslate"><span class="pre">PostProcessingConfigurationCallback</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="callbacks.html#anomalib.utils.callbacks.TilerConfigurationCallback"><code class="docutils literal notranslate"><span class="pre">TilerConfigurationCallback</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="callbacks.html#anomalib.utils.callbacks.TimerCallback"><code class="docutils literal notranslate"><span class="pre">TimerCallback</span></code></a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -357,7 +403,9 @@
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>

@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Adding a New Model to Anomalib" href="adding_a_new_model.html" /><link rel="prev" title="How to Guides" href="index.html" />
 
-    <link rel="shortcut icon" href="../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>Training with Custom Data - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -267,28 +267,28 @@
         </div>
         <article role="main">
           <section id="training-with-custom-data">
-<h1>Training with Custom Data<a class="headerlink" href="#training-with-custom-data" title="Permalink to this headline">¶</a></h1>
+<h1>Training with Custom Data<a class="headerlink" href="#training-with-custom-data" title="Permalink to this heading">¶</a></h1>
 <p>Anomalib supports a number of datasets in various formats, including the state-of-the-art anomaly detection benchmarks such as MVTec AD and BeanTech. For those who would like to use the library on their custom datasets, anomalib also provides a <code class="docutils literal notranslate"><span class="pre">Folder</span></code> datamodule that can load datasets from a folder on a file system. The scope of this post will be to train anomalib models on custom datasets using the <code class="docutils literal notranslate"><span class="pre">Folder</span></code> datamodule.</p>
 <section id="step-1-install-anomalib">
-<h2>Step 1: Install Anomalib<a class="headerlink" href="#step-1-install-anomalib" title="Permalink to this headline">¶</a></h2>
+<h2>Step 1: Install Anomalib<a class="headerlink" href="#step-1-install-anomalib" title="Permalink to this heading">¶</a></h2>
 <section id="option-1-pypi">
-<h3>Option - 1 : PyPI<a class="headerlink" href="#option-1-pypi" title="Permalink to this headline">¶</a></h3>
+<h3>Option - 1 : PyPI<a class="headerlink" href="#option-1-pypi" title="Permalink to this heading">¶</a></h3>
 <p>Anomalib can be installed from PyPI via the following:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install anomalib
 </pre></div>
 </div>
 </section>
 <section id="option-2-editable-install">
-<h3>Option - 2: Editable Install<a class="headerlink" href="#option-2-editable-install" title="Permalink to this headline">¶</a></h3>
+<h3>Option - 2: Editable Install<a class="headerlink" href="#option-2-editable-install" title="Permalink to this heading">¶</a></h3>
 <p>Alternatively, it is also possible to do editable install:</p>
 </section>
 </section>
 <section id="step-2-collect-your-custom-dataset">
-<span id="collect-your-custom-dataset"></span><h2>Step 2: Collect Your Custom Dataset<a class="headerlink" href="#step-2-collect-your-custom-dataset" title="Permalink to this headline">¶</a></h2>
+<span id="collect-your-custom-dataset"></span><h2>Step 2: Collect Your Custom Dataset<a class="headerlink" href="#step-2-collect-your-custom-dataset" title="Permalink to this heading">¶</a></h2>
 <p>Anomalib supports multiple image extensions such as <code class="docutils literal notranslate"><span class="pre">&quot;.jpg&quot;,</span> <span class="pre">&quot;.jpeg&quot;,</span> <span class="pre">&quot;.png&quot;,</span> <span class="pre">&quot;.ppm&quot;,</span> <span class="pre">&quot;.bmp&quot;,</span> <span class="pre">&quot;.pgm&quot;,</span> <span class="pre">&quot;.tif&quot;,</span> <span class="pre">&quot;.tiff&quot;,</span> <span class="pre">and</span> <span class="pre">&quot;.webp&quot;</span></code>. A dataset can be collected from images that have any of these extensions.</p>
 </section>
 <section id="step-3-format-your-dataset">
-<h2>Step 3: Format your dataset<a class="headerlink" href="#step-3-format-your-dataset" title="Permalink to this headline">¶</a></h2>
+<h2>Step 3: Format your dataset<a class="headerlink" href="#step-3-format-your-dataset" title="Permalink to this heading">¶</a></h2>
 <p>Depending on the use-case and collection, custom datasets can have different formats, some of which are listed below:</p>
 <ul class="simple">
 <li><p>A dataset with good and bad images.</p></li>
@@ -299,7 +299,7 @@
 <p>Load your data to the following directory structure. Anomalib will use all images in the <code class="docutils literal notranslate"><span class="pre">colour</span></code> folder as part of the validation dataset and then randomly split the good images for training and validation.</p>
 </section>
 <section id="step-4-modify-config-file">
-<h2>Step 4: Modify Config File<a class="headerlink" href="#step-4-modify-config-file" title="Permalink to this headline">¶</a></h2>
+<h2>Step 4: Modify Config File<a class="headerlink" href="#step-4-modify-config-file" title="Permalink to this heading">¶</a></h2>
 <p>A YAML configuration file is necessary to run training for Anomalib. The training configuration parameters are categorized into 5 sections: <code class="docutils literal notranslate"><span class="pre">dataset</span></code>, <code class="docutils literal notranslate"><span class="pre">model</span></code>, <code class="docutils literal notranslate"><span class="pre">project</span></code>, <code class="docutils literal notranslate"><span class="pre">logging</span></code>, <code class="docutils literal notranslate"><span class="pre">trainer</span></code>.</p>
 <p>To get Anomalib functionally working with a custom dataset, one only needs to change the <code class="docutils literal notranslate"><span class="pre">dataset</span></code> section of the configuration file.</p>
 <p>Below is an example of what the dataset parameters would look like for our <code class="docutils literal notranslate"><span class="pre">hazelnut_toy</span></code> folder specified in <a class="reference internal" href="#collect-your-custom-dataset"><span class="std std-ref">Step 2</span></a>.</p>
@@ -346,14 +346,14 @@
 </div>
 </section>
 <section id="step-5-run-training">
-<h2>Step 5: Run Training<a class="headerlink" href="#step-5-run-training" title="Permalink to this headline">¶</a></h2>
+<h2>Step 5: Run Training<a class="headerlink" href="#step-5-run-training" title="Permalink to this heading">¶</a></h2>
 <p>As per the config file, move <code class="docutils literal notranslate"><span class="pre">Hazelnut_toy</span></code> to the datasets section in the main root directory of anomalib, and then run</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python tools/train.py --config custom_padim.yaml
 </pre></div>
 </div>
 </section>
 <section id="step-6-interpret-results">
-<h2>Step 6: Interpret Results<a class="headerlink" href="#step-6-interpret-results" title="Permalink to this headline">¶</a></h2>
+<h2>Step 6: Interpret Results<a class="headerlink" href="#step-6-interpret-results" title="Permalink to this heading">¶</a></h2>
 <p>Anomalib will print out results of the trained model on the validation dataset. The printed metrics are dependent on the task mode chosen. The classification example provided in this tutorial prints out two scores: F1 and AUROC. The F1 score is a metric which values both the precision and recall, more information on its calculation can be found in this <a class="reference external" href="https://towardsdatascience.com/understanding-accuracy-recall-precision-f1-scores-and-confusion-matrices-561e0f5e328c">blog</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -377,7 +377,7 @@
 <img alt="../_images/hazelnut_results.gif" class="align-center" src="../_images/hazelnut_results.gif" />
 </section>
 <section id="logging-and-experiment-management">
-<h2>Logging and Experiment Management<a class="headerlink" href="#logging-and-experiment-management" title="Permalink to this headline">¶</a></h2>
+<h2>Logging and Experiment Management<a class="headerlink" href="#logging-and-experiment-management" title="Permalink to this heading">¶</a></h2>
 <p>While it is delightful to know how good your model performed on your preferred metric, it is even more exciting to see the predicted outputs. Anomalib provides a couple of ways to log and track experiments. These can be used individually or in a combination. As of the current release, you can save images to a local folder, or upload to comet, weights and biases, or TensorBoard.</p>
 <p>To select where you would like to save the images, change the <code class="docutils literal notranslate"><span class="pre">log_images</span></code> parameter in the <code class="docutils literal notranslate"><span class="pre">Visualization</span></code> section in the config file to true.</p>
 <p>For example, setting the following <code class="docutils literal notranslate"><span class="pre">log_images:</span> <span class="pre">True</span></code> will result in saving the images in the results folder as shown in the tree structure below:</p>
@@ -398,7 +398,7 @@
 </pre></div>
 </div>
 <section id="logging-to-tensorboard-and-or-w-b">
-<h3>Logging to Tensorboard and/or W&amp;B<a class="headerlink" href="#logging-to-tensorboard-and-or-w-b" title="Permalink to this headline">¶</a></h3>
+<h3>Logging to Tensorboard and/or W&amp;B<a class="headerlink" href="#logging-to-tensorboard-and-or-w-b" title="Permalink to this heading">¶</a></h3>
 <p>To use TensorBoard and/or W&amp;B logger and/or Comet logger, ensure that the logger parameter is set to <code class="docutils literal notranslate"><span class="pre">comet</span></code>, <code class="docutils literal notranslate"><span class="pre">tensorboard</span></code>, <code class="docutils literal notranslate"><span class="pre">wandb</span></code> or <code class="docutils literal notranslate"><span class="pre">[tensorboard,</span> <span class="pre">wandb]</span></code> in the <code class="docutils literal notranslate"><span class="pre">logging</span></code> section of the config file.</p>
 <p>An example configuration for saving to TensorBoard is shown in the figure below. Similarly after setting logger to <code class="docutils literal notranslate"><span class="pre">wandb</span></code> or ‘comet’ you will see the images on your wandb and/or comet project dashboard.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">visualization</span><span class="p">:</span><span class="w"></span>
@@ -416,7 +416,7 @@
 <img alt="../_images/logging.gif" class="align-center" src="../_images/logging.gif" />
 </section>
 <section id="hyper-parameter-optimization">
-<h3>Hyper-Parameter Optimization<a class="headerlink" href="#hyper-parameter-optimization" title="Permalink to this headline">¶</a></h3>
+<h3>Hyper-Parameter Optimization<a class="headerlink" href="#hyper-parameter-optimization" title="Permalink to this heading">¶</a></h3>
 <p>It is very rare to find a model which works out of the box for a particular dataset. However, fortunately, we support tools which work out of the box to help tune the models in Anomalib to your particular dataset. As of the publication of this blog post, Anomalib supports <a class="reference external" href="https://wandb.ai/">weights and biases</a> for hyperparameter optimization. To get started have a look at <code class="docutils literal notranslate"><span class="pre">sweep.yaml</span></code> located at <code class="docutils literal notranslate"><span class="pre">tools/hpo</span></code>. It provides a sample of how one can define a hyperparameter sweep.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">observation_budget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
 <span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bayes</span><span class="w"></span>
@@ -447,7 +447,7 @@
 </section>
 </section>
 <section id="benchmarking">
-<h2>Benchmarking<a class="headerlink" href="#benchmarking" title="Permalink to this headline">¶</a></h2>
+<h2>Benchmarking<a class="headerlink" href="#benchmarking" title="Permalink to this heading">¶</a></h2>
 <p>To add to the suit of experiment tracking and optimization, anomalib also includes a benchmarking script for gathering results across different combinations of models, their parameters, and dataset categories. The model performance and throughputs are logged into a csv file that can also serve as a means to track model drift. Optionally, these same results can be logged to Weights and Biases and TensorBoard. A sample configuration file is shown in the screenshot below.</p>
 <p>This configuration computes the throughput and performance metrics for CPU and GPU for two categories of the toy dataset for Padim and STFPM models. The dataset can be configured in the respective model configuration files. By default, <code class="docutils literal notranslate"><span class="pre">compute_openvino</span></code> is set to False to support instances where OpenVINO requirements are not installed in the environment. Once installed, this flag can be set to True to get throughput on OpenVINO optimized models. The writer parameter is optional and can be set to <code class="docutils literal notranslate"><span class="pre">writer:</span> <span class="pre">[]</span></code> in case the user only requires a csv file without logging to TensorBoard or Weights and Biases. It is also a good practice to set a value of seed to ensure reproducibility across runs and thus, is set to a non-zero value by default.</p>
 <p>Once a configuration is decided, benchmarking can easily be performed by calling</p>
@@ -551,7 +551,9 @@
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>

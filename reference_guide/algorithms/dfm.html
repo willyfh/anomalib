@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Draem" href="draem.html" /><link rel="prev" title="DFKDE" href="dfkde.html" />
 
-    <link rel="shortcut icon" href="../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>DFM - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -267,23 +267,23 @@
         </div>
         <article role="main">
           <section id="dfm">
-<h1>DFM<a class="headerlink" href="#dfm" title="Permalink to this headline">¶</a></h1>
+<h1>DFM<a class="headerlink" href="#dfm" title="Permalink to this heading">¶</a></h1>
 <p>This is the implementation of <a class="reference external" href="https://arxiv.org/pdf/1909.11786.pdf">DFM</a> paper.</p>
 <p>Model Type: Classification</p>
 <section id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading">¶</a></h2>
 <p>Fast anomaly classification algorithm that consists of a deep feature extraction stage followed by anomaly classification stage consisting of PCA and class-conditional Gaussian Density Estimation.</p>
 <section id="feature-extraction">
-<h3>Feature Extraction<a class="headerlink" href="#feature-extraction" title="Permalink to this headline">¶</a></h3>
+<h3>Feature Extraction<a class="headerlink" href="#feature-extraction" title="Permalink to this heading">¶</a></h3>
 <p>Features are extracted by feeding the images through a ResNet18 backbone, which was pre-trained on ImageNet. The output of the penultimate layer (average pooling layer) of the network is used to obtain a semantic feature vector with a fixed length of 2048.</p>
 </section>
 <section id="anomaly-detection">
-<h3>Anomaly Detection<a class="headerlink" href="#anomaly-detection" title="Permalink to this headline">¶</a></h3>
+<h3>Anomaly Detection<a class="headerlink" href="#anomaly-detection" title="Permalink to this heading">¶</a></h3>
 <p>In the anomaly classification stage, class-conditional PCA transformations and Gaussian Density models are learned. Two types of scores are calculated (i) Feature-reconstruction scores (norm of the difference between the high-dimensional pre-image of a reduced dimension feature and the original high-dimensional feature), and (ii) Negative log-likelihood under the learnt density models. Either of these scores can be used for anomaly detection.</p>
 </section>
 </section>
 <section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python tools/train.py --model dfm
 </pre></div>
 </div>
@@ -291,10 +291,10 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.dfm.torch_model.DFMModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfm.torch_model.</span></span><span class="sig-name descname"><span class="pre">DFMModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backbone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_trained</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pooling_kernel_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_comps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.97</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'fre'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/dfm/torch_model.html#DFMModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.torch_model.DFMModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
 <p>Model for the DFM algorithm.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>backbone</strong> (<em>str</em>) – Pre-trained model backbone.</p></li>
 <li><p><strong>layer</strong> (<em>str</em>) – Layer from which to extract features.</p></li>
@@ -308,10 +308,10 @@
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.dfm.torch_model.DFMModel.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/dfm/torch_model.html#DFMModel.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.torch_model.DFMModel.fit" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/dfm/torch_model.html#DFMModel.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.torch_model.DFMModel.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit a pca transformation and a Gaussian model to dataset.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>dataset</strong> (<em>Tensor</em>) – Input dataset to fit the model.</p>
 </dd>
 </dl>
@@ -319,16 +319,16 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.dfm.torch_model.DFMModel.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/dfm/torch_model.html#DFMModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.torch_model.DFMModel.forward" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/dfm/torch_model.html#DFMModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.torch_model.DFMModel.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computer score from input images.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>batch</strong> (<em>Tensor</em>) – Input images</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Scores</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Tensor</p>
 </dd>
 </dl>
@@ -336,16 +336,16 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.dfm.torch_model.DFMModel.get_features">
-<span class="sig-name descname"><span class="pre">get_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/dfm/torch_model.html#DFMModel.get_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.torch_model.DFMModel.get_features" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/dfm/torch_model.html#DFMModel.get_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.torch_model.DFMModel.get_features" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract features from the pretrained network.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>batch</strong> (<em>Tensor</em>) – Image batch.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Tensor containing extracted features.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Tensor</p>
 </dd>
 </dl>
@@ -353,18 +353,18 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.dfm.torch_model.DFMModel.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/dfm/torch_model.html#DFMModel.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.torch_model.DFMModel.score" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/dfm/torch_model.html#DFMModel.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.torch_model.DFMModel.score" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute scores.</p>
 <p>Scores are either PCA-based feature reconstruction error (FRE) scores or
 the Gaussian density-based NLL scores</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>features</strong> (<em>torch.Tensor</em>) – semantic features on which PCA and density modeling is performed.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>numpy array of scores</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>score (Tensor)</p>
 </dd>
 </dl>
@@ -380,12 +380,12 @@ the Gaussian density-based NLL scores</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.dfm.torch_model.SingleClassGaussian">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfm.torch_model.</span></span><span class="sig-name descname"><span class="pre">SingleClassGaussian</span></span><a class="reference internal" href="../../_modules/anomalib/models/dfm/torch_model.html#SingleClassGaussian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.torch_model.SingleClassGaussian" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/model/base.html#anomalib.models.components.base.DynamicBufferModule" title="anomalib.models.components.base.dynamic_module.DynamicBufferModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">anomalib.models.components.base.dynamic_module.DynamicBufferModule</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/model/base.html#anomalib.models.components.base.DynamicBufferModule" title="anomalib.models.components.base.dynamic_module.DynamicBufferModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicBufferModule</span></code></a></p>
 <p>Model Gaussian distribution over a set of points.</p>
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.dfm.torch_model.SingleClassGaussian.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/dfm/torch_model.html#SingleClassGaussian.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.torch_model.SingleClassGaussian.fit" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/dfm/torch_model.html#SingleClassGaussian.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.torch_model.SingleClassGaussian.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit a Gaussian model to dataset X.</p>
 <p>Covariance matrix is not calculated directly using:
 <code class="docutils literal notranslate"><span class="pre">C</span> <span class="pre">=</span> <span class="pre">X.X^T</span></code>
@@ -395,7 +395,7 @@ Hence,
 <code class="docutils literal notranslate"><span class="pre">C</span> <span class="pre">=</span> <span class="pre">U.S^2.U^T</span></code>
 This simplifies the calculation of the log-likelihood without requiring full matrix inversion.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>dataset</strong> (<em>Tensor</em>) – Input dataset to fit the model.</p>
 </dd>
 </dl>
@@ -403,11 +403,11 @@ This simplifies the calculation of the log-likelihood without requiring full mat
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.dfm.torch_model.SingleClassGaussian.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/dfm/torch_model.html#SingleClassGaussian.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.torch_model.SingleClassGaussian.forward" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/dfm/torch_model.html#SingleClassGaussian.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.torch_model.SingleClassGaussian.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Provides the same functionality as <cite>fit</cite>.</p>
 <p>Transforms the input dataset based on singular values calculated earlier.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>dataset</strong> (<em>Tensor</em>) – Input dataset</p>
 </dd>
 </dl>
@@ -415,16 +415,16 @@ This simplifies the calculation of the log-likelihood without requiring full mat
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.dfm.torch_model.SingleClassGaussian.score_samples">
-<span class="sig-name descname"><span class="pre">score_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/dfm/torch_model.html#SingleClassGaussian.score_samples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.torch_model.SingleClassGaussian.score_samples" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/dfm/torch_model.html#SingleClassGaussian.score_samples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.torch_model.SingleClassGaussian.score_samples" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the NLL (negative log likelihood) scores.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>features</strong> (<em>Tensor</em>) – semantic features on which density modeling is performed.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Torch tensor of scores</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>nll (Tensor)</p>
 </dd>
 </dl>
@@ -441,10 +441,10 @@ This simplifies the calculation of the log-likelihood without requiring full mat
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.Dfm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfm.lightning_model.</span></span><span class="sig-name descname"><span class="pre">Dfm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backbone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_trained</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pooling_kernel_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pca_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.97</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'fre'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/dfm/lightning_model.html#Dfm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.Dfm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/model/base.html#anomalib.models.components.base.AnomalyModule" title="anomalib.models.components.base.anomaly_module.AnomalyModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">anomalib.models.components.base.anomaly_module.AnomalyModule</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/model/base.html#anomalib.models.components.base.AnomalyModule" title="anomalib.models.components.base.anomaly_module.AnomalyModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnomalyModule</span></code></a></p>
 <p>DFM: Deep Featured Kernel Density Estimation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>backbone</strong> (<em>str</em>) – Backbone CNN network</p></li>
 <li><p><strong>layer</strong> (<em>str</em>) – Layer to extract features from the backbone CNN</p></li>
@@ -476,13 +476,13 @@ Defaults to 0.97.</p></li>
 <dd><p>Training Step of DFM.</p>
 <p>For each batch, features are extracted from the CNN.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>batch</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Tensor</em><em>]</em>) – Input batch</p></li>
 <li><p><strong>_</strong> – Index of the batch.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Deep CNN features.</p>
 </dd>
 </dl>
@@ -494,10 +494,10 @@ Defaults to 0.97.</p></li>
 <dd><p>Validation Step of DFM.</p>
 <p>Similar to the training step, features are extracted from the CNN for each batch.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>batch</strong> (<em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – Input batch</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Dictionary containing FRE anomaly scores and ground-truth.</p>
 </dd>
 </dl>
@@ -512,11 +512,11 @@ Defaults to 0.97.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.dfm.lightning_model.DfmLightning">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfm.lightning_model.</span></span><span class="sig-name descname"><span class="pre">DfmLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">omegaconf.dictconfig.DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">omegaconf.listconfig.ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/dfm/lightning_model.html#DfmLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.DfmLightning" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anomalib.models.dfm.lightning_model.Dfm" title="anomalib.models.dfm.lightning_model.Dfm"><code class="xref py py-class docutils literal notranslate"><span class="pre">anomalib.models.dfm.lightning_model.Dfm</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.dfm.lightning_model.</span></span><span class="sig-name descname"><span class="pre">DfmLightning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hparams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">DictConfig</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ListConfig</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/models/dfm/lightning_model.html#DfmLightning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.dfm.lightning_model.DfmLightning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anomalib.models.dfm.lightning_model.Dfm" title="anomalib.models.dfm.lightning_model.Dfm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dfm</span></code></a></p>
 <p>DFM: Deep Featured Kernel Density Estimation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>hparams</strong> (<em>Union</em><em>[</em><em>DictConfig</em><em>, </em><em>ListConfig</em><em>]</em>) – Model params</p>
 </dd>
 </dl>
@@ -653,7 +653,48 @@ Defaults to 0.97.</p></li>
 <li><a class="reference internal" href="#anomaly-detection">Anomaly Detection</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#anomalib.models.dfm.torch_model.DFMModel"><code class="docutils literal notranslate"><span class="pre">DFMModel</span></code></a><ul>
+<li><a class="reference internal" href="#anomalib.models.dfm.torch_model.DFMModel.fit"><code class="docutils literal notranslate"><span class="pre">DFMModel.fit()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.torch_model.DFMModel.forward"><code class="docutils literal notranslate"><span class="pre">DFMModel.forward()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.torch_model.DFMModel.get_features"><code class="docutils literal notranslate"><span class="pre">DFMModel.get_features()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.torch_model.DFMModel.score"><code class="docutils literal notranslate"><span class="pre">DFMModel.score()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.torch_model.DFMModel.training"><code class="docutils literal notranslate"><span class="pre">DFMModel.training</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#anomalib.models.dfm.torch_model.SingleClassGaussian"><code class="docutils literal notranslate"><span class="pre">SingleClassGaussian</span></code></a><ul>
+<li><a class="reference internal" href="#anomalib.models.dfm.torch_model.SingleClassGaussian.fit"><code class="docutils literal notranslate"><span class="pre">SingleClassGaussian.fit()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.torch_model.SingleClassGaussian.forward"><code class="docutils literal notranslate"><span class="pre">SingleClassGaussian.forward()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.torch_model.SingleClassGaussian.score_samples"><code class="docutils literal notranslate"><span class="pre">SingleClassGaussian.score_samples()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.torch_model.SingleClassGaussian.training"><code class="docutils literal notranslate"><span class="pre">SingleClassGaussian.training</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.Dfm"><code class="docutils literal notranslate"><span class="pre">Dfm</span></code></a><ul>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.Dfm.configure_optimizers"><code class="docutils literal notranslate"><span class="pre">Dfm.configure_optimizers()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.Dfm.on_validation_start"><code class="docutils literal notranslate"><span class="pre">Dfm.on_validation_start()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.Dfm.training_step"><code class="docutils literal notranslate"><span class="pre">Dfm.training_step()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.Dfm.validation_step"><code class="docutils literal notranslate"><span class="pre">Dfm.validation_step()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.Dfm.training"><code class="docutils literal notranslate"><span class="pre">Dfm.training</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning"><code class="docutils literal notranslate"><span class="pre">DfmLightning</span></code></a><ul>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.allow_zero_length_dataloader_with_multiple_devices"><code class="docutils literal notranslate"><span class="pre">DfmLightning.allow_zero_length_dataloader_with_multiple_devices</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.callbacks"><code class="docutils literal notranslate"><span class="pre">DfmLightning.callbacks</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.embeddings"><code class="docutils literal notranslate"><span class="pre">DfmLightning.embeddings</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.image_metrics"><code class="docutils literal notranslate"><span class="pre">DfmLightning.image_metrics</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.loss"><code class="docutils literal notranslate"><span class="pre">DfmLightning.loss</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.model"><code class="docutils literal notranslate"><span class="pre">DfmLightning.model</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.normalization_metrics"><code class="docutils literal notranslate"><span class="pre">DfmLightning.normalization_metrics</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.pixel_metrics"><code class="docutils literal notranslate"><span class="pre">DfmLightning.pixel_metrics</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.precision"><code class="docutils literal notranslate"><span class="pre">DfmLightning.precision</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.prepare_data_per_node"><code class="docutils literal notranslate"><span class="pre">DfmLightning.prepare_data_per_node</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.threshold_method"><code class="docutils literal notranslate"><span class="pre">DfmLightning.threshold_method</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.trainer"><code class="docutils literal notranslate"><span class="pre">DfmLightning.trainer</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.dfm.lightning_model.DfmLightning.training"><code class="docutils literal notranslate"><span class="pre">DfmLightning.training</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -668,7 +709,9 @@ Defaults to 0.97.</p></li>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>

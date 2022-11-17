@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
-    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>Installing Anomalib - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -533,7 +533,7 @@ where the goal of the algorithm is to identify anomalous images, or anomalous pi
 <p>The library supports <code class="docutils literal notranslate"><span class="pre">`MVTec</span> <span class="pre">AD</span></code> &lt;<a class="reference external" href="https://www.mvtec.com/company/research/datasets/mvtec-ad">https://www.mvtec.com/company/research/datasets/mvtec-ad</a>&gt;`__ (CC BY-NC-SA 4.0) and <code class="docutils literal notranslate"><span class="pre">`BeanTech</span></code> &lt;<a class="reference external" href="https://paperswithcode.com/dataset/btad">https://paperswithcode.com/dataset/btad</a>&gt;`__ (CC-BY-SA) for <strong>benchmarking</strong> and <code class="docutils literal notranslate"><span class="pre">folder</span></code> for custom dataset <strong>training/inference</strong>. In this notebook, we will explore <code class="docutils literal notranslate"><span class="pre">anomalib</span></code> training a PADIM model on the <code class="docutils literal notranslate"><span class="pre">MVTec</span> <span class="pre">AD</span></code> bottle dataset and evaluating the model’s performance. The sections in this notebook explores the steps in <code class="docutils literal notranslate"><span class="pre">tools/train.py</span></code> more in detail.
 Those who would like to reproduce the results via CLI could use <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">tools/train.py</span> <span class="pre">--model</span> <span class="pre">padim</span></code>.</p>
 <section id="Installing-Anomalib">
-<h1>Installing Anomalib<a class="headerlink" href="#Installing-Anomalib" title="Permalink to this headline">¶</a></h1>
+<h1>Installing Anomalib<a class="headerlink" href="#Installing-Anomalib" title="Permalink to this heading">¶</a></h1>
 <p>Installation can be done in two ways: (i) install via PyPI, or (ii) installing from source. In this notebook, we’ll install it from the PyPI version for the sake of simplicity.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -545,7 +545,7 @@ Those who would like to reproduce the results via CLI could use <code class="doc
 </div>
 </section>
 <section id="Imports">
-<h1>Imports<a class="headerlink" href="#Imports" title="Permalink to this headline">¶</a></h1>
+<h1>Imports<a class="headerlink" href="#Imports" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -569,7 +569,7 @@ from anomalib.utils.callbacks import LoadModelCallback, get_callbacks
 </div>
 </section>
 <section id="Model">
-<h1>Model<a class="headerlink" href="#Model" title="Permalink to this headline">¶</a></h1>
+<h1>Model<a class="headerlink" href="#Model" title="Permalink to this heading">¶</a></h1>
 <p>Currently, there are <strong>7</strong> anomaly detection models available in <code class="docutils literal notranslate"><span class="pre">anomalib</span></code> library. Namely,</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://arxiv.org/pdf/2107.12571v1.pdf">CFlow</a></p></li>
@@ -583,7 +583,7 @@ from anomalib.utils.callbacks import LoadModelCallback, get_callbacks
 <p>In this tutorial, we’ll be using Padim. Now, let’s get their config paths from the respected folders.</p>
 </section>
 <section id="Configuration">
-<h1>Configuration<a class="headerlink" href="#Configuration" title="Permalink to this headline">¶</a></h1>
+<h1>Configuration<a class="headerlink" href="#Configuration" title="Permalink to this heading">¶</a></h1>
 <p>In this demonstration, we will choose <a class="reference external" href="https://arxiv.org/pdf/2011.08785.pdf">Padim</a> model from the above list. Let’s take a quick look at its config file.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -609,7 +609,7 @@ config[&quot;dataset&quot;][&quot;path&quot;] = &quot;../../datasets/MVTec&quot;
 </div>
 </section>
 <section id="Dataset:-MVTec-AD">
-<h1>Dataset: MVTec AD<a class="headerlink" href="#Dataset:-MVTec-AD" title="Permalink to this headline">¶</a></h1>
+<h1>Dataset: MVTec AD<a class="headerlink" href="#Dataset:-MVTec-AD" title="Permalink to this heading">¶</a></h1>
 <p><strong>MVTec AD</strong> is a dataset for benchmarking anomaly detection methods with a focus on industrial inspection. It contains over <strong>5000</strong> high-resolution images divided into <strong>15</strong> different object and texture categories. Each category comprises a set of defect-free training images and a test set of images with various kinds of defects as well as images without defects. If the dataset is not located in the root datasets directory, anomalib will automatically install the dataset.</p>
 <p>We could now import the MVtec AD dataset using its specific datamodule implemented in anomalib.</p>
 <div class="nbinput docutils container">
@@ -695,7 +695,7 @@ show_image_and_mask(data, index=20)
 </div>
 </section>
 <section id="Prepare-Model-and-Callbacks">
-<h1>Prepare Model and Callbacks<a class="headerlink" href="#Prepare-Model-and-Callbacks" title="Permalink to this headline">¶</a></h1>
+<h1>Prepare Model and Callbacks<a class="headerlink" href="#Prepare-Model-and-Callbacks" title="Permalink to this heading">¶</a></h1>
 <p>Now, the config file is updated as we want. We can now start model training with it. Here we will be using <code class="docutils literal notranslate"><span class="pre">datamodule</span></code>, <code class="docutils literal notranslate"><span class="pre">model</span></code> and <code class="docutils literal notranslate"><span class="pre">callbacks</span></code> to train the model. Callbacks are self-contained objects, which contains non-essential logic. This way we could inject as many callbacks as possible such as ModelLoading, Timer, Metrics, Normalization and Visualization</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -809,7 +809,7 @@ Epoch 0: 100%|██████████| 10/10 [00:10&lt;00:00,  1.01s/it, 
 </div>
 </section>
 <section id="Validation">
-<h1>Validation<a class="headerlink" href="#Validation" title="Permalink to this headline">¶</a></h1>
+<h1>Validation<a class="headerlink" href="#Validation" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -945,7 +945,9 @@ results/padim/mvtec/bottle/images/contamination/017.png
 </div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>

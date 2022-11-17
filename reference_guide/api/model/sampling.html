@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Stats" href="stats.html" /><link rel="prev" title="Layers" href="layers.html" />
 
-    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>Sampling - Anomalib v0.3.7</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
@@ -134,7 +134,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -260,22 +260,22 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
           <section id="sampling">
-<h1>Sampling<a class="headerlink" href="#sampling" title="Permalink to this headline">¶</a></h1>
+<h1>Sampling<a class="headerlink" href="#sampling" title="Permalink to this heading">¶</a></h1>
 <span class="target" id="module-anomalib.models.components.sampling"></span><p>Sampling methods.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="anomalib.models.components.sampling.KCenterGreedy">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.components.sampling.</span></span><span class="sig-name descname"><span class="pre">KCenterGreedy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/anomalib/models/components/sampling/k_center_greedy.html#KCenterGreedy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.sampling.KCenterGreedy" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.models.components.sampling.</span></span><span class="sig-name descname"><span class="pre">KCenterGreedy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/anomalib/models/components/sampling/k_center_greedy.html#KCenterGreedy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.sampling.KCenterGreedy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Implements k-center-greedy method.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>embedding</strong> (<em>Tensor</em>) – Embedding vector extracted from a CNN</p></li>
 <li><p><strong>sampling_ratio</strong> (<em>float</em>) – Ratio to choose coreset size from the embedding size.</p></li>
@@ -298,10 +298,10 @@
 <dd><p>Get index value of a sample.</p>
 <p>Based on minimum distance of the cluster</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Sample index</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>int</p>
 </dd>
 </dl>
@@ -315,16 +315,16 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.models.components.sampling.KCenterGreedy.sample_coreset">
-<span class="sig-name descname"><span class="pre">sample_coreset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_idxs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/sampling/k_center_greedy.html#KCenterGreedy.sample_coreset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.sampling.KCenterGreedy.sample_coreset" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sample_coreset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_idxs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/sampling/k_center_greedy.html#KCenterGreedy.sample_coreset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.sampling.KCenterGreedy.sample_coreset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select coreset from the embedding.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>selected_idxs</strong> – index of samples already selected. Defaults to an empty set.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Output coreset</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Tensor</p>
 </dd>
 </dl>
@@ -344,10 +344,10 @@
 <span class="sig-name descname"><span class="pre">select_coreset_idxs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_idxs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/sampling/k_center_greedy.html#KCenterGreedy.select_coreset_idxs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.sampling.KCenterGreedy.select_coreset_idxs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Greedily form a coreset to minimize the maximum distance of a cluster.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>selected_idxs</strong> – index of samples already selected. Defaults to an empty set.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>indices of samples selected to minimize distance to cluster centers</p>
 </dd>
 </dl>
@@ -358,7 +358,7 @@
 <span class="sig-name descname"><span class="pre">update_distances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_centers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../_modules/anomalib/models/components/sampling/k_center_greedy.html#KCenterGreedy.update_distances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.components.sampling.KCenterGreedy.update_distances" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update min distances given cluster centers.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>cluster_centers</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – indices of cluster centers</p>
 </dd>
 </dl>
@@ -413,8 +413,34 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Sampling</a><ul>
+<li><a class="reference internal" href="#anomalib.models.components.sampling.KCenterGreedy"><code class="docutils literal notranslate"><span class="pre">KCenterGreedy</span></code></a><ul>
+<li><a class="reference internal" href="#anomalib.models.components.sampling.KCenterGreedy.get_new_idx"><code class="docutils literal notranslate"><span class="pre">KCenterGreedy.get_new_idx()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.components.sampling.KCenterGreedy.reset_distances"><code class="docutils literal notranslate"><span class="pre">KCenterGreedy.reset_distances()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.components.sampling.KCenterGreedy.sample_coreset"><code class="docutils literal notranslate"><span class="pre">KCenterGreedy.sample_coreset()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.components.sampling.KCenterGreedy.select_coreset_idxs"><code class="docutils literal notranslate"><span class="pre">KCenterGreedy.select_coreset_idxs()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.models.components.sampling.KCenterGreedy.update_distances"><code class="docutils literal notranslate"><span class="pre">KCenterGreedy.update_distances()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
@@ -422,7 +448,9 @@
 </div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/scripts/furo.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>
