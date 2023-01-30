@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,12 +272,17 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+
 <span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 <span class="kn">from</span> <span class="nn">torchmetrics</span> <span class="kn">import</span> <span class="n">PrecisionRecallCurve</span>
 
 
 <div class="viewcode-block" id="AnomalyScoreThreshold"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.AnomalyScoreThreshold">[docs]</a><span class="k">class</span> <span class="nc">AnomalyScoreThreshold</span><span class="p">(</span><span class="n">PrecisionRecallCurve</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Anomaly Score Threshold.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Anomaly Score Threshold.</span>
 
 <span class="sd">    This class computes/stores the threshold that determines the anomalous label</span>
 <span class="sd">    given anomaly scores. If the threshold method is ``manual``, the class only</span>
@@ -286,14 +293,14 @@
 <span class="sd">    adaptive threshold value.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">add_state</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">default_value</span><span class="p">),</span> <span class="n">persistent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># pylint: disable=not-callable</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">default_value</span><span class="p">)</span>  <span class="c1"># pylint: disable=not-callable</span>
 
-<div class="viewcode-block" id="AnomalyScoreThreshold.compute"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.AnomalyScoreThreshold.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Compute the threshold that yields the optimal F1 score.</span>
+<div class="viewcode-block" id="AnomalyScoreThreshold.compute"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.AnomalyScoreThreshold.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the threshold that yields the optimal F1 score.</span>
 
 <span class="sd">        Compute the F1 scores while varying the threshold. Store the optimal</span>
 <span class="sd">        threshold as attribute and return the maximum value of the F1 score.</span>
@@ -301,9 +308,17 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Value of the F1 score at the optimal threshold.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">precision</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
-        <span class="n">recall</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
-        <span class="n">thresholds</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
+        <span class="n">precision</span><span class="p">:</span> <span class="n">Tensor</span>
+        <span class="n">recall</span><span class="p">:</span> <span class="n">Tensor</span>
+        <span class="n">thresholds</span><span class="p">:</span> <span class="n">Tensor</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="mi">1</span> <span class="ow">in</span> <span class="n">batch</span> <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;The validation set does not contain any anomalous images. As a result, the adaptive threshold will &quot;</span>
+                <span class="s2">&quot;take the value of the highest anomaly score observed in the normal validation images, which may lead &quot;</span>
+                <span class="s2">&quot;to poor predictions. For a more reliable adaptive threshold computation, please add some anomalous &quot;</span>
+                <span class="s2">&quot;images to the validation set.&quot;</span>
+            <span class="p">)</span>
 
         <span class="n">precision</span><span class="p">,</span> <span class="n">recall</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
         <span class="n">f1_score</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">precision</span> <span class="o">*</span> <span class="n">recall</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">precision</span> <span class="o">+</span> <span class="n">recall</span> <span class="o">+</span> <span class="mf">1e-10</span><span class="p">)</span>

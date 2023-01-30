@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,21 +272,25 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
-<span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">PCA</span><span class="p">,</span> <span class="n">FeatureExtractor</span><span class="p">,</span> <span class="n">GaussianKDE</span>
+<span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">FeatureExtractor</span>
+<span class="kn">from</span> <span class="nn">anomalib.models.components.classification</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">FeatureScalingMethod</span><span class="p">,</span>
+    <span class="n">KDEClassifier</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="DfkdeModel"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.torch_model.DfkdeModel">[docs]</a><span class="k">class</span> <span class="nc">DfkdeModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Normality Model for the DFKDE algorithm.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Normality Model for the DFKDE algorithm.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        backbone (str): Pre-trained model backbone.</span>
@@ -299,33 +305,25 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">layers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">layers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
         <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">pre_trained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">n_comps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
-        <span class="n">pre_processing</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;scale&quot;</span><span class="p">,</span>
-        <span class="n">filter_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40000</span><span class="p">,</span>
-        <span class="n">threshold_steepness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
-        <span class="n">threshold_offset</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">12.0</span><span class="p">,</span>
-    <span class="p">):</span>
+        <span class="n">n_pca_components</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+        <span class="n">feature_scaling_method</span><span class="p">:</span> <span class="n">FeatureScalingMethod</span> <span class="o">=</span> <span class="n">FeatureScalingMethod</span><span class="o">.</span><span class="n">SCALE</span><span class="p">,</span>
+        <span class="n">max_training_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40000</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_comps</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pre_processing</span> <span class="o">=</span> <span class="n">pre_processing</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">filter_count</span> <span class="o">=</span> <span class="n">filter_count</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">threshold_steepness</span> <span class="o">=</span> <span class="n">threshold_steepness</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">threshold_offset</span> <span class="o">=</span> <span class="n">threshold_offset</span>
 
-        <span class="n">_backbone</span> <span class="o">=</span> <span class="n">backbone</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="n">_backbone</span><span class="p">,</span> <span class="n">pre_trained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="n">backbone</span><span class="p">,</span> <span class="n">pre_trained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">pca_model</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">kde_model</span> <span class="o">=</span> <span class="n">GaussianKDE</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">&quot;max_length&quot;</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([])))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">max_length</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">KDEClassifier</span><span class="p">(</span>
+            <span class="n">n_pca_components</span><span class="o">=</span><span class="n">n_pca_components</span><span class="p">,</span>
+            <span class="n">feature_scaling_method</span><span class="o">=</span><span class="n">feature_scaling_method</span><span class="p">,</span>
+            <span class="n">max_training_points</span><span class="o">=</span><span class="n">max_training_points</span><span class="p">,</span>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="DfkdeModel.get_features"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.torch_model.DfkdeModel.get_features">[docs]</a>    <span class="k">def</span> <span class="nf">get_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Extract features from the pretrained network.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract features from the pretrained network.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            batch (Tensor): Image batch.</span>
@@ -342,115 +340,8 @@
         <span class="n">layer_outputs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">layer_outputs</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">layer_outputs</span></div>
 
-<div class="viewcode-block" id="DfkdeModel.pre_process"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.torch_model.DfkdeModel.pre_process">[docs]</a>    <span class="k">def</span> <span class="nf">pre_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feature_stack</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">max_length</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Pre-process the CNN features.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">          feature_stack (Tensor): Features extracted from CNN</span>
-<span class="sd">          max_length (Optional[Tensor]): Used to unit normalize the feature_stack vector. If ``max_len`` is not</span>
-<span class="sd">            provided, the length is calculated from the ``feature_stack``. Defaults to None.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            (Tuple): Stacked features and length</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">if</span> <span class="n">max_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">max_length</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">feature_stack</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_processing</span> <span class="o">==</span> <span class="s2">&quot;norm&quot;</span><span class="p">:</span>
-            <span class="n">feature_stack</span> <span class="o">/=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">feature_stack</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_processing</span> <span class="o">==</span> <span class="s2">&quot;scale&quot;</span><span class="p">:</span>
-            <span class="n">feature_stack</span> <span class="o">/=</span> <span class="n">max_length</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Unknown pre-processing mode. Available modes are: Normalized and Scale.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">feature_stack</span><span class="p">,</span> <span class="n">max_length</span></div>
-
-<div class="viewcode-block" id="DfkdeModel.fit"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.torch_model.DfkdeModel.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Fit a kde model to embeddings.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            embeddings (Tensor): Input embeddings to fit the model.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            Boolean confirming whether the training is successful.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">_embeddings</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">_embeddings</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Not enough features to commit. Not making a model.&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="c1"># if max training points is non-zero and smaller than number of staged features, select random subset</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_count</span> <span class="ow">and</span> <span class="n">_embeddings</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_count</span><span class="p">:</span>
-            <span class="c1"># pylint: disable=not-callable</span>
-            <span class="n">selected_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">_embeddings</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_count</span><span class="p">))</span>
-            <span class="n">selected_features</span> <span class="o">=</span> <span class="n">_embeddings</span><span class="p">[</span><span class="n">selected_idx</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">selected_features</span> <span class="o">=</span> <span class="n">_embeddings</span>
-
-        <span class="n">feature_stack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pca_model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">selected_features</span><span class="p">)</span>
-        <span class="n">feature_stack</span><span class="p">,</span> <span class="n">max_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">(</span><span class="n">feature_stack</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">max_length</span> <span class="o">=</span> <span class="n">max_length</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">kde_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">feature_stack</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="kc">True</span></div>
-
-<div class="viewcode-block" id="DfkdeModel.compute_kde_scores"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.torch_model.DfkdeModel.compute_kde_scores">[docs]</a>    <span class="k">def</span> <span class="nf">compute_kde_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">as_log_likelihood</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Compute the KDE scores.</span>
-
-<span class="sd">        The scores calculated from the KDE model are converted to densities. If `as_log_likelihood` is set to true then</span>
-<span class="sd">            the log of the scores are calculated.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            features (Tensor): Features to which the PCA model is fit.</span>
-<span class="sd">            as_log_likelihood (Optional[bool], optional): If true, gets log likelihood scores. Defaults to False.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            (Tensor): Score</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pca_model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
-        <span class="n">features</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_length</span><span class="p">)</span>
-        <span class="c1"># Scores are always assumed to be passed as a density</span>
-        <span class="n">kde_scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kde_model</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
-
-        <span class="c1"># add small constant to avoid zero division in log computation</span>
-        <span class="n">kde_scores</span> <span class="o">+=</span> <span class="mf">1e-300</span>
-
-        <span class="k">if</span> <span class="n">as_log_likelihood</span><span class="p">:</span>
-            <span class="n">kde_scores</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">kde_scores</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">kde_scores</span></div>
-
-<div class="viewcode-block" id="DfkdeModel.compute_probabilities"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.torch_model.DfkdeModel.compute_probabilities">[docs]</a>    <span class="k">def</span> <span class="nf">compute_probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scores</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Converts density scores to anomaly probabilities (see https://www.desmos.com/calculator/ifju7eesg7).</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">          scores (Tensor): density of an image.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">          probability that image with {density} is anomalous</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">threshold_steepness</span> <span class="o">*</span> <span class="p">(</span><span class="n">scores</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold_offset</span><span class="p">)))</span></div>
-
-<div class="viewcode-block" id="DfkdeModel.predict"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.torch_model.DfkdeModel.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Predicts the probability that the features belong to the anomalous class.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">          features (Tensor): Feature from which the output probabilities are detected.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">          Detection probabilities</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_kde_scores</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">as_log_likelihood</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">probabilities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_probabilities</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">probabilities</span></div>
-
 <div class="viewcode-block" id="DfkdeModel.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.torch_model.DfkdeModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Prediction by normality model.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prediction by normality model.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            batch (Tensor): Input images.</span>
@@ -459,8 +350,14 @@
 <span class="sd">            Tensor: Predictions</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">feature_vector</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_features</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">feature_vector</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">feature_vector</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]))</span></div></div>
+        <span class="c1"># 1. apply feature extraction</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_features</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">features</span>
+
+        <span class="c1"># 2. apply density estimation</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">scores</span></div></div>
 </pre></div>
         </article>
       </div>

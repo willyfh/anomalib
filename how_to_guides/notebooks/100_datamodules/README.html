@@ -174,9 +174,11 @@
 <li class="toctree-l2"><a class="reference internal" href="101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -273,20 +275,20 @@
 <p>The DataModule implementation inherits the PyTorch Lightning <code class="docutils literal notranslate"><span class="pre">DataModule</span></code> object. The advantage of this class is that it organizes each step of data from download to creating the Torch dataloader.</p>
 <p>Overall, a data implementation has the following structure:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>anomalib
-├── __init__.py
-├── data
-│   ├── __init__.py
-│   ├── btech.py
-│   │   ├── BTechDataset
-│   │   └── BTech
-│   ├── folder.py
-│   │   ├── FolderDataset
-│   │   └── Folder
-│   ├── inference.py
-│   │   ├── InferenceDataset
-│   │   mvtec.py
-│   │   ├── MVTecDataset
-└── └── └── MVTec
+├──<span class="w"> </span>__init__.py
+├──<span class="w"> </span>data
+│<span class="w">   </span>├──<span class="w"> </span>__init__.py
+│<span class="w">   </span>├──<span class="w"> </span>btech.py
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>BTechDataset
+│<span class="w">   </span>│<span class="w">   </span>└──<span class="w"> </span>BTech
+│<span class="w">   </span>├──<span class="w"> </span>folder.py
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>FolderDataset
+│<span class="w">   </span>│<span class="w">   </span>└──<span class="w"> </span>Folder
+│<span class="w">   </span>├──<span class="w"> </span>inference.py
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>InferenceDataset
+│<span class="w">   </span>│<span class="w">   </span>mvtec.py
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>MVTecDataset
+└──<span class="w"> </span>└──<span class="w"> </span>└──<span class="w"> </span>MVTec
 </pre></div>
 </div>
 <p>Let’s deep dive into each dataset supported in anomalib and check their functionality.</p>

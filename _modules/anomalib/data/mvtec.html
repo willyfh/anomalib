@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,21 +272,17 @@
 <span class="sd">Description:</span>
 <span class="sd">    This script contains PyTorch Dataset, Dataloader and PyTorch</span>
 <span class="sd">        Lightning DataModule for the MVTec AD dataset.</span>
-
 <span class="sd">    If the dataset is not on the file system, the script downloads and</span>
 <span class="sd">        extracts the dataset and create PyTorch data objects.</span>
-
 <span class="sd">License:</span>
 <span class="sd">    MVTec AD dataset is released under the Creative Commons</span>
 <span class="sd">    Attribution-NonCommercial-ShareAlike 4.0 International License</span>
 <span class="sd">    (CC BY-NC-SA 4.0)(https://creativecommons.org/licenses/by-nc-sa/4.0/).</span>
-
 <span class="sd">Reference:</span>
 <span class="sd">    - Paul Bergmann, Kilian Batzner, Michael Fauser, David Sattlegger, Carsten Steger:</span>
 <span class="sd">      The MVTec Anomaly Detection Dataset: A Comprehensive Real-World Dataset for</span>
 <span class="sd">      Unsupervised Anomaly Detection; in: International Journal of Computer Vision</span>
 <span class="sd">      129(4):1038-1059, 2021, DOI: 10.1007/s11263-020-01400-4.</span>
-
 <span class="sd">    - Paul Bergmann, Michael Fauser, David Sattlegger, Carsten Steger: MVTec AD —</span>
 <span class="sd">      A Comprehensive Real-World Dataset for Unsupervised Anomaly Detection;</span>
 <span class="sd">      in: IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR),</span>
@@ -294,45 +292,44 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">tarfile</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
-<span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span>
 
 <span class="kn">import</span> <span class="nn">albumentations</span> <span class="k">as</span> <span class="nn">A</span>
-<span class="kn">import</span> <span class="nn">cv2</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">pandas.core.frame</span> <span class="kn">import</span> <span class="n">DataFrame</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning.core.datamodule</span> <span class="kn">import</span> <span class="n">LightningDataModule</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">DATAMODULE_REGISTRY</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.types</span> <span class="kn">import</span> <span class="n">EVAL_DATALOADERS</span><span class="p">,</span> <span class="n">TRAIN_DATALOADERS</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
-<span class="kn">from</span> <span class="nn">torchvision.datasets.folder</span> <span class="kn">import</span> <span class="n">VisionDataset</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span>
 
-<span class="kn">from</span> <span class="nn">anomalib.data.inference</span> <span class="kn">import</span> <span class="n">InferenceDataset</span>
-<span class="kn">from</span> <span class="nn">anomalib.data.utils</span> <span class="kn">import</span> <span class="n">DownloadProgressBar</span><span class="p">,</span> <span class="n">hash_check</span><span class="p">,</span> <span class="n">read_image</span>
-<span class="kn">from</span> <span class="nn">anomalib.data.utils.split</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">create_validation_set_from_test_set</span><span class="p">,</span>
-    <span class="n">split_normal_images_in_train_set</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">anomalib.data.base</span> <span class="kn">import</span> <span class="n">AnomalibDataModule</span><span class="p">,</span> <span class="n">AnomalibDataset</span>
+<span class="kn">from</span> <span class="nn">anomalib.data.task_type</span> <span class="kn">import</span> <span class="n">TaskType</span>
+<span class="kn">from</span> <span class="nn">anomalib.data.utils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DownloadInfo</span><span class="p">,</span>
+    <span class="n">InputNormalizationMethod</span><span class="p">,</span>
+    <span class="n">Split</span><span class="p">,</span>
+    <span class="n">TestSplitMode</span><span class="p">,</span>
+    <span class="n">ValSplitMode</span><span class="p">,</span>
+    <span class="n">download_and_extract</span><span class="p">,</span>
+    <span class="n">get_transforms</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">anomalib.pre_processing</span> <span class="kn">import</span> <span class="n">PreProcessor</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
+<span class="n">IMG_EXTENSIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="s2">&quot;.PNG&quot;</span><span class="p">]</span>
+
+<span class="n">DOWNLOAD_INFO</span> <span class="o">=</span> <span class="n">DownloadInfo</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mvtec&quot;</span><span class="p">,</span>
+    <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://www.mydrive.ch/shares/38536/3830184030e49fe74747669442f0f282/download/420938113-1629952094&quot;</span>
+    <span class="s2">&quot;/mvtec_anomaly_detection.tar.xz&quot;</span><span class="p">,</span>
+    <span class="nb">hash</span><span class="o">=</span><span class="s2">&quot;eefca59f2cede9c3fc5b6befbfec275e&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
 <div class="viewcode-block" id="make_mvtec_dataset"><a class="viewcode-back" href="../../../reference_guide/api/data/mvtec.html#anomalib.data.mvtec.make_mvtec_dataset">[docs]</a><span class="k">def</span> <span class="nf">make_mvtec_dataset</span><span class="p">(</span>
-    <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
-    <span class="n">split</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">split_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
-    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">create_validation_set</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">root</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">,</span> <span class="n">split</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Split</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">extensions</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Create MVTec AD samples by parsing the MVTec AD data file structure.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create MVTec AD samples by parsing the MVTec AD data file structure.</span>
 
 <span class="sd">    The files are expected to follow the structure:</span>
 <span class="sd">        path/to/dataset/split/category/image_filename.png</span>
@@ -347,7 +344,7 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        path (Path): Path to dataset</span>
-<span class="sd">        split (str, optional): Dataset split (ie., either train or test). Defaults to None.</span>
+<span class="sd">        split (str | Split | None, optional): Dataset split (ie., either train or test). Defaults to None.</span>
 <span class="sd">        split_ratio (float, optional): Ratio to split normal training images and add to the</span>
 <span class="sd">            test set in case test set doesn&#39;t contain any normal images.</span>
 <span class="sd">            Defaults to 0.1.</span>
@@ -375,356 +372,164 @@
 <span class="sd">        4  MVTec/bottle train good MVTec/bottle/train/good/109.png MVTec/bottle/ground_truth/good/109_mask.png 0</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        DataFrame: an output dataframe containing samples for the requested split (ie., train or test)</span>
+<span class="sd">        DataFrame: an output dataframe containing the samples of the dataset.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">samples_list</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),)</span> <span class="o">+</span> <span class="n">filename</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span> <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;**/*.png&quot;</span><span class="p">)]</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">samples_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found 0 images in </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">extensions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">extensions</span> <span class="o">=</span> <span class="n">IMG_EXTENSIONS</span>
 
-    <span class="n">samples</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">samples_list</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">,</span> <span class="s2">&quot;split&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;image_path&quot;</span><span class="p">])</span>
-    <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">!=</span> <span class="s2">&quot;ground_truth&quot;</span><span class="p">]</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="n">samples_list</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">str</span><span class="p">(</span><span class="n">root</span><span class="p">),)</span> <span class="o">+</span> <span class="n">f</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;**/*&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="n">extensions</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">samples_list</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found 0 images in </span><span class="si">{</span><span class="n">root</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="c1"># Create mask_path column</span>
-    <span class="n">samples</span><span class="p">[</span><span class="s2">&quot;mask_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">samples</span><span class="o">.</span><span class="n">path</span>
-        <span class="o">+</span> <span class="s2">&quot;/ground_truth/&quot;</span>
-        <span class="o">+</span> <span class="n">samples</span><span class="o">.</span><span class="n">label</span>
-        <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
-        <span class="o">+</span> <span class="n">samples</span><span class="o">.</span><span class="n">image_path</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
-        <span class="o">+</span> <span class="s2">&quot;_mask.png&quot;</span>
-    <span class="p">)</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">samples_list</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">,</span> <span class="s2">&quot;split&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;image_path&quot;</span><span class="p">])</span>
 
     <span class="c1"># Modify image_path column by converting to absolute path</span>
     <span class="n">samples</span><span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">samples</span><span class="o">.</span><span class="n">label</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">samples</span><span class="o">.</span><span class="n">image_path</span>
-
-    <span class="c1"># Split the normal images in training set if test set doesn&#39;t</span>
-    <span class="c1"># contain any normal images. This is needed because AUC score</span>
-    <span class="c1"># cannot be computed based on 1-class</span>
-    <span class="k">if</span> <span class="nb">sum</span><span class="p">((</span><span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;good&quot;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">samples</span> <span class="o">=</span> <span class="n">split_normal_images_in_train_set</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">split_ratio</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
-
-    <span class="c1"># Good images don&#39;t have mask</span>
-    <span class="n">samples</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;good&quot;</span><span class="p">),</span> <span class="s2">&quot;mask_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
     <span class="c1"># Create label index for normal (0) and anomalous (1) images.</span>
     <span class="n">samples</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">samples</span><span class="o">.</span><span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;good&quot;</span><span class="p">),</span> <span class="s2">&quot;label_index&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">samples</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">samples</span><span class="o">.</span><span class="n">label</span> <span class="o">!=</span> <span class="s2">&quot;good&quot;</span><span class="p">),</span> <span class="s2">&quot;label_index&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">samples</span><span class="o">.</span><span class="n">label_index</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">label_index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">create_validation_set</span><span class="p">:</span>
-        <span class="n">samples</span> <span class="o">=</span> <span class="n">create_validation_set_from_test_set</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+    <span class="c1"># separate masks from samples</span>
+    <span class="n">mask_samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="s2">&quot;ground_truth&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;image_path&quot;</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">!=</span> <span class="s2">&quot;ground_truth&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;image_path&quot;</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="c1"># Get the data frame for the split.</span>
-    <span class="k">if</span> <span class="n">split</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">split</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">]:</span>
-        <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="n">split</span><span class="p">]</span>
-        <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># assign mask paths to anomalous test images</span>
+    <span class="n">samples</span><span class="p">[</span><span class="s2">&quot;mask_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">samples</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">label_index</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;mask_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mask_samples</span><span class="o">.</span><span class="n">image_path</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="c1"># assert that the right mask files are associated with the right test images</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">samples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">samples</span><span class="o">.</span><span class="n">label_index</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">Path</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">image_path</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">mask_path</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="p">),</span> <span class="s2">&quot;Mismatch between anomalous images and ground truth masks. Make sure the mask files in &#39;ground_truth&#39; </span><span class="se">\</span>
+<span class="s2">              folder follow the same naming convention as the anomalous images in the dataset (e.g. image: &#39;000.png&#39;, </span><span class="se">\</span>
+<span class="s2">              mask: &#39;000.png&#39; or &#39;000_mask.png&#39;).&quot;</span>
+
+    <span class="k">if</span> <span class="n">split</span><span class="p">:</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="n">split</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">samples</span></div>
 
 
-<div class="viewcode-block" id="MVTecDataset"><a class="viewcode-back" href="../../../reference_guide/api/data/mvtec.html#anomalib.data.mvtec.MVTecDataset">[docs]</a><span class="k">class</span> <span class="nc">MVTecDataset</span><span class="p">(</span><span class="n">VisionDataset</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;MVTec AD PyTorch Dataset.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MVTecDataset"><a class="viewcode-back" href="../../../reference_guide/api/data/mvtec.html#anomalib.data.mvtec.MVTecDataset">[docs]</a><span class="k">class</span> <span class="nc">MVTecDataset</span><span class="p">(</span><span class="n">AnomalibDataset</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;MVTec dataset class.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        task (TaskType): Task type, ``classification``, ``detection`` or ``segmentation``</span>
+<span class="sd">        transform (A.Compose): Albumentations Compose object describing the transforms that are applied to the inputs.</span>
+<span class="sd">        split (str | Split | None): Split of the dataset, usually Split.TRAIN or Split.TEST</span>
+<span class="sd">        root (str): Path to the root of the dataset</span>
+<span class="sd">        category (str): Sub-category of the dataset, e.g. &#39;bottle&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+        <span class="n">task</span><span class="p">:</span> <span class="n">TaskType</span><span class="p">,</span>
+        <span class="n">transform</span><span class="p">:</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">,</span>
+        <span class="n">root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">pre_process</span><span class="p">:</span> <span class="n">PreProcessor</span><span class="p">,</span>
-        <span class="n">split</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">task</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;segmentation&quot;</span><span class="p">,</span>
-        <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">create_validation_set</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">split</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Split</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Mvtec AD Dataset class.</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            root: Path to the MVTec AD dataset</span>
-<span class="sd">            category: Name of the MVTec AD category.</span>
-<span class="sd">            pre_process: List of pre_processing object containing albumentation compose.</span>
-<span class="sd">            split: &#39;train&#39;, &#39;val&#39; or &#39;test&#39;</span>
-<span class="sd">            task: ``classification`` or ``segmentation``</span>
-<span class="sd">            seed: seed used for the random subset splitting</span>
-<span class="sd">            create_validation_set: Create a validation subset in addition to the train and test subsets</span>
-
-<span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; from anomalib.data.mvtec import MVTecDataset</span>
-<span class="sd">            &gt;&gt;&gt; from anomalib.data.transforms import PreProcessor</span>
-<span class="sd">            &gt;&gt;&gt; pre_process = PreProcessor(image_size=256)</span>
-<span class="sd">            &gt;&gt;&gt; dataset = MVTecDataset(</span>
-<span class="sd">            ...     root=&#39;./datasets/MVTec&#39;,</span>
-<span class="sd">            ...     category=&#39;leather&#39;,</span>
-<span class="sd">            ...     pre_process=pre_process,</span>
-<span class="sd">            ...     task=&quot;classification&quot;,</span>
-<span class="sd">            ...     is_train=True,</span>
-<span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; dataset[0].keys()</span>
-<span class="sd">            dict_keys([&#39;image&#39;])</span>
-
-<span class="sd">            &gt;&gt;&gt; dataset.split = &quot;test&quot;</span>
-<span class="sd">            &gt;&gt;&gt; dataset[0].keys()</span>
-<span class="sd">            dict_keys([&#39;image&#39;, &#39;image_path&#39;, &#39;label&#39;])</span>
-
-<span class="sd">            &gt;&gt;&gt; dataset.task = &quot;segmentation&quot;</span>
-<span class="sd">            &gt;&gt;&gt; dataset.split = &quot;train&quot;</span>
-<span class="sd">            &gt;&gt;&gt; dataset[0].keys()</span>
-<span class="sd">            dict_keys([&#39;image&#39;])</span>
-
-<span class="sd">            &gt;&gt;&gt; dataset.split = &quot;test&quot;</span>
-<span class="sd">            &gt;&gt;&gt; dataset[0].keys()</span>
-<span class="sd">            dict_keys([&#39;image_path&#39;, &#39;label&#39;, &#39;mask_path&#39;, &#39;image&#39;, &#39;mask&#39;])</span>
-
-<span class="sd">            &gt;&gt;&gt; dataset[0][&quot;image&quot;].shape, dataset[0][&quot;mask&quot;].shape</span>
-<span class="sd">            (torch.Size([3, 256, 256]), torch.Size([256, 256]))</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="s2">&quot;seed is None.&quot;</span>
-                <span class="s2">&quot; When seed is not set, images from the normal directory are split between training and test dir.&quot;</span>
-                <span class="s2">&quot; This will lead to inconsistency between runs.&quot;</span>
-            <span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">root</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">category</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root_category</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="o">/</span> <span class="n">Path</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="n">split</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">task</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span> <span class="o">=</span> <span class="n">pre_process</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="n">make_mvtec_dataset</span><span class="p">(</span>
-            <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="n">category</span><span class="p">,</span>
-            <span class="n">split</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">,</span>
-            <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
-            <span class="n">create_validation_set</span><span class="o">=</span><span class="n">create_validation_set</span><span class="p">,</span>
-        <span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get length of the dataset.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;Get dataset item for the index ``index``.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            index (int): Index to get the item.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            Union[Dict[str, Tensor], Dict[str, Union[str, Tensor]]]: Dict of image tensor during training.</span>
-<span class="sd">                Otherwise, Dict containing image path, target path, image tensor, label and transformed bounding box.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">item</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
-
-        <span class="n">image_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">image_path</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-        <span class="n">image</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>
-
-        <span class="n">pre_processed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
-        <span class="n">item</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="n">pre_processed</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]}</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;val&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">]:</span>
-            <span class="n">label_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">label_index</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-
-            <span class="n">item</span><span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">image_path</span>
-            <span class="n">item</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_index</span>
-
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">==</span> <span class="s2">&quot;segmentation&quot;</span><span class="p">:</span>
-                <span class="n">mask_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">mask_path</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-
-                <span class="c1"># Only Anomalous (1) images has masks in MVTec AD dataset.</span>
-                <span class="c1"># Therefore, create empty mask for Normal (0) images.</span>
-                <span class="k">if</span> <span class="n">label_index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">mask</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">mask_path</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span>
-
-                <span class="n">pre_processed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
-
-                <span class="n">item</span><span class="p">[</span><span class="s2">&quot;mask_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mask_path</span>
-                <span class="n">item</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pre_processed</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span>
-                <span class="n">item</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pre_processed</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span>
-
-        <span class="k">return</span> <span class="n">item</span></div>
+    <span class="k">def</span> <span class="nf">_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="n">make_mvtec_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_category</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">,</span> <span class="n">extensions</span><span class="o">=</span><span class="n">IMG_EXTENSIONS</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="MVTec"><a class="viewcode-back" href="../../../reference_guide/api/data/mvtec.html#anomalib.data.mvtec.MVTec">[docs]</a><span class="nd">@DATAMODULE_REGISTRY</span>
-<span class="k">class</span> <span class="nc">MVTec</span><span class="p">(</span><span class="n">LightningDataModule</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;MVTec AD Lightning Data Module.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MVTec"><a class="viewcode-back" href="../../../reference_guide/api/data/mvtec.html#anomalib.data.mvtec.MVTec">[docs]</a><span class="k">class</span> <span class="nc">MVTec</span><span class="p">(</span><span class="n">AnomalibDataModule</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;MVTec Datamodule.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        root (str): Path to the root of the dataset</span>
+<span class="sd">        category (str): Category of the MVTec dataset (e.g. &quot;bottle&quot; or &quot;cable&quot;).</span>
+<span class="sd">        image_size (int | tuple[int, int] | None, optional): Size of the input image.</span>
+<span class="sd">            Defaults to None.</span>
+<span class="sd">        center_crop (int | tuple[int, int] | None, optional): When provided, the images will be center-cropped</span>
+<span class="sd">            to the provided dimensions.</span>
+<span class="sd">        normalize (bool): When True, the images will be normalized to the ImageNet statistics.</span>
+<span class="sd">        train_batch_size (int, optional): Training batch size. Defaults to 32.</span>
+<span class="sd">        eval_batch_size (int, optional): Test batch size. Defaults to 32.</span>
+<span class="sd">        num_workers (int, optional): Number of workers. Defaults to 8.</span>
+<span class="sd">        task TaskType): Task type, &#39;classification&#39;, &#39;detection&#39; or &#39;segmentation&#39;</span>
+<span class="sd">        transform_config_train (str | A.Compose | None, optional): Config for pre-processing</span>
+<span class="sd">            during training.</span>
+<span class="sd">            Defaults to None.</span>
+<span class="sd">        transform_config_val (str | A.Compose | None, optional): Config for pre-processing</span>
+<span class="sd">            during validation.</span>
+<span class="sd">            Defaults to None.</span>
+<span class="sd">        test_split_mode (TestSplitMode): Setting that determines how the testing subset is obtained.</span>
+<span class="sd">        test_split_ratio (float): Fraction of images from the train set that will be reserved for testing.</span>
+<span class="sd">        val_split_mode (ValSplitMode): Setting that determines how the validation subset is obtained.</span>
+<span class="sd">        val_split_ratio (float): Fraction of train or test images that will be reserved for validation.</span>
+<span class="sd">        seed (int | None, optional): Seed which may be set to a fixed value for reproducibility.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="c1"># TODO: Remove default values. IAAALD-211</span>
-        <span class="n">image_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">image_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">center_crop</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">normalization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">InputNormalizationMethod</span> <span class="o">=</span> <span class="n">InputNormalizationMethod</span><span class="o">.</span><span class="n">IMAGENET</span><span class="p">,</span>
         <span class="n">train_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
-        <span class="n">test_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
+        <span class="n">eval_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
         <span class="n">num_workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
-        <span class="n">task</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;segmentation&quot;</span><span class="p">,</span>
-        <span class="n">transform_config_train</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">transform_config_val</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">create_validation_set</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">task</span><span class="p">:</span> <span class="n">TaskType</span> <span class="o">=</span> <span class="n">TaskType</span><span class="o">.</span><span class="n">SEGMENTATION</span><span class="p">,</span>
+        <span class="n">transform_config_train</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">transform_config_eval</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">test_split_mode</span><span class="p">:</span> <span class="n">TestSplitMode</span> <span class="o">=</span> <span class="n">TestSplitMode</span><span class="o">.</span><span class="n">FROM_DIR</span><span class="p">,</span>
+        <span class="n">test_split_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+        <span class="n">val_split_mode</span><span class="p">:</span> <span class="n">ValSplitMode</span> <span class="o">=</span> <span class="n">ValSplitMode</span><span class="o">.</span><span class="n">SAME_AS_TEST</span><span class="p">,</span>
+        <span class="n">val_split_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Mvtec AD Lightning Data Module.</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">train_batch_size</span><span class="o">=</span><span class="n">train_batch_size</span><span class="p">,</span>
+            <span class="n">eval_batch_size</span><span class="o">=</span><span class="n">eval_batch_size</span><span class="p">,</span>
+            <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">,</span>
+            <span class="n">test_split_mode</span><span class="o">=</span><span class="n">test_split_mode</span><span class="p">,</span>
+            <span class="n">test_split_ratio</span><span class="o">=</span><span class="n">test_split_ratio</span><span class="p">,</span>
+            <span class="n">val_split_mode</span><span class="o">=</span><span class="n">val_split_mode</span><span class="p">,</span>
+            <span class="n">val_split_ratio</span><span class="o">=</span><span class="n">val_split_ratio</span><span class="p">,</span>
+            <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+        <span class="p">)</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            root: Path to the MVTec AD dataset</span>
-<span class="sd">            category: Name of the MVTec AD category.</span>
-<span class="sd">            image_size: Variable to which image is resized.</span>
-<span class="sd">            train_batch_size: Training batch size.</span>
-<span class="sd">            test_batch_size: Testing batch size.</span>
-<span class="sd">            num_workers: Number of workers.</span>
-<span class="sd">            task: ``classification`` or ``segmentation``</span>
-<span class="sd">            transform_config_train: Config for pre-processing during training.</span>
-<span class="sd">            transform_config_val: Config for pre-processing during validation.</span>
-<span class="sd">            seed: seed used for the random subset splitting</span>
-<span class="sd">            create_validation_set: Create a validation subset in addition to the train and test subsets</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">category</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
 
-<span class="sd">        Examples:</span>
-<span class="sd">            &gt;&gt;&gt; from anomalib.data import MVTec</span>
-<span class="sd">            &gt;&gt;&gt; datamodule = MVTec(</span>
-<span class="sd">            ...     root=&quot;./datasets/MVTec&quot;,</span>
-<span class="sd">            ...     category=&quot;leather&quot;,</span>
-<span class="sd">            ...     image_size=256,</span>
-<span class="sd">            ...     train_batch_size=32,</span>
-<span class="sd">            ...     test_batch_size=32,</span>
-<span class="sd">            ...     num_workers=8,</span>
-<span class="sd">            ...     transform_config_train=None,</span>
-<span class="sd">            ...     transform_config_val=None,</span>
-<span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; datamodule.setup()</span>
+        <span class="n">transform_train</span> <span class="o">=</span> <span class="n">get_transforms</span><span class="p">(</span>
+            <span class="n">config</span><span class="o">=</span><span class="n">transform_config_train</span><span class="p">,</span>
+            <span class="n">image_size</span><span class="o">=</span><span class="n">image_size</span><span class="p">,</span>
+            <span class="n">center_crop</span><span class="o">=</span><span class="n">center_crop</span><span class="p">,</span>
+            <span class="n">normalization</span><span class="o">=</span><span class="n">InputNormalizationMethod</span><span class="p">(</span><span class="n">normalization</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">transform_eval</span> <span class="o">=</span> <span class="n">get_transforms</span><span class="p">(</span>
+            <span class="n">config</span><span class="o">=</span><span class="n">transform_config_eval</span><span class="p">,</span>
+            <span class="n">image_size</span><span class="o">=</span><span class="n">image_size</span><span class="p">,</span>
+            <span class="n">center_crop</span><span class="o">=</span><span class="n">center_crop</span><span class="p">,</span>
+            <span class="n">normalization</span><span class="o">=</span><span class="n">InputNormalizationMethod</span><span class="p">(</span><span class="n">normalization</span><span class="p">),</span>
+        <span class="p">)</span>
 
-<span class="sd">            &gt;&gt;&gt; i, data = next(enumerate(datamodule.train_dataloader()))</span>
-<span class="sd">            &gt;&gt;&gt; data.keys()</span>
-<span class="sd">            dict_keys([&#39;image&#39;])</span>
-<span class="sd">            &gt;&gt;&gt; data[&quot;image&quot;].shape</span>
-<span class="sd">            torch.Size([32, 3, 256, 256])</span>
-
-<span class="sd">            &gt;&gt;&gt; i, data = next(enumerate(datamodule.val_dataloader()))</span>
-<span class="sd">            &gt;&gt;&gt; data.keys()</span>
-<span class="sd">            dict_keys([&#39;image_path&#39;, &#39;label&#39;, &#39;mask_path&#39;, &#39;image&#39;, &#39;mask&#39;])</span>
-<span class="sd">            &gt;&gt;&gt; data[&quot;image&quot;].shape, data[&quot;mask&quot;].shape</span>
-<span class="sd">            (torch.Size([32, 3, 256, 256]), torch.Size([32, 256, 256]))</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">Path</span><span class="p">)</span> <span class="k">else</span> <span class="n">Path</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">category</span> <span class="o">=</span> <span class="n">category</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">category</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transform_config_train</span> <span class="o">=</span> <span class="n">transform_config_train</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transform_config_val</span> <span class="o">=</span> <span class="n">transform_config_val</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">image_size</span> <span class="o">=</span> <span class="n">image_size</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_config_train</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_config_val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">transform_config_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_config_train</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">pre_process_train</span> <span class="o">=</span> <span class="n">PreProcessor</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_config_train</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pre_process_val</span> <span class="o">=</span> <span class="n">PreProcessor</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_config_val</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">train_batch_size</span> <span class="o">=</span> <span class="n">train_batch_size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span> <span class="o">=</span> <span class="n">test_batch_size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span> <span class="o">=</span> <span class="n">num_workers</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">create_validation_set</span> <span class="o">=</span> <span class="n">create_validation_set</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">task</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">:</span> <span class="n">Dataset</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">test_data</span><span class="p">:</span> <span class="n">Dataset</span>
-        <span class="k">if</span> <span class="n">create_validation_set</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">val_data</span><span class="p">:</span> <span class="n">Dataset</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">inference_data</span><span class="p">:</span> <span class="n">Dataset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span> <span class="o">=</span> <span class="n">MVTecDataset</span><span class="p">(</span>
+            <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform_train</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">Split</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_data</span> <span class="o">=</span> <span class="n">MVTecDataset</span><span class="p">(</span>
+            <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform_eval</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">Split</span><span class="o">.</span><span class="n">TEST</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="MVTec.prepare_data"><a class="viewcode-back" href="../../../reference_guide/api/data/mvtec.html#anomalib.data.mvtec.MVTec.prepare_data">[docs]</a>    <span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Download the dataset if not available.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Download the dataset if not available.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Found the dataset.&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Downloading the Mvtec AD dataset.&quot;</span><span class="p">)</span>
-            <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://www.mydrive.ch/shares/38536/3830184030e49fe74747669442f0f282/download/420938113-1629952094&quot;</span>
-            <span class="n">dataset_name</span> <span class="o">=</span> <span class="s2">&quot;mvtec_anomaly_detection.tar.xz&quot;</span>
-            <span class="n">zip_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="n">dataset_name</span>
-            <span class="k">with</span> <span class="n">DownloadProgressBar</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">unit_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">miniters</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;MVTec AD&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">progress_bar</span><span class="p">:</span>
-                <span class="n">urlretrieve</span><span class="p">(</span>
-                    <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="n">filename</span><span class="o">=</span><span class="n">zip_filename</span><span class="p">,</span>
-                    <span class="n">reporthook</span><span class="o">=</span><span class="n">progress_bar</span><span class="o">.</span><span class="n">update_to</span><span class="p">,</span>
-                <span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Checking hash&quot;</span><span class="p">)</span>
-            <span class="n">hash_check</span><span class="p">(</span><span class="n">zip_filename</span><span class="p">,</span> <span class="s2">&quot;eefca59f2cede9c3fc5b6befbfec275e&quot;</span><span class="p">)</span>
-
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Extracting the dataset.&quot;</span><span class="p">)</span>
-            <span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">zip_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">tar_file</span><span class="p">:</span>
-                <span class="n">tar_file</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Cleaning the tar file&quot;</span><span class="p">)</span>
-            <span class="p">(</span><span class="n">zip_filename</span><span class="p">)</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="MVTec.setup"><a class="viewcode-back" href="../../../reference_guide/api/data/mvtec.html#anomalib.data.mvtec.MVTec.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Setup train, validation and test data.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">          stage: Optional[str]:  Train/Val/Test stages. (Default value = None)</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Setting up train, validation, test and prediction datasets.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">stage</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;fit&quot;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span> <span class="o">=</span> <span class="n">MVTecDataset</span><span class="p">(</span>
-                <span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
-                <span class="n">category</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
-                <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process_train</span><span class="p">,</span>
-                <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span>
-                <span class="n">task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">,</span>
-                <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
-                <span class="n">create_validation_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">create_validation_set</span><span class="p">,</span>
-            <span class="p">)</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_validation_set</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">val_data</span> <span class="o">=</span> <span class="n">MVTecDataset</span><span class="p">(</span>
-                <span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
-                <span class="n">category</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
-                <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process_val</span><span class="p">,</span>
-                <span class="n">split</span><span class="o">=</span><span class="s2">&quot;val&quot;</span><span class="p">,</span>
-                <span class="n">task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">,</span>
-                <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
-                <span class="n">create_validation_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">create_validation_set</span><span class="p">,</span>
-            <span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">test_data</span> <span class="o">=</span> <span class="n">MVTecDataset</span><span class="p">(</span>
-            <span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
-            <span class="n">category</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
-            <span class="n">pre_process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_process_val</span><span class="p">,</span>
-            <span class="n">split</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>
-            <span class="n">task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">,</span>
-            <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
-            <span class="n">create_validation_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">create_validation_set</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">stage</span> <span class="o">==</span> <span class="s2">&quot;predict&quot;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">inference_data</span> <span class="o">=</span> <span class="n">InferenceDataset</span><span class="p">(</span>
-                <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span> <span class="n">transform_config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_config_val</span>
-            <span class="p">)</span></div>
-
-<div class="viewcode-block" id="MVTec.train_dataloader"><a class="viewcode-back" href="../../../reference_guide/api/data/mvtec.html#anomalib.data.mvtec.MVTec.train_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TRAIN_DATALOADERS</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get train dataloader.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">train_batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="MVTec.val_dataloader"><a class="viewcode-back" href="../../../reference_guide/api/data/mvtec.html#anomalib.data.mvtec.MVTec.val_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">val_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EVAL_DATALOADERS</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get validation dataloader.&quot;&quot;&quot;</span>
-        <span class="n">dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">val_data</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_validation_set</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_data</span>
-        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="MVTec.test_dataloader"><a class="viewcode-back" href="../../../reference_guide/api/data/mvtec.html#anomalib.data.mvtec.MVTec.test_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">test_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EVAL_DATALOADERS</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get test dataloader.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_data</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="MVTec.predict_dataloader"><a class="viewcode-back" href="../../../reference_guide/api/data/mvtec.html#anomalib.data.mvtec.MVTec.predict_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">predict_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EVAL_DATALOADERS</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get predict dataloader.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">inference_data</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span>
-        <span class="p">)</span></div></div>
+            <span class="n">download_and_extract</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">DOWNLOAD_INFO</span><span class="p">)</span></div></div>
 </pre></div>
         </article>
       </div>

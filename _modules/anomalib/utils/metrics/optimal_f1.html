@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,12 +272,15 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
+<span class="kn">import</span> <span class="nn">warnings</span>
+
 <span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 <span class="kn">from</span> <span class="nn">torchmetrics</span> <span class="kn">import</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">PrecisionRecallCurve</span>
 
 
 <div class="viewcode-block" id="OptimalF1"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.OptimalF1">[docs]</a><span class="k">class</span> <span class="nc">OptimalF1</span><span class="p">(</span><span class="n">Metric</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Optimal F1 Metric.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimal F1 Metric.</span>
 
 <span class="sd">    Compute the optimal F1 score at the adaptive threshold, based on the F1 metric of the true labels and the</span>
 <span class="sd">    predicted anomaly scores.</span>
@@ -283,20 +288,28 @@
 
     <span class="n">full_state_update</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="ne">DeprecationWarning</span><span class="p">(</span>
+                <span class="s2">&quot;OptimalF1 metric is deprecated and will be removed in a future release. The optimal F1 score for &quot;</span>
+                <span class="s2">&quot;Anomalib predictions can be obtained by computing the adaptive threshold with the &quot;</span>
+                <span class="s2">&quot;AnomalyScoreThreshold metric and setting the computed threshold value in TorchMetrics F1Score metric.&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">precision_recall_curve</span> <span class="o">=</span> <span class="n">PrecisionRecallCurve</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">:</span> <span class="n">Tensor</span>
 
-    <span class="c1"># pylint: disable=arguments-differ</span>
-<div class="viewcode-block" id="OptimalF1.update"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.OptimalF1.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preds</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
-        <span class="sd">&quot;&quot;&quot;Update the precision-recall curve metric.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OptimalF1.update"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.OptimalF1.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preds</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the precision-recall curve metric.&quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>  <span class="c1"># These variables are not used.</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">precision_recall_curve</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="OptimalF1.compute"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.OptimalF1.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Compute the value of the optimal F1 score.</span>
+<div class="viewcode-block" id="OptimalF1.compute"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.OptimalF1.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the value of the optimal F1 score.</span>
 
 <span class="sd">        Compute the F1 scores while varying the threshold. Store the optimal</span>
 <span class="sd">        threshold as attribute and return the maximum value of the F1 score.</span>
@@ -304,9 +317,9 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Value of the F1 score at the optimal threshold.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">precision</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
-        <span class="n">recall</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
-        <span class="n">thresholds</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
+        <span class="n">precision</span><span class="p">:</span> <span class="n">Tensor</span>
+        <span class="n">recall</span><span class="p">:</span> <span class="n">Tensor</span>
+        <span class="n">thresholds</span><span class="p">:</span> <span class="n">Tensor</span>
 
         <span class="n">precision</span><span class="p">,</span> <span class="n">recall</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision_recall_curve</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
         <span class="n">f1_score</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">precision</span> <span class="o">*</span> <span class="n">recall</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">precision</span> <span class="o">+</span> <span class="n">recall</span> <span class="o">+</span> <span class="mf">1e-10</span><span class="p">)</span>
@@ -315,7 +328,7 @@
         <span class="k">return</span> <span class="n">optimal_f1_score</span></div>
 
 <div class="viewcode-block" id="OptimalF1.reset"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.OptimalF1.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Reset the metric.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset the metric.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">precision_recall_curve</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div></div>
 </pre></div>
         </article>

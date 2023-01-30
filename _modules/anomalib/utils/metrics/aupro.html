@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,7 +272,9 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="kn">import</span> <span class="n">Figure</span>
@@ -288,19 +292,19 @@
 
 
 <div class="viewcode-block" id="AUPRO"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.AUPRO">[docs]</a><span class="k">class</span> <span class="nc">AUPRO</span><span class="p">(</span><span class="n">Metric</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Area under per region overlap (AUPRO) Metric.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Area under per region overlap (AUPRO) Metric.&quot;&quot;&quot;</span>
 
     <span class="n">is_differentiable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">higher_is_better</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">higher_is_better</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">full_state_update</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">preds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span>
-    <span class="n">target</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span>
+    <span class="n">preds</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span>
+    <span class="n">target</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">compute_on_step</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">dist_sync_on_step</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">process_group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">process_group</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">dist_sync_fn</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">fpr_limit</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -316,7 +320,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">&quot;fpr_limit&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">fpr_limit</span><span class="p">))</span>
 
 <div class="viewcode-block" id="AUPRO.update"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.AUPRO.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preds</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
-        <span class="sd">&quot;&quot;&quot;Update state with new values.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update state with new values.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            preds (Tensor): predictions of the model</span>
@@ -325,8 +329,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Compute the pro/fpr value-pairs until the fpr specified by self.fpr_limit.</span>
+    <span class="k">def</span> <span class="nf">_compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the pro/fpr value-pairs until the fpr specified by self.fpr_limit.</span>
 
 <span class="sd">        It leverages the fact that the overlap corresponds to the tpr, and thus computes the overall</span>
 <span class="sd">        PRO curve by aggregating per-region tpr/fpr values produced by ROC-construction.</span>
@@ -336,7 +340,7 @@
 <span class="sd">                        connected component analysis.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Tuple[Tensor, Tensor]: tuple containing final fpr and tpr values.</span>
+<span class="sd">            tuple[Tensor, Tensor]: tuple containing final fpr and tpr values.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">target</span> <span class="o">=</span> <span class="n">dim_zero_cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
         <span class="n">preds</span> <span class="o">=</span> <span class="n">dim_zero_cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preds</span><span class="p">)</span>
@@ -344,10 +348,8 @@
         <span class="c1"># check and prepare target for labeling via kornia</span>
         <span class="k">if</span> <span class="n">target</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">target</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;kornia.contrib.connected_components expects input to lie in the interval [0, 1], but found &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;interval was [</span><span class="si">{</span><span class="n">target</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">target</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2">].&quot;</span>
-                <span class="p">)</span>
+                <span class="sa">f</span><span class="s2">&quot;kornia.contrib.connected_components expects input to lie in the interval [0, 1], but found &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;interval was [</span><span class="si">{</span><span class="n">target</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">target</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2">].&quot;</span>
             <span class="p">)</span>
         <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># kornia expects N1HW format</span>
         <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>  <span class="c1"># kornia expects FloatTensor</span>
@@ -422,7 +424,7 @@
         <span class="k">return</span> <span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span>
 
 <div class="viewcode-block" id="AUPRO.compute"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.AUPRO.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Fist compute PRO curve, then compute and scale area under the curve.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fist compute PRO curve, then compute and scale area under the curve.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Tensor: Value of the AUPRO metric</span>
@@ -434,11 +436,11 @@
 
         <span class="k">return</span> <span class="n">aupro</span></div>
 
-<div class="viewcode-block" id="AUPRO.generate_figure"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.AUPRO.generate_figure">[docs]</a>    <span class="k">def</span> <span class="nf">generate_figure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Figure</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Generate a figure containing the PRO curve and the AUPRO.</span>
+<div class="viewcode-block" id="AUPRO.generate_figure"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.AUPRO.generate_figure">[docs]</a>    <span class="k">def</span> <span class="nf">generate_figure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Figure</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a figure containing the PRO curve and the AUPRO.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Tuple[Figure, str]: Tuple containing both the figure and the figure title to be used for logging</span>
+<span class="sd">            tuple[Figure, str]: Tuple containing both the figure and the figure title to be used for logging</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute</span><span class="p">()</span>
         <span class="n">aupro</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
@@ -456,7 +458,7 @@
 
 <div class="viewcode-block" id="AUPRO.interp1d"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.AUPRO.interp1d">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">interp1d</span><span class="p">(</span><span class="n">old_x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">old_y</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">new_x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Function to interpolate a 1D signal linearly to new sampling points.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Function to interpolate a 1D signal linearly to new sampling points.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            old_x (Tensor): original 1-D x values (same size as y)</span>

@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -271,9 +273,10 @@
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -281,7 +284,7 @@
 
 
 <div class="viewcode-block" id="ThresholdMethod"><a class="viewcode-back" href="../../../reference_guide/api/post_processing.html#anomalib.post_processing.ThresholdMethod">[docs]</a><span class="k">class</span> <span class="nc">ThresholdMethod</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Threshold method to apply post-processing to the output predictions.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Threshold method to apply post-processing to the output predictions.&quot;&quot;&quot;</span>
 
     <span class="n">ADAPTIVE</span> <span class="o">=</span> <span class="s2">&quot;adaptive&quot;</span>
     <span class="n">MANUAL</span> <span class="o">=</span> <span class="s2">&quot;manual&quot;</span></div>
@@ -290,18 +293,18 @@
 <span class="k">def</span> <span class="nf">add_label</span><span class="p">(</span>
     <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">label_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">color</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
-    <span class="n">confidence</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">color</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+    <span class="n">confidence</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">font_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5e-3</span><span class="p">,</span>
     <span class="n">thickness_scale</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
-<span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Adds a label to an image.</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds a label to an image.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image (np.ndarray): Input image.</span>
 <span class="sd">        label_name (str): Name of the label that will be displayed on the image.</span>
-<span class="sd">        color (Tuple[int, int, int]): RGB values for background color of label.</span>
-<span class="sd">        confidence (Optional[float]): confidence score of the label.</span>
+<span class="sd">        color (tuple[int, int, int]): RGB values for background color of label.</span>
+<span class="sd">        confidence (float | None): confidence score of the label.</span>
 <span class="sd">        font_scale (float): scale of the font size relative to image size. Increase for bigger font.</span>
 <span class="sd">        thickness_scale (float): scale of the font thickness. Increase for thicker font.</span>
 
@@ -338,18 +341,18 @@
     <span class="k">return</span> <span class="n">image</span>
 
 
-<div class="viewcode-block" id="add_normal_label"><a class="viewcode-back" href="../../../reference_guide/api/post_processing.html#anomalib.post_processing.add_normal_label">[docs]</a><span class="k">def</span> <span class="nf">add_normal_label</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">confidence</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Adds the normal label to the image.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="add_normal_label"><a class="viewcode-back" href="../../../reference_guide/api/post_processing.html#anomalib.post_processing.add_normal_label">[docs]</a><span class="k">def</span> <span class="nf">add_normal_label</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">confidence</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds the normal label to the image.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">add_label</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">225</span><span class="p">,</span> <span class="mi">252</span><span class="p">,</span> <span class="mi">134</span><span class="p">),</span> <span class="n">confidence</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="add_anomalous_label"><a class="viewcode-back" href="../../../reference_guide/api/post_processing.html#anomalib.post_processing.add_anomalous_label">[docs]</a><span class="k">def</span> <span class="nf">add_anomalous_label</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">confidence</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Adds the anomalous label to the image.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="add_anomalous_label"><a class="viewcode-back" href="../../../reference_guide/api/post_processing.html#anomalib.post_processing.add_anomalous_label">[docs]</a><span class="k">def</span> <span class="nf">add_anomalous_label</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">confidence</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds the anomalous label to the image.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">add_label</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="s2">&quot;anomalous&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">confidence</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="anomaly_map_to_color_map"><a class="viewcode-back" href="../../../reference_guide/api/post_processing.html#anomalib.post_processing.anomaly_map_to_color_map">[docs]</a><span class="k">def</span> <span class="nf">anomaly_map_to_color_map</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">normalize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Compute anomaly color heatmap.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute anomaly color heatmap.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        anomaly_map (np.ndarray): Final anomaly map computed by the distance metric.</span>
@@ -372,7 +375,7 @@
 <div class="viewcode-block" id="superimpose_anomaly_map"><a class="viewcode-back" href="../../../reference_guide/api/post_processing.html#anomalib.post_processing.superimpose_anomaly_map">[docs]</a><span class="k">def</span> <span class="nf">superimpose_anomaly_map</span><span class="p">(</span>
     <span class="n">anomaly_map</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">,</span> <span class="n">gamma</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">normalize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Superimpose anomaly map on top of in the input image.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Superimpose anomaly map on top of in the input image.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        anomaly_map (np.ndarray): Anomaly map</span>
@@ -397,7 +400,7 @@
 
 
 <div class="viewcode-block" id="compute_mask"><a class="viewcode-back" href="../../../reference_guide/api/post_processing.html#anomalib.post_processing.compute_mask">[docs]</a><span class="k">def</span> <span class="nf">compute_mask</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Compute anomaly mask via thresholding the predicted anomaly map.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute anomaly mask via thresholding the predicted anomaly map.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        anomaly_map (np.ndarray): Anomaly map predicted via the model</span>
@@ -418,6 +421,23 @@
     <span class="n">mask</span> <span class="o">*=</span> <span class="mi">255</span>
 
     <span class="k">return</span> <span class="n">mask</span></div>
+
+
+<span class="k">def</span> <span class="nf">draw_boxes</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">boxes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">color</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Draw bounding boxes on an image.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        image (np.ndarray): Source image.</span>
+<span class="sd">        boxes (np.nparray): 2D array of shape (N, 4) where each row contains the xyxy coordinates of a bounding box.</span>
+<span class="sd">        color (tuple[int, int, int]): Color of the drawn boxes in RGB format.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: Image showing the bounding boxes drawn on top of the source image.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">box</span> <span class="ow">in</span> <span class="n">boxes</span><span class="p">:</span>
+        <span class="n">x_1</span><span class="p">,</span> <span class="n">y_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">,</span> <span class="n">y_2</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="n">x_1</span><span class="p">,</span> <span class="n">y_1</span><span class="p">),</span> <span class="p">(</span><span class="n">x_2</span><span class="p">,</span> <span class="n">y_2</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">thickness</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image</span>
 </pre></div>
         </article>
       </div>

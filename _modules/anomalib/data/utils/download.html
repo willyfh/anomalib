@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,69 +272,87 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span> <span class="nn">hashlib</span>
 <span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span>
+<span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+<span class="kn">from</span> <span class="nn">zipfile</span> <span class="kn">import</span> <span class="n">ZipFile</span>
 
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DownloadProgressBar"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.DownloadProgressBar">[docs]</a><span class="k">class</span> <span class="nc">DownloadProgressBar</span><span class="p">(</span><span class="n">tqdm</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create progress bar for urlretrieve. Subclasses `tqdm`.</span>
+
+<div class="viewcode-block" id="DownloadInfo"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.DownloadInfo">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">DownloadInfo</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Info needed to download a dataset from a url.&quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="nb">hash</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<span class="k">class</span> <span class="nc">DownloadProgressBar</span><span class="p">(</span><span class="n">tqdm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create progress bar for urlretrieve. Subclasses `tqdm`.</span>
 
 <span class="sd">    For information about the parameters in constructor, refer to `tqdm`&#39;s documentation.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        iterable (Optional[Iterable]): Iterable to decorate with a progressbar.</span>
+<span class="sd">        iterable (Iterable | None): Iterable to decorate with a progressbar.</span>
 <span class="sd">                            Leave blank to manually manage the updates.</span>
-<span class="sd">        desc (Optional[str]): Prefix for the progressbar.</span>
-<span class="sd">        total (Optional[Union[int, float]]): The number of expected iterations. If unspecified,</span>
+<span class="sd">        desc (str | None): Prefix for the progressbar.</span>
+<span class="sd">        total (int | float | None): The number of expected iterations. If unspecified,</span>
 <span class="sd">                                            len(iterable) is used if possible. If float(&quot;inf&quot;) or as a last</span>
 <span class="sd">                                            resort, only basic progress statistics are displayed</span>
 <span class="sd">                                            (no ETA, no progressbar).</span>
 <span class="sd">                                            If `gui` is True and this parameter needs subsequent updating,</span>
 <span class="sd">                                            specify an initial arbitrary large positive number,</span>
 <span class="sd">                                            e.g. 9e9.</span>
-<span class="sd">        leave (Optional[bool]): upon termination of iteration. If `None`, will leave only if `position` is `0`.</span>
-<span class="sd">        file (Optional[Union[io.TextIOWrapper, io.StringIO]]): Specifies where to output the progress messages</span>
+<span class="sd">        leave (bool | None): upon termination of iteration. If `None`, will leave only if `position` is `0`.</span>
+<span class="sd">        file (io.TextIOWrapper |  io.StringIO | None): Specifies where to output the progress messages</span>
 <span class="sd">                                                            (default: sys.stderr). Uses `file.write(str)` and</span>
 <span class="sd">                                                            `file.flush()` methods.  For encoding, see</span>
 <span class="sd">                                                            `write_bytes`.</span>
-<span class="sd">        ncols (Optional[int]): The width of the entire output message. If specified,</span>
+<span class="sd">        ncols (int | None): The width of the entire output message. If specified,</span>
 <span class="sd">                            dynamically resizes the progressbar to stay within this bound.</span>
 <span class="sd">                            If unspecified, attempts to use environment width. The</span>
 <span class="sd">                            fallback is a meter width of 10 and no limit for the counter and</span>
 <span class="sd">                            statistics. If 0, will not print any meter (only stats).</span>
-<span class="sd">        mininterval (Optional[float]): Minimum progress display update interval [default: 0.1] seconds.</span>
-<span class="sd">        maxinterval (Optional[float]): Maximum progress display update interval [default: 10] seconds.</span>
+<span class="sd">        mininterval (float | None): Minimum progress display update interval [default: 0.1] seconds.</span>
+<span class="sd">        maxinterval (float | None): Maximum progress display update interval [default: 10] seconds.</span>
 <span class="sd">                                    Automatically adjusts `miniters` to correspond to `mininterval`</span>
 <span class="sd">                                    after long display update lag. Only works if `dynamic_miniters`</span>
 <span class="sd">                                    or monitor thread is enabled.</span>
-<span class="sd">        miniters (Optional[Union[int, float]]): Minimum progress display update interval, in iterations.</span>
+<span class="sd">        miniters (int | float | None): Minimum progress display update interval, in iterations.</span>
 <span class="sd">                                            If 0 and `dynamic_miniters`, will automatically adjust to equal</span>
 <span class="sd">                                            `mininterval` (more CPU efficient, good for tight loops).</span>
 <span class="sd">                                            If &gt; 0, will skip display of specified number of iterations.</span>
 <span class="sd">                                            Tweak this and `mininterval` to get very efficient loops.</span>
 <span class="sd">                                            If your progress is erratic with both fast and slow iterations</span>
 <span class="sd">                                            (network, skipping items, etc) you should set miniters=1.</span>
-<span class="sd">        use_ascii (Optional[Union[bool, str]]): If unspecified or False, use unicode (smooth blocks) to fill</span>
+<span class="sd">        use_ascii (str | bool | None): If unspecified or False, use unicode (smooth blocks) to fill</span>
 <span class="sd">                                        the meter. The fallback is to use ASCII characters &quot; 123456789#&quot;.</span>
-<span class="sd">        disable (Optional[bool]): Whether to disable the entire progressbar wrapper</span>
+<span class="sd">        disable (bool | None): Whether to disable the entire progressbar wrapper</span>
 <span class="sd">                                    [default: False]. If set to None, disable on non-TTY.</span>
-<span class="sd">        unit (Optional[str]): String that will be used to define the unit of each iteration</span>
+<span class="sd">        unit (str | None): String that will be used to define the unit of each iteration</span>
 <span class="sd">                            [default: it].</span>
-<span class="sd">        unit_scale (Union[bool, int, float]): If 1 or True, the number of iterations will be reduced/scaled</span>
+<span class="sd">        unit_scale (int | float | bool): If 1 or True, the number of iterations will be reduced/scaled</span>
 <span class="sd">                            automatically and a metric prefix following the</span>
 <span class="sd">                            International System of Units standard will be added</span>
 <span class="sd">                            (kilo, mega, etc.) [default: False]. If any other non-zero</span>
 <span class="sd">                            number, will scale `total` and `n`.</span>
-<span class="sd">        dynamic_ncols (Optional[bool]): If set, constantly alters `ncols` and `nrows` to the</span>
+<span class="sd">        dynamic_ncols (bool | None): If set, constantly alters `ncols` and `nrows` to the</span>
 <span class="sd">                                        environment (allowing for window resizes) [default: False].</span>
-<span class="sd">        smoothing (Optional[float]): Exponential moving average smoothing factor for speed estimates</span>
+<span class="sd">        smoothing (float | None): Exponential moving average smoothing factor for speed estimates</span>
 <span class="sd">                                    (ignored in GUI mode). Ranges from 0 (average speed) to 1</span>
 <span class="sd">                                    (current/instantaneous speed) [default: 0.3].</span>
-<span class="sd">        bar_format (Optional[str]):  Specify a custom bar string formatting. May impact performance.</span>
+<span class="sd">        bar_format (str | None):  Specify a custom bar string formatting. May impact performance.</span>
 <span class="sd">                                    [default: &#39;{l_bar}{bar}{r_bar}&#39;], where</span>
 <span class="sd">                                    l_bar=&#39;{desc}: {percentage:3.0f}%|&#39; and</span>
 <span class="sd">                                    r_bar=&#39;| {n_fmt}/{total_fmt} [{elapsed}&lt;{remaining}, &#39;</span>
@@ -344,26 +364,26 @@
 <span class="sd">                                    remaining, remaining_s, eta.</span>
 <span class="sd">                                    Note that a trailing &quot;: &quot; is automatically removed after {desc}</span>
 <span class="sd">                                    if the latter is empty.</span>
-<span class="sd">        initial (Optional[Union[int, float]]): The initial counter value. Useful when restarting a progress</span>
+<span class="sd">        initial (int | float | None): The initial counter value. Useful when restarting a progress</span>
 <span class="sd">                                            bar [default: 0]. If using float, consider specifying `{n:.3f}`</span>
 <span class="sd">                                            or similar in `bar_format`, or specifying `unit_scale`.</span>
-<span class="sd">        position (Optional[int]): Specify the line offset to print this bar (starting from 0)</span>
+<span class="sd">        position (int | None): Specify the line offset to print this bar (starting from 0)</span>
 <span class="sd">                                    Automatic if unspecified.</span>
 <span class="sd">                                    Useful to manage multiple bars at once (eg, from threads).</span>
-<span class="sd">        postfix (Optional[Dict]): Specify additional stats to display at the end of the bar.</span>
+<span class="sd">        postfix (dict | None): Specify additional stats to display at the end of the bar.</span>
 <span class="sd">                                    Calls `set_postfix(**postfix)` if possible (dict).</span>
-<span class="sd">        unit_divisor (Optional[float]): [default: 1000], ignored unless `unit_scale` is True.</span>
-<span class="sd">        write_bytes (Optional[bool]): If (default: None) and `file` is unspecified,</span>
+<span class="sd">        unit_divisor (float | None): [default: 1000], ignored unless `unit_scale` is True.</span>
+<span class="sd">        write_bytes (bool | None): If (default: None) and `file` is unspecified,</span>
 <span class="sd">                                    bytes will be written in Python 2. If `True` will also write</span>
 <span class="sd">                                    bytes. In all other cases will default to unicode.</span>
-<span class="sd">        lock_args (Optional[tuple]): Passed to `refresh` for intermediate output</span>
+<span class="sd">        lock_args (tuple | None): Passed to `refresh` for intermediate output</span>
 <span class="sd">                                    (initialisation, iterating, and updating).</span>
-<span class="sd">                                    nrows (Optional[int]): The screen height. If specified, hides nested bars</span>
+<span class="sd">                                    nrows (int | None): The screen height. If specified, hides nested bars</span>
 <span class="sd">                                    outside this bound. If unspecified, attempts to use environment height.</span>
 <span class="sd">                                    The fallback is 20.</span>
-<span class="sd">        colour (Optional[str]): Bar colour (e.g. &#39;green&#39;, &#39;#00ff00&#39;).</span>
-<span class="sd">        delay (Optional[float]): Don&#39;t display until [default: 0] seconds have elapsed.</span>
-<span class="sd">        gui (Optional[bool]): WARNING: internal parameter - do not use.</span>
+<span class="sd">        colour (str | None): Bar colour (e.g. &#39;green&#39;, &#39;#00ff00&#39;).</span>
+<span class="sd">        delay (float | None): Don&#39;t display until [default: 0] seconds have elapsed.</span>
+<span class="sd">        gui (bool | None): WARNING: internal parameter - do not use.</span>
 <span class="sd">                                Use tqdm.gui.tqdm(...) instead. If set, will attempt to use</span>
 <span class="sd">                                matplotlib animations for a graphical output [default: False].</span>
 
@@ -375,32 +395,32 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">iterable</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Iterable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">desc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">total</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">leave</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">TextIOWrapper</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">ncols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">mininterval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
-        <span class="n">maxinterval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
-        <span class="n">miniters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">use_ascii</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">disable</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">unit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;it&quot;</span><span class="p">,</span>
-        <span class="n">unit_scale</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">dynamic_ncols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">smoothing</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span>
-        <span class="n">bar_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">initial</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="n">position</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">postfix</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">unit_divisor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
-        <span class="n">write_bytes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">lock_args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">nrows</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">colour</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">delay</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="n">gui</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">desc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">total</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">leave</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">file</span><span class="p">:</span> <span class="n">io</span><span class="o">.</span><span class="n">TextIOWrapper</span> <span class="o">|</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">ncols</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mininterval</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">maxinterval</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="n">miniters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">use_ascii</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">disable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="s2">&quot;it&quot;</span><span class="p">,</span>
+        <span class="n">unit_scale</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">dynamic_ncols</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">smoothing</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span>
+        <span class="n">bar_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">initial</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">postfix</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">unit_divisor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">write_bytes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">lock_args</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">nrows</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">colour</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">delay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">gui</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
@@ -432,10 +452,10 @@
             <span class="n">gui</span><span class="o">=</span><span class="n">gui</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="DownloadProgressBar.update_to"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.DownloadProgressBar.update_to">[docs]</a>    <span class="k">def</span> <span class="nf">update_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chunk_number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">max_chunk_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">total_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Progress bar hook for tqdm.</span>
+    <span class="k">def</span> <span class="nf">update_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chunk_number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">max_chunk_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">total_size</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Progress bar hook for tqdm.</span>
 
 <span class="sd">        Based on https://stackoverflow.com/a/53877507</span>
 <span class="sd">        The implementor does not have to bother about passing parameters to this as it gets them from urlretrieve.</span>
@@ -448,20 +468,58 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">total_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="n">total_size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chunk_number</span> <span class="o">*</span> <span class="n">max_chunk_size</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chunk_number</span> <span class="o">*</span> <span class="n">max_chunk_size</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="hash_check"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.hash_check">[docs]</a><span class="k">def</span> <span class="nf">hash_check</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">expected_hash</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Raise assert error if hash does not match the calculated hash of the file.</span>
+<span class="k">def</span> <span class="nf">hash_check</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">expected_hash</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raise assert error if hash does not match the calculated hash of the file.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        file_path (Path): Path to file.</span>
 <span class="sd">        expected_hash (str): Expected hash of the file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">hash_file</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">file_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">hash_file</span><span class="p">:</span>
         <span class="k">assert</span> <span class="p">(</span>
             <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">hash_file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="o">==</span> <span class="n">expected_hash</span>
-        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Downloaded file </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2"> does not match the required hash.&quot;</span></div>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Downloaded file </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2"> does not match the required hash.&quot;</span>
+
+
+<div class="viewcode-block" id="download_and_extract"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.download_and_extract">[docs]</a><span class="k">def</span> <span class="nf">download_and_extract</span><span class="p">(</span><span class="n">root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">info</span><span class="p">:</span> <span class="n">DownloadInfo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Download and extract a dataset.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        root (Path): Root directory where the dataset will be stored.</span>
+<span class="sd">        info (DownloadInfo): Info needed to download the dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># save the compressed file in the specified root directory, using the same file name as on the server</span>
+    <span class="n">downloaded_file_path</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="n">info</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">downloaded_file_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Existing dataset archive found. Skipping download stage.&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Downloading the </span><span class="si">%s</span><span class="s2"> dataset.&quot;</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">DownloadProgressBar</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">unit_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">miniters</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">as</span> <span class="n">progress_bar</span><span class="p">:</span>
+            <span class="n">urlretrieve</span><span class="p">(</span>  <span class="c1"># nosec - suppress bandit warning (urls are hardcoded)</span>
+                <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">info</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">filename</span><span class="o">=</span><span class="n">downloaded_file_path</span><span class="p">,</span>
+                <span class="n">reporthook</span><span class="o">=</span><span class="n">progress_bar</span><span class="o">.</span><span class="n">update_to</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Checking the hash of the downloaded file.&quot;</span><span class="p">)</span>
+        <span class="n">hash_check</span><span class="p">(</span><span class="n">downloaded_file_path</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">hash</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Extracting dataset into root folder.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">downloaded_file_path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.zip&quot;</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">ZipFile</span><span class="p">(</span><span class="n">downloaded_file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_file</span><span class="p">:</span>
+            <span class="n">zip_file</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">downloaded_file_path</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;.tar&quot;</span><span class="p">,</span> <span class="s2">&quot;.gz&quot;</span><span class="p">,</span> <span class="s2">&quot;.xz&quot;</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">downloaded_file_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">tar_file</span><span class="p">:</span>
+            <span class="n">tar_file</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognized file format: </span><span class="si">{</span><span class="n">downloaded_file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Cleaning up files.&quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">downloaded_file_path</span><span class="p">)</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span></div>
 </pre></div>
         </article>
       </div>

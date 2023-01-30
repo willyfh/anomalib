@@ -174,9 +174,11 @@
 <li class="toctree-l2"><a class="reference internal" href="notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -274,7 +276,7 @@
 <section id="option-1-pypi">
 <h3>Option - 1 : PyPI<a class="headerlink" href="#option-1-pypi" title="Permalink to this heading">¶</a></h3>
 <p>Anomalib can be installed from PyPI via the following:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install anomalib
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>anomalib
 </pre></div>
 </div>
 </section>
@@ -304,51 +306,51 @@
 <p>To get Anomalib functionally working with a custom dataset, one only needs to change the <code class="docutils literal notranslate"><span class="pre">dataset</span></code> section of the configuration file.</p>
 <p>Below is an example of what the dataset parameters would look like for our <code class="docutils literal notranslate"><span class="pre">hazelnut_toy</span></code> folder specified in <a class="reference internal" href="#collect-your-custom-dataset"><span class="std std-ref">Step 2</span></a>.</p>
 <p>Let’s choose <a class="reference external" href="https://arxiv.org/pdf/2011.08785.pdf">Padim algorithm</a>, copy the sample config and modify the dataset section.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cp anomalib/models/padim/config.yaml custom_padim.yaml
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cp<span class="w"> </span>anomalib/models/padim/config.yaml<span class="w"> </span>custom_padim.yaml
 </pre></div>
 </div>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace the dataset configs with the following.</span><span class="w"></span>
-<span class="nt">dataset</span><span class="p">:</span><span class="w"></span>
-<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hazelnut</span><span class="w"></span>
-<span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">folder</span><span class="w"></span>
-<span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./datasets/Hazelnut_toy</span><span class="w"></span>
-<span class="nt">normal_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">good</span><span class="w"> </span><span class="c1"># name of the folder containing normal images.</span><span class="w"></span>
-<span class="nt">abnormal_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">colour</span><span class="w"> </span><span class="c1"># name of the folder containing abnormal images.</span><span class="w"></span>
-<span class="nt">task</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">classification</span><span class="w"> </span><span class="c1"># classification or segmentation</span><span class="w"></span>
-<span class="nt">mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1">#optional</span><span class="w"></span>
-<span class="nt">normal_test_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># optional</span><span class="w"></span>
-<span class="nt">extensions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
-<span class="nt">split_ratio</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.2</span><span class="w">  </span><span class="c1"># normal images ratio to create a test split</span><span class="w"></span>
-<span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
-<span class="nt">image_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span><span class="w"></span>
-<span class="nt">train_batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span><span class="w"></span>
-<span class="nt">test_batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span><span class="w"></span>
-<span class="nt">num_workers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span><span class="w"></span>
-<span class="nt">transform_config</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">train</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
-<span class="w">    </span><span class="nt">val</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
-<span class="nt">create_validation_set</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="nt">tiling</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">apply</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="w">    </span><span class="nt">tile_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
-<span class="w">    </span><span class="nt">stride</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
-<span class="w">    </span><span class="nt">remove_border_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
-<span class="w">    </span><span class="nt">use_random_tiling</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
-<span class="w">    </span><span class="nt">random_tile_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace the dataset configs with the following.</span>
+<span class="nt">dataset</span><span class="p">:</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hazelnut</span>
+<span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">folder</span>
+<span class="nt">root</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./datasets/Hazelnut_toy</span>
+<span class="nt">normal_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">good</span><span class="w"> </span><span class="c1"># name of the folder containing normal images.</span>
+<span class="nt">abnormal_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">colour</span><span class="w"> </span><span class="c1"># name of the folder containing abnormal images.</span>
+<span class="nt">task</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">classification</span><span class="w"> </span><span class="c1"># classification or segmentation</span>
+<span class="nt">mask_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1">#optional</span>
+<span class="nt">normal_test_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># optional</span>
+<span class="nt">extensions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="nt">split_ratio</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.2</span><span class="w">  </span><span class="c1"># normal images ratio to create a test split</span>
+<span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="nt">image_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256</span>
+<span class="nt">train_batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
+<span class="nt">eval_batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
+<span class="nt">num_workers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<span class="nt">transform_config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">train</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">eval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="nt">val_split_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">from_test</span><span class="w"> </span><span class="c1"># determines how the validation set is created, options [same_as_test, from_test]</span>
+<span class="nt">tiling</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">apply</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">tile_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">stride</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">remove_border_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">use_random_tiling</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="w">    </span><span class="nt">random_tile_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
 
-<span class="nt">model</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">padim</span><span class="w"></span>
-<span class="w">    </span><span class="nt">backbone</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">resnet18</span><span class="w"></span>
-<span class="w">    </span><span class="nt">layer</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">layer1</span><span class="w"></span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<span class="nt">model</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">padim</span>
+<span class="w">    </span><span class="nt">backbone</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">resnet18</span>
+<span class="w">    </span><span class="nt">layer</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">layer1</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </pre></div>
 </div>
 </section>
 <section id="step-5-run-training">
 <h2>Step 5: Run Training<a class="headerlink" href="#step-5-run-training" title="Permalink to this heading">¶</a></h2>
 <p>As per the config file, move <code class="docutils literal notranslate"><span class="pre">Hazelnut_toy</span></code> to the datasets section in the main root directory of anomalib, and then run</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python tools/train.py --config custom_padim.yaml
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>tools/train.py<span class="w"> </span>--config<span class="w"> </span>custom_padim.yaml
 </pre></div>
 </div>
 </section>
@@ -360,16 +362,16 @@
 <p>Not only does Anomalib classify whether a part is defected or not, it can also be used to segment the defects as well. To do this, simply add a folder called <code class="docutils literal notranslate"><span class="pre">mask</span></code> at the same directory level as the <code class="docutils literal notranslate"><span class="pre">good</span></code> and <code class="docutils literal notranslate"><span class="pre">colour</span></code> folders. This folder should contain binary images for the defects in the <code class="docutils literal notranslate"><span class="pre">colour</span></code> folder. Here, the white pixels represent the location of the defect. Populate the mask field in the config file with <code class="docutils literal notranslate"><span class="pre">mask</span></code> and change the task to segmentation to see Anomalib segment defects.</p>
 </div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Hazelnut_toy
-├── colour
-│  ├── <span class="m">00</span>.jpg
-│  ├── <span class="m">01</span>.jpg
-│  ...
-├── good
-│  ├── <span class="m">00</span>.jpg
-│  ├── <span class="m">01</span>.jpg
-└── mask
-├── <span class="m">00</span>.jpg
-├── <span class="m">01</span>.jpg
+├──<span class="w"> </span>colour
+│<span class="w">  </span>├──<span class="w"> </span><span class="m">00</span>.jpg
+│<span class="w">  </span>├──<span class="w"> </span><span class="m">01</span>.jpg
+│<span class="w">  </span>...
+├──<span class="w"> </span>good
+│<span class="w">  </span>├──<span class="w"> </span><span class="m">00</span>.jpg
+│<span class="w">  </span>├──<span class="w"> </span><span class="m">01</span>.jpg
+└──<span class="w"> </span>mask
+├──<span class="w"> </span><span class="m">00</span>.jpg
+├──<span class="w"> </span><span class="m">01</span>.jpg
 ...
 </pre></div>
 </div>
@@ -382,35 +384,35 @@
 <p>To select where you would like to save the images, change the <code class="docutils literal notranslate"><span class="pre">log_images</span></code> parameter in the <code class="docutils literal notranslate"><span class="pre">Visualization</span></code> section in the config file to true.</p>
 <p>For example, setting the following <code class="docutils literal notranslate"><span class="pre">log_images:</span> <span class="pre">True</span></code> will result in saving the images in the results folder as shown in the tree structure below:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>results
-└── padim
-    └── Hazelnut_toy
-        ├── images
-        │   ├── colour
-        │   │   ├── <span class="m">00</span>.jpg
-        │   │   ├── <span class="m">01</span>.jpg
-        │   │   └── ...
-        │   └── good
-        │       ├── <span class="m">00</span>.jpg
-        │       ├── <span class="m">01</span>.jpg
-        │       └── ...
-        └── weights
-            └── model.ckpt
+└──<span class="w"> </span>padim
+<span class="w">    </span>└──<span class="w"> </span>Hazelnut_toy
+<span class="w">        </span>├──<span class="w"> </span>images
+<span class="w">        </span>│<span class="w">   </span>├──<span class="w"> </span>colour
+<span class="w">        </span>│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span><span class="m">00</span>.jpg
+<span class="w">        </span>│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span><span class="m">01</span>.jpg
+<span class="w">        </span>│<span class="w">   </span>│<span class="w">   </span>└──<span class="w"> </span>...
+<span class="w">        </span>│<span class="w">   </span>└──<span class="w"> </span>good
+<span class="w">        </span>│<span class="w">       </span>├──<span class="w"> </span><span class="m">00</span>.jpg
+<span class="w">        </span>│<span class="w">       </span>├──<span class="w"> </span><span class="m">01</span>.jpg
+<span class="w">        </span>│<span class="w">       </span>└──<span class="w"> </span>...
+<span class="w">        </span>└──<span class="w"> </span>weights
+<span class="w">            </span>└──<span class="w"> </span>model.ckpt
 </pre></div>
 </div>
 <section id="logging-to-tensorboard-and-or-w-b">
 <h3>Logging to Tensorboard and/or W&amp;B<a class="headerlink" href="#logging-to-tensorboard-and-or-w-b" title="Permalink to this heading">¶</a></h3>
 <p>To use TensorBoard and/or W&amp;B logger and/or Comet logger, ensure that the logger parameter is set to <code class="docutils literal notranslate"><span class="pre">comet</span></code>, <code class="docutils literal notranslate"><span class="pre">tensorboard</span></code>, <code class="docutils literal notranslate"><span class="pre">wandb</span></code> or <code class="docutils literal notranslate"><span class="pre">[tensorboard,</span> <span class="pre">wandb]</span></code> in the <code class="docutils literal notranslate"><span class="pre">logging</span></code> section of the config file.</p>
 <p>An example configuration for saving to TensorBoard is shown in the figure below. Similarly after setting logger to <code class="docutils literal notranslate"><span class="pre">wandb</span></code> or ‘comet’ you will see the images on your wandb and/or comet project dashboard.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">visualization</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">show_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"> </span><span class="c1"># show images on the screen</span><span class="w"></span>
-<span class="w">    </span><span class="nt">save_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"> </span><span class="c1"># save images to the file system</span><span class="w"></span>
-<span class="w">    </span><span class="nt">log_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"> </span><span class="c1"># log images to the available loggers (if any)</span><span class="w"></span>
-<span class="w">    </span><span class="nt">image_save_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># path to which images will be saved</span><span class="w"></span>
-<span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">full</span><span class="w"> </span><span class="c1"># options: [&quot;full&quot;, &quot;simple&quot;]</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">visualization</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">show_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"> </span><span class="c1"># show images on the screen</span>
+<span class="w">    </span><span class="nt">save_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"> </span><span class="c1"># save images to the file system</span>
+<span class="w">    </span><span class="nt">log_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"> </span><span class="c1"># log images to the available loggers (if any)</span>
+<span class="w">    </span><span class="nt">image_save_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># path to which images will be saved</span>
+<span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">full</span><span class="w"> </span><span class="c1"># options: [&quot;full&quot;, &quot;simple&quot;]</span>
 
-<span class="w">    </span><span class="nt">logging</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">comet</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">tensorboard</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wandb</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1">#Choose any combination of these 3</span><span class="w"></span>
-<span class="w">    </span><span class="nt">log_graph</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">logging</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">comet</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">tensorboard</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wandb</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1">#Choose any combination of these 3</span>
+<span class="w">    </span><span class="nt">log_graph</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </pre></div>
 </div>
 <img alt="../_images/logging.gif" class="align-center" src="../_images/logging.gif" />
@@ -418,27 +420,27 @@
 <section id="hyper-parameter-optimization">
 <h3>Hyper-Parameter Optimization<a class="headerlink" href="#hyper-parameter-optimization" title="Permalink to this heading">¶</a></h3>
 <p>It is very rare to find a model which works out of the box for a particular dataset. However, fortunately, we support tools which work out of the box to help tune the models in Anomalib to your particular dataset. As of the publication of this blog post, Anomalib supports <a class="reference external" href="https://wandb.ai/">weights and biases</a> for hyperparameter optimization. To get started have a look at <code class="docutils literal notranslate"><span class="pre">sweep.yaml</span></code> located at <code class="docutils literal notranslate"><span class="pre">tools/hpo</span></code>. It provides a sample of how one can define a hyperparameter sweep.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">observation_budget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
-<span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bayes</span><span class="w"></span>
-<span class="nt">metric</span><span class="p">:</span><span class="w"></span>
-<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pixel_AUROC</span><span class="w"></span>
-<span class="nt">goal</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">maximize</span><span class="w"></span>
-<span class="nt">parameters</span><span class="p">:</span><span class="w"></span>
-<span class="nt">dataset</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">category</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hazelnut</span><span class="w"></span>
-<span class="w">    </span><span class="nt">image_size</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">128</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">256</span><span class="p p-Indicator">]</span><span class="w"></span>
-<span class="nt">model</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">backbone</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">resnet18</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wide_resnet50_2</span><span class="p p-Indicator">]</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">observation_budget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bayes</span>
+<span class="nt">metric</span><span class="p">:</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pixel_AUROC</span>
+<span class="nt">goal</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">maximize</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="nt">dataset</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">category</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hazelnut</span>
+<span class="w">    </span><span class="nt">image_size</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">128</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">256</span><span class="p p-Indicator">]</span>
+<span class="nt">model</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">backbone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">resnet18</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wide_resnet50_2</span><span class="p p-Indicator">]</span>
 </pre></div>
 </div>
 <p>The observation_budget informs wandb about the number of experiments to run. The method section defines the kind of method to use for HPO search. For other available methods, have a look at <a class="reference external" href="https://docs.wandb.ai/guides/sweeps/quickstart">Weights and Biases</a> documentation. The parameters section contains dataset and model parameters. Any parameter defined here overrides the parameter in the original model configuration.</p>
 <p>To run a sweep, you can just call,</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python tools/hpo/wandb_sweep.py   <span class="se">\</span>
-    --model padim                   <span class="se">\</span>
-    --config ./path_to_config.yaml  <span class="se">\</span>
-    --sweep_config tools/hpo/sweep.yaml
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>tools/hpo/wandb_sweep.py<span class="w">   </span><span class="se">\</span>
+<span class="w">    </span>--model<span class="w"> </span>padim<span class="w">                   </span><span class="se">\</span>
+<span class="w">    </span>--config<span class="w"> </span>./path_to_config.yaml<span class="w">  </span><span class="se">\</span>
+<span class="w">    </span>--sweep_config<span class="w"> </span>tools/hpo/sweep.yaml
 </pre></div>
 </div>
 <p>In case <code class="docutils literal notranslate"><span class="pre">model_config</span></code> is not provided, the script looks at the default config location for that model. Note, you will need to have logged into a wandb account to use HPO search and view the results.</p>
@@ -451,8 +453,8 @@
 <p>To add to the suit of experiment tracking and optimization, anomalib also includes a benchmarking script for gathering results across different combinations of models, their parameters, and dataset categories. The model performance and throughputs are logged into a csv file that can also serve as a means to track model drift. Optionally, these same results can be logged to Weights and Biases and TensorBoard. A sample configuration file is shown in the screenshot below.</p>
 <p>This configuration computes the throughput and performance metrics for CPU and GPU for two categories of the toy dataset for Padim and STFPM models. The dataset can be configured in the respective model configuration files. By default, <code class="docutils literal notranslate"><span class="pre">compute_openvino</span></code> is set to False to support instances where OpenVINO requirements are not installed in the environment. Once installed, this flag can be set to True to get throughput on OpenVINO optimized models. The writer parameter is optional and can be set to <code class="docutils literal notranslate"><span class="pre">writer:</span> <span class="pre">[]</span></code> in case the user only requires a csv file without logging to TensorBoard or Weights and Biases. It is also a good practice to set a value of seed to ensure reproducibility across runs and thus, is set to a non-zero value by default.</p>
 <p>Once a configuration is decided, benchmarking can easily be performed by calling</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python tools/benchmarking/benchmark.py <span class="se">\</span>
-    --config tools/benchmarking/benchmark_params.yaml
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>tools/benchmarking/benchmark.py<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--config<span class="w"> </span>tools/benchmarking/benchmark_params.yaml
 </pre></div>
 </div>
 <p>A nice feature about the provided benchmarking script is that if the host system has multiple GPUs, the runs are parallelized over all the available GPUs for faster collection of result.</p>

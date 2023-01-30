@@ -174,9 +174,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -268,26 +270,34 @@
         <article role="main">
           <section id="pre-commit-hooks">
 <span id="id1"></span><h1>Pre-commit Hooks<a class="headerlink" href="#pre-commit-hooks" title="Permalink to this heading">¶</a></h1>
-<p>First of all, you will need to install development requirements. This will also install the pre-commit pip package
-in your python environment</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install -r requirements/dev.txt
+<p>To enforce consistency within the repo, Anomalib relies on several formatters, linters, and style- and type checkers:</p>
+<div class="line-block">
+<div class="line">Tool         | Function                   | Documentation                                  |</div>
+<div class="line">——       | ————————– | —————————————–      |</div>
+<div class="line">Black        | Code formatting            | &lt;<a class="reference external" href="https://black.readthedocs.io/en/stable/">https://black.readthedocs.io/en/stable/</a>&gt;      |</div>
+<div class="line">isort        | Organize import statements | &lt;<a class="reference external" href="https://pycqa.github.io/isort/">https://pycqa.github.io/isort/</a>&gt;               |</div>
+<div class="line">Flake8       | Code style                 | &lt;<a class="reference external" href="https://flake8.pycqa.org/en/latest/">https://flake8.pycqa.org/en/latest/</a>&gt;          |</div>
+<div class="line">Pylint       | Linting                    | &lt;<a class="reference external" href="http://pylint.pycqa.org/en/latest/">http://pylint.pycqa.org/en/latest/</a>&gt;           |</div>
+<div class="line">MyPy         | Type checking              | &lt;<a class="reference external" href="https://mypy.readthedocs.io/en/stable/">https://mypy.readthedocs.io/en/stable/</a>&gt;       |</div>
+<div class="line">Pydocstyle   | Docstring conventions      | &lt;<a class="reference external" href="http://www.pydocstyle.org/en/stable/">http://www.pydocstyle.org/en/stable/</a>&gt;         |</div>
+<div class="line">Prettier     | Opinionated code formatter | &lt;<a class="reference external" href="https://prettier.io/docs/en/index.html">https://prettier.io/docs/en/index.html</a>&gt;       |</div>
+<div class="line">Markdownlint | Markdown style             | &lt;<a class="reference external" href="https://github.com/markdownlint/markdownlint">https://github.com/markdownlint/markdownlint</a>&gt; |</div>
+<div class="line">Hadolint     | Dockerfile linting         | &lt;<a class="reference external" href="https://hadolint.github.io/hadolint/">https://hadolint.github.io/hadolint/</a>&gt;         |</div>
+</div>
+<p>Instead of running each of these tools manually, we automatically run them before each commit and after each merge request. To achieve this we use pre-commit hooks. Every developer is expected to use pre-commit hooks to make sure that their code remains free of typing and linting issues, and complies with the coding style requirements.</p>
+<p>To install the development environment, including pre-commit, run the following commands:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>anomalib_dev<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8
+$<span class="w"> </span>conda<span class="w"> </span>activate<span class="w"> </span>anomalib_dev
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements/base.txt<span class="w"> </span>-r<span class="w"> </span>requirements/dev.txt
+$<span class="w"> </span>pre-commit<span class="w"> </span>install
 </pre></div>
 </div>
-<p>Then, install pre-commit hooks using the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pre-commit install
-</pre></div>
-</div>
-<p>Pre-commit hooks will run several formatters, linters and type checkers each time you commit some changes to a branch. Some tools like black and isort will automatically format your files to enforce consistent formatting within the repo. Other tools will provide a list of errors and warnings which you will be required to address before being able to make the commit.</p>
+<p>Pre-commit hooks will run each of the code quality tools listed above each time you commit some changes to a branch. Some tools like black and isort will automatically format your files to enforce consistent formatting within the repo. Other tools will provide a list of errors and warnings which you will be required to address before being able to make the commit.</p>
 <p>In some cases it might be desired to commit your changes even though some of the checks are failing. For example when you want to address the pre-commit issues at a later time, or when you want to commit a work-in-progress. In these cases, you can skip the pre-commit hooks by adding the <code class="docutils literal notranslate"><span class="pre">--no-verify</span></code> parameter to the commit command.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git commit -m <span class="s1">&#39;WIP commit&#39;</span> --no-verify
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span><span class="s1">&#39;WIP commit&#39;</span><span class="w"> </span>--no-verify
 </pre></div>
 </div>
-<p>When doing so, please make sure to revisit the issues at a later time. A good way to check if all issues have been addressed before making an MR is to run tox.</p>
-<p>Apart from tox, you can also run <code class="docutils literal notranslate"><span class="pre">`pre-commit`</span></code> on all the files to check formatting and style issues. To do this you can use</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pre-commit run --all
-</pre></div>
-</div>
-<p>Tox: <a class="reference internal" href="using_tox.html#using-tox"><span class="std std-ref">Using Tox</span></a></p>
+<p>When doing so, please make sure to revisit the pre-commit issues before you submit your PR. A good way to confirm if your code passes the checks is by running <cite>pre-commit run –all-files</cite>.</p>
 <p>In rare cases it might be desired to ignore certain errors or warnings for a particular part of your code. Flake8, Pylint and MyPy allow disabling specific errors for a line or block of code. The instructions for this can be found in the the documentations of each of these tools. Please make sure to only ignore errors/warnings when absolutely necessary, and always add a comment in your code stating why you chose to ignore it.</p>
 </section>
 

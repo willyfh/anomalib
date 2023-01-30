@@ -174,9 +174,11 @@
 <li class="toctree-l2"><a class="reference internal" href="101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -376,10 +378,11 @@ div.nboutput.container div.prompt > div {
     }
 }
 
-/* disable scrollbars on prompts */
+/* disable scrollbars and line breaks on prompts */
 div.nbinput.container div.prompt pre,
 div.nboutput.container div.prompt pre {
     overflow: hidden;
+    white-space: pre;
 }
 
 /* input/output area */
@@ -524,36 +527,44 @@ div.rendered_html tbody tr:hover {
 </style>
 <section id="Use-MVTec-AD-Dataset-via-API">
 <h1>Use MVTec AD Dataset via API<a class="headerlink" href="#Use-MVTec-AD-Dataset-via-API" title="Permalink to this heading">¶</a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-from PIL import Image
-from torchvision.transforms import ToPILImage
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">ToPILImage</span>
 
-from anomalib.data.mvtec import MVTec, MVTecDataset
-from anomalib.pre_processing import PreProcessor
-from anomalib.pre_processing.transforms import Denormalize
+<span class="kn">from</span> <span class="nn">anomalib.data.mvtec</span> <span class="kn">import</span> <span class="n">MVTec</span><span class="p">,</span> <span class="n">MVTecDataset</span>
+<span class="kn">from</span> <span class="nn">anomalib.data.utils</span> <span class="kn">import</span> <span class="n">InputNormalizationMethod</span><span class="p">,</span> <span class="n">get_transforms</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/user/conda/lib/python3.8/site-packages/tqdm/auto.py:22: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre></div></div>
 </div>
 <section id="Torch-Dataset">
 <h2>Torch Dataset<a class="headerlink" href="#Torch-Dataset" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>MVTecDataset??
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>MVTecDataset<span class="o">??</span>
 </pre></div>
 </div>
 </div>
-<p>To create <code class="docutils literal notranslate"><span class="pre">MVTecDataset</span></code> we need to import <code class="docutils literal notranslate"><span class="pre">pre_process</span></code> that applies transforms to the input image.</p>
+<p>To create <code class="docutils literal notranslate"><span class="pre">MVTecDataset</span></code> we need to create the albumentations object that applies transforms to the input image.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>PreProcessor??
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>get_transforms<span class="o">??</span>
 </pre></div>
 </div>
 </div>
@@ -561,30 +572,32 @@ from anomalib.pre_processing.transforms import Denormalize
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pre_process = PreProcessor(image_size=256, to_tensor=True)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="n">transform</span> <span class="o">=</span> <span class="n">get_transforms</span><span class="p">(</span><span class="n">image_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">normalization</span><span class="o">=</span><span class="n">InputNormalizationMethod</span><span class="o">.</span><span class="n">NONE</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <section id="Classification-Task">
 <h3>Classification Task<a class="headerlink" href="#Classification-Task" title="Permalink to this heading">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># MVTec Classification Train Set
-mvtec_dataset_classification_train = MVTecDataset(
-    root=&quot;../../datasets/MVTec&quot;,
-    category=&quot;bottle&quot;,
-    pre_process=pre_process,
-    split=&quot;train&quot;,
-    task=&quot;classification&quot;,
-)
-mvtec_dataset_classification_train.samples.head()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># MVTec Classification Train Set</span>
+<span class="n">mvtec_dataset_classification_train</span> <span class="o">=</span> <span class="n">MVTecDataset</span><span class="p">(</span>
+    <span class="n">root</span><span class="o">=</span><span class="s2">&quot;../../datasets/MVTec&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="s2">&quot;bottle&quot;</span><span class="p">,</span>
+    <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span>
+    <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span>
+    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">mvtec_dataset_classification_train</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+<span class="n">mvtec_dataset_classification_train</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -610,8 +623,8 @@ mvtec_dataset_classification_train.samples.head()
       <th>split</th>
       <th>label</th>
       <th>image_path</th>
-      <th>mask_path</th>
       <th>label_index</th>
+      <th>mask_path</th>
     </tr>
   </thead>
   <tbody>
@@ -620,96 +633,97 @@ mvtec_dataset_classification_train.samples.head()
       <td>../../datasets/MVTec/bottle</td>
       <td>train</td>
       <td>good</td>
-      <td>../../datasets/MVTec/bottle/train/good/116.png</td>
-      <td>../../datasets/MVTec/bottle/ground_truth/good/...</td>
+      <td>../../datasets/MVTec/bottle/train/good/000.png</td>
       <td>0</td>
+      <td></td>
     </tr>
     <tr>
       <th>1</th>
       <td>../../datasets/MVTec/bottle</td>
       <td>train</td>
       <td>good</td>
-      <td>../../datasets/MVTec/bottle/train/good/136.png</td>
-      <td>../../datasets/MVTec/bottle/ground_truth/good/...</td>
+      <td>../../datasets/MVTec/bottle/train/good/001.png</td>
       <td>0</td>
+      <td></td>
     </tr>
     <tr>
       <th>2</th>
       <td>../../datasets/MVTec/bottle</td>
       <td>train</td>
       <td>good</td>
-      <td>../../datasets/MVTec/bottle/train/good/097.png</td>
-      <td>../../datasets/MVTec/bottle/ground_truth/good/...</td>
+      <td>../../datasets/MVTec/bottle/train/good/002.png</td>
       <td>0</td>
+      <td></td>
     </tr>
     <tr>
       <th>3</th>
       <td>../../datasets/MVTec/bottle</td>
       <td>train</td>
       <td>good</td>
-      <td>../../datasets/MVTec/bottle/train/good/039.png</td>
-      <td>../../datasets/MVTec/bottle/ground_truth/good/...</td>
+      <td>../../datasets/MVTec/bottle/train/good/003.png</td>
       <td>0</td>
+      <td></td>
     </tr>
     <tr>
       <th>4</th>
       <td>../../datasets/MVTec/bottle</td>
       <td>train</td>
       <td>good</td>
-      <td>../../datasets/MVTec/bottle/train/good/037.png</td>
-      <td>../../datasets/MVTec/bottle/ground_truth/good/...</td>
+      <td>../../datasets/MVTec/bottle/train/good/004.png</td>
       <td>0</td>
+      <td></td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sample = mvtec_dataset_classification_train[0]
-sample.keys(), sample[&quot;image&quot;].shape
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">mvtec_dataset_classification_train</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sample</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(dict_keys([&#39;image&#39;]), torch.Size([3, 256, 256]))
+(dict_keys([&#39;image_path&#39;, &#39;label&#39;, &#39;image&#39;]), torch.Size([3, 256, 256]))
 </pre></div></div>
 </div>
 <p>As can be seen above, when we choose <code class="docutils literal notranslate"><span class="pre">classification</span></code> task and <code class="docutils literal notranslate"><span class="pre">train</span></code> split, the dataset only returns <code class="docutils literal notranslate"><span class="pre">image</span></code>. This is mainly because training only requires normal images and no labels. Now let’s try <code class="docutils literal notranslate"><span class="pre">test</span></code> split for the <code class="docutils literal notranslate"><span class="pre">classification</span></code> task</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># MVTec Classification Test Set
-mvtec_dataset_classification_test = MVTecDataset(
-    root=&quot;../../datasets/MVTec&quot;,
-    category=&quot;bottle&quot;,
-    pre_process=pre_process,
-    split=&quot;test&quot;,
-    task=&quot;classification&quot;,
-)
-sample = mvtec_dataset_classification_test[0]
-sample.keys(), sample[&quot;image&quot;].shape, sample[&quot;image_path&quot;], sample[&quot;label&quot;]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># MVTec Classification Test Set</span>
+<span class="n">mvtec_dataset_classification_test</span> <span class="o">=</span> <span class="n">MVTecDataset</span><span class="p">(</span>
+    <span class="n">root</span><span class="o">=</span><span class="s2">&quot;../../datasets/MVTec&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="s2">&quot;bottle&quot;</span><span class="p">,</span>
+    <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span>
+    <span class="n">split</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>
+    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">mvtec_dataset_classification_test</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">mvtec_dataset_classification_test</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sample</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">],</span> <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(dict_keys([&#39;image&#39;, &#39;image_path&#39;, &#39;label&#39;]),
+(dict_keys([&#39;image_path&#39;, &#39;label&#39;, &#39;image&#39;]),
  torch.Size([3, 256, 256]),
- &#39;../../datasets/MVTec/bottle/test/good/007.png&#39;,
- 0)
+ &#39;../../datasets/MVTec/bottle/test/broken_large/000.png&#39;,
+ 1)
 </pre></div></div>
 </div>
 </section>
@@ -717,23 +731,24 @@ sample.keys(), sample[&quot;image&quot;].shape, sample[&quot;image_path&quot;], 
 <h3>Segmentation Task<a class="headerlink" href="#Segmentation-Task" title="Permalink to this heading">¶</a></h3>
 <p>It is also possible to configure the MVTec dataset for the segmentation task, where the dataset object returns image and ground-truth mask.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># MVTec Segmentation Train Set
-mvtec_dataset_segmentation_train = MVTecDataset(
-    root=&quot;../../datasets/MVTec&quot;,
-    category=&quot;bottle&quot;,
-    pre_process=pre_process,
-    split=&quot;train&quot;,
-    task=&quot;segmentation&quot;,
-)
-mvtec_dataset_segmentation_train.samples.head()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># MVTec Segmentation Train Set</span>
+<span class="n">mvtec_dataset_segmentation_train</span> <span class="o">=</span> <span class="n">MVTecDataset</span><span class="p">(</span>
+    <span class="n">root</span><span class="o">=</span><span class="s2">&quot;../../datasets/MVTec&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="s2">&quot;bottle&quot;</span><span class="p">,</span>
+    <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span>
+    <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span>
+    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;segmentation&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">mvtec_dataset_segmentation_train</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+<span class="n">mvtec_dataset_segmentation_train</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -759,8 +774,8 @@ mvtec_dataset_segmentation_train.samples.head()
       <th>split</th>
       <th>label</th>
       <th>image_path</th>
-      <th>mask_path</th>
       <th>label_index</th>
+      <th>mask_path</th>
     </tr>
   </thead>
   <tbody>
@@ -769,92 +784,93 @@ mvtec_dataset_segmentation_train.samples.head()
       <td>../../datasets/MVTec/bottle</td>
       <td>train</td>
       <td>good</td>
-      <td>../../datasets/MVTec/bottle/train/good/116.png</td>
-      <td>../../datasets/MVTec/bottle/ground_truth/good/...</td>
+      <td>../../datasets/MVTec/bottle/train/good/000.png</td>
       <td>0</td>
+      <td></td>
     </tr>
     <tr>
       <th>1</th>
       <td>../../datasets/MVTec/bottle</td>
       <td>train</td>
       <td>good</td>
-      <td>../../datasets/MVTec/bottle/train/good/136.png</td>
-      <td>../../datasets/MVTec/bottle/ground_truth/good/...</td>
+      <td>../../datasets/MVTec/bottle/train/good/001.png</td>
       <td>0</td>
+      <td></td>
     </tr>
     <tr>
       <th>2</th>
       <td>../../datasets/MVTec/bottle</td>
       <td>train</td>
       <td>good</td>
-      <td>../../datasets/MVTec/bottle/train/good/097.png</td>
-      <td>../../datasets/MVTec/bottle/ground_truth/good/...</td>
+      <td>../../datasets/MVTec/bottle/train/good/002.png</td>
       <td>0</td>
+      <td></td>
     </tr>
     <tr>
       <th>3</th>
       <td>../../datasets/MVTec/bottle</td>
       <td>train</td>
       <td>good</td>
-      <td>../../datasets/MVTec/bottle/train/good/039.png</td>
-      <td>../../datasets/MVTec/bottle/ground_truth/good/...</td>
+      <td>../../datasets/MVTec/bottle/train/good/003.png</td>
       <td>0</td>
+      <td></td>
     </tr>
     <tr>
       <th>4</th>
       <td>../../datasets/MVTec/bottle</td>
       <td>train</td>
       <td>good</td>
-      <td>../../datasets/MVTec/bottle/train/good/037.png</td>
-      <td>../../datasets/MVTec/bottle/ground_truth/good/...</td>
+      <td>../../datasets/MVTec/bottle/train/good/004.png</td>
       <td>0</td>
+      <td></td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># MVTec Segmentation Test Set
-mvtec_dataset_segmentation_test = MVTecDataset(
-    root=&quot;../../datasets/MVTec&quot;,
-    category=&quot;bottle&quot;,
-    pre_process=pre_process,
-    split=&quot;test&quot;,
-    task=&quot;segmentation&quot;,
-)
-sample = mvtec_dataset_segmentation_test[20]
-sample.keys(), sample[&quot;image&quot;].shape, sample[&quot;mask&quot;].shape
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># MVTec Segmentation Test Set</span>
+<span class="n">mvtec_dataset_segmentation_test</span> <span class="o">=</span> <span class="n">MVTecDataset</span><span class="p">(</span>
+    <span class="n">root</span><span class="o">=</span><span class="s2">&quot;../../datasets/MVTec&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="s2">&quot;bottle&quot;</span><span class="p">,</span>
+    <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span>
+    <span class="n">split</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>
+    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;segmentation&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">mvtec_dataset_segmentation_test</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">mvtec_dataset_segmentation_test</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span>
+<span class="n">sample</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(dict_keys([&#39;image&#39;, &#39;image_path&#39;, &#39;label&#39;, &#39;mask_path&#39;, &#39;mask&#39;]),
+(dict_keys([&#39;image_path&#39;, &#39;label&#39;, &#39;image&#39;, &#39;mask_path&#39;, &#39;mask&#39;]),
  torch.Size([3, 256, 256]),
  torch.Size([256, 256]))
 </pre></div></div>
 </div>
 <p>Let’s visualize the image and the mask…</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>img = ToPILImage()(Denormalize()(sample[&quot;image&quot;].clone()))
-msk = ToPILImage()(sample[&quot;mask&quot;]).convert(&quot;RGB&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">ToPILImage</span><span class="p">()(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">())</span>
+<span class="n">msk</span> <span class="o">=</span> <span class="n">ToPILImage</span><span class="p">()(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">)</span>
 
-Image.fromarray(np.hstack((np.array(img), np.array(msk))))
+<span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">msk</span><span class="p">))))</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -867,76 +883,78 @@ Image.fromarray(np.hstack((np.array(img), np.array(msk))))
 <h2>DataModule<a class="headerlink" href="#DataModule" title="Permalink to this heading">¶</a></h2>
 <p>So far, we have shown the Torch Dateset implementation of MVTec AD dataset. This is quite useful to get a sample. However, when we train models end-to-end fashion, we do need much more than this such as downloading the dataset, creating train/val/test/inference dataloaders. To handle all these, we have the PyTorch Lightning DataModule implementation, which is shown below</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mvtec_datamodule = MVTec(
-    root=&quot;../../datasets/MVTec&quot;,
-    category=&quot;bottle&quot;,
-    image_size=256,
-    train_batch_size=32,
-    test_batch_size=32,
-    num_workers=8,
-    task=&quot;segmentation&quot;,
-)
-mvtec_datamodule.setup()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mvtec_datamodule</span> <span class="o">=</span> <span class="n">MVTec</span><span class="p">(</span>
+    <span class="n">root</span><span class="o">=</span><span class="s2">&quot;../../datasets/MVTec&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="s2">&quot;bottle&quot;</span><span class="p">,</span>
+    <span class="n">image_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+    <span class="n">train_batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+    <span class="n">eval_batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;segmentation&quot;</span><span class="p">,</span>
+    <span class="n">normalization</span><span class="o">=</span><span class="n">InputNormalizationMethod</span><span class="o">.</span><span class="n">NONE</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">mvtec_datamodule</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Train images
-i, data = next(enumerate(mvtec_datamodule.train_dataloader()))
-data.keys(), data[&quot;image&quot;].shape
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Train images</span>
+<span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">mvtec_datamodule</span><span class="o">.</span><span class="n">train_dataloader</span><span class="p">()))</span>
+<span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(dict_keys([&#39;image&#39;]), torch.Size([32, 3, 256, 256]))
+(dict_keys([&#39;image_path&#39;, &#39;label&#39;, &#39;image&#39;, &#39;mask_path&#39;, &#39;mask&#39;]),
+ torch.Size([32, 3, 256, 256]))
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Test images
-i, data = next(enumerate(mvtec_datamodule.test_dataloader()))
-data.keys(), data[&quot;image&quot;].shape, data[&quot;mask&quot;].shape
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test images</span>
+<span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">mvtec_datamodule</span><span class="o">.</span><span class="n">test_dataloader</span><span class="p">()))</span>
+<span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(dict_keys([&#39;image&#39;, &#39;image_path&#39;, &#39;label&#39;, &#39;mask_path&#39;, &#39;mask&#39;]),
+(dict_keys([&#39;image_path&#39;, &#39;label&#39;, &#39;image&#39;, &#39;mask_path&#39;, &#39;mask&#39;]),
  torch.Size([32, 3, 256, 256]),
  torch.Size([32, 256, 256]))
 </pre></div></div>
 </div>
 <p>As can be seen above, creating the dataloaders are pretty straghtforward, which could be directly used for training/testing/inference. We could visualize samples from the dataloaders as well.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>img = ToPILImage()(Denormalize()(data[&quot;image&quot;][0].clone()))
-msk = ToPILImage()(data[&quot;mask&quot;][0]).convert(&quot;RGB&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">ToPILImage</span><span class="p">()(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">())</span>
+<span class="n">msk</span> <span class="o">=</span> <span class="n">ToPILImage</span><span class="p">()(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">)</span>
 
-Image.fromarray(np.hstack((np.array(img), np.array(msk))))
+<span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">msk</span><span class="p">))))</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area docutils container">

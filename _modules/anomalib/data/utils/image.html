@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,10 +272,11 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -282,17 +285,17 @@
 <span class="kn">from</span> <span class="nn">torchvision.datasets.folder</span> <span class="kn">import</span> <span class="n">IMG_EXTENSIONS</span>
 
 
-<div class="viewcode-block" id="get_image_filenames"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.get_image_filenames">[docs]</a><span class="k">def</span> <span class="nf">get_image_filenames</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Get image filenames.</span>
+<div class="viewcode-block" id="get_image_filenames"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.get_image_filenames">[docs]</a><span class="k">def</span> <span class="nf">get_image_filenames</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get image filenames.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        path (Union[str, Path]): Path to image or image-folder.</span>
+<span class="sd">        path (str | Path): Path to image or image-folder.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        List[Path]: List of image filenames</span>
+<span class="sd">        list[Path]: List of image filenames</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">image_filenames</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span>
+    <span class="n">image_filenames</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
@@ -303,19 +306,19 @@
     <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
         <span class="n">image_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;**/*&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="n">IMG_EXTENSIONS</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">image_filenames</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">image_filenames</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found 0 images in </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">image_filenames</span></div>
 
 
-<span class="k">def</span> <span class="nf">duplicate_filename</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Check and duplicate filename.</span>
+<span class="k">def</span> <span class="nf">duplicate_filename</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check and duplicate filename.</span>
 
 <span class="sd">    This function checks the path and adds a suffix if it already exists on the file system.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        path (Union[str, Path]): Input Path</span>
+<span class="sd">        path (str | Path): Input Path</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; path = Path(&quot;datasets/MVTec/bottle/test/broken_large/000.png&quot;)</span>
@@ -343,8 +346,8 @@
     <span class="k">return</span> <span class="n">duplicated_path</span>
 
 
-<div class="viewcode-block" id="generate_output_image_filename"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.generate_output_image_filename">[docs]</a><span class="k">def</span> <span class="nf">generate_output_image_filename</span><span class="p">(</span><span class="n">input_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">output_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Generate an output filename to save the inference image.</span>
+<div class="viewcode-block" id="generate_output_image_filename"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.generate_output_image_filename">[docs]</a><span class="k">def</span> <span class="nf">generate_output_image_filename</span><span class="p">(</span><span class="n">input_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">,</span> <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate an output filename to save the inference image.</span>
 
 <span class="sd">    This function generates an output filaname by checking the input and output filenames. Input path is</span>
 <span class="sd">    the input to infer, and output path is the path to save the output predictions specified by the user.</span>
@@ -356,8 +359,8 @@
 <span class="sd">    filenames of ``input_path`` to ``output_path``.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        input_path (Union[str, Path]): Path to the input image to infer.</span>
-<span class="sd">        output_path (Union[str, Path]): Path to output to save the predictions.</span>
+<span class="sd">        input_path (str | Path): Path to the input image to infer.</span>
+<span class="sd">        output_path (str | Path): Path to output to save the predictions.</span>
 <span class="sd">            Could be a filename or a directory.</span>
 
 <span class="sd">    Examples:</span>
@@ -408,11 +411,11 @@
     <span class="k">return</span> <span class="n">file_path</span></div>
 
 
-<div class="viewcode-block" id="get_image_height_and_width"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.get_image_height_and_width">[docs]</a><span class="k">def</span> <span class="nf">get_image_height_and_width</span><span class="p">(</span><span class="n">image_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
-    <span class="sd">&quot;&quot;&quot;Get image height and width from ``image_size`` variable.</span>
+<div class="viewcode-block" id="get_image_height_and_width"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.get_image_height_and_width">[docs]</a><span class="k">def</span> <span class="nf">get_image_height_and_width</span><span class="p">(</span><span class="n">image_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get image height and width from ``image_size`` variable.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        image_size (Optional[Union[int, Tuple[int, int]]], optional): Input image size.</span>
+<span class="sd">        image_size (int | tuple[int, int] | None, optional): Input image size.</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: Image size not None, int or tuple.</span>
@@ -431,26 +434,23 @@
 <span class="sd">        Traceback (most recent call last):</span>
 <span class="sd">        File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;</span>
 <span class="sd">        File &quot;&lt;string&gt;&quot;, line 18, in get_image_height_and_width</span>
-<span class="sd">        ValueError: ``image_size`` could be either int or Tuple[int, int]</span>
+<span class="sd">        ValueError: ``image_size`` could be either int or tuple[int, int]</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Tuple[Optional[int], Optional[int]]: A tuple containing image height and width values.</span>
+<span class="sd">        tuple[int | None, int | None]: A tuple containing image height and width values.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">height_and_width</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
         <span class="n">height_and_width</span> <span class="o">=</span> <span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
         <span class="n">height_and_width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">image_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">image_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">elif</span> <span class="n">image_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">height_and_width</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;``image_size`` could be either int or Tuple[int, int]&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;``image_size`` could be either int or tuple[int, int]&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">height_and_width</span></div>
 
 
-<div class="viewcode-block" id="read_image"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.read_image">[docs]</a><span class="k">def</span> <span class="nf">read_image</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">image_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Read image from disk in RGB format.</span>
+<div class="viewcode-block" id="read_image"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.read_image">[docs]</a><span class="k">def</span> <span class="nf">read_image</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">,</span> <span class="n">image_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read image from disk in RGB format.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path (str, Path): path to the image file</span>
@@ -476,7 +476,7 @@
 
 
 <span class="k">def</span> <span class="nf">pad_nextpow2</span><span class="p">(</span><span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Compute required padding from input size and return padded images.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute required padding from input size and return padded images.</span>
 
 <span class="sd">    Finds the largest dimension and computes a square image of dimensions that are of the power of 2.</span>
 <span class="sd">    In case the image dimension is odd, it returns the image with an extra padding on one side.</span>

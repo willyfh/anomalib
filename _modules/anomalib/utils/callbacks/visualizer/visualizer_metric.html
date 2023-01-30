@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,6 +272,8 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -284,17 +288,17 @@
 
 <div class="viewcode-block" id="MetricVisualizerCallback"><a class="viewcode-back" href="../../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.MetricVisualizerCallback">[docs]</a><span class="nd">@CALLBACK_REGISTRY</span>
 <span class="k">class</span> <span class="nc">MetricVisualizerCallback</span><span class="p">(</span><span class="n">BaseVisualizerCallback</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Callback that visualizes the metric results of a model by plotting the corresponding curves.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback that visualizes the metric results of a model by plotting the corresponding curves.</span>
 
 <span class="sd">    To save the images to the filesystem, add the &#39;local&#39; keyword to the `project.log_images_to` parameter in the</span>
 <span class="sd">    config.yaml file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="MetricVisualizerCallback.on_test_end"><a class="viewcode-back" href="../../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.MetricVisualizerCallback.on_test_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_test_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Log images of the metrics contained in pl_module.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log images of the metrics contained in pl_module.</span>
 
 <span class="sd">        In order to also plot custom metrics, they need to have implemented a `generate_figure` function that returns</span>
-<span class="sd">        Tuple[matplotlib.figure.Figure, str].</span>
+<span class="sd">        tuple[matplotlib.figure.Figure, str].</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            trainer (pl.Trainer): pytorch lightning trainer.</span>

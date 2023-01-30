@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -272,7 +274,7 @@
 <span class="sd">    . https://arxiv.org/abs/1708.00489</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
@@ -282,7 +284,7 @@
 
 
 <div class="viewcode-block" id="KCenterGreedy"><a class="viewcode-back" href="../../../../../reference_guide/api/model/sampling.html#anomalib.models.components.sampling.KCenterGreedy">[docs]</a><span class="k">class</span> <span class="nc">KCenterGreedy</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Implements k-center-greedy method.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Implements k-center-greedy method.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        embedding (Tensor): Embedding vector extracted from a CNN</span>
@@ -308,14 +310,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">n_observations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 <div class="viewcode-block" id="KCenterGreedy.reset_distances"><a class="viewcode-back" href="../../../../../reference_guide/api/model/sampling.html#anomalib.models.components.sampling.KCenterGreedy.reset_distances">[docs]</a>    <span class="k">def</span> <span class="nf">reset_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Reset minimum distances.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset minimum distances.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_distances</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="KCenterGreedy.update_distances"><a class="viewcode-back" href="../../../../../reference_guide/api/model/sampling.html#anomalib.models.components.sampling.KCenterGreedy.update_distances">[docs]</a>    <span class="k">def</span> <span class="nf">update_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cluster_centers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Update min distances given cluster centers.</span>
+<div class="viewcode-block" id="KCenterGreedy.update_distances"><a class="viewcode-back" href="../../../../../reference_guide/api/model/sampling.html#anomalib.models.components.sampling.KCenterGreedy.update_distances">[docs]</a>    <span class="k">def</span> <span class="nf">update_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cluster_centers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update min distances given cluster centers.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            cluster_centers (List[int]): indices of cluster centers</span>
+<span class="sd">            cluster_centers (list[int]): indices of cluster centers</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">cluster_centers</span><span class="p">:</span>
@@ -329,7 +331,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">min_distances</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_distances</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="KCenterGreedy.get_new_idx"><a class="viewcode-back" href="../../../../../reference_guide/api/model/sampling.html#anomalib.models.components.sampling.KCenterGreedy.get_new_idx">[docs]</a>    <span class="k">def</span> <span class="nf">get_new_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get index value of a sample.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get index value of a sample.</span>
 
 <span class="sd">        Based on minimum distance of the cluster</span>
 
@@ -344,8 +346,8 @@
 
         <span class="k">return</span> <span class="n">idx</span></div>
 
-<div class="viewcode-block" id="KCenterGreedy.select_coreset_idxs"><a class="viewcode-back" href="../../../../../reference_guide/api/model/sampling.html#anomalib.models.components.sampling.KCenterGreedy.select_coreset_idxs">[docs]</a>    <span class="k">def</span> <span class="nf">select_coreset_idxs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected_idxs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Greedily form a coreset to minimize the maximum distance of a cluster.</span>
+<div class="viewcode-block" id="KCenterGreedy.select_coreset_idxs"><a class="viewcode-back" href="../../../../../reference_guide/api/model/sampling.html#anomalib.models.components.sampling.KCenterGreedy.select_coreset_idxs">[docs]</a>    <span class="k">def</span> <span class="nf">select_coreset_idxs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected_idxs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Greedily form a coreset to minimize the maximum distance of a cluster.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            selected_idxs: index of samples already selected. Defaults to an empty set.</span>
@@ -365,7 +367,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">update_distances</span><span class="p">(</span><span class="n">cluster_centers</span><span class="o">=</span><span class="n">selected_idxs</span><span class="p">)</span>
 
-        <span class="n">selected_coreset_idxs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">selected_coreset_idxs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">high</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_observations</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coreset_size</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">update_distances</span><span class="p">(</span><span class="n">cluster_centers</span><span class="o">=</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
@@ -377,8 +379,8 @@
 
         <span class="k">return</span> <span class="n">selected_coreset_idxs</span></div>
 
-<div class="viewcode-block" id="KCenterGreedy.sample_coreset"><a class="viewcode-back" href="../../../../../reference_guide/api/model/sampling.html#anomalib.models.components.sampling.KCenterGreedy.sample_coreset">[docs]</a>    <span class="k">def</span> <span class="nf">sample_coreset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected_idxs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Select coreset from the embedding.</span>
+<div class="viewcode-block" id="KCenterGreedy.sample_coreset"><a class="viewcode-back" href="../../../../../reference_guide/api/model/sampling.html#anomalib.models.components.sampling.KCenterGreedy.sample_coreset">[docs]</a>    <span class="k">def</span> <span class="nf">sample_coreset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected_idxs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Select coreset from the embedding.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            selected_idxs: index of samples already selected. Defaults to an empty set.</span>

@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,8 +272,9 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
@@ -280,13 +283,13 @@
 
 
 <div class="viewcode-block" id="GaussianKDE"><a class="viewcode-back" href="../../../../../reference_guide/api/model/stats.html#anomalib.models.components.stats.GaussianKDE">[docs]</a><span class="k">class</span> <span class="nc">GaussianKDE</span><span class="p">(</span><span class="n">DynamicBufferModule</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Gaussian Kernel Density Estimation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Gaussian Kernel Density Estimation.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        dataset (Optional[Tensor], optional): Dataset on which to fit the KDE model. Defaults to None.</span>
+<span class="sd">        dataset (Tensor | None, optional): Dataset on which to fit the KDE model. Defaults to None.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">dataset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -301,7 +304,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">norm</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">()</span>
 
 <div class="viewcode-block" id="GaussianKDE.forward"><a class="viewcode-back" href="../../../../../reference_guide/api/model/stats.html#anomalib.models.components.stats.GaussianKDE.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get the KDE estimates from the feature map.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the KDE estimates from the feature map.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">          features (Tensor): Feature map extracted from the CNN</span>
@@ -319,7 +322,7 @@
         <span class="k">return</span> <span class="n">estimate</span></div>
 
 <div class="viewcode-block" id="GaussianKDE.fit"><a class="viewcode-back" href="../../../../../reference_guide/api/model/stats.html#anomalib.models.components.stats.GaussianKDE.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Fit a KDE model to the input dataset.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit a KDE model to the input dataset.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">          dataset (Tensor): Input dataset.</span>
@@ -350,7 +353,7 @@
 
 <div class="viewcode-block" id="GaussianKDE.cov"><a class="viewcode-back" href="../../../../../reference_guide/api/model/stats.html#anomalib.models.components.stats.GaussianKDE.cov">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">cov</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Calculate the unbiased covariance matrix.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate the unbiased covariance matrix.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            tensor (Tensor): Input tensor from which covariance matrix is computed.</span>

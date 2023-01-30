@@ -174,9 +174,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -272,38 +274,38 @@
 <section id="yaml-file">
 <h2>YAML file<a class="headerlink" href="#yaml-file" title="Permalink to this heading">¶</a></h2>
 <p>A Sample configuration files for hyperparameter optimization with Comet is provided at <code class="docutils literal notranslate"><span class="pre">tools/hpo/configs/comet.yaml</span></code> and reproduced below:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bayes&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">maxCombo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
-<span class="w">  </span><span class="nt">metric</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;image_F1Score&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="nt">objective</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;maximize&quot;</span><span class="w"></span>
-<span class="nt">parameters</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">dataset</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">category</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">capsule</span><span class="w"></span>
-<span class="w">    </span><span class="nt">image_size</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">discrete</span><span class="w"></span>
-<span class="w">      </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">128</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">256</span><span class="p p-Indicator">]</span><span class="w"></span>
-<span class="w">  </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">backbone</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">categorical</span><span class="w"></span>
-<span class="w">      </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;resnet18&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;wide_resnet50_2&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bayes&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">maxCombo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">  </span><span class="nt">metric</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;image_F1Score&quot;</span>
+<span class="w">  </span><span class="nt">objective</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;maximize&quot;</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">dataset</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">category</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">capsule</span>
+<span class="w">    </span><span class="nt">image_size</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">discrete</span>
+<span class="w">      </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">128</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">256</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">backbone</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">categorical</span>
+<span class="w">      </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;resnet18&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;wide_resnet50_2&quot;</span><span class="p p-Indicator">]</span>
 </pre></div>
 </div>
 <p>The maxCombo defines the total number of experiments to run. The algorithm is the optimization method to be used. The metric is the metric to be used to evaluate the performance of the model. The parameters are the hyperparameters to be optimized. For details on other possible configurations with Comet’s Optimizer  , refer to the <a class="reference external" href="https://www.comet.com/docs/v2/api-and-sdk/python-sdk/introduction-optimizer/">Comet’s</a> documentation.</p>
 <p>A sample configuration file for hyperparameter optimization with Weights and Bias is provided at <code class="docutils literal notranslate"><span class="pre">tools/hpo/configs/wandb.yaml</span></code> and is reproduced below:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">observation_budget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
-<span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bayes</span><span class="w"></span>
-<span class="nt">metric</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pixel_AUROC</span><span class="w"></span>
-<span class="w">  </span><span class="nt">goal</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">maximize</span><span class="w"></span>
-<span class="nt">parameters</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">dataset</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">category</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hazelnut</span><span class="w"></span>
-<span class="w">    </span><span class="nt">image_size</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">128</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">256</span><span class="p p-Indicator">]</span><span class="w"></span>
-<span class="w">  </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">backbone</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">resnet18</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wide_resnet50_2</span><span class="p p-Indicator">]</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">observation_budget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bayes</span>
+<span class="nt">metric</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pixel_AUROC</span>
+<span class="w">  </span><span class="nt">goal</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">maximize</span>
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">dataset</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">category</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hazelnut</span>
+<span class="w">    </span><span class="nt">image_size</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">128</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">256</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">backbone</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">resnet18</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wide_resnet50_2</span><span class="p p-Indicator">]</span>
 </pre></div>
 </div>
 <p>The observation budget defines the total number of experiments to run. The method is the optimization method to be used. The metric is the metric to be used to evaluate the performance of the model. The parameters are the hyperparameters to be optimized. For details on methods other than <code class="docutils literal notranslate"><span class="pre">bayes</span></code> and parameter values apart from list, refer the <a class="reference external" href="https://docs.wandb.ai/guides/sweeps/quickstart">Weights and Biases</a> documentation.</p>
@@ -316,13 +318,13 @@
 <p>You will need to have logged into a Comet or wandb account to use HPO search and view the results.</p>
 </div>
 <p>To run the hyperparameter optimization, use the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python tools/hpo/sweep.py --model padim <span class="se">\</span>
-  --model_config ./path_to_config.yaml <span class="se">\</span>
-  --sweep_config tools/hpo/configs/comet.yaml
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>tools/hpo/sweep.py<span class="w"> </span>--model<span class="w"> </span>padim<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--model_config<span class="w"> </span>./path_to_config.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--sweep_config<span class="w"> </span>tools/hpo/configs/comet.yaml
 </pre></div>
 </div>
 <p>In case <code class="docutils literal notranslate"><span class="pre">model_config</span></code> is not provided, the script looks at the default config location for that model.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python tools/hpo/sweep.py --sweep_config tools/hpo/configs/comet.yaml
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>tools/hpo/sweep.py<span class="w"> </span>--sweep_config<span class="w"> </span>tools/hpo/configs/comet.yaml
 </pre></div>
 </div>
 </section>

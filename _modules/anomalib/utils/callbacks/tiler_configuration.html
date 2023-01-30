@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -271,7 +273,9 @@
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span>
 
 <span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span>
@@ -285,25 +289,25 @@
 
 <div class="viewcode-block" id="TilerConfigurationCallback"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.TilerConfigurationCallback">[docs]</a><span class="nd">@CALLBACK_REGISTRY</span>
 <span class="k">class</span> <span class="nc">TilerConfigurationCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Tiler Configuration Callback.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tiler Configuration Callback.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">enable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">tile_size</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">]</span> <span class="o">=</span> <span class="mi">256</span><span class="p">,</span>
-        <span class="n">stride</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tile_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">Sequence</span> <span class="o">=</span> <span class="mi">256</span><span class="p">,</span>
+        <span class="n">stride</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">Sequence</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">remove_border_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;padding&quot;</span><span class="p">,</span>
         <span class="n">tile_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Sets tiling configuration from the command line.</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets tiling configuration from the command line.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            enable (bool): Boolean to enable tiling operation.</span>
 <span class="sd">                Defaults to False.</span>
-<span class="sd">            tile_size ([Union[int, Sequence]]): Tile size.</span>
+<span class="sd">            tile_size ([int | Sequence]): Tile size.</span>
 <span class="sd">                Defaults to 256.</span>
-<span class="sd">            stride ([Union[int, Sequence]]): Stride to move tiles on the image.</span>
+<span class="sd">            stride ([int | Sequence]): Stride to move tiles on the image.</span>
 <span class="sd">            remove_border_count (int, optional): Number of pixels to remove from the image before</span>
 <span class="sd">                tiling. Defaults to 0.</span>
 <span class="sd">            mode (str, optional): Up-scaling mode when untiling overlapping tiles.</span>
@@ -318,18 +322,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tile_count</span> <span class="o">=</span> <span class="n">tile_count</span>
 
-<div class="viewcode-block" id="TilerConfigurationCallback.setup"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.TilerConfigurationCallback.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Setup Tiler object within Anomalib Model.</span>
+<div class="viewcode-block" id="TilerConfigurationCallback.setup"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.TilerConfigurationCallback.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup Tiler object within Anomalib Model.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            _trainer (pl.Trainer): PyTorch Lightning Trainer</span>
+<span class="sd">            trainer (pl.Trainer): PyTorch Lightning Trainer</span>
 <span class="sd">            pl_module (pl.LightningModule): Anomalib Model that inherits pl LightningModule.</span>
-<span class="sd">            stage (Optional[str], optional): fit, validate, test or predict. Defaults to None.</span>
+<span class="sd">            stage (str | None, optional): fit, validate, test or predict. Defaults to None.</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            ValueError: When Anomalib Model doesn&#39;t contain ``Tiler`` object, it means the model</span>
 <span class="sd">                doesn not support tiling operation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">stage</span>  <span class="c1"># These variables are not used.</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pl_module</span><span class="p">,</span> <span class="n">AnomalyModule</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pl_module</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;tiler&quot;</span><span class="p">):</span>
                 <span class="n">pl_module</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">tiler</span> <span class="o">=</span> <span class="n">Tiler</span><span class="p">(</span>

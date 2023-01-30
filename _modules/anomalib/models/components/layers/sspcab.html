@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -279,7 +281,7 @@
 
 
 <span class="k">class</span> <span class="nc">AttentionModule</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Squeeze and excitation block that acts as the attention module in SSPCAB.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Squeeze and excitation block that acts as the attention module in SSPCAB.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        channels (int): Number of input channels.</span>
@@ -294,7 +296,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">out_channels</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Forward pass through the attention module.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Forward pass through the attention module.&quot;&quot;&quot;</span>
         <span class="c1"># reduce feature map to 1d vector through global average pooling</span>
         <span class="n">avg_pooled</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 
@@ -311,7 +313,7 @@
 
 
 <div class="viewcode-block" id="SSPCAB"><a class="viewcode-back" href="../../../../../reference_guide/api/model/layers.html#anomalib.models.components.layers.SSPCAB">[docs]</a><span class="k">class</span> <span class="nc">SSPCAB</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;SSPCAB block.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;SSPCAB block.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        in_channels (int): Number of input channels.</span>
@@ -334,7 +336,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">attention_module</span> <span class="o">=</span> <span class="n">AttentionModule</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">reduction_ratio</span><span class="o">=</span><span class="n">reduction_ratio</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SSPCAB.forward"><a class="viewcode-back" href="../../../../../reference_guide/api/model/layers.html#anomalib.models.components.layers.SSPCAB.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Forward pass through the SSPCAB block.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Forward pass through the SSPCAB block.&quot;&quot;&quot;</span>
         <span class="c1"># compute masked convolution</span>
         <span class="n">padded</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pad</span><span class="p">,)</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
         <span class="n">masked_out</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>

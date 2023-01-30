@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -276,7 +278,7 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
@@ -285,15 +287,15 @@
 
 
 <div class="viewcode-block" id="DraemModel"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.DraemModel">[docs]</a><span class="k">class</span> <span class="nc">DraemModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;DRAEM PyTorch model consisting of the reconstructive and discriminative sub networks.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;DRAEM PyTorch model consisting of the reconstructive and discriminative sub networks.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sspcab</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sspcab</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reconstructive_subnetwork</span> <span class="o">=</span> <span class="n">ReconstructiveSubNetwork</span><span class="p">(</span><span class="n">sspcab</span><span class="o">=</span><span class="n">sspcab</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">discriminative_subnetwork</span> <span class="o">=</span> <span class="n">DiscriminativeSubNetwork</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DraemModel.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.DraemModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;Compute the reconstruction and anomaly mask from an input image.</span>
+<div class="viewcode-block" id="DraemModel.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.DraemModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the reconstruction and anomaly mask from an input image.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            x (Tensor): batch of input images</span>
@@ -311,7 +313,7 @@
 
 
 <div class="viewcode-block" id="ReconstructiveSubNetwork"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.ReconstructiveSubNetwork">[docs]</a><span class="k">class</span> <span class="nc">ReconstructiveSubNetwork</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Autoencoder model that encodes and reconstructs the input image.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Autoencoder model that encodes and reconstructs the input image.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        in_channels (int): Number of input channels.</span>
@@ -319,13 +321,13 @@
 <span class="sd">        base_width (int): Base dimensionality of the layers of the autoencoder.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">base_width</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">sspcab</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">base_width</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">sspcab</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">EncoderReconstructive</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">base_width</span><span class="p">,</span> <span class="n">sspcab</span><span class="o">=</span><span class="n">sspcab</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span> <span class="o">=</span> <span class="n">DecoderReconstructive</span><span class="p">(</span><span class="n">base_width</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="n">out_channels</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ReconstructiveSubNetwork.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.ReconstructiveSubNetwork.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Encode and reconstruct the input images.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Encode and reconstruct the input images.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            batch (Tensor): Batch of input images</span>
@@ -339,7 +341,7 @@
 
 
 <div class="viewcode-block" id="DiscriminativeSubNetwork"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.DiscriminativeSubNetwork">[docs]</a><span class="k">class</span> <span class="nc">DiscriminativeSubNetwork</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Discriminative model that predicts the anomaly mask from the original image and its reconstruction.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Discriminative model that predicts the anomaly mask from the original image and its reconstruction.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        in_channels (int): Number of input channels.</span>
@@ -347,13 +349,13 @@
 <span class="sd">        base_width (int): Base dimensionality of the layers of the autoencoder.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">base_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">base_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">encoder_segment</span> <span class="o">=</span> <span class="n">EncoderDiscriminative</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">base_width</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">decoder_segment</span> <span class="o">=</span> <span class="n">DecoderDiscriminative</span><span class="p">(</span><span class="n">base_width</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="n">out_channels</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DiscriminativeSubNetwork.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.DiscriminativeSubNetwork.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Generate the predicted anomaly masks for a batch of input images.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate the predicted anomaly masks for a batch of input images.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            batch (Tensor): Batch of inputs consisting of the concatenation of the original images</span>
@@ -368,14 +370,14 @@
 
 
 <div class="viewcode-block" id="EncoderDiscriminative"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.EncoderDiscriminative">[docs]</a><span class="k">class</span> <span class="nc">EncoderDiscriminative</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Encoder part of the discriminator network.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encoder part of the discriminator network.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        in_channels (int): Number of input channels.</span>
 <span class="sd">        base_width (int): Base dimensionality of the layers of the autoencoder.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">base_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">base_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">block1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">base_width</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
@@ -432,8 +434,8 @@
             <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="EncoderDiscriminative.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.EncoderDiscriminative.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Convert the inputs to the salient space by running them through the encoder network.</span>
+<div class="viewcode-block" id="EncoderDiscriminative.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.EncoderDiscriminative.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert the inputs to the salient space by running them through the encoder network.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            batch (Tensor): Batch of inputs consisting of the concatenation of the original images</span>
@@ -457,14 +459,14 @@
 
 
 <div class="viewcode-block" id="DecoderDiscriminative"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.DecoderDiscriminative">[docs]</a><span class="k">class</span> <span class="nc">DecoderDiscriminative</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Decoder part of the discriminator network.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decoder part of the discriminator network.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        base_width (int): Base dimensionality of the layers of the autoencoder.</span>
 <span class="sd">        out_channels (int): Number of output channels.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">up_b</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
@@ -545,7 +547,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fin_out</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">base_width</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 
 <div class="viewcode-block" id="DecoderDiscriminative.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.DecoderDiscriminative.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">act1</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">act2</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">act3</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">act4</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">act5</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">act6</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Computes predicted anomaly class scores from the intermediate outputs of the encoder sub network.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Computes predicted anomaly class scores from the intermediate outputs of the encoder sub network.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            act1 (Tensor): Encoder activations of the first block of convolutional layers.</span>
@@ -583,14 +585,14 @@
 
 
 <div class="viewcode-block" id="EncoderReconstructive"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.EncoderReconstructive">[docs]</a><span class="k">class</span> <span class="nc">EncoderReconstructive</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Encoder part of the reconstructive network.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encoder part of the reconstructive network.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        in_channels (int): Number of input channels.</span>
 <span class="sd">        base_width (int): Base dimensionality of the layers of the autoencoder.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">base_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">sspcab</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">base_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">sspcab</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">block1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">base_width</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
@@ -641,7 +643,7 @@
             <span class="p">)</span>
 
 <div class="viewcode-block" id="EncoderReconstructive.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.EncoderReconstructive.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Encode a batch of input images to the salient space.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Encode a batch of input images to the salient space.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            batch (Tensor): Batch of input images.</span>
@@ -662,14 +664,14 @@
 
 
 <div class="viewcode-block" id="DecoderReconstructive"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.DecoderReconstructive">[docs]</a><span class="k">class</span> <span class="nc">DecoderReconstructive</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Decoder part of the reconstructive network.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decoder part of the reconstructive network.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        base_width (int): Base dimensionality of the layers of the autoencoder.</span>
 <span class="sd">        out_channels (int): Number of output channels.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">up1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
@@ -736,7 +738,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fin_out</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">base_width</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 
 <div class="viewcode-block" id="DecoderReconstructive.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.DecoderReconstructive.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">act5</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Reconstruct the image from the activations of the bottleneck layer.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reconstruct the image from the activations of the bottleneck layer.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            act5 (Tensor): Activations of the bottleneck layer.</span>

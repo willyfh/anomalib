@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -278,8 +280,9 @@
 
 <span class="c1"># pylint: disable=invalid-name</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
@@ -287,13 +290,13 @@
 
 
 <span class="k">def</span> <span class="nf">lerp_np</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Helper function.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Helper function.&quot;&quot;&quot;</span>
     <span class="n">fin_out</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">w</span> <span class="o">+</span> <span class="n">x</span>
     <span class="k">return</span> <span class="n">fin_out</span>
 
 
 <span class="k">def</span> <span class="nf">rand_perlin_2d_octaves_np</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">octaves</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">persistence</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Generate Perlin noise parameterized by the octaves method. Numpy version.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate Perlin noise parameterized by the octaves method. Numpy version.&quot;&quot;&quot;</span>
     <span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">frequency</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">amplitude</span> <span class="o">=</span> <span class="mi">1</span>
@@ -305,7 +308,7 @@
 
 
 <span class="k">def</span> <span class="nf">generate_perlin_noise_2d</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Fractal perlin noise.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fractal perlin noise.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">6</span> <span class="o">*</span> <span class="n">t</span><span class="o">**</span><span class="mi">5</span> <span class="o">-</span> <span class="mi">15</span> <span class="o">*</span> <span class="n">t</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">t</span><span class="o">**</span><span class="mi">3</span>
@@ -333,20 +336,20 @@
 
 
 <div class="viewcode-block" id="random_2d_perlin"><a class="viewcode-back" href="../../../../../reference_guide/api/data/utils.html#anomalib.data.utils.random_2d_perlin">[docs]</a><span class="k">def</span> <span class="nf">random_2d_perlin</span><span class="p">(</span>
-    <span class="n">shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">,</span>
-    <span class="n">res</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">],</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]],</span>
+    <span class="n">shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span>
+    <span class="n">res</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">],</span>
     <span class="n">fade</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="mi">6</span> <span class="o">*</span> <span class="n">t</span><span class="o">**</span><span class="mi">5</span> <span class="o">-</span> <span class="mi">15</span> <span class="o">*</span> <span class="n">t</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">t</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Returns a random 2d perlin noise array.</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a random 2d perlin noise array.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        shape (Tuple): Shape of the 2d map.</span>
-<span class="sd">        res (Tuple[Union[int, Tensor]]): Tuple of scales for perlin noise for height and width dimension.</span>
+<span class="sd">        shape (tuple): Shape of the 2d map.</span>
+<span class="sd">        res (tuple[int | Tensor, int | Tensor]): Tuple of scales for perlin noise for height and width dimension.</span>
 <span class="sd">        fade (_type_, optional): Function used for fading the resulting 2d map.</span>
 <span class="sd">            Defaults to equation 6*t**5-15*t**4+10*t**3.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Union[np.ndarray, Tensor]: Random 2d-array/tensor generated using perlin noise.</span>
+<span class="sd">        np.ndarray | Tensor: Random 2d-array/tensor generated using perlin noise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">_rand_perlin_2d_np</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">fade</span><span class="p">)</span>
@@ -358,7 +361,7 @@
 
 
 <span class="k">def</span> <span class="nf">_rand_perlin_2d_np</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">fade</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="mi">6</span> <span class="o">*</span> <span class="n">t</span><span class="o">**</span><span class="mi">5</span> <span class="o">-</span> <span class="mi">15</span> <span class="o">*</span> <span class="n">t</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">t</span><span class="o">**</span><span class="mi">3</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Generate a random image containing Perlin noise. Numpy version.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a random image containing Perlin noise. Numpy version.&quot;&quot;&quot;</span>
     <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">d</span> <span class="o">=</span> <span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:</span> <span class="n">delta</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span> <span class="p">:</span> <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">:</span> <span class="n">delta</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">%</span> <span class="mi">1</span>
@@ -384,7 +387,7 @@
 
 
 <span class="k">def</span> <span class="nf">_rand_perlin_2d</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">fade</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="mi">6</span> <span class="o">*</span> <span class="n">t</span><span class="o">**</span><span class="mi">5</span> <span class="o">-</span> <span class="mi">15</span> <span class="o">*</span> <span class="n">t</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">t</span><span class="o">**</span><span class="mi">3</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Generate a random image containing Perlin noise. PyTorch version.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a random image containing Perlin noise. PyTorch version.&quot;&quot;&quot;</span>
     <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">d</span> <span class="o">=</span> <span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
@@ -417,7 +420,7 @@
 
 
 <span class="k">def</span> <span class="nf">rand_perlin_2d_octaves</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">octaves</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">persistence</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Generate Perlin noise parameterized by the octaves method. PyTorch version.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate Perlin noise parameterized by the octaves method. PyTorch version.&quot;&quot;&quot;</span>
     <span class="n">noise</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">frequency</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">amplitude</span> <span class="o">=</span> <span class="mi">1</span>

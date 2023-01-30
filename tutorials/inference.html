@@ -174,9 +174,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -272,6 +274,8 @@
 <section id="pytorch-lightning-inference">
 <h2>PyTorch (Lightning) Inference<a class="headerlink" href="#pytorch-lightning-inference" title="Permalink to this heading">¶</a></h2>
 <p>The entrypoint script in <code class="docutils literal notranslate"><span class="pre">tools/inference/lightning.py</span></code> can be used to run inference with a trained PyTorch model. The script runs inference by loading a previously trained model into a PyTorch Lightning trainer and running the <code class="docutils literal notranslate"><span class="pre">predict</span> <span class="pre">sequence</span></code>. The entrypoint script has several command line arguments that can be used to configure inference:</p>
+<p>Like the other PyTorch Lightning entrypoints, the inference script reads the model configuration from a config file. It is generally advisible to use the same config file that was used when training the model, although some inference-related paremeter values may be changed to accommodate your needs. Some settings that you might want to change before inference are the batch size, transform config and number of workers for the dataloader.</p>
+<p>It is also possible to run inference with a custom anomaly score threshold that differs from the threshold used/computed during training. To change the threshold for inference, simply set the <code class="docutils literal notranslate"><span class="pre">metrics.threshold.method</span></code> to <code class="docutils literal notranslate"><span class="pre">manual</span></code> and specify the custom threshold values in <code class="docutils literal notranslate"><span class="pre">metrics.threshold.manual_image</span></code> and <code class="docutils literal notranslate"><span class="pre">metrics.threshold.manual_pixel</span></code>.</p>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <thead>
@@ -301,9 +305,9 @@
 <td><p>False</p></td>
 <td><p>Determines how the inference results are visualized. Options: “full”, “simple”.</p></td>
 </tr>
-<tr class="row-odd"><td><p>disable_show_images</p></td>
+<tr class="row-odd"><td><p>show</p></td>
 <td><p>False</p></td>
-<td><p>When this flag is passed, visualizations will not be shown on the screen.</p></td>
+<td><p>When true, the visualized inference results will be displayed on the screen.</p></td>
 </tr>
 </tbody>
 </table>
@@ -344,6 +348,10 @@
 <td><p>True</p></td>
 <td><p>Path to the JSON file containing the model’s meta data (e.g. normalization
 parameters and anomaly score threshold).</p></td>
+</tr>
+<tr class="row-odd"><td><p>device</p></td>
+<td><p>False</p></td>
+<td><p>Device on which OpenVINO will perform the computations (<code class="docutils literal notranslate"><span class="pre">CPU</span></code>, <code class="docutils literal notranslate"><span class="pre">GPU</span></code> or <code class="docutils literal notranslate"><span class="pre">VPU</span></code>)</p></td>
 </tr>
 </tbody>
 </table>
@@ -391,16 +399,16 @@ This is needed only for OpenVINO model.</p></td>
 </div>
 <p>To use gradio with OpenVINO model, first make sure that your model has been exported to the OpenVINO IR format and ensure that the <cite>meta_data</cite> argument points to the <code class="docutils literal notranslate"><span class="pre">meta_data.json</span></code> file that was generated when exporting the OpenVINO IR model. The file is stored in the same folder as the <code class="docutils literal notranslate"><span class="pre">.xml</span></code> and <code class="docutils literal notranslate"><span class="pre">.bin</span></code> files of the model.</p>
 <p>As an example, PyTorch model can be used by the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python tools/inference/gradio_inference.py <span class="se">\</span>
-    --config ./anomalib/models/padim/config.yaml <span class="se">\</span>
-    --weights ./results/padim/mvtec/bottle/weights/model.ckpt
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>tools/inference/gradio_inference.py<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--config<span class="w"> </span>./anomalib/models/padim/config.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--weights<span class="w"> </span>./results/padim/mvtec/bottle/weights/model.ckpt
 </pre></div>
 </div>
 <p>Similarly, you can use OpenVINO model by the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python python tools/inference/gradio_inference.py <span class="se">\</span>
-    --config ./anomalib/models/padim/config.yaml <span class="se">\</span>
-    --weights ./results/padim/mvtec/bottle/openvino/openvino_model.onnx <span class="se">\</span>
-    --meta_data ./results/padim/mvtec/bottle/openvino/meta_data.json
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>python<span class="w"> </span>tools/inference/gradio_inference.py<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--config<span class="w"> </span>./anomalib/models/padim/config.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--weights<span class="w"> </span>./results/padim/mvtec/bottle/openvino/openvino_model.onnx<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--meta_data<span class="w"> </span>./results/padim/mvtec/bottle/openvino/meta_data.json
 </pre></div>
 </div>
 </section>

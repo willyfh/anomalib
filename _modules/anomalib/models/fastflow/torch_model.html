@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -276,21 +278,23 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
 
 <span class="kn">import</span> <span class="nn">timm</span>
 <span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">FrEIA.framework</span> <span class="kn">import</span> <span class="n">SequenceINN</span>
+<span class="kn">from</span> <span class="nn">FrEIA.modules</span> <span class="kn">import</span> <span class="n">AllInOneBlock</span>
 <span class="kn">from</span> <span class="nn">timm.models.cait</span> <span class="kn">import</span> <span class="n">Cait</span>
 <span class="kn">from</span> <span class="nn">timm.models.vision_transformer</span> <span class="kn">import</span> <span class="n">VisionTransformer</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
-<span class="kn">from</span> <span class="nn">anomalib.models.components.freia.framework</span> <span class="kn">import</span> <span class="n">SequenceINN</span>
-<span class="kn">from</span> <span class="nn">anomalib.models.components.freia.modules</span> <span class="kn">import</span> <span class="n">AllInOneBlock</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.fastflow.anomaly_map</span> <span class="kn">import</span> <span class="n">AnomalyMapGenerator</span>
 
 
 <div class="viewcode-block" id="subnet_conv_func"><a class="viewcode-back" href="../../../../reference_guide/algorithms/fastflow.html#anomalib.models.fastflow.torch_model.subnet_conv_func">[docs]</a><span class="k">def</span> <span class="nf">subnet_conv_func</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">hidden_ratio</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Subnet Convolutional Function.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Subnet Convolutional Function.</span>
 
 <span class="sd">    Callable class or function ``f``, called as ``f(channels_in, channels_out)`` and</span>
 <span class="sd">        should return a torch.nn.Module.</span>
@@ -316,19 +320,19 @@
 
 
 <div class="viewcode-block" id="create_fast_flow_block"><a class="viewcode-back" href="../../../../reference_guide/algorithms/fastflow.html#anomalib.models.fastflow.torch_model.create_fast_flow_block">[docs]</a><span class="k">def</span> <span class="nf">create_fast_flow_block</span><span class="p">(</span>
-    <span class="n">input_dimensions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">input_dimensions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
     <span class="n">conv3x3_only</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="n">hidden_ratio</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">flow_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">clamp</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SequenceINN</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Create NF Fast Flow Block.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create NF Fast Flow Block.</span>
 
 <span class="sd">    This is to create Normalizing Flow (NF) Fast Flow model block based on</span>
 <span class="sd">    Figure 2 and Section 3.3 in the paper.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        input_dimensions (List[int]): Input dimensions (Channel, Height, Width)</span>
+<span class="sd">        input_dimensions (list[int]): Input dimensions (Channel, Height, Width)</span>
 <span class="sd">        conv3x3_only (bool): Boolean whether to use conv3x3 only or conv3x3 and conv1x1.</span>
 <span class="sd">        hidden_ratio (float): Ratio for the hidden layer channels.</span>
 <span class="sd">        flow_steps (int): Flow steps.</span>
@@ -353,12 +357,12 @@
 
 
 <div class="viewcode-block" id="FastflowModel"><a class="viewcode-back" href="../../../../reference_guide/algorithms/fastflow.html#anomalib.models.fastflow.torch_model.FastflowModel">[docs]</a><span class="k">class</span> <span class="nc">FastflowModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;FastFlow.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;FastFlow.</span>
 
 <span class="sd">    Unsupervised Anomaly Detection and Localization via 2D Normalizing Flows.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        input_size (Tuple[int, int]): Model input size.</span>
+<span class="sd">        input_size (tuple[int, int]): Model input size.</span>
 <span class="sd">        backbone (str): Backbone CNN network</span>
 <span class="sd">        pre_trained (bool, optional): Boolean to check whether to use a pre_trained backbone.</span>
 <span class="sd">        flow_steps (int, optional): Flow steps.</span>
@@ -371,7 +375,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
         <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">pre_trained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">flow_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
@@ -382,11 +386,11 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">input_size</span> <span class="o">=</span> <span class="n">input_size</span>
 
-        <span class="k">if</span> <span class="n">backbone</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;cait_m48_448&quot;</span><span class="p">,</span> <span class="s2">&quot;deit_base_distilled_patch16_384&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">backbone</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;cait_m48_448&quot;</span><span class="p">,</span> <span class="s2">&quot;deit_base_distilled_patch16_384&quot;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="n">backbone</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">)</span>
             <span class="n">channels</span> <span class="o">=</span> <span class="p">[</span><span class="mi">768</span><span class="p">]</span>
             <span class="n">scales</span> <span class="o">=</span> <span class="p">[</span><span class="mi">16</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">backbone</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;resnet18&quot;</span><span class="p">,</span> <span class="s2">&quot;wide_resnet50_2&quot;</span><span class="p">]:</span>
+        <span class="k">elif</span> <span class="n">backbone</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;resnet18&quot;</span><span class="p">,</span> <span class="s2">&quot;wide_resnet50_2&quot;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span>
                 <span class="n">backbone</span><span class="p">,</span>
                 <span class="n">pretrained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">,</span>
@@ -427,19 +431,19 @@
             <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">anomaly_map_generator</span> <span class="o">=</span> <span class="n">AnomalyMapGenerator</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="n">input_size</span><span class="p">)</span>
 
-<div class="viewcode-block" id="FastflowModel.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/fastflow.html#anomalib.models.fastflow.torch_model.FastflowModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]],</span> <span class="n">Tensor</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Forward-Pass the input to the FastFlow Model.</span>
+<div class="viewcode-block" id="FastflowModel.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/fastflow.html#anomalib.models.fastflow.torch_model.FastflowModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Forward-Pass the input to the FastFlow Model.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            input_tensor (Tensor): Input tensor.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Union[Tuple[Tensor, Tensor], Tensor]: During training, return</span>
+<span class="sd">            Tensor | list[Tensor] | tuple[list[Tensor]]: During training, return</span>
 <span class="sd">                (hidden_variables, log-of-the-jacobian-determinants).</span>
 <span class="sd">                During the validation/test, return the anomaly map.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">return_val</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]],</span> <span class="n">Tensor</span><span class="p">]</span>
+        <span class="n">return_val</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="p">,</span> <span class="n">VisionTransformer</span><span class="p">):</span>
@@ -452,8 +456,8 @@
         <span class="c1"># Compute the hidden variable f: X -&gt; Z and log-likelihood of the jacobian</span>
         <span class="c1"># (See Section 3.3 in the paper.)</span>
         <span class="c1"># NOTE: output variable has z, and jacobian tuple for each fast-flow blocks.</span>
-        <span class="n">hidden_variables</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">log_jacobians</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">hidden_variables</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">log_jacobians</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">fast_flow_block</span><span class="p">,</span> <span class="n">feature</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fast_flow_blocks</span><span class="p">,</span> <span class="n">features</span><span class="p">):</span>
             <span class="n">hidden_variable</span><span class="p">,</span> <span class="n">log_jacobian</span> <span class="o">=</span> <span class="n">fast_flow_block</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
             <span class="n">hidden_variables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hidden_variable</span><span class="p">)</span>
@@ -466,27 +470,27 @@
 
         <span class="k">return</span> <span class="n">return_val</span></div>
 
-    <span class="k">def</span> <span class="nf">_get_cnn_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Get CNN-based features.</span>
+    <span class="k">def</span> <span class="nf">_get_cnn_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get CNN-based features.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            input_tensor (Tensor): Input Tensor.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            List[Tensor]: List of features.</span>
+<span class="sd">            list[Tensor]: List of features.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
         <span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">norms</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">feature</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">feature</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">features</span><span class="p">)]</span>
         <span class="k">return</span> <span class="n">features</span>
 
-    <span class="k">def</span> <span class="nf">_get_cait_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Get Class-Attention-Image-Transformers (CaiT) features.</span>
+    <span class="k">def</span> <span class="nf">_get_cait_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get Class-Attention-Image-Transformers (CaiT) features.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            input_tensor (Tensor): Input Tensor.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            List[Tensor]: List of features.</span>
+<span class="sd">            list[Tensor]: List of features.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">feature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">patch_embed</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
         <span class="n">feature</span> <span class="o">=</span> <span class="n">feature</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">pos_embed</span>
@@ -500,14 +504,14 @@
         <span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="n">feature</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">features</span>
 
-    <span class="k">def</span> <span class="nf">_get_vit_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Get Vision Transformers (ViT) features.</span>
+    <span class="k">def</span> <span class="nf">_get_vit_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get Vision Transformers (ViT) features.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            input_tensor (Tensor): Input Tensor.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            List[Tensor]: List of features.</span>
+<span class="sd">            list[Tensor]: List of features.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">feature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">patch_embed</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
         <span class="n">cls_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">cls_token</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">feature</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>

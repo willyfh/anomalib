@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -273,34 +275,37 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">EarlyStopping</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">MODEL_REGISTRY</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.types</span> <span class="kn">import</span> <span class="n">STEP_OUTPUT</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
+<span class="kn">from</span> <span class="nn">anomalib.data.utils</span> <span class="kn">import</span> <span class="n">Augmenter</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.draem.loss</span> <span class="kn">import</span> <span class="n">DraemLoss</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.draem.torch_model</span> <span class="kn">import</span> <span class="n">DraemModel</span>
-<span class="kn">from</span> <span class="nn">anomalib.models.draem.utils</span> <span class="kn">import</span> <span class="n">Augmenter</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Draem&quot;</span><span class="p">,</span> <span class="s2">&quot;DraemLightning&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="Draem"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.lightning_model.Draem">[docs]</a><span class="nd">@MODEL_REGISTRY</span>
 <span class="k">class</span> <span class="nc">Draem</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;DRÆM: A discriminatively trained reconstruction embedding for surface anomaly detection.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;DRÆM: A discriminatively trained reconstruction embedding for surface anomaly detection.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        anomaly_source_path (Optional[str]): Path to folder that contains the anomaly source images. Random noise will</span>
+<span class="sd">        anomaly_source_path (str | None): Path to folder that contains the anomaly source images. Random noise will</span>
 <span class="sd">            be used if left empty.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">enable_sspcab</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">sspcab_lambda</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">anomaly_source_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="p">):</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">enable_sspcab</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">sspcab_lambda</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">anomaly_source_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">augmenter</span> <span class="o">=</span> <span class="n">Augmenter</span><span class="p">(</span><span class="n">anomaly_source_path</span><span class="p">)</span>
@@ -309,23 +314,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">sspcab</span> <span class="o">=</span> <span class="n">enable_sspcab</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sspcab</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">sspcab_activations</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sspcab_activations</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setup_sspcab</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sspcab_loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sspcab_lambda</span> <span class="o">=</span> <span class="n">sspcab_lambda</span>
 
-<div class="viewcode-block" id="Draem.setup_sspcab"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.lightning_model.Draem.setup_sspcab">[docs]</a>    <span class="k">def</span> <span class="nf">setup_sspcab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Prepare the model for the SSPCAB training step by adding forward hooks for the SSPCAB layer activations.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Draem.setup_sspcab"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.lightning_model.Draem.setup_sspcab">[docs]</a>    <span class="k">def</span> <span class="nf">setup_sspcab</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepare the model for the SSPCAB training step by adding forward hooks for the SSPCAB layer activations.&quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="nf">get_activation</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
-            <span class="sd">&quot;&quot;&quot;Retrieves the activations.</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Retrieves the activations.</span>
 
 <span class="sd">            Args:</span>
 <span class="sd">                name (str): Identifier for the retrieved activations.</span>
 <span class="sd">            &quot;&quot;&quot;</span>
 
-            <span class="k">def</span> <span class="nf">hook</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">__</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">):</span>
-                <span class="sd">&quot;&quot;&quot;Hook for retrieving the activations.&quot;&quot;&quot;</span>
+            <span class="k">def</span> <span class="nf">hook</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">__</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;Hook for retrieving the activations.&quot;&quot;&quot;</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">sspcab_activations</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span>
 
             <span class="k">return</span> <span class="n">hook</span>
@@ -333,14 +338,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">reconstructive_subnetwork</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">mp4</span><span class="o">.</span><span class="n">register_forward_hook</span><span class="p">(</span><span class="n">get_activation</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">reconstructive_subnetwork</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">block5</span><span class="o">.</span><span class="n">register_forward_hook</span><span class="p">(</span><span class="n">get_activation</span><span class="p">(</span><span class="s2">&quot;output&quot;</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Draem.training_step"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.lightning_model.Draem.training_step">[docs]</a>    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
-        <span class="sd">&quot;&quot;&quot;Training Step of DRAEM.</span>
+<div class="viewcode-block" id="Draem.training_step"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.lightning_model.Draem.training_step">[docs]</a>    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">STEP_OUTPUT</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Training Step of DRAEM.</span>
 
 <span class="sd">        Feeds the original image and the simulated anomaly</span>
 <span class="sd">        image through the network and computes the training loss.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            batch (Dict[str, Any]): Batch containing image filename, image, label and mask</span>
+<span class="sd">            batch (dict[str, str | Tensor]): Batch containing image filename, image, label and mask</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Loss dictionary</span>
@@ -357,13 +362,15 @@
             <span class="n">loss</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sspcab_lambda</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sspcab_loss</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">sspcab_activations</span><span class="p">[</span><span class="s2">&quot;input&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">sspcab_activations</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span>
             <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;train_loss&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">on_epoch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">prog_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="p">}</span></div>
 
-<div class="viewcode-block" id="Draem.validation_step"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.lightning_model.Draem.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Validation step of DRAEM. The Softmax predictions of the anomalous class are used as anomaly map.</span>
+<div class="viewcode-block" id="Draem.validation_step"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.lightning_model.Draem.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">STEP_OUTPUT</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validation step of DRAEM. The Softmax predictions of the anomalous class are used as anomaly map.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            batch: Batch of input images</span>
+<span class="sd">            batch (dict[str, str | Tensor]): Batch of input images</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Dictionary to which predicted anomaly maps have been added.</span>
@@ -374,23 +381,23 @@
 
 
 <div class="viewcode-block" id="DraemLightning"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.lightning_model.DraemLightning">[docs]</a><span class="k">class</span> <span class="nc">DraemLightning</span><span class="p">(</span><span class="n">Draem</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;DRÆM: A discriminatively trained reconstruction embedding for surface anomaly detection.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;DRÆM: A discriminatively trained reconstruction embedding for surface anomaly detection.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        hparams (Union[DictConfig, ListConfig]): Model parameters</span>
+<span class="sd">        hparams (DictConfig | ListConfig): Model parameters</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">enable_sspcab</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">enable_sspcab</span><span class="p">,</span>
             <span class="n">sspcab_lambda</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">sspcab_lambda</span><span class="p">,</span>
             <span class="n">anomaly_source_path</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">anomaly_source_path</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span>  <span class="c1"># type: ignore</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DraemLightning.configure_callbacks"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.lightning_model.DraemLightning.configure_callbacks">[docs]</a>    <span class="k">def</span> <span class="nf">configure_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Configure model-specific callbacks.</span>
+<div class="viewcode-block" id="DraemLightning.configure_callbacks"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.lightning_model.DraemLightning.configure_callbacks">[docs]</a>    <span class="k">def</span> <span class="nf">configure_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">EarlyStopping</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Configure model-specific callbacks.</span>
 
 <span class="sd">        Note:</span>
 <span class="sd">            This method is used for the existing CLI.</span>
@@ -405,8 +412,8 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">early_stopping</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="DraemLightning.configure_optimizers"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.lightning_model.DraemLightning.configure_optimizers">[docs]</a>    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
-        <span class="sd">&quot;&quot;&quot;Configure the Adam optimizer.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DraemLightning.configure_optimizers"><a class="viewcode-back" href="../../../../reference_guide/algorithms/draem.html#anomalib.models.draem.lightning_model.DraemLightning.configure_optimizers">[docs]</a>    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Configure the Adam optimizer.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">lr</span><span class="p">)</span></div></div>
 </pre></div>
         </article>

@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -276,8 +278,9 @@
 <span class="c1"># Copyright (C) 2020-2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
@@ -286,10 +289,10 @@
 
 
 <div class="viewcode-block" id="Encoder"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.Encoder">[docs]</a><span class="k">class</span> <span class="nc">Encoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Encoder Network.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encoder Network.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        input_size (Tuple[int, int]): Size of input image</span>
+<span class="sd">        input_size (tuple[int, int]): Size of input image</span>
 <span class="sd">        latent_vec_size (int): Size of latent vector z</span>
 <span class="sd">        num_input_channels (int): Number of input channels in the image</span>
 <span class="sd">        n_features (int): Number of features per convolution layer</span>
@@ -299,13 +302,13 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
         <span class="n">latent_vec_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">num_input_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">extra_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">add_final_conv_layer</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="p">):</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">input_layers</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
@@ -352,8 +355,8 @@
                 <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="p">)</span>
 
-<div class="viewcode-block" id="Encoder.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.Encoder.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return latent vectors.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Encoder.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.Encoder.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return latent vectors.&quot;&quot;&quot;</span>
 
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_layers</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extra_layers</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
@@ -365,10 +368,10 @@
 
 
 <div class="viewcode-block" id="Decoder"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.Decoder">[docs]</a><span class="k">class</span> <span class="nc">Decoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Decoder Network.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decoder Network.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        input_size (Tuple[int, int]): Size of input image</span>
+<span class="sd">        input_size (tuple[int, int]): Size of input image</span>
 <span class="sd">        latent_vec_size (int): Size of latent vector z</span>
 <span class="sd">        num_input_channels (int): Number of input channels in the image</span>
 <span class="sd">        n_features (int): Number of features per convolution layer</span>
@@ -378,12 +381,12 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
         <span class="n">latent_vec_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">num_input_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">extra_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="p">):</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">latent_input</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
@@ -458,8 +461,8 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">final_layers</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;final-</span><span class="si">{</span><span class="n">num_input_channels</span><span class="si">}</span><span class="s2">-tanh&quot;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">())</span>
 
-<div class="viewcode-block" id="Decoder.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.Decoder.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return generated image.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Decoder.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.Decoder.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return generated image.&quot;&quot;&quot;</span>
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">latent_input</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inverse_pyramid</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extra_layers</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
@@ -468,18 +471,20 @@
 
 
 <div class="viewcode-block" id="Discriminator"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.Discriminator">[docs]</a><span class="k">class</span> <span class="nc">Discriminator</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Discriminator.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Discriminator.</span>
 
 <span class="sd">        Made of only one encoder layer which takes x and x_hat to produce a score.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        input_size (Tuple[int,int]): Input image size.</span>
+<span class="sd">        input_size (tuple[int, int]): Input image size.</span>
 <span class="sd">        num_input_channels (int): Number of image channels.</span>
 <span class="sd">        n_features (int): Number of feature maps in each convolution layer.</span>
 <span class="sd">        extra_layers (int, optional): Add extra intermediate layers. Defaults to 0.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">num_input_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">extra_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">input_size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">num_input_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">extra_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="n">encoder</span> <span class="o">=</span> <span class="n">Encoder</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_input_channels</span><span class="p">,</span> <span class="n">n_features</span><span class="p">,</span> <span class="n">extra_layers</span><span class="p">)</span>
         <span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
@@ -493,8 +498,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s2">&quot;Sigmoid&quot;</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">())</span>
 
-<div class="viewcode-block" id="Discriminator.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.Discriminator.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return class of object and features.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Discriminator.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.Discriminator.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return class of object and features.&quot;&quot;&quot;</span>
         <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
         <span class="n">classifier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
         <span class="n">classifier</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -502,12 +507,12 @@
 
 
 <div class="viewcode-block" id="Generator"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.Generator">[docs]</a><span class="k">class</span> <span class="nc">Generator</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Generator model.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generator model.</span>
 
 <span class="sd">    Made of an encoder-decoder-encoder architecture.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        input_size (Tuple[int,int]): Size of input data.</span>
+<span class="sd">        input_size (tuple[int, int]): Size of input data.</span>
 <span class="sd">        latent_vec_size (int): Dimension of latent vector produced between the first encoder-decoder.</span>
 <span class="sd">        num_input_channels (int): Number of channels in input image.</span>
 <span class="sd">        n_features (int): Number of feature maps in each convolution layer.</span>
@@ -517,13 +522,13 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
         <span class="n">latent_vec_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">num_input_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">extra_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">add_final_conv_layer</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="p">):</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">encoder1</span> <span class="o">=</span> <span class="n">Encoder</span><span class="p">(</span>
             <span class="n">input_size</span><span class="p">,</span> <span class="n">latent_vec_size</span><span class="p">,</span> <span class="n">num_input_channels</span><span class="p">,</span> <span class="n">n_features</span><span class="p">,</span> <span class="n">extra_layers</span><span class="p">,</span> <span class="n">add_final_conv_layer</span>
@@ -533,8 +538,8 @@
             <span class="n">input_size</span><span class="p">,</span> <span class="n">latent_vec_size</span><span class="p">,</span> <span class="n">num_input_channels</span><span class="p">,</span> <span class="n">n_features</span><span class="p">,</span> <span class="n">extra_layers</span><span class="p">,</span> <span class="n">add_final_conv_layer</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="Generator.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.Generator.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return generated image and the latent vectors.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Generator.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.Generator.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return generated image and the latent vectors.&quot;&quot;&quot;</span>
         <span class="n">latent_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder1</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
         <span class="n">gen_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="p">(</span><span class="n">latent_i</span><span class="p">)</span>
         <span class="n">latent_o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder2</span><span class="p">(</span><span class="n">gen_image</span><span class="p">)</span>
@@ -542,10 +547,10 @@
 
 
 <div class="viewcode-block" id="GanomalyModel"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.GanomalyModel">[docs]</a><span class="k">class</span> <span class="nc">GanomalyModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Ganomaly Model.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ganomaly Model.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        input_size (Tuple[int,int]): Input dimension.</span>
+<span class="sd">        input_size (tuple[int, int]): Input dimension.</span>
 <span class="sd">        num_input_channels (int): Number of input channels.</span>
 <span class="sd">        n_features (int): Number of features layers in the CNNs.</span>
 <span class="sd">        latent_vec_size (int): Size of autoencoder latent vector.</span>
@@ -555,7 +560,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
         <span class="n">num_input_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">latent_vec_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -581,8 +586,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">weights_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">discriminator</span><span class="p">)</span>
 
 <div class="viewcode-block" id="GanomalyModel.weights_init"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.GanomalyModel.weights_init">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">weights_init</span><span class="p">(</span><span class="n">module</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize DCGAN weights.</span>
+    <span class="k">def</span> <span class="nf">weights_init</span><span class="p">(</span><span class="n">module</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize DCGAN weights.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            module (nn.Module): [description]</span>
@@ -594,8 +599,8 @@
             <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">normal_</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">constant_</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="GanomalyModel.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.GanomalyModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">],</span> <span class="n">Tensor</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Get scores for batch.</span>
+<div class="viewcode-block" id="GanomalyModel.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.GanomalyModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get scores for batch.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            batch (Tensor): Images</span>

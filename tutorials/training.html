@@ -174,9 +174,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -273,7 +275,7 @@
 runs <a class="reference external" href="https://arxiv.org/pdf/2103.04257.pdf">STFPM</a> model
 <a class="reference external" href="https://www.mvtec.com/company/research/datasets/mvtec-ad">MVTec AD</a>
 <code class="docutils literal notranslate"><span class="pre">leather</span></code> dataset.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python tools/train.py    <span class="c1"># Train STFPM on MVTec AD leather</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>tools/train.py<span class="w">    </span><span class="c1"># Train STFPM on MVTec AD leather</span>
 </pre></div>
 </div>
 <p>Training a model on a specific dataset and category requires further
@@ -282,12 +284,12 @@ configuration. Each model has its own configuration file,
 which contains data, model and training configurable parameters. To
 train a specific model on a specific dataset and category, the config
 file is to be provided:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python tools/train.py --config &lt;path/to/model/config.yaml&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>tools/train.py<span class="w"> </span>--config<span class="w"> </span>&lt;path/to/model/config.yaml&gt;
 </pre></div>
 </div>
 <p>Alternatively, a model name could also be provided as an argument, where
 the scripts automatically finds the corresponding config file.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python tools/train.py --model stfpm
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>tools/train.py<span class="w"> </span>--model<span class="w"> </span>stfpm
 </pre></div>
 </div>
 <p>To see a list of currently supported models, refer to page: <a class="reference internal" href="../reference_guide/algorithms/index.html#available-models"><span class="std std-ref">Algorithms</span></a></p>

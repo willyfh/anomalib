@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,14 +272,18 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">MODEL_REGISTRY</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.types</span> <span class="kn">import</span> <span class="n">STEP_OUTPUT</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
+<span class="kn">from</span> <span class="nn">anomalib.models.components.classification</span> <span class="kn">import</span> <span class="n">FeatureScalingMethod</span>
 
 <span class="kn">from</span> <span class="nn">.torch_model</span> <span class="kn">import</span> <span class="n">DfkdeModel</span>
 
@@ -286,7 +292,7 @@
 
 <div class="viewcode-block" id="Dfkde"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.lightning_model.Dfkde">[docs]</a><span class="nd">@MODEL_REGISTRY</span>
 <span class="k">class</span> <span class="nc">Dfkde</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;DFKDE: Deep Feature Kernel Density Estimation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;DFKDE: Deep Feature Kernel Density Estimation.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        backbone (str): Pre-trained model backbone.</span>
@@ -303,47 +309,42 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">layers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">layers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
         <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">pre_trained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">n_pca_components</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+        <span class="n">feature_scaling_method</span><span class="p">:</span> <span class="n">FeatureScalingMethod</span> <span class="o">=</span> <span class="n">FeatureScalingMethod</span><span class="o">.</span><span class="n">SCALE</span><span class="p">,</span>
         <span class="n">max_training_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40000</span><span class="p">,</span>
-        <span class="n">pre_processing</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;scale&quot;</span><span class="p">,</span>
-        <span class="n">n_components</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
-        <span class="n">threshold_steepness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
-        <span class="n">threshold_offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span>
-    <span class="p">):</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">DfkdeModel</span><span class="p">(</span>
             <span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">,</span>
             <span class="n">backbone</span><span class="o">=</span><span class="n">backbone</span><span class="p">,</span>
             <span class="n">pre_trained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">,</span>
-            <span class="n">n_comps</span><span class="o">=</span><span class="n">n_components</span><span class="p">,</span>
-            <span class="n">pre_processing</span><span class="o">=</span><span class="n">pre_processing</span><span class="p">,</span>
-            <span class="n">filter_count</span><span class="o">=</span><span class="n">max_training_points</span><span class="p">,</span>
-            <span class="n">threshold_steepness</span><span class="o">=</span><span class="n">threshold_steepness</span><span class="p">,</span>
-            <span class="n">threshold_offset</span><span class="o">=</span><span class="n">threshold_offset</span><span class="p">,</span>
+            <span class="n">n_pca_components</span><span class="o">=</span><span class="n">n_pca_components</span><span class="p">,</span>
+            <span class="n">feature_scaling_method</span><span class="o">=</span><span class="n">feature_scaling_method</span><span class="p">,</span>
+            <span class="n">max_training_points</span><span class="o">=</span><span class="n">max_training_points</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
 <div class="viewcode-block" id="Dfkde.configure_optimizers"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.lightning_model.Dfkde.configure_optimizers">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">():</span>  <span class="c1"># pylint: disable=arguments-differ</span>
-        <span class="sd">&quot;&quot;&quot;DFKDE doesn&#39;t require optimization, therefore returns no optimizers.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pylint: disable=arguments-differ</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;DFKDE doesn&#39;t require optimization, therefore returns no optimizers.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Dfkde.training_step"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.lightning_model.Dfkde.training_step">[docs]</a>    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_batch_idx</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
-        <span class="sd">&quot;&quot;&quot;Training Step of DFKDE. For each batch, features are extracted from the CNN.</span>
+<div class="viewcode-block" id="Dfkde.training_step"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.lightning_model.Dfkde.training_step">[docs]</a>    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Training Step of DFKDE. For each batch, features are extracted from the CNN.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            batch (Dict[str, Any]): Batch containing image filename, image, label and mask</span>
-<span class="sd">            _batch_idx: Index of the batch.</span>
+<span class="sd">            batch (batch: dict[str, str | Tensor]): Batch containing image filename, image, label and mask</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">          Deep CNN features.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">embedding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_features</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+        <span class="n">embedding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">])</span>
 
         <span class="c1"># NOTE: `self.embedding` appends each batch embedding to</span>
         <span class="c1">#   store the training set embedding. We manually append these</span>
@@ -352,20 +353,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">embedding</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Dfkde.on_validation_start"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.lightning_model.Dfkde.on_validation_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Fit a KDE Model to the embedding collected from the training set.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit a KDE Model to the embedding collected from the training set.&quot;&quot;&quot;</span>
         <span class="c1"># NOTE: Previous anomalib versions fit Gaussian at the end of the epoch.</span>
         <span class="c1">#   This is not possible anymore with PyTorch Lightning v1.4.0 since validation</span>
         <span class="c1">#   is run within train epoch.</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Fitting a KDE model to the embedding collected from the training set.&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">)</span></div>
+        <span class="n">embeddings</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Dfkde.validation_step"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.lightning_model.Dfkde.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
-        <span class="sd">&quot;&quot;&quot;Validation Step of DFKDE.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Fitting a KDE model to the embedding collected from the training set.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dfkde.validation_step"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.lightning_model.Dfkde.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">STEP_OUTPUT</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validation Step of DFKDE.</span>
 
 <span class="sd">        Similar to the training step, features are extracted from the CNN for each batch.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">          batch: Input batch</span>
+<span class="sd">          batch (dict[str, str | Tensor]): Input batch</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">          Dictionary containing probability, prediction and ground truth values.</span>
@@ -376,24 +379,22 @@
 
 
 <div class="viewcode-block" id="DfkdeLightning"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.lightning_model.DfkdeLightning">[docs]</a><span class="k">class</span> <span class="nc">DfkdeLightning</span><span class="p">(</span><span class="n">Dfkde</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;DFKDE: Deep Feature Kernel Density Estimation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;DFKDE: Deep Feature Kernel Density Estimation.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        hparams (Union[DictConfig, ListConfig]): Model params</span>
+<span class="sd">        hparams (DictConfig | ListConfig): Model params</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">layers</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">,</span>
             <span class="n">backbone</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">,</span>
             <span class="n">pre_trained</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">pre_trained</span><span class="p">,</span>
+            <span class="n">n_pca_components</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">n_pca_components</span><span class="p">,</span>
+            <span class="n">feature_scaling_method</span><span class="o">=</span><span class="n">FeatureScalingMethod</span><span class="p">(</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">feature_scaling_method</span><span class="p">),</span>
             <span class="n">max_training_points</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">max_training_points</span><span class="p">,</span>
-            <span class="n">pre_processing</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">pre_processing</span><span class="p">,</span>
-            <span class="n">n_components</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">n_components</span><span class="p">,</span>
-            <span class="n">threshold_steepness</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">threshold_steepness</span><span class="p">,</span>
-            <span class="n">threshold_offset</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">threshold_offset</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span>  <span class="c1"># type: ignore</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span></div>
 </pre></div>
         </article>

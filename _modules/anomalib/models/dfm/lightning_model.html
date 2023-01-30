@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -265,17 +267,19 @@
         </div>
         <article role="main">
           <h1>Source code for anomalib.models.dfm.lightning_model</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;DFM: Deep Feature Kernel Density Estimation.&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;DFM: Deep Feature Modeling.&quot;&quot;&quot;</span>
 
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">MODEL_REGISTRY</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.types</span> <span class="kn">import</span> <span class="n">STEP_OUTPUT</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
@@ -287,53 +291,58 @@
 
 <div class="viewcode-block" id="Dfm"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfm.html#anomalib.models.dfm.lightning_model.Dfm">[docs]</a><span class="nd">@MODEL_REGISTRY</span>
 <span class="k">class</span> <span class="nc">Dfm</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;DFM: Deep Featured Kernel Density Estimation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;DFM: Deep Featured Kernel Density Estimation.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        backbone (str): Backbone CNN network</span>
 <span class="sd">        layer (str): Layer to extract features from the backbone CNN</span>
+<span class="sd">        input_size (tuple[int, int]): Input size for the model.</span>
 <span class="sd">        pre_trained (bool, optional): Boolean to check whether to use a pre_trained backbone.</span>
 <span class="sd">        pooling_kernel_size (int, optional): Kernel size to pool features extracted from the CNN.</span>
 <span class="sd">            Defaults to 4.</span>
 <span class="sd">        pca_level (float, optional): Ratio from which number of components for PCA are calculated.</span>
 <span class="sd">            Defaults to 0.97.</span>
 <span class="sd">        score_type (str, optional): Scoring type. Options are `fre` and `nll`. Defaults to &quot;fre&quot;.</span>
-<span class="sd">        nll: for Gaussian modeling, fre: pca feature reconstruction error</span>
+<span class="sd">        nll: for Gaussian modeling, fre: pca feature-reconstruction error. Anomaly segmentation is</span>
+<span class="sd">        supported with `fre` only. If using `nll`, set `task` in config.yaml to classification</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">layer</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
         <span class="n">pre_trained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">pooling_kernel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
         <span class="n">pca_level</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.97</span><span class="p">,</span>
         <span class="n">score_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;fre&quot;</span><span class="p">,</span>
-    <span class="p">):</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span> <span class="n">DFMModel</span> <span class="o">=</span> <span class="n">DFMModel</span><span class="p">(</span>
             <span class="n">backbone</span><span class="o">=</span><span class="n">backbone</span><span class="p">,</span>
             <span class="n">pre_trained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">,</span>
             <span class="n">layer</span><span class="o">=</span><span class="n">layer</span><span class="p">,</span>
+            <span class="n">input_size</span><span class="o">=</span><span class="n">input_size</span><span class="p">,</span>
             <span class="n">pooling_kernel_size</span><span class="o">=</span><span class="n">pooling_kernel_size</span><span class="p">,</span>
             <span class="n">n_comps</span><span class="o">=</span><span class="n">pca_level</span><span class="p">,</span>
             <span class="n">score_type</span><span class="o">=</span><span class="n">score_type</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">score_type</span> <span class="o">=</span> <span class="n">score_type</span>
 
 <div class="viewcode-block" id="Dfm.configure_optimizers"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfm.html#anomalib.models.dfm.lightning_model.Dfm.configure_optimizers">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pylint: disable=arguments-differ</span>
-        <span class="sd">&quot;&quot;&quot;DFM doesn&#39;t require optimization, therefore returns no optimizers.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;DFM doesn&#39;t require optimization, therefore returns no optimizers.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Dfm.training_step"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfm.html#anomalib.models.dfm.lightning_model.Dfm.training_step">[docs]</a>    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
-        <span class="sd">&quot;&quot;&quot;Training Step of DFM.</span>
+<div class="viewcode-block" id="Dfm.training_step"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfm.html#anomalib.models.dfm.lightning_model.Dfm.training_step">[docs]</a>    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Training Step of DFM.</span>
 
 <span class="sd">        For each batch, features are extracted from the CNN.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">          batch (Dict[str, Tensor]): Input batch</span>
+<span class="sd">          batch (dict[str, str | Tensor]): Input batch</span>
 <span class="sd">          _: Index of the batch.</span>
 
 <span class="sd">        Returns:</span>
@@ -348,7 +357,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">embedding</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Dfm.on_validation_start"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfm.html#anomalib.models.dfm.lightning_model.Dfm.on_validation_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Fit a PCA transformation and a Gaussian model to dataset.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit a PCA transformation and a Gaussian model to dataset.&quot;&quot;&quot;</span>
         <span class="c1"># NOTE: Previous anomalib versions fit Gaussian at the end of the epoch.</span>
         <span class="c1">#   This is not possible anymore with PyTorch Lightning v1.4.0 since validation</span>
         <span class="c1">#   is run within train epoch.</span>
@@ -358,31 +367,35 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Fitting a PCA and a Gaussian model to dataset.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Dfm.validation_step"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfm.html#anomalib.models.dfm.lightning_model.Dfm.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
-        <span class="sd">&quot;&quot;&quot;Validation Step of DFM.</span>
+<div class="viewcode-block" id="Dfm.validation_step"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfm.html#anomalib.models.dfm.lightning_model.Dfm.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">STEP_OUTPUT</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validation Step of DFM.</span>
 
 <span class="sd">        Similar to the training step, features are extracted from the CNN for each batch.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">          batch (List[Dict[str, Any]]): Input batch</span>
+<span class="sd">          batch (dict[str, str | Tensor]): Input batch</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">          Dictionary containing FRE anomaly scores and ground-truth.</span>
+<span class="sd">          Dictionary containing FRE anomaly scores and anomaly maps.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;pred_scores&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">score_type</span> <span class="o">==</span> <span class="s2">&quot;fre&quot;</span><span class="p">:</span>
+            <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;anomaly_maps&quot;</span><span class="p">],</span> <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;pred_scores&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">score_type</span> <span class="o">==</span> <span class="s2">&quot;nll&quot;</span><span class="p">:</span>
+            <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;pred_scores&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">])</span>
 
         <span class="k">return</span> <span class="n">batch</span></div></div>
 
 
 <div class="viewcode-block" id="DfmLightning"><a class="viewcode-back" href="../../../../reference_guide/algorithms/dfm.html#anomalib.models.dfm.lightning_model.DfmLightning">[docs]</a><span class="k">class</span> <span class="nc">DfmLightning</span><span class="p">(</span><span class="n">Dfm</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;DFM: Deep Featured Kernel Density Estimation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;DFM: Deep Featured Kernel Density Estimation.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        hparams (Union[DictConfig, ListConfig]): Model params</span>
+<span class="sd">        hparams (DictConfig | ListConfig): Model params</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">input_size</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_size</span><span class="p">,</span>
             <span class="n">backbone</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">,</span>
             <span class="n">layer</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">layer</span><span class="p">,</span>
             <span class="n">pre_trained</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">pre_trained</span><span class="p">,</span>
@@ -390,7 +403,7 @@
             <span class="n">pca_level</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">pca_level</span><span class="p">,</span>
             <span class="n">score_type</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">score_type</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span>  <span class="c1"># type: ignore</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span></div>
 </pre></div>
         </article>

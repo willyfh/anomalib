@@ -172,9 +172,11 @@
 <li class="toctree-l2"><a class="reference internal" href="how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -626,6 +628,8 @@
 </li>
         <li><a href="reference_guide/api/loggers.html#anomalib.utils.loggers.AnomalibWandbLogger">AnomalibWandbLogger (class in anomalib.utils.loggers)</a>
 </li>
+        <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.ImageResult.anomalous_boxes">anomalous_boxes (anomalib.post_processing.ImageResult attribute)</a>
+</li>
         <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.ImageResult.anomaly_map">anomaly_map (anomalib.post_processing.ImageResult attribute)</a>
 </li>
         <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.anomaly_map_to_color_map">anomaly_map_to_color_map() (in module anomalib.post_processing)</a>
@@ -650,6 +654,10 @@
 </li>
         <li><a href="reference_guide/api/metrics.html#anomalib.utils.metrics.AnomalyScoreThreshold">AnomalyScoreThreshold (class in anomalib.utils.metrics)</a>
 </li>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.Augmenter.augment_batch">augment_batch() (anomalib.data.utils.Augmenter method)</a>
+</li>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.Augmenter">Augmenter (class in anomalib.data.utils)</a>
+</li>
         <li><a href="reference_guide/api/metrics.html#anomalib.utils.metrics.AUPR">AUPR (class in anomalib.utils.metrics)</a>
 </li>
         <li><a href="reference_guide/api/metrics.html#anomalib.utils.metrics.AUPRO">AUPRO (class in anomalib.utils.metrics)</a>
@@ -664,10 +672,18 @@
   <h2>B</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference_guide/api/model/feature_extractors.html#anomalib.models.components.feature_extractors.BackboneParams">BackboneParams (class in anomalib.models.components.feature_extractors)</a>
+</li>
         <li><a href="reference_guide/api/cli.html#anomalib.utils.cli.AnomalibCLI.before_instantiate_classes">before_instantiate_classes() (anomalib.utils.cli.AnomalibCLI method)</a>
+</li>
+        <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.ImageResult.box_labels">box_labels (anomalib.post_processing.ImageResult attribute)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.boxes_to_anomaly_maps">boxes_to_anomaly_maps() (in module anomalib.data.utils)</a>
+</li>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.boxes_to_masks">boxes_to_masks() (in module anomalib.data.utils)</a>
+</li>
         <li><a href="reference_guide/api/data/btech.html#anomalib.data.btech.BTech">BTech (class in anomalib.data.btech)</a>
 </li>
         <li><a href="reference_guide/api/data/btech.html#anomalib.data.btech.BTechDataset">BTechDataset (class in anomalib.data.btech)</a>
@@ -710,6 +726,8 @@
 </li>
         <li><a href="reference_guide/algorithms/cflow.html#anomalib.models.cflow.torch_model.CflowModel">CflowModel (class in anomalib.models.cflow.torch_model)</a>
 </li>
+        <li><a href="reference_guide/api/model/feature_extractors.html#anomalib.models.components.feature_extractors.BackboneParams.class_path">class_path (anomalib.models.components.feature_extractors.BackboneParams attribute)</a>
+</li>
         <li><a href="reference_guide/api/metrics.html#anomalib.utils.metrics.AnomalyScoreDistribution.compute">compute() (anomalib.utils.metrics.AnomalyScoreDistribution method)</a>
 
         <ul>
@@ -744,13 +762,11 @@
 </li>
         <li><a href="reference_guide/algorithms/padim.html#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.compute_distance">compute_distance() (anomalib.models.padim.anomaly_map.AnomalyMapGenerator static method)</a>
 </li>
-        <li><a href="reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.torch_model.DfkdeModel.compute_kde_scores">compute_kde_scores() (anomalib.models.dfkde.torch_model.DfkdeModel method)</a>
-</li>
         <li><a href="reference_guide/algorithms/stfpm.html#anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator.compute_layer_map">compute_layer_map() (anomalib.models.stfpm.anomaly_map.AnomalyMapGenerator method)</a>
 </li>
         <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.compute_mask">compute_mask() (in module anomalib.post_processing)</a>
 </li>
-        <li><a href="reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.torch_model.DfkdeModel.compute_probabilities">compute_probabilities() (anomalib.models.dfkde.torch_model.DfkdeModel method)</a>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.concatenate_datasets">concatenate_datasets() (in module anomalib.data.utils)</a>
 </li>
         <li><a href="reference_guide/algorithms/cflow.html#anomalib.models.cflow.lightning_model.CflowLightning.configure_callbacks">configure_callbacks() (anomalib.models.cflow.lightning_model.CflowLightning method)</a>
 
@@ -818,15 +834,17 @@
 </li>
         <li><a href="reference_guide/algorithms/dfm.html#anomalib.models.dfm.lightning_model.DfmLightning">DfmLightning (class in anomalib.models.dfm.lightning_model)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="reference_guide/algorithms/dfm.html#anomalib.models.dfm.torch_model.DFMModel">DFMModel (class in anomalib.models.dfm.torch_model)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.DiscriminativeSubNetwork">DiscriminativeSubNetwork (class in anomalib.models.draem.torch_model)</a>
 </li>
         <li><a href="reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.Discriminator">Discriminator (class in anomalib.models.ganomaly.torch_model)</a>
 </li>
-        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.DownloadProgressBar">DownloadProgressBar (class in anomalib.data.utils)</a>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.download_and_extract">download_and_extract() (in module anomalib.data.utils)</a>
+</li>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.DownloadInfo">DownloadInfo (class in anomalib.data.utils)</a>
 </li>
         <li><a href="reference_guide/algorithms/draem.html#anomalib.models.draem.lightning_model.Draem">Draem (class in anomalib.models.draem.lightning_model)</a>
 </li>
@@ -889,8 +907,6 @@
 </li>
           <li><a href="reference_guide/api/model/stats.html#anomalib.models.components.stats.MultiVariateGaussian.fit">(anomalib.models.components.stats.MultiVariateGaussian method)</a>
 </li>
-          <li><a href="reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.torch_model.DfkdeModel.fit">(anomalib.models.dfkde.torch_model.DfkdeModel method)</a>
-</li>
           <li><a href="reference_guide/algorithms/dfm.html#anomalib.models.dfm.torch_model.DFMModel.fit">(anomalib.models.dfm.torch_model.DFMModel method)</a>
 </li>
           <li><a href="reference_guide/algorithms/dfm.html#anomalib.models.dfm.torch_model.SingleClassGaussian.fit">(anomalib.models.dfm.torch_model.SingleClassGaussian method)</a>
@@ -913,7 +929,9 @@
 </li>
           <li><a href="reference_guide/api/model/dimensionality_reduction.html#anomalib.models.components.dimensionality_reduction.PCA.forward">(anomalib.models.components.dimensionality_reduction.PCA method)</a>
 </li>
-          <li><a href="reference_guide/api/model/feature_extractors.html#anomalib.models.components.feature_extractors.FeatureExtractor.forward">(anomalib.models.components.feature_extractors.FeatureExtractor method)</a>
+          <li><a href="reference_guide/api/model/feature_extractors.html#anomalib.models.components.feature_extractors.TimmFeatureExtractor.forward">(anomalib.models.components.feature_extractors.TimmFeatureExtractor method)</a>
+</li>
+          <li><a href="reference_guide/api/model/feature_extractors.html#anomalib.models.components.feature_extractors.TorchFXFeatureExtractor.forward">(anomalib.models.components.feature_extractors.TorchFXFeatureExtractor method)</a>
 </li>
           <li><a href="reference_guide/api/model/filters.html#anomalib.models.components.filters.GaussianBlur2d.forward">(anomalib.models.components.filters.GaussianBlur2d method)</a>
 </li>
@@ -976,6 +994,10 @@
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.TestSplitMode.FROM_DIR">FROM_DIR (anomalib.data.utils.TestSplitMode attribute)</a>
+</li>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.ValSplitMode.FROM_TEST">FROM_TEST (anomalib.data.utils.ValSplitMode attribute)</a>
+</li>
         <li><a href="reference_guide/api/metrics.html#anomalib.utils.metrics.AUPRO.full_state_update">full_state_update (anomalib.utils.metrics.AUPRO attribute)</a>
 
         <ul>
@@ -1018,6 +1040,8 @@
         </ul></li>
         <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.generate_output_image_filename">generate_output_image_filename() (in module anomalib.data.utils)</a>
 </li>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.Augmenter.generate_perturbation">generate_perturbation() (anomalib.data.utils.Augmenter method)</a>
+</li>
         <li><a href="reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.torch_model.Generator">Generator (class in anomalib.models.ganomaly.torch_model)</a>
 </li>
         <li><a href="reference_guide/api/config.html#anomalib.config.get_configurable_parameters">get_configurable_parameters() (in module anomalib.config)</a>
@@ -1048,7 +1072,11 @@
 </li>
         <li><a href="reference_guide/api/sweep.html#anomalib.utils.sweep.get_torch_throughput">get_torch_throughput() (in module anomalib.utils.sweep)</a>
 </li>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.get_transforms">get_transforms() (in module anomalib.data.utils)</a>
+</li>
         <li><a href="reference_guide/api/callbacks.html#anomalib.utils.callbacks.GraphLogger">GraphLogger (class in anomalib.utils.callbacks)</a>
+</li>
+        <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.ImageResult.gt_boxes">gt_boxes (anomalib.post_processing.ImageResult attribute)</a>
 </li>
         <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.ImageResult.gt_mask">gt_mask (anomalib.post_processing.ImageResult attribute)</a>
 </li>
@@ -1060,7 +1088,7 @@
   <h2>H</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.hash_check">hash_check() (in module anomalib.data.utils)</a>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.DownloadInfo.hash">hash (anomalib.data.utils.DownloadInfo attribute)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
@@ -1100,9 +1128,17 @@
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.InputNormalizationMethod.IMAGENET">IMAGENET (anomalib.data.utils.InputNormalizationMethod attribute)</a>
+</li>
         <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.ImageResult">ImageResult (class in anomalib.post_processing)</a>
 </li>
         <li><a href="reference_guide/api/callbacks.html#anomalib.utils.callbacks.ImageVisualizerCallback">ImageVisualizerCallback (class in anomalib.utils.callbacks)</a>
+</li>
+        <li><a href="reference_guide/api/model/feature_extractors.html#anomalib.models.components.feature_extractors.BackboneParams.init_args">init_args (anomalib.models.components.feature_extractors.BackboneParams attribute)</a>
+</li>
+        <li><a href="reference_guide/api/model/feature_extractors.html#anomalib.models.components.feature_extractors.TorchFXFeatureExtractor.initialize_feature_extractor">initialize_feature_extractor() (anomalib.models.components.feature_extractors.TorchFXFeatureExtractor method)</a>
+</li>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.InputNormalizationMethod">InputNormalizationMethod (class in anomalib.data.utils)</a>
 </li>
         <li><a href="reference_guide/api/metrics.html#anomalib.utils.metrics.AUPRO.interp1d">interp1d() (anomalib.utils.metrics.AUPRO static method)</a>
 </li>
@@ -1172,11 +1208,13 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="reference_guide/api/data/btech.html#anomalib.data.btech.make_btech_dataset">make_btech_dataset() (in module anomalib.data.btech)</a>
 </li>
-        <li><a href="reference_guide/api/data/folder.html#anomalib.data.folder.make_dataset">make_dataset() (in module anomalib.data.folder)</a>
+        <li><a href="reference_guide/api/data/folder.html#anomalib.data.folder.make_folder_dataset">make_folder_dataset() (in module anomalib.data.folder)</a>
 </li>
         <li><a href="reference_guide/api/data/mvtec.html#anomalib.data.mvtec.make_mvtec_dataset">make_mvtec_dataset() (in module anomalib.data.mvtec)</a>
 </li>
         <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.ThresholdMethod.MANUAL">MANUAL (anomalib.post_processing.ThresholdMethod attribute)</a>
+</li>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.masks_to_boxes">masks_to_boxes() (in module anomalib.data.utils)</a>
 </li>
         <li><a href="reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.lightning_model.GanomalyLightning.max_scores">max_scores (anomalib.models.ganomaly.lightning_model.GanomalyLightning attribute)</a>
 </li>
@@ -1321,9 +1359,21 @@
   <h2>N</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.DownloadInfo.name">name (anomalib.data.utils.DownloadInfo attribute)</a>
+</li>
         <li><a href="reference_guide/algorithms/patchcore.html#anomalib.models.patchcore.torch_model.PatchcoreModel.nearest_neighbors">nearest_neighbors() (anomalib.models.patchcore.torch_model.PatchcoreModel method)</a>
 </li>
-        <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.NormalizationMethod.NONE">NONE (anomalib.post_processing.NormalizationMethod attribute)</a>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.InputNormalizationMethod.NONE">NONE (anomalib.data.utils.InputNormalizationMethod attribute)</a>
+
+        <ul>
+          <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.TestSplitMode.NONE">(anomalib.data.utils.TestSplitMode attribute)</a>
+</li>
+          <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.ValSplitMode.NONE">(anomalib.data.utils.ValSplitMode attribute)</a>
+</li>
+          <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.NormalizationMethod.NONE">(anomalib.post_processing.NormalizationMethod attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.ImageResult.normal_boxes">normal_boxes (anomalib.post_processing.ImageResult attribute)</a>
 </li>
         <li><a href="reference_guide/algorithms/cflow.html#anomalib.models.cflow.lightning_model.CflowLightning.normalization_metrics">normalization_metrics (anomalib.models.cflow.lightning_model.CflowLightning attribute)</a>
 
@@ -1369,8 +1419,6 @@
           <li><a href="reference_guide/api/callbacks.html#anomalib.utils.callbacks.MinMaxNormalizationCallback.on_predict_batch_end">(anomalib.utils.callbacks.MinMaxNormalizationCallback method)</a>
 </li>
         </ul></li>
-        <li><a href="reference_guide/api/callbacks.html#anomalib.utils.callbacks.LoadModelCallback.on_predict_start">on_predict_start() (anomalib.utils.callbacks.LoadModelCallback method)</a>
-</li>
         <li><a href="reference_guide/api/callbacks.html#anomalib.utils.callbacks.CdfNormalizationCallback.on_test_batch_end">on_test_batch_end() (anomalib.utils.callbacks.CdfNormalizationCallback method)</a>
 
         <ul>
@@ -1389,8 +1437,6 @@
 
         <ul>
           <li><a href="reference_guide/api/callbacks.html#anomalib.utils.callbacks.CdfNormalizationCallback.on_test_start">(anomalib.utils.callbacks.CdfNormalizationCallback method)</a>
-</li>
-          <li><a href="reference_guide/api/callbacks.html#anomalib.utils.callbacks.LoadModelCallback.on_test_start">(anomalib.utils.callbacks.LoadModelCallback method)</a>
 </li>
           <li><a href="reference_guide/api/callbacks.html#anomalib.utils.callbacks.MinMaxNormalizationCallback.on_test_start">(anomalib.utils.callbacks.MinMaxNormalizationCallback method)</a>
 </li>
@@ -1469,8 +1515,6 @@
         </ul></li>
         <li><a href="reference_guide/api/callbacks.html#anomalib.utils.callbacks.PostProcessingConfigurationCallback">PostProcessingConfigurationCallback (class in anomalib.utils.callbacks)</a>
 </li>
-        <li><a href="reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.torch_model.DfkdeModel.pre_process">pre_process() (anomalib.models.dfkde.torch_model.DfkdeModel method)</a>
-</li>
         <li><a href="reference_guide/algorithms/cflow.html#anomalib.models.cflow.lightning_model.CflowLightning.precision">precision (anomalib.models.cflow.lightning_model.CflowLightning attribute)</a>
 
         <ul>
@@ -1493,22 +1537,14 @@
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.ImageResult.pred_boxes">pred_boxes (anomalib.post_processing.ImageResult attribute)</a>
+</li>
         <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.ImageResult.pred_label">pred_label (anomalib.post_processing.ImageResult attribute)</a>
 </li>
         <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.ImageResult.pred_mask">pred_mask (anomalib.post_processing.ImageResult attribute)</a>
 </li>
         <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.ImageResult.pred_score">pred_score (anomalib.post_processing.ImageResult attribute)</a>
 </li>
-        <li><a href="reference_guide/algorithms/dfkde.html#anomalib.models.dfkde.torch_model.DfkdeModel.predict">predict() (anomalib.models.dfkde.torch_model.DfkdeModel method)</a>
-</li>
-        <li><a href="reference_guide/api/data/btech.html#anomalib.data.btech.BTech.predict_dataloader">predict_dataloader() (anomalib.data.btech.BTech method)</a>
-
-        <ul>
-          <li><a href="reference_guide/api/data/folder.html#anomalib.data.folder.Folder.predict_dataloader">(anomalib.data.folder.Folder method)</a>
-</li>
-          <li><a href="reference_guide/api/data/mvtec.html#anomalib.data.mvtec.MVTec.predict_dataloader">(anomalib.data.mvtec.MVTec method)</a>
-</li>
-        </ul></li>
         <li><a href="reference_guide/api/model/base.html#anomalib.models.components.base.AnomalyModule.predict_step">predict_step() (anomalib.models.components.base.AnomalyModule method)</a>
 </li>
         <li><a href="reference_guide/api/metrics.html#anomalib.utils.metrics.AnomalyScoreThreshold.preds">preds (anomalib.utils.metrics.AnomalyScoreThreshold attribute)</a>
@@ -1559,16 +1595,20 @@
   <h2>R</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.Augmenter.rand_augmenter">rand_augmenter() (anomalib.data.utils.Augmenter method)</a>
+</li>
         <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.random_2d_perlin">random_2d_perlin() (in module anomalib.data.utils)</a>
+</li>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.random_split">random_split() (in module anomalib.data.utils)</a>
 </li>
         <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.read_image">read_image() (in module anomalib.data.utils)</a>
 </li>
         <li><a href="reference_guide/algorithms/draem.html#anomalib.models.draem.torch_model.ReconstructiveSubNetwork">ReconstructiveSubNetwork (class in anomalib.models.draem.torch_model)</a>
 </li>
-        <li><a href="reference_guide/api/metrics.html#anomalib.utils.metrics.OptimalF1.reset">reset() (anomalib.utils.metrics.OptimalF1 method)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference_guide/api/metrics.html#anomalib.utils.metrics.OptimalF1.reset">reset() (anomalib.utils.metrics.OptimalF1 method)</a>
+</li>
         <li><a href="reference_guide/api/model/sampling.html#anomalib.models.components.sampling.KCenterGreedy.reset_distances">reset_distances() (anomalib.models.components.sampling.KCenterGreedy method)</a>
 </li>
         <li><a href="reference_guide/algorithms/patchcore.html#anomalib.models.patchcore.torch_model.PatchcoreModel.reshape_embedding">reshape_embedding() (anomalib.models.patchcore.torch_model.PatchcoreModel static method)</a>
@@ -1587,6 +1627,8 @@
   <h2>S</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.ValSplitMode.SAME_AS_TEST">SAME_AS_TEST (anomalib.data.utils.ValSplitMode attribute)</a>
+</li>
         <li><a href="reference_guide/api/model/sampling.html#anomalib.models.components.sampling.KCenterGreedy.sample_coreset">sample_coreset() (anomalib.models.components.sampling.KCenterGreedy method)</a>
 </li>
         <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.Visualizer.save">save() (anomalib.post_processing.Visualizer static method)</a>
@@ -1605,14 +1647,10 @@
 </li>
         <li><a href="reference_guide/api/sweep.html#anomalib.utils.sweep.set_in_nested_config">set_in_nested_config() (in module anomalib.utils.sweep)</a>
 </li>
-        <li><a href="reference_guide/api/data/btech.html#anomalib.data.btech.BTech.setup">setup() (anomalib.data.btech.BTech method)</a>
+        <li><a href="reference_guide/api/callbacks.html#anomalib.utils.callbacks.CdfNormalizationCallback.setup">setup() (anomalib.utils.callbacks.CdfNormalizationCallback method)</a>
 
         <ul>
-          <li><a href="reference_guide/api/data/folder.html#anomalib.data.folder.Folder.setup">(anomalib.data.folder.Folder method)</a>
-</li>
-          <li><a href="reference_guide/api/data/mvtec.html#anomalib.data.mvtec.MVTec.setup">(anomalib.data.mvtec.MVTec method)</a>
-</li>
-          <li><a href="reference_guide/api/callbacks.html#anomalib.utils.callbacks.CdfNormalizationCallback.setup">(anomalib.utils.callbacks.CdfNormalizationCallback method)</a>
+          <li><a href="reference_guide/api/callbacks.html#anomalib.utils.callbacks.LoadModelCallback.setup">(anomalib.utils.callbacks.LoadModelCallback method)</a>
 </li>
           <li><a href="reference_guide/api/callbacks.html#anomalib.utils.callbacks.MetricsConfigurationCallback.setup">(anomalib.utils.callbacks.MetricsConfigurationCallback method)</a>
 </li>
@@ -1623,10 +1661,10 @@
           <li><a href="reference_guide/api/callbacks.html#anomalib.utils.callbacks.TilerConfigurationCallback.setup">(anomalib.utils.callbacks.TilerConfigurationCallback method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="reference_guide/algorithms/draem.html#anomalib.models.draem.lightning_model.Draem.setup_sspcab">setup_sspcab() (anomalib.models.draem.lightning_model.Draem method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.Visualizer.show">show() (anomalib.post_processing.Visualizer static method)</a>
 </li>
         <li><a href="reference_guide/algorithms/dfm.html#anomalib.models.dfm.torch_model.SingleClassGaussian">SingleClassGaussian (class in anomalib.models.dfm.torch_model)</a>
@@ -1634,6 +1672,10 @@
         <li><a href="reference_guide/algorithms/padim.html#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.smooth_anomaly_map">smooth_anomaly_map() (anomalib.models.padim.anomaly_map.AnomalyMapGenerator method)</a>
 </li>
         <li><a href="reference_guide/api/model/dimensionality_reduction.html#anomalib.models.components.dimensionality_reduction.SparseRandomProjection">SparseRandomProjection (class in anomalib.models.components.dimensionality_reduction)</a>
+</li>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.Split">Split (class in anomalib.data.utils)</a>
+</li>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.split_by_label">split_by_label() (in module anomalib.data.utils)</a>
 </li>
         <li><a href="reference_guide/api/model/layers.html#anomalib.models.components.layers.SSPCAB">SSPCAB (class in anomalib.models.components.layers)</a>
 </li>
@@ -1651,6 +1693,12 @@
 </li>
         <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.superimpose_anomaly_map">superimpose_anomaly_map() (in module anomalib.post_processing)</a>
 </li>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.TestSplitMode.SYNTHETIC">SYNTHETIC (anomalib.data.utils.TestSplitMode attribute)</a>
+
+        <ul>
+          <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.ValSplitMode.SYNTHETIC">(anomalib.data.utils.ValSplitMode attribute)</a>
+</li>
+        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -1671,14 +1719,8 @@
           <li><a href="reference_guide/api/metrics.html#anomalib.utils.metrics.PRO.target">(anomalib.utils.metrics.PRO attribute)</a>
 </li>
         </ul></li>
-        <li><a href="reference_guide/api/data/btech.html#anomalib.data.btech.BTech.test_dataloader">test_dataloader() (anomalib.data.btech.BTech method)</a>
-
-        <ul>
-          <li><a href="reference_guide/api/data/folder.html#anomalib.data.folder.Folder.test_dataloader">(anomalib.data.folder.Folder method)</a>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.Split.TEST">TEST (anomalib.data.utils.Split attribute)</a>
 </li>
-          <li><a href="reference_guide/api/data/mvtec.html#anomalib.data.mvtec.MVTec.test_dataloader">(anomalib.data.mvtec.MVTec method)</a>
-</li>
-        </ul></li>
         <li><a href="reference_guide/api/model/base.html#anomalib.models.components.base.AnomalyModule.test_epoch_end">test_epoch_end() (anomalib.models.components.base.AnomalyModule method)</a>
 
         <ul>
@@ -1692,6 +1734,8 @@
 </li>
         </ul></li>
         <li><a href="reference_guide/api/model/base.html#anomalib.models.components.base.AnomalyModule.test_step_end">test_step_end() (anomalib.models.components.base.AnomalyModule method)</a>
+</li>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.TestSplitMode">TestSplitMode (class in anomalib.data.utils)</a>
 </li>
         <li><a href="reference_guide/algorithms/cflow.html#anomalib.models.cflow.lightning_model.CflowLightning.threshold_method">threshold_method (anomalib.models.cflow.lightning_model.CflowLightning attribute)</a>
 
@@ -1719,14 +1763,12 @@
 </li>
         <li><a href="reference_guide/api/callbacks.html#anomalib.utils.callbacks.TimerCallback">TimerCallback (class in anomalib.utils.callbacks)</a>
 </li>
-        <li><a href="reference_guide/api/data/btech.html#anomalib.data.btech.BTech.train_dataloader">train_dataloader() (anomalib.data.btech.BTech method)</a>
-
-        <ul>
-          <li><a href="reference_guide/api/data/folder.html#anomalib.data.folder.Folder.train_dataloader">(anomalib.data.folder.Folder method)</a>
+        <li><a href="reference_guide/api/model/feature_extractors.html#anomalib.models.components.feature_extractors.TimmFeatureExtractor">TimmFeatureExtractor (class in anomalib.models.components.feature_extractors)</a>
 </li>
-          <li><a href="reference_guide/api/data/mvtec.html#anomalib.data.mvtec.MVTec.train_dataloader">(anomalib.data.mvtec.MVTec method)</a>
+        <li><a href="reference_guide/api/model/feature_extractors.html#anomalib.models.components.feature_extractors.TorchFXFeatureExtractor">TorchFXFeatureExtractor (class in anomalib.models.components.feature_extractors)</a>
 </li>
-        </ul></li>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.Split.TRAIN">TRAIN (anomalib.data.utils.Split attribute)</a>
+</li>
         <li><a href="reference_guide/algorithms/cflow.html#anomalib.models.cflow.lightning_model.CflowLightning.trainer">trainer (anomalib.models.cflow.lightning_model.CflowLightning attribute)</a>
 
         <ul>
@@ -1763,6 +1805,10 @@
           <li><a href="reference_guide/api/model/dimensionality_reduction.html#anomalib.models.components.dimensionality_reduction.PCA.training">(anomalib.models.components.dimensionality_reduction.PCA attribute)</a>
 </li>
           <li><a href="reference_guide/api/model/feature_extractors.html#anomalib.models.components.feature_extractors.FeatureExtractor.training">(anomalib.models.components.feature_extractors.FeatureExtractor attribute)</a>
+</li>
+          <li><a href="reference_guide/api/model/feature_extractors.html#anomalib.models.components.feature_extractors.TimmFeatureExtractor.training">(anomalib.models.components.feature_extractors.TimmFeatureExtractor attribute)</a>
+</li>
+          <li><a href="reference_guide/api/model/feature_extractors.html#anomalib.models.components.feature_extractors.TorchFXFeatureExtractor.training">(anomalib.models.components.feature_extractors.TorchFXFeatureExtractor attribute)</a>
 </li>
           <li><a href="reference_guide/api/model/filters.html#anomalib.models.components.filters.GaussianBlur2d.training">(anomalib.models.components.filters.GaussianBlur2d attribute)</a>
 </li>
@@ -1919,7 +1965,7 @@
 </li>
         <li><a href="reference_guide/api/config.html#anomalib.config.update_nncf_config">update_nncf_config() (in module anomalib.config)</a>
 </li>
-        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.DownloadProgressBar.update_to">update_to() (anomalib.data.utils.DownloadProgressBar method)</a>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.DownloadInfo.url">url (anomalib.data.utils.DownloadInfo attribute)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1929,14 +1975,8 @@
   <h2>V</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="reference_guide/api/data/btech.html#anomalib.data.btech.BTech.val_dataloader">val_dataloader() (anomalib.data.btech.BTech method)</a>
-
-        <ul>
-          <li><a href="reference_guide/api/data/folder.html#anomalib.data.folder.Folder.val_dataloader">(anomalib.data.folder.Folder method)</a>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.Split.VAL">VAL (anomalib.data.utils.Split attribute)</a>
 </li>
-          <li><a href="reference_guide/api/data/mvtec.html#anomalib.data.mvtec.MVTec.val_dataloader">(anomalib.data.mvtec.MVTec method)</a>
-</li>
-        </ul></li>
         <li><a href="reference_guide/api/model/base.html#anomalib.models.components.base.AnomalyModule.validation_epoch_end">validation_epoch_end() (anomalib.models.components.base.AnomalyModule method)</a>
 
         <ul>
@@ -1968,6 +2008,8 @@
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="reference_guide/api/model/base.html#anomalib.models.components.base.AnomalyModule.validation_step_end">validation_step_end() (anomalib.models.components.base.AnomalyModule method)</a>
+</li>
+        <li><a href="reference_guide/api/data/utils.html#anomalib.data.utils.ValSplitMode">ValSplitMode (class in anomalib.data.utils)</a>
 </li>
         <li><a href="reference_guide/api/post_processing.html#anomalib.post_processing.Visualizer.visualize_batch">visualize_batch() (anomalib.post_processing.Visualizer method)</a>
 </li>

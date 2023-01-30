@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -271,8 +273,9 @@
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Callback</span><span class="p">,</span> <span class="n">LightningModule</span><span class="p">,</span> <span class="n">Trainer</span>
@@ -288,27 +291,27 @@
 
 <div class="viewcode-block" id="PostProcessingConfigurationCallback"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.PostProcessingConfigurationCallback">[docs]</a><span class="nd">@CALLBACK_REGISTRY</span>
 <span class="k">class</span> <span class="nc">PostProcessingConfigurationCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Post-Processing Configuration Callback.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Post-Processing Configuration Callback.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        normalization_method(NormalizationMethod): Normalization method. &lt;none, min_max, cdf&gt;</span>
 <span class="sd">        threshold_method (ThresholdMethod): Flag indicating whether threshold should be manual or adaptive.</span>
-<span class="sd">        manual_image_threshold (Optional[float]): Default manual image threshold value.</span>
-<span class="sd">        manual_pixel_threshold (Optional[float]): Default manual pixel threshold value.</span>
+<span class="sd">        manual_image_threshold (float | None): Default manual image threshold value.</span>
+<span class="sd">        manual_pixel_threshold (float | None): Default manual pixel threshold value.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">normalization_method</span><span class="p">:</span> <span class="n">NormalizationMethod</span> <span class="o">=</span> <span class="n">NormalizationMethod</span><span class="o">.</span><span class="n">MIN_MAX</span><span class="p">,</span>
         <span class="n">threshold_method</span><span class="p">:</span> <span class="n">ThresholdMethod</span> <span class="o">=</span> <span class="n">ThresholdMethod</span><span class="o">.</span><span class="n">ADAPTIVE</span><span class="p">,</span>
-        <span class="n">manual_image_threshold</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">manual_pixel_threshold</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">manual_image_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">manual_pixel_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">normalization_method</span> <span class="o">=</span> <span class="n">normalization_method</span>
 
         <span class="k">if</span> <span class="n">threshold_method</span> <span class="o">==</span> <span class="n">ThresholdMethod</span><span class="o">.</span><span class="n">ADAPTIVE</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
-            <span class="n">i</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="n">manual_image_threshold</span><span class="p">,</span> <span class="n">manual_pixel_threshold</span><span class="p">]</span>
+            <span class="n">i</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">manual_image_threshold</span><span class="p">,</span> <span class="n">manual_pixel_threshold</span><span class="p">)</span>
         <span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;When `threshold_method` is set to `adaptive`, `manual_image_threshold` and `manual_pixel_threshold` &quot;</span>
@@ -316,7 +319,7 @@
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">threshold_method</span> <span class="o">==</span> <span class="n">ThresholdMethod</span><span class="o">.</span><span class="n">MANUAL</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
-            <span class="n">i</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="n">manual_image_threshold</span><span class="p">,</span> <span class="n">manual_pixel_threshold</span><span class="p">]</span>
+            <span class="n">i</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">manual_image_threshold</span><span class="p">,</span> <span class="n">manual_pixel_threshold</span><span class="p">)</span>
         <span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;When `threshold_method` is set to `manual`, `manual_image_threshold` and `manual_pixel_threshold` &quot;</span>
@@ -327,15 +330,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">manual_image_threshold</span> <span class="o">=</span> <span class="n">manual_image_threshold</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">manual_pixel_threshold</span> <span class="o">=</span> <span class="n">manual_pixel_threshold</span>
 
-    <span class="c1"># pylint: disable=unused-argument</span>
-<div class="viewcode-block" id="PostProcessingConfigurationCallback.setup"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.PostProcessingConfigurationCallback.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">:</span> <span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">LightningModule</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Setup post-processing configuration within Anomalib Model.</span>
+<div class="viewcode-block" id="PostProcessingConfigurationCallback.setup"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.PostProcessingConfigurationCallback.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">:</span> <span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">LightningModule</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup post-processing configuration within Anomalib Model.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            trainer (Trainer): PyTorch Lightning Trainer</span>
 <span class="sd">            pl_module (LightningModule): Anomalib Model that inherits pl LightningModule.</span>
-<span class="sd">            stage (Optional[str], optional): fit, validate, test or predict. Defaults to None.</span>
+<span class="sd">            stage (str | None, optional): fit, validate, test or predict. Defaults to None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">stage</span>  <span class="c1"># These variables are not used.</span>
+
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pl_module</span><span class="p">,</span> <span class="n">AnomalyModule</span><span class="p">):</span>
             <span class="n">pl_module</span><span class="o">.</span><span class="n">threshold_method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold_method</span>
             <span class="k">if</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">threshold_method</span> <span class="o">==</span> <span class="n">ThresholdMethod</span><span class="o">.</span><span class="n">MANUAL</span><span class="p">:</span>

@@ -1,0 +1,442 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
+
+    <link rel="shortcut icon" href="../../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+        <title>anomalib.data.utils.transform - Anomalib v0.3.7</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../index.html"><div class="brand">Anomalib v0.3.7</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../../../_static/anomalib-icon.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../tutorials/index.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/training.html">Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/inference.html">Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/export.html">Export &amp; Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/logging.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/hyperparameter_optimization.html">Hyperparameter Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../how_to_guides/index.html">How to Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/train_custom_data.html">Training with Custom Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/adding_a_new_model.html">Adding a New Model to Anomalib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../reference_guide/api/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/api/cli.html">CLI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/api/config.html">Configuration</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../reference_guide/api/data/index.html">Dataset</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reference_guide/api/data/btech.html">Btech Dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reference_guide/api/data/mvtec.html">MVTec Dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reference_guide/api/data/folder.html">Folder Dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reference_guide/api/data/utils.html">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../reference_guide/api/model/index.html">Model</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reference_guide/api/model/base.html">Base Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reference_guide/api/model/dimensionality_reduction.html">Dimensionality Reduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reference_guide/api/model/feature_extractors.html">Feature Extractors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reference_guide/api/model/filters.html">Filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reference_guide/api/model/layers.html">Layers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reference_guide/api/model/sampling.html">Sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reference_guide/api/model/stats.html">Stats</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/api/post_processing.html">Post Processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/api/metrics.html">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/api/loggers.html">Loggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/api/sweep.html">Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/api/callbacks.html">Callbacks</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../reference_guide/algorithms/index.html">Algorithms</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/algorithms/cflow.html">CFlow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/algorithms/dfkde.html">DFKDE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/algorithms/dfm.html">DFM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/algorithms/draem.html">Draem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/algorithms/fastflow.html">Fast-Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/algorithms/ganomaly.html">GANomaly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/algorithms/padim.html">Padim</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/algorithms/patchcore.html">PatchCore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/algorithms/reverse_distillation.html">Reverse Distillation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../reference_guide/algorithms/stfpm.html">STFPM</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../developer_guide/index.html">Developer Guide</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../developer_guide/getting_started.html">Getting Started with Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../developer_guide/pre_commit_hooks.html">Pre-commit Hooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../developer_guide/using_tox.html">Using Tox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../developer_guide/developing_on_docker.html">Developing on Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../developer_guide/developing_on_docker.html#build-the-docker-image">Build the Docker Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../developer_guide/developing_on_docker.html#run-the-docker-image">Run the Docker Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../developer_guide/developing_on_docker.html#using-vscode">Using VSCode</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <h1>Source code for anomalib.data.utils.transform</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Helper function for retrieving transforms.&quot;&quot;&quot;</span>
+
+<span class="c1"># Copyright (C) 2022 Intel Corporation</span>
+<span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="kn">import</span> <span class="nn">albumentations</span> <span class="k">as</span> <span class="nn">A</span>
+<span class="kn">from</span> <span class="nn">albumentations.pytorch</span> <span class="kn">import</span> <span class="n">ToTensorV2</span>
+
+<span class="kn">from</span> <span class="nn">anomalib.data.utils.image</span> <span class="kn">import</span> <span class="n">get_image_height_and_width</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="InputNormalizationMethod"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.InputNormalizationMethod">[docs]</a><span class="k">class</span> <span class="nc">InputNormalizationMethod</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalization method for the input images.&quot;&quot;&quot;</span>
+
+    <span class="n">NONE</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span>  <span class="c1"># no normalization applied</span>
+    <span class="n">IMAGENET</span> <span class="o">=</span> <span class="s2">&quot;imagenet&quot;</span>  <span class="c1"># normalization to ImageNet statistics</span></div>
+
+
+<div class="viewcode-block" id="get_transforms"><a class="viewcode-back" href="../../../../reference_guide/api/data/utils.html#anomalib.data.utils.get_transforms">[docs]</a><span class="k">def</span> <span class="nf">get_transforms</span><span class="p">(</span>
+    <span class="n">config</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">image_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">center_crop</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">normalization</span><span class="p">:</span> <span class="n">InputNormalizationMethod</span> <span class="o">=</span> <span class="n">InputNormalizationMethod</span><span class="o">.</span><span class="n">IMAGENET</span><span class="p">,</span>
+    <span class="n">to_tensor</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get transforms from config or image size.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config (str | A.Compose | None, optional): Albumentations transforms.</span>
+<span class="sd">            Either config or albumentations ``Compose`` object. Defaults to None.</span>
+<span class="sd">        image_size (int | tuple | None, optional): Image size to transform. Defaults to None.</span>
+<span class="sd">        to_tensor (bool, optional): Boolean to convert the final transforms into Torch tensor. Defaults to True.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: When both ``config`` and ``image_size`` is ``None``.</span>
+<span class="sd">        ValueError: When ``config`` is not a ``str`` or `A.Compose`` object.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A.Compose: Albumentation ``Compose`` object containing the image transforms.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; import skimage</span>
+<span class="sd">        &gt;&gt;&gt; image = skimage.data.astronaut()</span>
+
+<span class="sd">        &gt;&gt;&gt; transforms = get_transforms(image_size=256, to_tensor=False)</span>
+<span class="sd">        &gt;&gt;&gt; output = transforms(image=image)</span>
+<span class="sd">        &gt;&gt;&gt; output[&quot;image&quot;].shape</span>
+<span class="sd">        (256, 256, 3)</span>
+
+<span class="sd">        &gt;&gt;&gt; transforms = get_transforms(image_size=256, to_tensor=True)</span>
+<span class="sd">        &gt;&gt;&gt; output = transforms(image=image)</span>
+<span class="sd">        &gt;&gt;&gt; output[&quot;image&quot;].shape</span>
+<span class="sd">        torch.Size([3, 256, 256])</span>
+
+
+<span class="sd">        Transforms could be read from albumentations Compose object.</span>
+<span class="sd">        &gt;&gt;&gt; import albumentations as A</span>
+<span class="sd">        &gt;&gt;&gt; from albumentations.pytorch import ToTensorV2</span>
+<span class="sd">        &gt;&gt;&gt; config = A.Compose([A.Resize(512, 512), ToTensorV2()])</span>
+<span class="sd">        &gt;&gt;&gt; transforms = get_transforms(config=config, to_tensor=False)</span>
+<span class="sd">        &gt;&gt;&gt; output = transforms(image=image)</span>
+<span class="sd">        &gt;&gt;&gt; output[&quot;image&quot;].shape</span>
+<span class="sd">        (512, 512, 3)</span>
+<span class="sd">        &gt;&gt;&gt; type(output[&quot;image&quot;])</span>
+<span class="sd">        numpy.ndarray</span>
+
+<span class="sd">        Transforms could be deserialized from a yaml file.</span>
+<span class="sd">        &gt;&gt;&gt; transforms = A.Compose([A.Resize(1024, 1024), ToTensorV2()])</span>
+<span class="sd">        &gt;&gt;&gt; A.save(transforms, &quot;/tmp/transforms.yaml&quot;, data_format=&quot;yaml&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; transforms = get_transforms(config=&quot;/tmp/transforms.yaml&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; output = transforms(image=image)</span>
+<span class="sd">        &gt;&gt;&gt; output[&quot;image&quot;].shape</span>
+<span class="sd">        torch.Size([3, 1024, 1024])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">transforms</span><span class="p">:</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span>
+
+    <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># load transforms from config file</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Reading transforms from Albumentations config file: </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+            <span class="n">transforms</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s2">&quot;yaml&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Transforms loaded from Albumentations Compose object&quot;</span><span class="p">)</span>
+            <span class="n">transforms</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;config could be either ``str`` or ``A.Compose``&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No config file has been provided. Using default transforms.&quot;</span><span class="p">)</span>
+        <span class="n">transforms_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># add resize transform</span>
+        <span class="k">if</span> <span class="n">image_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Both config and image_size cannot be `None`. &quot;</span>
+                <span class="s2">&quot;Provide either config file to de-serialize transforms &quot;</span>
+                <span class="s2">&quot;or image_size to get the default transformations&quot;</span>
+            <span class="p">)</span>
+        <span class="n">resize_height</span><span class="p">,</span> <span class="n">resize_width</span> <span class="o">=</span> <span class="n">get_image_height_and_width</span><span class="p">(</span><span class="n">image_size</span><span class="p">)</span>
+        <span class="n">transforms_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">resize_height</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">resize_width</span><span class="p">,</span> <span class="n">always_apply</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+        <span class="c1"># add center crop transform</span>
+        <span class="k">if</span> <span class="n">center_crop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">crop_height</span><span class="p">,</span> <span class="n">crop_width</span> <span class="o">=</span> <span class="n">get_image_height_and_width</span><span class="p">(</span><span class="n">center_crop</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">crop_height</span> <span class="o">&gt;</span> <span class="n">resize_height</span> <span class="ow">or</span> <span class="n">crop_width</span> <span class="o">&gt;</span> <span class="n">resize_width</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Crop size may not be larger than image size. Found </span><span class="si">{</span><span class="n">image_size</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">center_crop</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">transforms_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">CenterCrop</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">crop_height</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">crop_width</span><span class="p">,</span> <span class="n">always_apply</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+        <span class="c1"># add normalize transform</span>
+        <span class="k">if</span> <span class="n">normalization</span> <span class="o">==</span> <span class="n">InputNormalizationMethod</span><span class="o">.</span><span class="n">IMAGENET</span><span class="p">:</span>
+            <span class="n">transforms_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">(</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">),</span> <span class="n">std</span><span class="o">=</span><span class="p">(</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">)))</span>
+        <span class="k">elif</span> <span class="n">normalization</span> <span class="o">==</span> <span class="n">InputNormalizationMethod</span><span class="o">.</span><span class="n">NONE</span><span class="p">:</span>
+            <span class="n">transforms_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">ToFloat</span><span class="p">(</span><span class="n">max_value</span><span class="o">=</span><span class="mi">255</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown normalization method: </span><span class="si">{</span><span class="n">normalization</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># add tensor conversion</span>
+        <span class="k">if</span> <span class="n">to_tensor</span><span class="p">:</span>
+            <span class="n">transforms_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ToTensorV2</span><span class="p">())</span>
+
+        <span class="n">transforms</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span><span class="n">transforms_list</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">transforms</span></div>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/scripts/furo.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    </body>
+</html>

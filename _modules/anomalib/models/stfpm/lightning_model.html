@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -273,13 +275,14 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">EarlyStopping</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">MODEL_REGISTRY</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">optim</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.types</span> <span class="kn">import</span> <span class="n">STEP_OUTPUT</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">optim</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.stfpm.loss</span> <span class="kn">import</span> <span class="n">STFPMLoss</span>
@@ -290,20 +293,20 @@
 
 <span class="nd">@MODEL_REGISTRY</span>
 <span class="k">class</span> <span class="nc">Stfpm</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;PL Lightning Module for the STFPM algorithm.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;PL Lightning Module for the STFPM algorithm.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        input_size (Tuple[int, int]): Size of the model input.</span>
+<span class="sd">        input_size (tuple[int, int]): Size of the model input.</span>
 <span class="sd">        backbone (str): Backbone CNN network</span>
-<span class="sd">        layers (List[str]): Layers to extract features from the backbone CNN</span>
+<span class="sd">        layers (list[str]): Layers to extract features from the backbone CNN</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
         <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">layers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-    <span class="p">):</span>
+        <span class="n">layers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">STFPMModel</span><span class="p">(</span>
@@ -313,32 +316,31 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">STFPMLoss</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
-        <span class="sd">&quot;&quot;&quot;Training Step of STFPM.</span>
+    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">STEP_OUTPUT</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Training Step of STFPM.</span>
 
 <span class="sd">        For each batch, teacher and student and teacher features are extracted from the CNN.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">          batch (Tensor): Input batch</span>
-<span class="sd">          _: Index of the batch.</span>
+<span class="sd">          batch (dict[str, str | Tensor]): Input batch</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">          Hierarchical feature map</span>
+<span class="sd">          Loss value</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">teacher_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
         <span class="n">teacher_features</span><span class="p">,</span> <span class="n">student_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">])</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">teacher_features</span><span class="p">,</span> <span class="n">student_features</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;train_loss&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">on_epoch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">prog_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
-        <span class="sd">&quot;&quot;&quot;Validation Step of STFPM.</span>
+    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">STEP_OUTPUT</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validation Step of STFPM.</span>
 
 <span class="sd">        Similar to the training step, student/teacher features are extracted from the CNN for each batch, and</span>
 <span class="sd">        anomaly map is computed.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">          batch (Tensor): Input batch</span>
-<span class="sd">          _: Index of the batch.</span>
+<span class="sd">          batch (dict[str, str | Tensor]): Input batch</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">          Dictionary containing images, anomaly maps, true labels and masks.</span>
@@ -350,23 +352,23 @@
 
 
 <div class="viewcode-block" id="StfpmLightning"><a class="viewcode-back" href="../../../../reference_guide/algorithms/stfpm.html#anomalib.models.stfpm.lightning_model.StfpmLightning">[docs]</a><span class="k">class</span> <span class="nc">StfpmLightning</span><span class="p">(</span><span class="n">Stfpm</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;PL Lightning Module for the STFPM algorithm.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;PL Lightning Module for the STFPM algorithm.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        hparams (Union[DictConfig, ListConfig]): Model params</span>
+<span class="sd">        hparams (DictConfig | ListConfig): Model params</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">input_size</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_size</span><span class="p">,</span>
             <span class="n">backbone</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">backbone</span><span class="p">,</span>
             <span class="n">layers</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span>  <span class="c1"># type: ignore</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
 
-<div class="viewcode-block" id="StfpmLightning.configure_callbacks"><a class="viewcode-back" href="../../../../reference_guide/algorithms/stfpm.html#anomalib.models.stfpm.lightning_model.StfpmLightning.configure_callbacks">[docs]</a>    <span class="k">def</span> <span class="nf">configure_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Configure model-specific callbacks.</span>
+<div class="viewcode-block" id="StfpmLightning.configure_callbacks"><a class="viewcode-back" href="../../../../reference_guide/algorithms/stfpm.html#anomalib.models.stfpm.lightning_model.StfpmLightning.configure_callbacks">[docs]</a>    <span class="k">def</span> <span class="nf">configure_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">EarlyStopping</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Configure model-specific callbacks.</span>
 
 <span class="sd">        Note:</span>
 <span class="sd">            This method is used for the existing CLI.</span>
@@ -382,7 +384,7 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">early_stopping</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="StfpmLightning.configure_optimizers"><a class="viewcode-back" href="../../../../reference_guide/algorithms/stfpm.html#anomalib.models.stfpm.lightning_model.StfpmLightning.configure_optimizers">[docs]</a>    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Configures optimizers for each decoder.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Configures optimizers.</span>
 
 <span class="sd">        Note:</span>
 <span class="sd">            This method is used for the existing CLI.</span>
@@ -391,7 +393,7 @@
 <span class="sd">                config.yaml file or from CLI.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Optimizer: Adam optimizer for each decoder</span>
+<span class="sd">            Optimizer: SGD optimizer</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span>
             <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">student_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>

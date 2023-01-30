@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -267,25 +269,24 @@
           <h1>Source code for anomalib.models.components.feature_extractors.utils</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Utility functions to manipulate feature extractors.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch.fx.graph_module</span> <span class="kn">import</span> <span class="n">GraphModule</span>
 
-<span class="kn">from</span> <span class="nn">anomalib.models.components.feature_extractors.feature_extractor</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">FeatureExtractor</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.timm</span> <span class="kn">import</span> <span class="n">FeatureExtractor</span>
 
 
 <div class="viewcode-block" id="dryrun_find_featuremap_dims"><a class="viewcode-back" href="../../../../../reference_guide/api/model/feature_extractors.html#anomalib.models.components.feature_extractors.dryrun_find_featuremap_dims">[docs]</a><span class="k">def</span> <span class="nf">dryrun_find_featuremap_dims</span><span class="p">(</span>
-    <span class="n">feature_extractor</span><span class="p">:</span> <span class="n">FeatureExtractor</span><span class="p">,</span>
-    <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
-    <span class="n">layers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]]:</span>
-    <span class="sd">&quot;&quot;&quot;Dry run an empty image of `input_size` size to get the featuremap tensors&#39; dimensions (num_features, resolution).</span>
+    <span class="n">feature_extractor</span><span class="p">:</span> <span class="n">FeatureExtractor</span> <span class="o">|</span> <span class="n">GraphModule</span><span class="p">,</span>
+    <span class="n">input_size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+    <span class="n">layers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Dry run an empty image of `input_size` size to get the featuremap tensors&#39; dimensions (num_features, resolution).</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Tuple[int, int]: maping of `layer -&gt; dimensions dict`</span>
-<span class="sd">            Each `dimension dict` has two keys: `num_features` (int) and `resolution`(Tuple[int, int]).</span>
+<span class="sd">        tuple[int, int]: maping of `layer -&gt; dimensions dict`</span>
+<span class="sd">            Each `dimension dict` has two keys: `num_features` (int) and `resolution`(tuple[int, int]).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">dryrun_input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">*</span><span class="n">input_size</span><span class="p">)</span>

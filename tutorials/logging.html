@@ -174,9 +174,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -273,30 +275,30 @@
 <h2>Enabling Logging<a class="headerlink" href="#enabling-logging" title="Permalink to this heading">¶</a></h2>
 <p>These can be enabled using the <code class="docutils literal notranslate"><span class="pre">logger</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">logging</span></code> section of each model configuration file. The available options are <code class="docutils literal notranslate"><span class="pre">comet</span></code>, <code class="docutils literal notranslate"><span class="pre">tensorboard</span></code>, <code class="docutils literal notranslate"><span class="pre">wandb</span></code> and <code class="docutils literal notranslate"><span class="pre">csv</span></code>.
 For example, to log to TensorBoard:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">logging</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tensorboard&quot;</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">logging</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tensorboard&quot;</span>
 </pre></div>
 </div>
 <p>You can also pass a list of loggers to enable multiple loggers. For example:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">logging</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">comet</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">tensorboard</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wandb</span><span class="p p-Indicator">]</span><span class="w"></span>
-<span class="w">  </span><span class="nt">log_graph</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">logging</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">comet</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">tensorboard</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wandb</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">log_graph</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </pre></div>
 </div>
 </section>
 <section id="logging-images">
 <h2>Logging Images<a class="headerlink" href="#logging-images" title="Permalink to this heading">¶</a></h2>
 <p>Anomalib allows you to save predictions to the file system by setting <code class="docutils literal notranslate"><span class="pre">log_images:</span> <span class="pre">True</span></code> in the visualization section . As of the current version, Anomalib also supports Comet, TensorBoard and Weights and Biases loggers for logging images. These loggers extend upon the base loggers by providing a common interface for logging images. You can access the required logger from <code class="docutils literal notranslate"><span class="pre">trainer.loggers</span></code>. Then you can use <code class="docutils literal notranslate"><span class="pre">logger.add_image</span></code> method to log images. For a complete overview of this method refer to our <a class="reference external" href="https://openvinotoolkit.github.io/anomalib/api/anomalib/utils/loggers/index.html">API documentation</a>.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">visualization</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">show_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"> </span><span class="c1"># show images on the screen</span><span class="w"></span>
-<span class="w">  </span><span class="nt">save_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"> </span><span class="c1"># save images to the file system</span><span class="w"></span>
-<span class="w">  </span><span class="nt">log_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"> </span><span class="c1"># log images to the available loggers (if any)</span><span class="w"></span>
-<span class="w">  </span><span class="nt">image_save_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># path to which images will be saved</span><span class="w"></span>
-<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">full</span><span class="w"> </span><span class="c1"># options: [&quot;full&quot;, &quot;simple&quot;]</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">visualization</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">show_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"> </span><span class="c1"># show images on the screen</span>
+<span class="w">  </span><span class="nt">save_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"> </span><span class="c1"># save images to the file system</span>
+<span class="w">  </span><span class="nt">log_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"> </span><span class="c1"># log images to the available loggers (if any)</span>
+<span class="w">  </span><span class="nt">image_save_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># path to which images will be saved</span>
+<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">full</span><span class="w"> </span><span class="c1"># options: [&quot;full&quot;, &quot;simple&quot;]</span>
 
-<span class="nt">logging</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">comet</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">tensorboard</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wandb</span><span class="p p-Indicator">]</span><span class="w"></span>
-<span class="w">  </span><span class="nt">log_graph</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="nt">logging</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">comet</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">tensorboard</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">wandb</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">log_graph</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -330,9 +332,9 @@ For example, to log to TensorBoard:</p>
 <p>When accessing the base <code class="docutils literal notranslate"><span class="pre">logger/logger.experiment</span></code> object, refer to the documentation of the respective logger for the list of available methods.</p>
 </div>
 <p>Anomalib makes it easier to log your model graph to Comet, TensorBoard or Weights and Biases. Just set <code class="docutils literal notranslate"><span class="pre">log_graph</span></code> to True under <code class="docutils literal notranslate"><span class="pre">logging</span></code> parameter of the model configuration file.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">logging</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">comet</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">tensorboard</span><span class="p p-Indicator">]</span><span class="w"></span>
-<span class="w">  </span><span class="nt">log_graph</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">logging</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">comet</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">tensorboard</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">log_graph</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </pre></div>
 </div>
 <figure class="align-default" id="id5">

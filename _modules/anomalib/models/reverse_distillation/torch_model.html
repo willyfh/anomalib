@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,7 +272,7 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
 
@@ -284,12 +286,12 @@
 
 
 <div class="viewcode-block" id="ReverseDistillationModel"><a class="viewcode-back" href="../../../../reference_guide/algorithms/reverse_distillation.html#anomalib.models.reverse_distillation.torch_model.ReverseDistillationModel">[docs]</a><span class="k">class</span> <span class="nc">ReverseDistillationModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Reverse Distillation Model.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reverse Distillation Model.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        backbone (str): Name of the backbone used for encoder and decoder</span>
-<span class="sd">        input_size (Tuple[int, int]): Size of input image</span>
-<span class="sd">        layers (List[str]): Name of layers from which the features are extracted.</span>
+<span class="sd">        input_size (tuple[int, int]): Size of input image</span>
+<span class="sd">        layers (list[str]): Name of layers from which the features are extracted.</span>
 <span class="sd">        anomaly_map_mode (str): Mode used to generate anomaly map. Options are between ``multiply`` and ``add``.</span>
 <span class="sd">        pre_trained (bool, optional): Boolean to check whether to use a pre_trained backbone.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -297,13 +299,13 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
-        <span class="n">layers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">layers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
         <span class="n">anomaly_map_mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">pre_trained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="p">):</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tiler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tiler</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tiler</span><span class="p">:</span> <span class="n">Tiler</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="n">encoder_backbone</span> <span class="o">=</span> <span class="n">backbone</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">backbone</span><span class="o">=</span><span class="n">encoder_backbone</span><span class="p">,</span> <span class="n">pre_trained</span><span class="o">=</span><span class="n">pre_trained</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">)</span>
@@ -315,10 +317,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">image_size</span> <span class="o">=</span> <span class="n">input_size</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">anomaly_map_generator</span> <span class="o">=</span> <span class="n">AnomalyMapGenerator</span><span class="p">(</span><span class="n">image_size</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">image_size</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="n">anomaly_map_mode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">anomaly_map_generator</span> <span class="o">=</span> <span class="n">AnomalyMapGenerator</span><span class="p">(</span><span class="n">image_size</span><span class="o">=</span><span class="n">image_size</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">anomaly_map_mode</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ReverseDistillationModel.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/reverse_distillation.html#anomalib.models.reverse_distillation.torch_model.ReverseDistillationModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]]]:</span>
-        <span class="sd">&quot;&quot;&quot;Forward-pass images to the network.</span>
+<div class="viewcode-block" id="ReverseDistillationModel.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/reverse_distillation.html#anomalib.models.reverse_distillation.torch_model.ReverseDistillationModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Forward-pass images to the network.</span>
 
 <span class="sd">        During the training mode the model extracts features from encoder and decoder networks.</span>
 <span class="sd">        During evaluation mode, it returns the predicted anomaly map.</span>
@@ -327,7 +329,7 @@
 <span class="sd">            images (Tensor): Batch of images</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Union[Tensor, Tuple[List[Tensor],List[Tensor]]]: Encoder and decoder features in training mode,</span>
+<span class="sd">            Tensor | list[Tensor] | tuple[list[Tensor]]: Encoder and decoder features in training mode,</span>
 <span class="sd">                else anomaly maps.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>

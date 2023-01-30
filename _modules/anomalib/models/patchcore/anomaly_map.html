@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,9 +272,8 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
@@ -281,11 +282,11 @@
 
 
 <div class="viewcode-block" id="AnomalyMapGenerator"><a class="viewcode-back" href="../../../../reference_guide/algorithms/patchcore.html#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator">[docs]</a><span class="k">class</span> <span class="nc">AnomalyMapGenerator</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Generate Anomaly Heatmap.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate Anomaly Heatmap.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">input_size</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ListConfig</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">],</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="n">ListConfig</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">,</span>
         <span class="n">sigma</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -293,14 +294,14 @@
         <span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">blur</span> <span class="o">=</span> <span class="n">GaussianBlur2d</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span> <span class="n">channels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-<div class="viewcode-block" id="AnomalyMapGenerator.compute_anomaly_map"><a class="viewcode-back" href="../../../../reference_guide/algorithms/patchcore.html#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.compute_anomaly_map">[docs]</a>    <span class="k">def</span> <span class="nf">compute_anomaly_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patch_scores</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Pixel Level Anomaly Heatmap.</span>
+<div class="viewcode-block" id="AnomalyMapGenerator.compute_anomaly_map"><a class="viewcode-back" href="../../../../reference_guide/algorithms/patchcore.html#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.compute_anomaly_map">[docs]</a>    <span class="k">def</span> <span class="nf">compute_anomaly_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patch_scores</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Pixel Level Anomaly Heatmap.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            patch_scores (Tensor): Patch-level anomaly scores</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            torch.Tensor: Map of the pixel-level anomaly scores</span>
+<span class="sd">            Tensor: Map of the pixel-level anomaly scores</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">patch_scores</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
         <span class="n">anomaly_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="n">anomaly_map</span><span class="p">)</span>
@@ -308,7 +309,7 @@
         <span class="k">return</span> <span class="n">anomaly_map</span></div>
 
 <div class="viewcode-block" id="AnomalyMapGenerator.forward"><a class="viewcode-back" href="../../../../reference_guide/algorithms/patchcore.html#anomalib.models.patchcore.anomaly_map.AnomalyMapGenerator.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patch_scores</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Returns anomaly_map and anomaly_score.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns anomaly_map and anomaly_score.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            patch_scores (Tensor): Patch-level anomaly scores</span>

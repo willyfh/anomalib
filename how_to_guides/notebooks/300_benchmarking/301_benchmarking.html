@@ -174,9 +174,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -376,10 +378,11 @@ div.nboutput.container div.prompt > div {
     }
 }
 
-/* disable scrollbars on prompts */
+/* disable scrollbars and line breaks on prompts */
 div.nbinput.container div.prompt pre,
 div.nboutput.container div.prompt pre {
     overflow: hidden;
+    white-space: pre;
 }
 
 /* input/output area */
@@ -528,7 +531,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 </div>
 </div>
@@ -538,7 +541,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>!git clone https://github.com/openvinotoolkit/anomalib.git
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/openvinotoolkit/anomalib.git
 </pre></div>
 </div>
 </div>
@@ -546,7 +549,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>% cd anomalib
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="n">anomalib</span>
 </pre></div>
 </div>
 </div>
@@ -554,7 +557,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>% pip install .
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">.</span>
 </pre></div>
 </div>
 </div>
@@ -562,7 +565,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>! pip install -r requirements/openvino.txt
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements/openvino.txt
 </pre></div>
 </div>
 </div>
@@ -576,7 +579,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>!wget https://openvinotoolkit.github.io/anomalib/_downloads/3f2af1d7748194b18c2177a34c03a2c4/hazelnut_toy.zip
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>wget<span class="w"> </span>https://openvinotoolkit.github.io/anomalib/_downloads/3f2af1d7748194b18c2177a34c03a2c4/hazelnut_toy.zip
 </pre></div>
 </div>
 </div>
@@ -584,7 +587,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>% cd /content/anomalib/
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cd</span> <span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">anomalib</span><span class="o">/</span>
 </pre></div>
 </div>
 </div>
@@ -592,7 +595,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>!mkdir datasets &amp;&amp; unzip hazelnut_toy.zip -d datasets/ &gt; /dev/null
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>mkdir<span class="w"> </span>datasets<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>unzip<span class="w"> </span>hazelnut_toy.zip<span class="w"> </span>-d<span class="w"> </span>datasets/<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
 </pre></div>
 </div>
 </div>
@@ -601,31 +604,31 @@ div.rendered_html tbody tr:hover {
 <h2>Create configuration file for training using Folder Dataset<a class="headerlink" href="#Create-configuration-file-for-training-using-Folder-Dataset" title="Permalink to this heading">¶</a></h2>
 <p>The following configuration file is based on the one at <code class="docutils literal notranslate"><span class="pre">anomalib/models/padim/config.yaml</span></code>. The configuration file at that location uses the MVTec dataset for training. Since we are working with a custom dataset, we will use the <code class="docutils literal notranslate"><span class="pre">Folder</span></code> datset format. In this format, the images are divided among folders such as <em>good</em>, and <em>colour</em>. Optionally, it can also contain a <em>mask</em> folder as shown below.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hazelnut_toy
-├── colour
-│  ├── <span class="m">00</span>.jpg
-│  ├── <span class="m">01</span>.jpg
-│  ...
-├── good
-│  ├── <span class="m">00</span>.jpg
-│  ├── <span class="m">01</span>.jpg
-└── mask
-   ├── <span class="m">00</span>.jpg
-   ├── <span class="m">01</span>.jpg
-   ...
+├──<span class="w"> </span>colour
+│<span class="w">  </span>├──<span class="w"> </span><span class="m">00</span>.jpg
+│<span class="w">  </span>├──<span class="w"> </span><span class="m">01</span>.jpg
+│<span class="w">  </span>...
+├──<span class="w"> </span>good
+│<span class="w">  </span>├──<span class="w"> </span><span class="m">00</span>.jpg
+│<span class="w">  </span>├──<span class="w"> </span><span class="m">01</span>.jpg
+└──<span class="w"> </span>mask
+<span class="w">   </span>├──<span class="w"> </span><span class="m">00</span>.jpg
+<span class="w">   </span>├──<span class="w"> </span><span class="m">01</span>.jpg
+<span class="w">   </span>...
 </pre></div>
 </div>
 <p>Each of these folders contain images belonging to their respective category. Since we are using the <code class="docutils literal notranslate"><span class="pre">hazelnut_toy</span></code> dataset, we need to change a few lines in the PaDiM configuration as shown below.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">dataset</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;name-of-the-dataset&gt;</span><span class="w"></span>
-<span class="w">  </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">folder</span><span class="w"></span>
-<span class="w">  </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;path/to/folder/dataset&gt;</span><span class="w"></span>
-<span class="w">  </span><span class="nt">normal_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">normal</span><span class="w"> </span><span class="c1"># name of the folder containing normal images.</span><span class="w"></span>
-<span class="w">  </span><span class="nt">abnormal_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">abnormal</span><span class="w"> </span><span class="c1"># name of the folder containing abnormal images.</span><span class="w"></span>
-<span class="w">  </span><span class="nt">normal_test_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># name of the folder containing normal test images.</span><span class="w"></span>
-<span class="w">  </span><span class="nt">task</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segmentation</span><span class="w"> </span><span class="c1"># classification or segmentation</span><span class="w"></span>
-<span class="w">  </span><span class="nt">mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;path/to/mask/annotations&gt;</span><span class="w"> </span><span class="c1">#optional</span><span class="w"></span>
-<span class="w">  </span><span class="nt">extensions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
-<span class="w">  </span><span class="nt">split_ratio</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.2</span><span class="w">  </span><span class="c1"># ratio of the normal images that will be used to create a test split</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">dataset</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;name-of-the-dataset&gt;</span>
+<span class="w">  </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">folder</span>
+<span class="w">  </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;path/to/folder/dataset&gt;</span>
+<span class="w">  </span><span class="nt">normal_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">normal</span><span class="w"> </span><span class="c1"># name of the folder containing normal images.</span>
+<span class="w">  </span><span class="nt">abnormal_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">abnormal</span><span class="w"> </span><span class="c1"># name of the folder containing abnormal images.</span>
+<span class="w">  </span><span class="nt">normal_test_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1"># name of the folder containing normal test images.</span>
+<span class="w">  </span><span class="nt">task</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">segmentation</span><span class="w"> </span><span class="c1"># classification or segmentation</span>
+<span class="w">  </span><span class="nt">mask</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;path/to/mask/annotations&gt;</span><span class="w"> </span><span class="c1">#optional</span>
+<span class="w">  </span><span class="nt">extensions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">split_ratio</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.2</span><span class="w">  </span><span class="c1"># ratio of the normal images that will be used to create a test split</span>
 </pre></div>
 </div>
 <p>The complete configuration is in the codeblock below.</p>
@@ -633,117 +636,117 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>folder_padim = &quot;&quot;&quot;
-dataset:
-  name: hazelnut
-  format: folder
-  path: /content/anomalib/datasets/hazelnut_toy
-  normal_dir: good # name of the folder containing normal images.
-  abnormal_dir: colour # name of the folder containing abnormal images.
-  normal_test_dir: null # name of the folder containing normal test images.
-  task: segmentation # classification or segmentation
-  mask: /content/anomalib/datasets/hazelnut_toy/mask/colour # optional
-  extensions: null
-  split_ratio: 0.2  # ratio of the normal images that will be used to create a test split
-  image_size: 256
-  train_batch_size: 32
-  test_batch_size: 32
-  num_workers: 8
-  transform_config:
-    train: null
-    val: null
-  create_validation_set: false
-  tiling:
-    apply: false
-    tile_size: null
-    stride: null
-    remove_border_count: 0
-    use_random_tiling: False
-    random_tile_count: 16
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">folder_padim</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">dataset:</span>
+<span class="s2">  name: hazelnut</span>
+<span class="s2">  format: folder</span>
+<span class="s2">  path: /content/anomalib/datasets/hazelnut_toy</span>
+<span class="s2">  normal_dir: good # name of the folder containing normal images.</span>
+<span class="s2">  abnormal_dir: colour # name of the folder containing abnormal images.</span>
+<span class="s2">  normal_test_dir: null # name of the folder containing normal test images.</span>
+<span class="s2">  task: segmentation # classification or segmentation</span>
+<span class="s2">  mask: /content/anomalib/datasets/hazelnut_toy/mask/colour # optional</span>
+<span class="s2">  extensions: null</span>
+<span class="s2">  split_ratio: 0.2  # ratio of the normal images that will be used to create a test split</span>
+<span class="s2">  image_size: 256</span>
+<span class="s2">  train_batch_size: 32</span>
+<span class="s2">  test_batch_size: 32</span>
+<span class="s2">  num_workers: 8</span>
+<span class="s2">  transform_config:</span>
+<span class="s2">    train: null</span>
+<span class="s2">    val: null</span>
+<span class="s2">  create_validation_set: false</span>
+<span class="s2">  tiling:</span>
+<span class="s2">    apply: false</span>
+<span class="s2">    tile_size: null</span>
+<span class="s2">    stride: null</span>
+<span class="s2">    remove_border_count: 0</span>
+<span class="s2">    use_random_tiling: False</span>
+<span class="s2">    random_tile_count: 16</span>
 
-model:
-  name: padim
-  backbone: resnet18
-  layers:
-    - layer1
-    - layer2
-    - layer3
-  normalization_method: min_max # options: [none, min_max, cdf]
+<span class="s2">model:</span>
+<span class="s2">  name: padim</span>
+<span class="s2">  backbone: resnet18</span>
+<span class="s2">  layers:</span>
+<span class="s2">    - layer1</span>
+<span class="s2">    - layer2</span>
+<span class="s2">    - layer3</span>
+<span class="s2">  normalization_method: min_max # options: [none, min_max, cdf]</span>
 
-metrics:
-  image:
-    - F1Score
-    - AUROC
-  pixel:
-    - F1Score
-    - AUROC
-  threshold:
-    image_default: 3
-    pixel_default: 3
-    adaptive: true
+<span class="s2">metrics:</span>
+<span class="s2">  image:</span>
+<span class="s2">    - F1Score</span>
+<span class="s2">    - AUROC</span>
+<span class="s2">  pixel:</span>
+<span class="s2">    - F1Score</span>
+<span class="s2">    - AUROC</span>
+<span class="s2">  threshold:</span>
+<span class="s2">    image_default: 3</span>
+<span class="s2">    pixel_default: 3</span>
+<span class="s2">    adaptive: true</span>
 
-project:
-  seed: 42
-  path: ./results
+<span class="s2">project:</span>
+<span class="s2">  seed: 42</span>
+<span class="s2">  path: ./results</span>
 
-logging:
-  log_images_to: [&quot;local&quot;] # options: [wandb, tensorboard, local].
-  logger: [] # options: [tensorboard, wandb, csv] or combinations.
-  log_graph: false # Logs the model graph to respective logger.
+<span class="s2">logging:</span>
+<span class="s2">  log_images_to: [&quot;local&quot;] # options: [wandb, tensorboard, local].</span>
+<span class="s2">  logger: [] # options: [tensorboard, wandb, csv] or combinations.</span>
+<span class="s2">  log_graph: false # Logs the model graph to respective logger.</span>
 
-optimization:
-  openvino:
-    apply: false
+<span class="s2">optimization:</span>
+<span class="s2">  openvino:</span>
+<span class="s2">    apply: false</span>
 
-# PL Trainer Args. Don&#39;t add extra parameter here.
-trainer:
-  accelerator: auto # &lt;&quot;cpu&quot;, &quot;gpu&quot;, &quot;tpu&quot;, &quot;ipu&quot;, &quot;hpu&quot;, &quot;auto&quot;&gt;
-  accumulate_grad_batches: 1
-  amp_backend: native
-  auto_lr_find: false
-  auto_scale_batch_size: false
-  auto_select_gpus: false
-  benchmark: false
-  check_val_every_n_epoch: 1 # Don&#39;t validate before extracting features.
-  default_root_dir: null
-  detect_anomaly: false
-  deterministic: false
-  devices: 1
-  enable_checkpointing: true
-  enable_model_summary: true
-  enable_progress_bar: true
-  fast_dev_run: false
-  gpus: null # Set automatically
-  gradient_clip_val: 0
-  ipus: null
-  limit_predict_batches: 1.0
-  limit_test_batches: 1.0
-  limit_train_batches: 1.0
-  limit_val_batches: 1.0
-  log_every_n_steps: 50
-  max_epochs: 1
-  max_steps: -1
-  max_time: null
-  min_epochs: null
-  min_steps: null
-  move_metrics_to_cpu: false
-  multiple_trainloader_mode: max_size_cycle
-  num_nodes: 1
-  num_processes: null
-  num_sanity_val_steps: 0
-  overfit_batches: 0.0
-  plugins: null
-  precision: 32
-  profiler: null
-  reload_dataloaders_every_n_epochs: 0
-  replace_sampler_ddp: true
-  sync_batchnorm: false
-  tpu_cores: null
-  track_grad_norm: -1
-  val_check_interval: 1.0 # Don&#39;t validate before extracting features.
-&quot;&quot;&quot;
-with open(&quot;config.yaml&quot;, &quot;w&quot;, encoding=&quot;utf8&quot;) as f:
-    f.writelines(folder_padim)
+<span class="s2"># PL Trainer Args. Don&#39;t add extra parameter here.</span>
+<span class="s2">trainer:</span>
+<span class="s2">  accelerator: auto # &lt;&quot;cpu&quot;, &quot;gpu&quot;, &quot;tpu&quot;, &quot;ipu&quot;, &quot;hpu&quot;, &quot;auto&quot;&gt;</span>
+<span class="s2">  accumulate_grad_batches: 1</span>
+<span class="s2">  amp_backend: native</span>
+<span class="s2">  auto_lr_find: false</span>
+<span class="s2">  auto_scale_batch_size: false</span>
+<span class="s2">  auto_select_gpus: false</span>
+<span class="s2">  benchmark: false</span>
+<span class="s2">  check_val_every_n_epoch: 1 # Don&#39;t validate before extracting features.</span>
+<span class="s2">  default_root_dir: null</span>
+<span class="s2">  detect_anomaly: false</span>
+<span class="s2">  deterministic: false</span>
+<span class="s2">  devices: 1</span>
+<span class="s2">  enable_checkpointing: true</span>
+<span class="s2">  enable_model_summary: true</span>
+<span class="s2">  enable_progress_bar: true</span>
+<span class="s2">  fast_dev_run: false</span>
+<span class="s2">  gpus: null # Set automatically</span>
+<span class="s2">  gradient_clip_val: 0</span>
+<span class="s2">  ipus: null</span>
+<span class="s2">  limit_predict_batches: 1.0</span>
+<span class="s2">  limit_test_batches: 1.0</span>
+<span class="s2">  limit_train_batches: 1.0</span>
+<span class="s2">  limit_val_batches: 1.0</span>
+<span class="s2">  log_every_n_steps: 50</span>
+<span class="s2">  max_epochs: 1</span>
+<span class="s2">  max_steps: -1</span>
+<span class="s2">  max_time: null</span>
+<span class="s2">  min_epochs: null</span>
+<span class="s2">  min_steps: null</span>
+<span class="s2">  move_metrics_to_cpu: false</span>
+<span class="s2">  multiple_trainloader_mode: max_size_cycle</span>
+<span class="s2">  num_nodes: 1</span>
+<span class="s2">  num_processes: null</span>
+<span class="s2">  num_sanity_val_steps: 0</span>
+<span class="s2">  overfit_batches: 0.0</span>
+<span class="s2">  plugins: null</span>
+<span class="s2">  precision: 32</span>
+<span class="s2">  profiler: null</span>
+<span class="s2">  reload_dataloaders_every_n_epochs: 0</span>
+<span class="s2">  replace_sampler_ddp: true</span>
+<span class="s2">  sync_batchnorm: false</span>
+<span class="s2">  tpu_cores: null</span>
+<span class="s2">  track_grad_norm: -1</span>
+<span class="s2">  val_check_interval: 1.0 # Don&#39;t validate before extracting features.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;config.yaml&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">folder_padim</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -754,7 +757,7 @@ with open(&quot;config.yaml&quot;, &quot;w&quot;, encoding=&quot;utf8&quot;) as 
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>! python ./tools/train.py --config config.yaml
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span><span class="w"> </span>python<span class="w"> </span>./tools/train.py<span class="w"> </span>--config<span class="w"> </span>config.yaml
 </pre></div>
 </div>
 </div>
@@ -774,34 +777,34 @@ with open(&quot;config.yaml&quot;, &quot;w&quot;, encoding=&quot;utf8&quot;) as 
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># While every attribute in dataset and model can be used to perform grid search,
-# in this example the lists with only single values are used for patching the
-# original model config
-benchmarking_params = &quot;&quot;&quot;seed: 42
-compute_openvino: true
-hardware:
-  - gpu
-writer: []
-grid_search:
-  dataset:
-    name: [hazelnut]
-    format: [folder]
-    path: [/content/anomalib/datasets/hazelnut_toy]
-    normal_dir: [good]
-    abnormal_dir: [colour]
-    normal_test_dir: [null]
-    task: [segmentation]
-    mask: [/content/anomalib/datasets/hazelnut_toy/mask/colour]
-    extensions: [null]
-    split_ratio: [0.2]
-    image_size: [256, 128]
-    num_workers: [4]
-  model_name:
-    - padim
-    - patchcore
-&quot;&quot;&quot;
-with open(&quot;benchmark_config.yaml&quot;, &quot;w&quot;, encoding=&quot;utf8&quot;) as f:
-    f.writelines(benchmarking_params)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># While every attribute in dataset and model can be used to perform grid search,</span>
+<span class="c1"># in this example the lists with only single values are used for patching the</span>
+<span class="c1"># original model config</span>
+<span class="n">benchmarking_params</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;seed: 42</span>
+<span class="s2">compute_openvino: true</span>
+<span class="s2">hardware:</span>
+<span class="s2">  - gpu</span>
+<span class="s2">writer: []</span>
+<span class="s2">grid_search:</span>
+<span class="s2">  dataset:</span>
+<span class="s2">    name: [hazelnut]</span>
+<span class="s2">    format: [folder]</span>
+<span class="s2">    path: [/content/anomalib/datasets/hazelnut_toy]</span>
+<span class="s2">    normal_dir: [good]</span>
+<span class="s2">    abnormal_dir: [colour]</span>
+<span class="s2">    normal_test_dir: [null]</span>
+<span class="s2">    task: [segmentation]</span>
+<span class="s2">    mask: [/content/anomalib/datasets/hazelnut_toy/mask/colour]</span>
+<span class="s2">    extensions: [null]</span>
+<span class="s2">    split_ratio: [0.2]</span>
+<span class="s2">    image_size: [256, 128]</span>
+<span class="s2">    num_workers: [4]</span>
+<span class="s2">  model_name:</span>
+<span class="s2">    - padim</span>
+<span class="s2">    - patchcore</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;benchmark_config.yaml&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">benchmarking_params</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -809,7 +812,7 @@ with open(&quot;benchmark_config.yaml&quot;, &quot;w&quot;, encoding=&quot;utf8&
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>!python ./tools/benchmarking/benchmark.py --config benchmark_config.yaml
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>python<span class="w"> </span>./tools/benchmarking/benchmark.py<span class="w"> </span>--config<span class="w"> </span>benchmark_config.yaml
 </pre></div>
 </div>
 </div>
@@ -817,8 +820,8 @@ with open(&quot;benchmark_config.yaml&quot;, &quot;w&quot;, encoding=&quot;utf8&
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = pd.read_csv(&quot;runs/padim_gpu.csv&quot;)
-df.head()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;runs/padim_gpu.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

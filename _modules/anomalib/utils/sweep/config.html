@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,17 +272,19 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">operator</span>
 <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">ValuesView</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Generator</span>
 
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span>
 
 
-<span class="k">def</span> <span class="nf">convert_to_tuple</span><span class="p">(</span><span class="n">values</span><span class="p">:</span> <span class="n">ValuesView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Converts a ValuesView object to a list of tuples.</span>
+<span class="k">def</span> <span class="nf">convert_to_tuple</span><span class="p">(</span><span class="n">values</span><span class="p">:</span> <span class="n">ValuesView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts a ValuesView object to a list of tuples.</span>
 
 <span class="sd">    This is useful to get list of possible values for each parameter in the config and a tuple for values that are</span>
 <span class="sd">    are to be patched. Ideally this is useful when used with product.</span>
@@ -303,7 +307,7 @@
 <span class="sd">        values: ValuesView: ValuesView object to be converted to a list of tuples.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        List[Tuple]: List of tuples.</span>
+<span class="sd">        list[Tuple]: List of tuples.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">return_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
@@ -315,7 +319,7 @@
 
 
 <div class="viewcode-block" id="flatten_sweep_params"><a class="viewcode-back" href="../../../../reference_guide/api/sweep.html#anomalib.utils.sweep.flatten_sweep_params">[docs]</a><span class="k">def</span> <span class="nf">flatten_sweep_params</span><span class="p">(</span><span class="n">params_dict</span><span class="p">:</span> <span class="n">DictConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DictConfig</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Flatten the nested parameters section of the config object.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Flatten the nested parameters section of the config object.</span>
 
 <span class="sd">    We need to flatten the params so that all the nested keys are concatenated into a single string.</span>
 <span class="sd">    This is useful when</span>
@@ -330,15 +334,15 @@
 <span class="sd">        flattened version of the parameter dictionary.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">flatten_nested_dict</span><span class="p">(</span><span class="n">nested_params</span><span class="p">:</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">keys</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">flattened_params</span><span class="p">:</span> <span class="n">DictConfig</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Flatten nested dictionary.</span>
+    <span class="k">def</span> <span class="nf">flatten_nested_dict</span><span class="p">(</span><span class="n">nested_params</span><span class="p">:</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">keys</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">flattened_params</span><span class="p">:</span> <span class="n">DictConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Flatten nested dictionary.</span>
 
 <span class="sd">        Recursive helper function that traverses the nested config object and stores the leaf nodes in a flattened</span>
 <span class="sd">        dictionary.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            nested_params: DictConfig: config object containing the original parameters.</span>
-<span class="sd">            keys: List[str]: list of keys leading to the current location in the config.</span>
+<span class="sd">            keys: list[str]: list of keys leading to the current location in the config.</span>
 <span class="sd">            flattened_params: DictConfig: Dictionary in which the flattened parameters are stored.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">cfg</span> <span class="ow">in</span> <span class="n">nested_params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -355,7 +359,7 @@
 
 
 <div class="viewcode-block" id="get_run_config"><a class="viewcode-back" href="../../../../reference_guide/api/sweep.html#anomalib.utils.sweep.get_run_config">[docs]</a><span class="k">def</span> <span class="nf">get_run_config</span><span class="p">(</span><span class="n">params_dict</span><span class="p">:</span> <span class="n">DictConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Yields configuration for a single run.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Yields configuration for a single run.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        params_dict (DictConfig): Configuration for grid search.</span>
@@ -390,22 +394,22 @@
         <span class="k">yield</span> <span class="n">run_config</span></div>
 
 
-<span class="k">def</span> <span class="nf">get_from_nested_config</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">keymap</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Retrieves an item from a nested config object using a list of keys.</span>
+<span class="k">def</span> <span class="nf">get_from_nested_config</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">keymap</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retrieves an item from a nested config object using a list of keys.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        config: DictConfig: nested DictConfig object</span>
-<span class="sd">        keymap: List[str]: list of keys corresponding to item that should be retrieved.</span>
+<span class="sd">        keymap: list[str]: list of keys corresponding to item that should be retrieved.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">getitem</span><span class="p">,</span> <span class="n">keymap</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="set_in_nested_config"><a class="viewcode-back" href="../../../../reference_guide/api/sweep.html#anomalib.utils.sweep.set_in_nested_config">[docs]</a><span class="k">def</span> <span class="nf">set_in_nested_config</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">keymap</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Set an item in a nested config object using a list of keys.</span>
+<div class="viewcode-block" id="set_in_nested_config"><a class="viewcode-back" href="../../../../reference_guide/api/sweep.html#anomalib.utils.sweep.set_in_nested_config">[docs]</a><span class="k">def</span> <span class="nf">set_in_nested_config</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">keymap</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set an item in a nested config object using a list of keys.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        config: DictConfig: nested DictConfig object</span>
-<span class="sd">        keymap: List[str]: list of keys corresponding to item that should be set.</span>
+<span class="sd">        keymap: list[str]: list of keys corresponding to item that should be set.</span>
 <span class="sd">        value: Any: Value that should be assigned to the dictionary item at the specified location.</span>
 
 <span class="sd">    Example:</span>

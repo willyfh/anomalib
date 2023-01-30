@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,8 +272,11 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 
 <span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">CALLBACK_REGISTRY</span>
@@ -284,7 +289,7 @@
 
 <div class="viewcode-block" id="ImageVisualizerCallback"><a class="viewcode-back" href="../../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.ImageVisualizerCallback">[docs]</a><span class="nd">@CALLBACK_REGISTRY</span>
 <span class="k">class</span> <span class="nc">ImageVisualizerCallback</span><span class="p">(</span><span class="n">BaseVisualizerCallback</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Callback that visualizes the inference results of a model.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback that visualizes the inference results of a model.</span>
 
 <span class="sd">    The callback generates a figure showing the original image, the ground truth segmentation mask,</span>
 <span class="sd">    the predicted error heat map, and the predicted segmentation mask.</span>
@@ -295,25 +300,27 @@
 
 <div class="viewcode-block" id="ImageVisualizerCallback.on_predict_batch_end"><a class="viewcode-back" href="../../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.ImageVisualizerCallback.on_predict_batch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_predict_batch_end</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">_trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span>
-        <span class="n">_pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">,</span>
-        <span class="n">outputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">STEP_OUTPUT</span><span class="p">],</span>
-        <span class="n">_batch</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-        <span class="n">_batch_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">_dataloader_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span>
+        <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">,</span>
+        <span class="n">outputs</span><span class="p">:</span> <span class="n">STEP_OUTPUT</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">batch</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">batch_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">dataloader_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Show images at the end of every batch.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Show images at the end of every batch.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            _trainer (Trainer): Pytorch lightning trainer object (unused).</span>
-<span class="sd">            _pl_module (LightningModule): Lightning modules derived from BaseAnomalyLightning object as</span>
+<span class="sd">            trainer (Trainer): Pytorch lightning trainer object (unused).</span>
+<span class="sd">            pl_module (AnomalyModule): Lightning modules derived from BaseAnomalyLightning object as</span>
 <span class="sd">            currently only they support logging images.</span>
-<span class="sd">            outputs (Dict[str, Any]): Outputs of the current test step.</span>
-<span class="sd">            _batch (Any): Input batch of the current test step (unused).</span>
-<span class="sd">            _batch_idx (int): Index of the current test batch (unused).</span>
-<span class="sd">            _dataloader_idx (int): Index of the dataloader that yielded the current batch (unused).</span>
+<span class="sd">            outputs (STEP_OUTPUT | None): Outputs of the current test step.</span>
+<span class="sd">            batch (Any): Input batch of the current test step (unused).</span>
+<span class="sd">            batch_idx (int): Index of the current test batch (unused).</span>
+<span class="sd">            dataloader_idx (int): Index of the dataloader that yielded the current batch (unused).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">dataloader_idx</span>  <span class="c1"># These variables are not used.</span>
         <span class="k">assert</span> <span class="n">outputs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">image</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">visualizer</span><span class="o">.</span><span class="n">visualize_batch</span><span class="p">(</span><span class="n">outputs</span><span class="p">)):</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_images</span><span class="p">:</span>
@@ -326,25 +333,35 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span>
         <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">,</span>
-        <span class="n">outputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">STEP_OUTPUT</span><span class="p">],</span>
-        <span class="n">_batch</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-        <span class="n">_batch_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">_dataloader_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">outputs</span><span class="p">:</span> <span class="n">STEP_OUTPUT</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">batch</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">batch_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">dataloader_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Log images at the end of every batch.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log images at the end of every batch.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            trainer (Trainer): Pytorch lightning trainer object (unused).</span>
-<span class="sd">            pl_module (LightningModule): Lightning modules derived from BaseAnomalyLightning object as</span>
-<span class="sd">            currently only they support logging images.</span>
-<span class="sd">            outputs (Dict[str, Any]): Outputs of the current test step.</span>
-<span class="sd">            _batch (Any): Input batch of the current test step (unused).</span>
-<span class="sd">            _batch_idx (int): Index of the current test batch (unused).</span>
-<span class="sd">            _dataloader_idx (int): Index of the dataloader that yielded the current batch (unused).</span>
+<span class="sd">            pl_module (AnomalyModule): Lightning modules derived from BaseAnomalyLightning object as</span>
+<span class="sd">                currently only they support logging images.</span>
+<span class="sd">            outputs (STEP_OUTPUT | None): Outputs of the current test step.</span>
+<span class="sd">            batch (Any): Input batch of the current test step (unused).</span>
+<span class="sd">            batch_idx (int): Index of the current test batch (unused).</span>
+<span class="sd">            dataloader_idx (int): Index of the dataloader that yielded the current batch (unused).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">dataloader_idx</span>  <span class="c1"># These variables are not used.</span>
         <span class="k">assert</span> <span class="n">outputs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">image</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">visualizer</span><span class="o">.</span><span class="n">visualize_batch</span><span class="p">(</span><span class="n">outputs</span><span class="p">)):</span>
-            <span class="n">filename</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s2">&quot;image_path&quot;</span> <span class="ow">in</span> <span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="s2">&quot;video_path&quot;</span> <span class="ow">in</span> <span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">zero_fill</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;last_frame&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">suffix</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;frames&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">int</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">())</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">zero_fill</span><span class="p">)</span><span class="si">}</span><span class="s2">.png&quot;</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;video_path&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span> <span class="o">/</span> <span class="n">suffix</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;Batch must have either &#39;image_path&#39; or &#39;video_path&#39; defined.&quot;</span><span class="p">)</span>
+
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_images</span><span class="p">:</span>
                 <span class="n">file_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_save_path</span> <span class="o">/</span> <span class="n">filename</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="o">/</span> <span class="n">filename</span><span class="o">.</span><span class="n">name</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">visualizer</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>

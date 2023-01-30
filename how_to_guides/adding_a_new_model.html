@@ -174,9 +174,11 @@
 <li class="toctree-l2"><a class="reference internal" href="notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -283,38 +285,38 @@
 <h2>Create a New Sub Package<a class="headerlink" href="#create-a-new-sub-package" title="Permalink to this heading">¶</a></h2>
 <p>This is a new directory to be created in <code class="docutils literal notranslate"><span class="pre">anomalib/models</span></code> to store the model-related files. The overall outline would be as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./anomalib/models/&lt;new-model&gt;
-├── __init__.py
-├── config.yaml
-├── torch_model.py
-├── lightning_model.py
-├── loss.py    <span class="c1"># OPTIONAL</span>
-├── anomaly_map.py    <span class="c1"># OPTIONAL</span>
-└── README.md
+├──<span class="w"> </span>__init__.py
+├──<span class="w"> </span>config.yaml
+├──<span class="w"> </span>torch_model.py
+├──<span class="w"> </span>lightning_model.py
+├──<span class="w"> </span>loss.py<span class="w">    </span><span class="c1"># OPTIONAL</span>
+├──<span class="w"> </span>anomaly_map.py<span class="w">    </span><span class="c1"># OPTIONAL</span>
+└──<span class="w"> </span>README.md
 </pre></div>
 </div>
 </section>
 <section id="create-a-config-yaml-file">
 <h2>Create a <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code> file<a class="headerlink" href="#create-a-config-yaml-file" title="Permalink to this heading">¶</a></h2>
 <p>This file stores all the configurations, from data to optimization options. An exemplary yaml file is shown below. For a full configuration file, you could refer to one of the existing model implementations, such as <a class="reference external" href="https://github.com/openvinotoolkit/anomalib/blob/main/anomalib/models/patchcore/config.yaml">patchcore configuration.</a></p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">dataset</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mvtec</span><span class="w"> </span><span class="c1">#options: [mvtec, btech, folder]</span><span class="w"></span>
-<span class="w">    </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mvtec</span><span class="w"></span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="nt">model</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">patchcore</span><span class="w"></span>
-<span class="w">    </span><span class="nt">backbone</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wide_resnet50_2</span><span class="w"></span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="nt">metrics</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">F1Score</span><span class="w"></span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="nt">visualization</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">show_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"> </span><span class="c1"># show images on the screen</span><span class="w"></span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="c1"># PL Trainer Args. Don&#39;t add extra parameter here.</span><span class="w"></span>
-<span class="nt">trainer</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">accelerator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">auto</span><span class="w"> </span><span class="c1"># &lt;&quot;cpu&quot;, &quot;gpu&quot;, &quot;tpu&quot;, &quot;ipu&quot;, &quot;hpu&quot;, &quot;auto&quot;&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">dataset</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mvtec</span><span class="w"> </span><span class="c1">#options: [mvtec, btech, folder]</span>
+<span class="w">    </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mvtec</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">model</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">patchcore</span>
+<span class="w">    </span><span class="nt">backbone</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wide_resnet50_2</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">metrics</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">F1Score</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">visualization</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">show_images</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"> </span><span class="c1"># show images on the screen</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="c1"># PL Trainer Args. Don&#39;t add extra parameter here.</span>
+<span class="nt">trainer</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">accelerator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">auto</span><span class="w"> </span><span class="c1"># &lt;&quot;cpu&quot;, &quot;gpu&quot;, &quot;tpu&quot;, &quot;ipu&quot;, &quot;hpu&quot;, &quot;auto&quot;&gt;</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </pre></div>
 </div>
 </section>
@@ -322,7 +324,7 @@
 <h2>Create a <code class="docutils literal notranslate"><span class="pre">torch_model.py</span></code> Module<a class="headerlink" href="#create-a-torch-model-py-module" title="Permalink to this heading">¶</a></h2>
 <p>This file contains the torch model implementation that inherits from <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>, defines the model architecture and performs a basic forward-pass. The advantage of storing the model in a separate <code class="docutils literal notranslate"><span class="pre">torch_model.py</span></code> file is that the model is de-coupled from the rest of the anomalib implementations and could be used outside the library as well. Basic implementation would look like as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NewModelModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;New Model Module.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;New Model Module.&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
@@ -334,7 +336,7 @@
 <h2>Create a <code class="docutils literal notranslate"><span class="pre">lightning_model.py</span></code> Module<a class="headerlink" href="#create-a-lightning-model-py-module" title="Permalink to this heading">¶</a></h2>
 <p>This module contains the lightning model implementation that inherits from the <code class="docutils literal notranslate"><span class="pre">AnomalModule</span></code>, which already has the <code class="docutils literal notranslate"><span class="pre">anomalib</span></code> related attributes and methods. The user does not need to worry about the boilerplate code and only needs to implement the training and validation logic of the algorithm.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NewModel</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;PL Lightning Module for the New Model.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;PL Lightning Module for the New Model.&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="k">pass</span>
@@ -350,10 +352,10 @@
 <h2>Create a <code class="docutils literal notranslate"><span class="pre">loss.py</span></code> File - [Optional]<a class="headerlink" href="#create-a-loss-py-file-optional" title="Permalink to this heading">¶</a></h2>
 <p>This module’s availability is dependent on the algorithm. If the algorithm requires a custom, complex loss function, this file may contain the subclass of the torch.nn.Module class implementation. This loss would subsequently be utilized by the lightning module.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NewModelLoss</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;NewModel Loss.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;NewModel Loss.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Calculate the NewModel loss.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate the NewModel loss.&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </pre></div>
 </div>
@@ -362,13 +364,13 @@
 <h2>Create an <code class="docutils literal notranslate"><span class="pre">anomaly_map.py</span></code> File - [Optional]<a class="headerlink" href="#create-an-anomaly-map-py-file-optional" title="Permalink to this heading">¶</a></h2>
 <p>Similar to the loss.py module, the anomaly map.py module is optional depending on the capabilities of the algorithm. This module may be implemented if the algorithm supports segmentation so that the location of the anomaly can be predicted pixel-by-pixel.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AnomalyMapGenerator</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Generate Anomaly Heatmap.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate Anomaly Heatmap.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_size</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ListConfig</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">]):</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Generate Anomaly Heatmap.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate Anomaly Heatmap.&quot;&quot;&quot;</span>
         <span class="o">...</span>
         <span class="k">return</span> <span class="n">anomaly_map</span>
 </pre></div>

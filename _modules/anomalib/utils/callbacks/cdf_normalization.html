@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,8 +272,10 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 
 <span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Callback</span><span class="p">,</span> <span class="n">Trainer</span>
@@ -289,15 +293,16 @@
 
 <div class="viewcode-block" id="CdfNormalizationCallback"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.CdfNormalizationCallback">[docs]</a><span class="nd">@CALLBACK_REGISTRY</span>
 <span class="k">class</span> <span class="nc">CdfNormalizationCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Callback that standardizes the image-level and pixel-level anomaly scores.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback that standardizes the image-level and pixel-level anomaly scores.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">image_dist</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogNormal</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pixel_dist</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogNormal</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_dist</span><span class="p">:</span> <span class="n">LogNormal</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixel_dist</span><span class="p">:</span> <span class="n">LogNormal</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="c1"># pylint: disable=unused-argument</span>
-<div class="viewcode-block" id="CdfNormalizationCallback.setup"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.CdfNormalizationCallback.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Adds training_distribution metrics to normalization metrics.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CdfNormalizationCallback.setup"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.CdfNormalizationCallback.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds training_distribution metrics to normalization metrics.&quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">stage</span>  <span class="c1"># These variabels are not used.</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pl_module</span><span class="p">,</span> <span class="s2">&quot;normalization_metrics&quot;</span><span class="p">):</span>
             <span class="n">pl_module</span><span class="o">.</span><span class="n">normalization_metrics</span> <span class="o">=</span> <span class="n">AnomalyScoreDistribution</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
         <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pl_module</span><span class="o">.</span><span class="n">normalization_metrics</span><span class="p">,</span> <span class="n">AnomalyScoreDistribution</span><span class="p">):</span>
@@ -306,16 +311,17 @@
                 <span class="sa">f</span><span class="s2">&quot; got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">pl_module</span><span class="o">.</span><span class="n">normalization_metrics</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span></div>
 
-    <span class="c1"># pylint: disable=unused-argument</span>
 <div class="viewcode-block" id="CdfNormalizationCallback.on_test_start"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.CdfNormalizationCallback.on_test_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_test_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Called when the test begins.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called when the test begins.&quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">trainer</span>  <span class="c1"># `trainer` variable is not used.</span>
+
         <span class="k">if</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">image_metrics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">pl_module</span><span class="o">.</span><span class="n">image_metrics</span><span class="o">.</span><span class="n">set_threshold</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">pixel_metrics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">pl_module</span><span class="o">.</span><span class="n">pixel_metrics</span><span class="o">.</span><span class="n">set_threshold</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CdfNormalizationCallback.on_validation_epoch_start"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.CdfNormalizationCallback.on_validation_epoch_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_epoch_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">:</span> <span class="s2">&quot;pl.Trainer&quot;</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Called when the validation starts after training.</span>
+<div class="viewcode-block" id="CdfNormalizationCallback.on_validation_epoch_start"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.CdfNormalizationCallback.on_validation_epoch_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_epoch_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called when the validation starts after training.</span>
 
 <span class="sd">        Use the current model to compute the anomaly score distributions</span>
 <span class="sd">        of the normal training data. This is needed after every epoch, because the statistics must be</span>
@@ -326,45 +332,51 @@
 
 <div class="viewcode-block" id="CdfNormalizationCallback.on_validation_batch_end"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.CdfNormalizationCallback.on_validation_batch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_batch_end</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">_trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span>
+        <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span>
         <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">,</span>
-        <span class="n">outputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">STEP_OUTPUT</span><span class="p">],</span>
-        <span class="n">_batch</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-        <span class="n">_batch_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">_dataloader_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">outputs</span><span class="p">:</span> <span class="n">STEP_OUTPUT</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">batch</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">batch_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">dataloader_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Called when the validation batch ends, standardizes the predicted scores and anomaly maps.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called when the validation batch ends, standardizes the predicted scores and anomaly maps.&quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">dataloader_idx</span>  <span class="c1"># These variables are not used.</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_standardize_batch</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CdfNormalizationCallback.on_test_batch_end"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.CdfNormalizationCallback.on_test_batch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_test_batch_end</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">_trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span>
+        <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span>
         <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">,</span>
-        <span class="n">outputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">STEP_OUTPUT</span><span class="p">],</span>
-        <span class="n">_batch</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-        <span class="n">_batch_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">_dataloader_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">outputs</span><span class="p">:</span> <span class="n">STEP_OUTPUT</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">batch</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">batch_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">dataloader_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Called when the test batch ends, normalizes the predicted scores and anomaly maps.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called when the test batch ends, normalizes the predicted scores and anomaly maps.&quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">dataloader_idx</span>  <span class="c1"># These variables are not used.</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_standardize_batch</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_batch</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CdfNormalizationCallback.on_predict_batch_end"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.CdfNormalizationCallback.on_predict_batch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_predict_batch_end</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">_trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span>
+        <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span>
         <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">,</span>
-        <span class="n">outputs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span>
-        <span class="n">_batch</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-        <span class="n">_batch_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">_dataloader_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">outputs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">batch</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">batch_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">dataloader_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Called when the predict batch ends, normalizes the predicted scores and anomaly maps.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called when the predict batch ends, normalizes the predicted scores and anomaly maps.&quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">dataloader_idx</span>  <span class="c1"># These variables are not used.</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_standardize_batch</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_batch</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">)</span>
         <span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;pred_labels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;pred_scores&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mf">0.5</span></div>
 
-    <span class="k">def</span> <span class="nf">_collect_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Collect the statistics of the normal training data.</span>
+    <span class="k">def</span> <span class="nf">_collect_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Collect the statistics of the normal training data.</span>
 
 <span class="sd">        Create a trainer and use it to predict the anomaly maps and scores of the normal training data. Then</span>
 <span class="sd">         estimate the distribution of anomaly scores for normal data at the image and pixel level by computing</span>
@@ -383,7 +395,7 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_create_inference_model</span><span class="p">(</span><span class="n">pl_module</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create a duplicate of the PL module that can be used to perform inference on the training set.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a duplicate of the PL module that can be used to perform inference on the training set.&quot;&quot;&quot;</span>
         <span class="n">new_model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">pl_module</span><span class="o">.</span><span class="n">hparams</span><span class="p">)</span>
         <span class="n">new_model</span><span class="o">.</span><span class="n">normalization_metrics</span> <span class="o">=</span> <span class="n">AnomalyScoreDistribution</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
         <span class="n">new_model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">pl_module</span><span class="o">.</span><span class="n">state_dict</span><span class="p">())</span>
@@ -402,6 +414,7 @@
     <span class="k">def</span> <span class="nf">_normalize_batch</span><span class="p">(</span><span class="n">outputs</span><span class="p">:</span> <span class="n">STEP_OUTPUT</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;pred_scores&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;pred_scores&quot;</span><span class="p">],</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">image_threshold</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="s2">&quot;anomaly_maps&quot;</span> <span class="ow">in</span> <span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;anomaly_maps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;anomaly_maps&quot;</span><span class="p">],</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">pixel_threshold</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
             <span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;anomaly_maps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;anomaly_maps&quot;</span><span class="p">],</span> <span class="n">pl_module</span><span class="o">.</span><span class="n">pixel_threshold</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 </pre></div>
         </article>

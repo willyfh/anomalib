@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -273,37 +275,56 @@
 <span class="c1"># TODO: This would require a new design.</span>
 <span class="c1"># TODO: https://jira.devtools.intel.com/browse/IAAALD-149</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
 
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">,</span> <span class="n">OmegaConf</span>
 
+<span class="kn">from</span> <span class="nn">anomalib.data.utils</span> <span class="kn">import</span> <span class="n">TestSplitMode</span><span class="p">,</span> <span class="n">ValSplitMode</span>
+
 
 <span class="k">def</span> <span class="nf">_get_now_str</span><span class="p">(</span><span class="n">timestamp</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Standard format for datetimes is defined here.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Standard format for datetimes is defined here.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">_%H-%M-%S&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="update_input_size_config"><a class="viewcode-back" href="../../../reference_guide/api/config.html#anomalib.config.update_input_size_config">[docs]</a><span class="k">def</span> <span class="nf">update_input_size_config</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Update config with image size as tuple, effective input size and tiling stride.</span>
+<div class="viewcode-block" id="update_input_size_config"><a class="viewcode-back" href="../../../reference_guide/api/config.html#anomalib.config.update_input_size_config">[docs]</a><span class="k">def</span> <span class="nf">update_input_size_config</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update config with image size as tuple, effective input size and tiling stride.</span>
 
 <span class="sd">    Convert integer image size parameters into tuples, calculate the effective input size based on image size</span>
 <span class="sd">    and crop size, and set tiling stride if undefined.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        config (Union[DictConfig, ListConfig]): Configurable parameters object</span>
+<span class="sd">        config (DictConfig | ListConfig): Configurable parameters object</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Union[DictConfig, ListConfig]: Configurable parameters with updated values</span>
+<span class="sd">        DictConfig | ListConfig: Configurable parameters with updated values</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># handle image size</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">image_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">image_size</span><span class="p">,)</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="c1"># Image size: Ensure value is in the form [height, width]</span>
+    <span class="n">image_size</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;image_size&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">image_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">image_size</span><span class="p">,)</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">image_size</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;image_size must be a single integer or tuple of length 2 for width and height.&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;image_size must be either int or ListConfig, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">image_size</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="n">config</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_size</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">image_size</span>
+    <span class="c1"># Center crop: Ensure value is in the form [height, width], and update input_size</span>
+    <span class="n">center_crop</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;center_crop&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">center_crop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_size</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">image_size</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">center_crop</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">center_crop</span> <span class="o">=</span> <span class="p">(</span><span class="n">center_crop</span><span class="p">,)</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_size</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">center_crop</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">center_crop</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">center_crop</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;center_crop must be a single integer or tuple of length 2 for width and height.&quot;</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_size</span> <span class="o">=</span> <span class="n">center_crop</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;center_crop must be either int or ListConfig, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">center_crop</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="s2">&quot;tiling&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">tiling</span><span class="o">.</span><span class="n">apply</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">tiling</span><span class="o">.</span><span class="n">tile_size</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
@@ -314,14 +335,14 @@
     <span class="k">return</span> <span class="n">config</span></div>
 
 
-<div class="viewcode-block" id="update_nncf_config"><a class="viewcode-back" href="../../../reference_guide/api/config.html#anomalib.config.update_nncf_config">[docs]</a><span class="k">def</span> <span class="nf">update_nncf_config</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Set the NNCF input size based on the value of the crop_size parameter in the configurable parameters object.</span>
+<div class="viewcode-block" id="update_nncf_config"><a class="viewcode-back" href="../../../reference_guide/api/config.html#anomalib.config.update_nncf_config">[docs]</a><span class="k">def</span> <span class="nf">update_nncf_config</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the NNCF input size based on the value of the crop_size parameter in the configurable parameters object.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        config (Union[DictConfig, ListConfig]): Configurable parameters of the current run.</span>
+<span class="sd">    Args</span>
+<span class="sd">        config (DictConfig | ListConfig): Configurable parameters of the current run.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Union[DictConfig, ListConfig]: Updated configurable parameters in DictConfig object.</span>
+<span class="sd">        DictConfig | ListConfig: Updated configurable parameters in DictConfig object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">crop_size</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">image_size</span>
     <span class="n">sample_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">crop_size</span><span class="p">,</span> <span class="n">crop_size</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">crop_size</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="n">crop_size</span>
@@ -336,19 +357,19 @@
     <span class="k">return</span> <span class="n">config</span></div>
 
 
-<span class="k">def</span> <span class="nf">update_multi_gpu_training_config</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Updates the config to change learning rate based on number of gpus assigned.</span>
+<span class="k">def</span> <span class="nf">update_multi_gpu_training_config</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Updates the config to change learning rate based on number of gpus assigned.</span>
 
 <span class="sd">    Current behaviour is to ensure only ddp accelerator is used.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        config (Union[DictConfig, ListConfig]): Configurable parameters for the current run</span>
+<span class="sd">        config (DictConfig | ListConfig): Configurable parameters for the current run</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: If unsupported accelerator is passed</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Union[DictConfig, ListConfig]: Updated config</span>
+<span class="sd">        DictConfig | ListConfig: Updated config</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># validate accelerator</span>
     <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">accelerator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -368,7 +389,7 @@
     <span class="c1"># increase the learning rate by the number of devices</span>
     <span class="k">if</span> <span class="s2">&quot;lr&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
         <span class="c1"># Number of GPUs can either be passed as gpus: 2 or gpus: [0,1]</span>
-        <span class="n">n_gpus</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">n_gpus</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">list</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="s2">&quot;trainer&quot;</span> <span class="ow">in</span> <span class="n">config</span> <span class="ow">and</span> <span class="s2">&quot;gpus&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="p">:</span>
             <span class="n">n_gpus</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">gpus</span>
         <span class="n">lr_scaler</span> <span class="o">=</span> <span class="n">n_gpus</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_gpus</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="n">n_gpus</span><span class="p">)</span>
@@ -376,26 +397,98 @@
     <span class="k">return</span> <span class="n">config</span>
 
 
-<div class="viewcode-block" id="get_configurable_parameters"><a class="viewcode-back" href="../../../reference_guide/api/config.html#anomalib.config.get_configurable_parameters">[docs]</a><span class="k">def</span> <span class="nf">get_configurable_parameters</span><span class="p">(</span>
-    <span class="n">model_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">config_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">weight_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">config_filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;config&quot;</span><span class="p">,</span>
-    <span class="n">config_file_extension</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;yaml&quot;</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Get configurable parameters.</span>
+<span class="k">def</span> <span class="nf">update_datasets_config</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Updates the dataset section of the config.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        model_name: Optional[str]:  (Default value = None)</span>
-<span class="sd">        config_path: Optional[Union[Path, str]]:  (Default value = None)</span>
-<span class="sd">        weight_file: Path to the weight file</span>
-<span class="sd">        config_filename: Optional[str]:  (Default value = &quot;config&quot;)</span>
-<span class="sd">        config_file_extension: Optional[str]:  (Default value = &quot;yaml&quot;)</span>
+<span class="sd">        config (DictConfig | ListConfig): Configurable parameters for the current run.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Union[DictConfig, ListConfig]: Configurable parameters in DictConfig object.</span>
+<span class="sd">        DictConfig | ListConfig: Updated config</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">model_name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">config_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;format&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="s2">&quot;mvtec&quot;</span>
+
+    <span class="k">if</span> <span class="s2">&quot;create_validation_set&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">warn</span><span class="p">(</span>
+            <span class="ne">DeprecationWarning</span><span class="p">(</span>
+                <span class="s2">&quot;The &#39;create_validation_set&#39; parameter is deprecated and will be removed in a future release. Please &quot;</span>
+                <span class="s2">&quot;use &#39;validation_split_mode&#39; instead.&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">val_split_mode</span> <span class="o">=</span> <span class="s2">&quot;from_test&quot;</span> <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">create_validation_set</span> <span class="k">else</span> <span class="s2">&quot;same_as_test&quot;</span>
+
+    <span class="k">if</span> <span class="s2">&quot;test_batch_size&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">warn</span><span class="p">(</span>
+            <span class="ne">DeprecationWarning</span><span class="p">(</span>
+                <span class="s2">&quot;The &#39;test_batch_size&#39; parameter is deprecated and will be removed in a future release. Please use &quot;</span>
+                <span class="s2">&quot;&#39;eval_batch_size&#39; instead.&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">eval_batch_size</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">test_batch_size</span>
+
+    <span class="k">if</span> <span class="s2">&quot;transform_config&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="s2">&quot;val&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">transform_config</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">warn</span><span class="p">(</span>
+            <span class="ne">DeprecationWarning</span><span class="p">(</span>
+                <span class="s2">&quot;The &#39;transform_config.val&#39; parameter is deprecated and will be removed in a future release. Please &quot;</span>
+                <span class="s2">&quot;use &#39;transform_config.eval&#39; instead.&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">transform_config</span><span class="o">.</span><span class="n">eval</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">transform_config</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="n">config</span> <span class="o">=</span> <span class="n">update_input_size_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s2">&quot;clip_length_in_frames&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">clip_length_in_frames</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">warn</span><span class="p">(</span>
+            <span class="s2">&quot;Anomalib&#39;s models and visualizer are currently not compatible with video datasets with a clip length &gt; 1. &quot;</span>
+            <span class="s2">&quot;Custom changes to these modules will be needed to prevent errors and/or unpredictable behaviour.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s2">&quot;folder&quot;</span> <span class="ow">and</span> <span class="s2">&quot;split_ratio&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">warn</span><span class="p">(</span>
+            <span class="ne">DeprecationWarning</span><span class="p">(</span>
+                <span class="s2">&quot;The &#39;split_ratio&#39; parameter is deprecated and will be removed in a future release. Please use &quot;</span>
+                <span class="s2">&quot;&#39;test_split_ratio&#39; instead.&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">test_split_ratio</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">split_ratio</span>
+
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;test_split_mode&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">TestSplitMode</span><span class="o">.</span><span class="n">NONE</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;val_split_mode&quot;</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span>
+        <span class="n">ValSplitMode</span><span class="o">.</span><span class="n">SAME_AS_TEST</span><span class="p">,</span>
+        <span class="n">ValSplitMode</span><span class="o">.</span><span class="n">FROM_TEST</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">warn</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;val_split_mode </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">val_split_mode</span><span class="si">}</span><span class="s2"> not allowed for test_split_mode = &#39;none&#39;. &quot;</span>
+            <span class="s2">&quot;Setting val_split_mode to &#39;none&#39;.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">val_split_mode</span> <span class="o">=</span> <span class="n">ValSplitMode</span><span class="o">.</span><span class="n">NONE</span>
+
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;val_split_mode&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">ValSplitMode</span><span class="o">.</span><span class="n">NONE</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">limit_val_batches</span> <span class="o">!=</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Running without validation set. Setting trainer.limit_val_batches to 0.&quot;</span><span class="p">)</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">limit_val_batches</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">return</span> <span class="n">config</span>
+
+
+<div class="viewcode-block" id="get_configurable_parameters"><a class="viewcode-back" href="../../../reference_guide/api/config.html#anomalib.config.get_configurable_parameters">[docs]</a><span class="k">def</span> <span class="nf">get_configurable_parameters</span><span class="p">(</span>
+    <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">config_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">weight_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">config_filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="s2">&quot;config&quot;</span><span class="p">,</span>
+    <span class="n">config_file_extension</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="s2">&quot;yaml&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get configurable parameters.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model_name: str | None:  (Default value = None)</span>
+<span class="sd">        config_path: Path | str | None:  (Default value = None)</span>
+<span class="sd">        weight_file: Path to the weight file</span>
+<span class="sd">        config_filename: str | None:  (Default value = &quot;config&quot;)</span>
+<span class="sd">        config_file_extension: str | None:  (Default value = &quot;yaml&quot;)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DictConfig | ListConfig: Configurable parameters in DictConfig object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">model_name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">is</span> <span class="n">config_path</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="s2">&quot;Both model_name and model config path cannot be None! &quot;</span>
             <span class="s2">&quot;Please provide a model name or path to a config file!&quot;</span>
@@ -409,17 +502,35 @@
     <span class="c1"># keep track of the original config file because it will be modified</span>
     <span class="n">config_original</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-    <span class="c1"># Dataset Configs</span>
-    <span class="k">if</span> <span class="s2">&quot;format&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="s2">&quot;mvtec&quot;</span>
+    <span class="c1"># if the seed value is 0, notify a user that the behavior of the seed value zero has been changed.</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;seed&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">warn</span><span class="p">(</span>
+            <span class="s2">&quot;The seed value is now fixed to 0. &quot;</span>
+            <span class="s2">&quot;Up to v0.3.7, the seed was not fixed when the seed value was set to 0. &quot;</span>
+            <span class="s2">&quot;If you want to use the random seed, please select `None` for the seed value &quot;</span>
+            <span class="s2">&quot;(`null` in the YAML file) or remove the `seed` key from the YAML file.&quot;</span>
+        <span class="p">)</span>
 
+    <span class="n">config</span> <span class="o">=</span> <span class="n">update_datasets_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">update_input_size_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 
     <span class="c1"># Project Configs</span>
     <span class="n">project_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">path</span><span class="p">)</span> <span class="o">/</span> <span class="n">config</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">name</span> <span class="o">/</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">name</span>
 
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s2">&quot;folder&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;mask&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="p">:</span>
+            <span class="n">warn</span><span class="p">(</span>
+                <span class="ne">DeprecationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;mask will be deprecated in favor of mask_dir in config.dataset in a future release.&quot;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">mask_dir</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">mask</span>
+        <span class="k">if</span> <span class="s2">&quot;path&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="p">:</span>
+            <span class="n">warn</span><span class="p">(</span><span class="ne">DeprecationWarning</span><span class="p">(</span><span class="s2">&quot;path will be deprecated in favor of root in config.dataset in a future release.&quot;</span><span class="p">))</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">path</span>
+
     <span class="c1"># add category subfolder if needed</span>
-    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;btech&quot;</span><span class="p">,</span> <span class="s2">&quot;mvtec&quot;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;btech&quot;</span><span class="p">,</span> <span class="s2">&quot;mvtec&quot;</span><span class="p">,</span> <span class="s2">&quot;visa&quot;</span><span class="p">):</span>
         <span class="n">project_path</span> <span class="o">=</span> <span class="n">project_path</span> <span class="o">/</span> <span class="n">config</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">category</span>
 
     <span class="c1"># set to False by default for backward compatibility</span>
@@ -454,15 +565,29 @@
     <span class="k">if</span> <span class="s2">&quot;metrics&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
         <span class="c1"># NOTE: Deprecate this after v0.4.0.</span>
         <span class="k">if</span> <span class="s2">&quot;adaptive&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;adaptive will be deprecated in favor of method in config.metrics.threshold in v0.4.0.&quot;</span><span class="p">)</span>
+            <span class="n">warn</span><span class="p">(</span>
+                <span class="ne">DeprecationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;adaptive will be deprecated in favor of method in config.metrics.threshold in a future release&quot;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
             <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;adaptive&quot;</span> <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">adaptive</span> <span class="k">else</span> <span class="s2">&quot;manual&quot;</span>
         <span class="k">if</span> <span class="s2">&quot;image_default&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;image_default will be deprecated in favor of manual_image in config.metrics.threshold in v0.4.0.&quot;</span><span class="p">)</span>
+            <span class="n">warn</span><span class="p">(</span>
+                <span class="ne">DeprecationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;image_default will be deprecated in favor of manual_image in config.metrics.threshold in a future &quot;</span>
+                    <span class="s2">&quot;release.&quot;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
             <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">manual_image</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="kc">None</span> <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">adaptive</span> <span class="k">else</span> <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">image_default</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="s2">&quot;pixel_default&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;pixel_default will be deprecated in favor of manual_pixel in config.metrics.threshold in v0.4.0.&quot;</span><span class="p">)</span>
+            <span class="n">warn</span><span class="p">(</span>
+                <span class="ne">DeprecationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;pixel_default will be deprecated in favor of manual_pixel in config.metrics.threshold in a future &quot;</span>
+                    <span class="s2">&quot;release.&quot;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
             <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">manual_pixel</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="kc">None</span> <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">adaptive</span> <span class="k">else</span> <span class="n">config</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">pixel_default</span>
             <span class="p">)</span>

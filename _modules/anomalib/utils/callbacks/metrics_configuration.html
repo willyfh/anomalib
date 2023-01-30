@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -271,13 +273,15 @@
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">CALLBACK_REGISTRY</span>
 
+<span class="kn">from</span> <span class="nn">anomalib.data</span> <span class="kn">import</span> <span class="n">TaskType</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.components.base.anomaly_module</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
 <span class="kn">from</span> <span class="nn">anomalib.utils.metrics</span> <span class="kn">import</span> <span class="n">create_metric_collection</span>
 
@@ -288,15 +292,15 @@
 
 <div class="viewcode-block" id="MetricsConfigurationCallback"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.MetricsConfigurationCallback">[docs]</a><span class="nd">@CALLBACK_REGISTRY</span>
 <span class="k">class</span> <span class="nc">MetricsConfigurationCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Metrics Configuration Callback.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Metrics Configuration Callback.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">task</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;segmentation&quot;</span><span class="p">,</span>
-        <span class="n">image_metrics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">pixel_metrics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create image and pixel-level AnomalibMetricsCollection.</span>
+        <span class="n">task</span><span class="p">:</span> <span class="n">TaskType</span> <span class="o">=</span> <span class="n">TaskType</span><span class="o">.</span><span class="n">SEGMENTATION</span><span class="p">,</span>
+        <span class="n">image_metrics</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">pixel_metrics</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create image and pixel-level AnomalibMetricsCollection.</span>
 
 <span class="sd">        This callback creates AnomalibMetricsCollection based on the</span>
 <span class="sd">            list of strings provided for image and pixel-level metrics.</span>
@@ -304,9 +308,9 @@
 <span class="sd">        these to the lightning module.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            task (str): Task type of the current run.</span>
-<span class="sd">            image_metrics (Optional[List[str]]): List of image-level metrics.</span>
-<span class="sd">            pixel_metrics (Optional[List[str]]): List of pixel-level metrics.</span>
+<span class="sd">            task (TaskType): Task type of the current run.</span>
+<span class="sd">            image_metrics (list[str] | None): List of image-level metrics.</span>
+<span class="sd">            pixel_metrics (list[str] | None): List of pixel-level metrics.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">task</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_metric_names</span> <span class="o">=</span> <span class="n">image_metrics</span>
@@ -314,23 +318,25 @@
 
 <div class="viewcode-block" id="MetricsConfigurationCallback.setup"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.MetricsConfigurationCallback.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">_trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span>
-        <span class="n">pl_module</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">,</span>
-        <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># pylint: disable=unused-argument</span>
+        <span class="n">trainer</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">,</span>
+        <span class="n">pl_module</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">,</span>
+        <span class="n">stage</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Setup image and pixel-level AnomalibMetricsCollection within Anomalib Model.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup image and pixel-level AnomalibMetricsCollection within Anomalib Model.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            _trainer (pl.Trainer): PyTorch Lightning Trainer</span>
-<span class="sd">            pl_module (pl.LightningModule): Anomalib Model that inherits pl LightningModule.</span>
-<span class="sd">            stage (Optional[str], optional): fit, validate, test or predict. Defaults to None.</span>
+<span class="sd">            trainer (pl.Trainer): PyTorch Lightning Trainer</span>
+<span class="sd">            pl_module (AnomalyModule): Anomalib Model that inherits pl LightningModule.</span>
+<span class="sd">            stage (str | None, optional): fit, validate, test or predict. Defaults to None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">stage</span>  <span class="c1"># These variables are not used.</span>
+
         <span class="n">image_metric_names</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_metric_names</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_metric_names</span>
 
-        <span class="n">pixel_metric_names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+        <span class="n">pixel_metric_names</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixel_metric_names</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">pixel_metric_names</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">==</span> <span class="s2">&quot;classification&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">==</span> <span class="n">TaskType</span><span class="o">.</span><span class="n">CLASSIFICATION</span><span class="p">:</span>
             <span class="n">pixel_metric_names</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                 <span class="s2">&quot;Cannot perform pixel-level evaluation when task type is classification. &quot;</span>

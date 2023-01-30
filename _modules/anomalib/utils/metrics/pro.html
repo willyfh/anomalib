@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,23 +272,22 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">cv2</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">kornia.contrib</span> <span class="kn">import</span> <span class="n">connected_components</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 <span class="kn">from</span> <span class="nn">torchmetrics</span> <span class="kn">import</span> <span class="n">Metric</span>
 <span class="kn">from</span> <span class="nn">torchmetrics.functional</span> <span class="kn">import</span> <span class="n">recall</span>
 <span class="kn">from</span> <span class="nn">torchmetrics.utilities.data</span> <span class="kn">import</span> <span class="n">dim_zero_cat</span>
 
+<span class="kn">from</span> <span class="nn">anomalib.utils.cv</span> <span class="kn">import</span> <span class="n">connected_components_cpu</span><span class="p">,</span> <span class="n">connected_components_gpu</span>
+
 
 <div class="viewcode-block" id="PRO"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.PRO">[docs]</a><span class="k">class</span> <span class="nc">PRO</span><span class="p">(</span><span class="n">Metric</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Per-Region Overlap (PRO) Score.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Per-Region Overlap (PRO) Score.&quot;&quot;&quot;</span>
 
-    <span class="n">target</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span>
-    <span class="n">preds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span>
+    <span class="n">target</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span>
+    <span class="n">preds</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -296,13 +297,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">add_state</span><span class="p">(</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">[],</span> <span class="n">dist_reduce_fx</span><span class="o">=</span><span class="s2">&quot;cat&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PRO.update"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.PRO.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">targets</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Compute the PRO score for the current batch.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the PRO score for the current batch.&quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PRO.compute"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.PRO.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Compute the macro average of the PRO score across all regions in all batches.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the macro average of the PRO score across all regions in all batches.&quot;&quot;&quot;</span>
         <span class="n">target</span> <span class="o">=</span> <span class="n">dim_zero_cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
         <span class="n">preds</span> <span class="o">=</span> <span class="n">dim_zero_cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preds</span><span class="p">)</span>
 
@@ -315,7 +316,7 @@
 
 
 <span class="k">def</span> <span class="nf">pro_score</span><span class="p">(</span><span class="n">predictions</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">comps</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Calculate the PRO score for a batch of predictions.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the PRO score for a batch of predictions.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        predictions (Tensor): Predicted anomaly masks (Bx1xHxW)</span>
@@ -336,47 +337,6 @@
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])</span>
     <span class="n">pro</span> <span class="o">=</span> <span class="n">recall</span><span class="p">(</span><span class="n">preds</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">comps</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">num_classes</span><span class="o">=</span><span class="n">n_comps</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s2">&quot;macro&quot;</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pro</span>
-
-
-<span class="k">def</span> <span class="nf">connected_components_gpu</span><span class="p">(</span><span class="n">binary_input</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">num_iterations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Perform connected component labeling on GPU and remap the labels from 0 to N.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        binary_input (Tensor): Binary input data from which we want to extract connected components (Bx1xHxW)</span>
-<span class="sd">        num_iterations (int): Number of iterations used in the connected component computation.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        Tensor: Components labeled from 0 to N.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">components</span> <span class="o">=</span> <span class="n">connected_components</span><span class="p">(</span><span class="n">binary_input</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="n">num_iterations</span><span class="p">)</span>
-
-    <span class="c1"># remap component values from 0 to N</span>
-    <span class="n">labels</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">new_label</span><span class="p">,</span> <span class="n">old_label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
-        <span class="n">components</span><span class="p">[</span><span class="n">components</span> <span class="o">==</span> <span class="n">old_label</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_label</span>
-
-    <span class="k">return</span> <span class="n">components</span><span class="o">.</span><span class="n">int</span><span class="p">()</span>
-
-
-<span class="k">def</span> <span class="nf">connected_components_cpu</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Connected component labeling on CPU.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        image (Tensor): Binary input data from which we want to extract connected components (Bx1xHxW)</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        Tensor: Components labeled from 0 to N.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">components</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-    <span class="n">label_idx</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">mask</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
-        <span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
-        <span class="n">_</span><span class="p">,</span> <span class="n">comps</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">connectedComponents</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
-        <span class="c1"># remap component values to make sure every component has a unique value when outputs are concatenated</span>
-        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">comps</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]:</span>
-            <span class="n">components</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">][</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">comps</span> <span class="o">==</span> <span class="n">label</span><span class="p">)]</span> <span class="o">=</span> <span class="n">label_idx</span>
-            <span class="n">label_idx</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">components</span><span class="o">.</span><span class="n">int</span><span class="p">()</span>
 </pre></div>
         </article>
       </div>

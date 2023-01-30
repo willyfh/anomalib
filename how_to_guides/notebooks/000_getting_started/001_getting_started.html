@@ -134,7 +134,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -174,9 +174,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -260,7 +262,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -376,10 +378,11 @@ div.nboutput.container div.prompt > div {
     }
 }
 
-/* disable scrollbars on prompts */
+/* disable scrollbars and line breaks on prompts */
 div.nbinput.container div.prompt pre,
 div.nboutput.container div.prompt pre {
     overflow: hidden;
+    white-space: pre;
 }
 
 /* input/output area */
@@ -534,50 +537,101 @@ where the goal of the algorithm is to identify anomalous images, or anomalous pi
 Those who would like to reproduce the results via CLI could use <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">tools/train.py</span> <span class="pre">--model</span> <span class="pre">padim</span></code>.</p>
 <section id="Installing-Anomalib">
 <h1>Installing Anomalib<a class="headerlink" href="#Installing-Anomalib" title="Permalink to this heading">¶</a></h1>
-<p>Installation can be done in two ways: (i) install via PyPI, or (ii) installing from source. In this notebook, we’ll install it from the PyPI version for the sake of simplicity.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%pip install anomalib
-</pre></div>
-</div>
-</div>
-</section>
-<section id="Imports">
-<h1>Imports<a class="headerlink" href="#Imports" title="Permalink to this heading">¶</a></h1>
+<p>Installation can be done in two ways: (i) install via PyPI, or (ii) installing from source. In this notebook, we’ll install it from source in order to get the most recent version of anomalib.</p>
+<section id="I.-Install-via-PyPI">
+<h2>I. Install via PyPI<a class="headerlink" href="#I.-Install-via-PyPI" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from pathlib import Path
-from typing import Any, Dict
-
-import numpy as np
-from IPython.display import display
-from PIL import Image
-from pytorch_lightning import Trainer
-from torchvision.transforms import ToPILImage
-
-from anomalib.config import get_configurable_parameters
-from anomalib.data import get_datamodule
-from anomalib.models import get_model
-from anomalib.pre_processing.transforms import Denormalize
-from anomalib.utils.callbacks import LoadModelCallback, get_callbacks
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Option - I: Uncomment the next line if you want to install via pip.</span>
+<span class="c1"># %pip install anomalib</span>
 </pre></div>
 </div>
 </div>
 </section>
+<section id="II.-Install-from-Source">
+<h2>II. Install from Source<a class="headerlink" href="#II.-Install-from-Source" title="Permalink to this heading">¶</a></h2>
+<blockquote>
+<div><p>NOTE: If you are running the notebook on Google Colab, make sure that you install the library from source to have access to the entire material, including configuration files, etc.</p>
+</div></blockquote>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Option - II: Uncomment the next three lines if you want to install from the source.</span>
+<span class="c1"># %git clone https://github.com/openvinotoolkit/anomalib.git</span>
+<span class="c1"># %cd anomalib</span>
+<span class="c1"># %pip install -e .</span>
+</pre></div>
+</div>
+</div>
+<blockquote>
+<div><p>NOTE: If you are running the notebook from the <code class="docutils literal notranslate"><span class="pre">notebooks/000_getting_started</span></code> directory of the repository, you could install the library as follows:</p>
+</div></blockquote>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># If you are in `~/anomalib/notebooks/000_getting_started` directory, uncomment the following two lines.</span>
+<span class="c1"># %cd ../..</span>
+<span class="c1"># %pip install -e .</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Imports">
+<h1>Imports<a class="headerlink" href="#Imports" title="Permalink to this heading">¶</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Trainer</span>
+<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">ToPILImage</span>
+
+<span class="kn">from</span> <span class="nn">anomalib.config</span> <span class="kn">import</span> <span class="n">get_configurable_parameters</span>
+<span class="kn">from</span> <span class="nn">anomalib.data</span> <span class="kn">import</span> <span class="n">get_datamodule</span>
+<span class="kn">from</span> <span class="nn">anomalib.models</span> <span class="kn">import</span> <span class="n">get_model</span>
+<span class="kn">from</span> <span class="nn">anomalib.pre_processing.transforms</span> <span class="kn">import</span> <span class="n">Denormalize</span>
+<span class="kn">from</span> <span class="nn">anomalib.utils.callbacks</span> <span class="kn">import</span> <span class="n">LoadModelCallback</span><span class="p">,</span> <span class="n">get_callbacks</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/user/conda/lib/python3.8/site-packages/tqdm/auto.py:22: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre></div></div>
+</div>
+</section>
 <section id="Model">
 <h1>Model<a class="headerlink" href="#Model" title="Permalink to this heading">¶</a></h1>
-<p>Currently, there are <strong>7</strong> anomaly detection models available in <code class="docutils literal notranslate"><span class="pre">anomalib</span></code> library. Namely,</p>
+<p>Currently, there are <strong>13</strong> anomaly detection models available in <code class="docutils literal notranslate"><span class="pre">anomalib</span></code> library. Namely,</p>
 <ul class="simple">
+<li><p><a class="reference external" href="https://arxiv.org/abs/2206.04325">CFA</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/2110.02855v1">CS-Flow</a></p></li>
 <li><p><a class="reference external" href="https://arxiv.org/pdf/2107.12571v1.pdf">CFlow</a></p></li>
 <li><p><a class="reference external" href="https://github.com/openvinotoolkit/anomalib/tree/main/anomalib/models/dfkde">DFKDE</a></p></li>
 <li><p><a class="reference external" href="https://arxiv.org/pdf/1909.11786.pdf">DFM</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/2108.07610">DRAEM</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/2111.07677">FastFlow</a></p></li>
 <li><p><a class="reference external" href="https://arxiv.org/abs/1805.06725">Ganomaly</a></p></li>
 <li><p><a class="reference external" href="https://arxiv.org/pdf/2011.08785.pdf">Padim</a></p></li>
 <li><p><a class="reference external" href="https://arxiv.org/pdf/2106.08265.pdf">Patchcore</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/2201.10703">Reverse Distillation</a></p></li>
+<li><p><a class="reference external" href="https://ieeexplore.ieee.org/document/8999287">R-KDE</a></p></li>
 <li><p><a class="reference external" href="https://arxiv.org/pdf/2103.04257.pdf">STFPM</a></p></li>
 </ul>
 <p>In this tutorial, we’ll be using Padim. Now, let’s get their config paths from the respected folders.</p>
@@ -585,27 +639,157 @@ from anomalib.utils.callbacks import LoadModelCallback, get_callbacks
 <section id="Configuration">
 <h1>Configuration<a class="headerlink" href="#Configuration" title="Permalink to this heading">¶</a></h1>
 <p>In this demonstration, we will choose <a class="reference external" href="https://arxiv.org/pdf/2011.08785.pdf">Padim</a> model from the above list. Let’s take a quick look at its config file.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>MODEL = &quot;padim&quot;  # &#39;padim&#39;, &#39;cflow&#39;, &#39;stfpm&#39;, &#39;ganomaly&#39;, &#39;dfkde&#39;, &#39;patchcore&#39;
-CONFIG_PATH = f&quot;../../anomalib/models/{MODEL}/config.yaml&quot;
-with open(file=CONFIG_PATH, mode=&quot;r&quot;, encoding=&quot;utf-8&quot;) as file:
-    print(file.read())
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MODEL</span> <span class="o">=</span> <span class="s2">&quot;padim&quot;</span>  <span class="c1"># &#39;padim&#39;, &#39;cflow&#39;, &#39;stfpm&#39;, &#39;ganomaly&#39;, &#39;dfkde&#39;, &#39;patchcore&#39;</span>
+<span class="n">CONFIG_PATH</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;../../anomalib/models/</span><span class="si">{</span><span class="n">MODEL</span><span class="si">}</span><span class="s2">/config.yaml&quot;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">CONFIG_PATH</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+dataset:
+  name: mvtec
+  format: mvtec
+  path: ./datasets/MVTec
+  category: bottle
+  task: segmentation
+  train_batch_size: 32
+  eval_batch_size: 32
+  num_workers: 8
+  image_size: 256 # dimensions to which images are resized (mandatory)
+  center_crop: null # dimensions to which images are center-cropped after resizing (optional)
+  normalization: imagenet # data distribution to which the images will be normalized: [none, imagenet]
+  transform_config:
+    train: null
+    eval: null
+  test_split_mode: from_dir # options: [from_dir, synthetic]
+  test_split_ratio: 0.2 # fraction of train images held out testing (usage depends on test_split_mode)
+  val_split_mode: same_as_test # options: [same_as_test, from_test, synthetic]
+  val_split_ratio: 0.5 # fraction of train/test images held out for validation (usage depends on val_split_mode)
+  tiling:
+    apply: false
+    tile_size: null
+    stride: null
+    remove_border_count: 0
+    use_random_tiling: False
+    random_tile_count: 16
+
+model:
+  name: padim
+  backbone: resnet18
+  pre_trained: true
+  layers:
+    - layer1
+    - layer2
+    - layer3
+  normalization_method: min_max # options: [none, min_max, cdf]
+
+metrics:
+  image:
+    - F1Score
+    - AUROC
+  pixel:
+    - F1Score
+    - AUROC
+  threshold:
+    method: adaptive #options: [adaptive, manual]
+    manual_image: null
+    manual_pixel: null
+
+visualization:
+  show_images: False # show images on the screen
+  save_images: True # save images to the file system
+  log_images: True # log images to the available loggers (if any)
+  image_save_path: null # path to which images will be saved
+  mode: full # options: [&#34;full&#34;, &#34;simple&#34;]
+
+project:
+  seed: 42
+  path: ./results
+
+logging:
+  logger: [] # options: [comet, tensorboard, wandb, csv] or combinations.
+  log_graph: false # Logs the model graph to respective logger.
+
+optimization:
+  export_mode: null #options: onnx, openvino
+
+# PL Trainer Args. Don&#39;t add extra parameter here.
+trainer:
+  accelerator: auto # &lt;&#34;cpu&#34;, &#34;gpu&#34;, &#34;tpu&#34;, &#34;ipu&#34;, &#34;hpu&#34;, &#34;auto&#34;&gt;
+  accumulate_grad_batches: 1
+  amp_backend: native
+  auto_lr_find: false
+  auto_scale_batch_size: false
+  auto_select_gpus: false
+  benchmark: false
+  check_val_every_n_epoch: 1 # Don&#39;t validate before extracting features.
+  default_root_dir: null
+  detect_anomaly: false
+  deterministic: false
+  devices: 1
+  enable_checkpointing: true
+  enable_model_summary: true
+  enable_progress_bar: true
+  fast_dev_run: false
+  gpus: null # Set automatically
+  gradient_clip_val: 0
+  ipus: null
+  limit_predict_batches: 1.0
+  limit_test_batches: 1.0
+  limit_train_batches: 1.0
+  limit_val_batches: 1.0
+  log_every_n_steps: 50
+  max_epochs: 1
+  max_steps: -1
+  max_time: null
+  min_epochs: null
+  min_steps: null
+  move_metrics_to_cpu: false
+  multiple_trainloader_mode: max_size_cycle
+  num_nodes: 1
+  num_processes: null
+  num_sanity_val_steps: 0
+  overfit_batches: 0.0
+  plugins: null
+  precision: 32
+  profiler: null
+  reload_dataloaders_every_n_epochs: 0
+  replace_sampler_ddp: true
+  sync_batchnorm: false
+  tpu_cores: null
+  track_grad_norm: -1
+  val_check_interval: 1.0 # Don&#39;t validate before extracting features.
+
+</pre></div></div>
 </div>
 <p>We could use <a class="reference external" href="https://github.com/openvinotoolkit/anomalib/blob/main/anomalib/config/config.py#L114">get_configurable_parameter</a> function to read the configs from the path and return them in a dictionary. We use the default config file that comes with Padim implementation, which uses <code class="docutils literal notranslate"><span class="pre">./datasets/MVTec</span></code> as the path to the dataset. We need to overwrite this after loading the config.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># pass the config file to model, callbacks and datamodule
-config = get_configurable_parameters(config_path=CONFIG_PATH)
-config[&quot;dataset&quot;][&quot;path&quot;] = &quot;../../datasets/MVTec&quot;  # or wherever the MVTec dataset is stored.
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># pass the config file to model, callbacks and datamodule</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">get_configurable_parameters</span><span class="p">(</span><span class="n">config_path</span><span class="o">=</span><span class="n">CONFIG_PATH</span><span class="p">)</span>
+<span class="n">config</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">][</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;../../datasets/MVTec&quot;</span>  <span class="c1"># or wherever the MVTec dataset is stored.</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/user/conda/lib/python3.8/site-packages/anomalib/config/config.py:275: UserWarning: config.project.unique_dir is set to False. This does not ensure that your results will be written in an empty directory and you may overwrite files.
+  warn(
+</pre></div></div>
 </div>
 </section>
 <section id="Dataset:-MVTec-AD">
@@ -613,33 +797,33 @@ config[&quot;dataset&quot;][&quot;path&quot;] = &quot;../../datasets/MVTec&quot;
 <p><strong>MVTec AD</strong> is a dataset for benchmarking anomaly detection methods with a focus on industrial inspection. It contains over <strong>5000</strong> high-resolution images divided into <strong>15</strong> different object and texture categories. Each category comprises a set of defect-free training images and a test set of images with various kinds of defects as well as images without defects. If the dataset is not located in the root datasets directory, anomalib will automatically install the dataset.</p>
 <p>We could now import the MVtec AD dataset using its specific datamodule implemented in anomalib.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>datamodule = get_datamodule(config)
-datamodule.setup()  # Downloads the dataset if it&#39;s not in the specified `root` directory
-datamodule.prepare_data()  # Create train/val/test/prediction sets.
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datamodule</span> <span class="o">=</span> <span class="n">get_datamodule</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="n">datamodule</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>  <span class="c1"># Downloads the dataset if it&#39;s not in the specified `root` directory</span>
+<span class="n">datamodule</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">()</span>  <span class="c1"># Create train/val/test/prediction sets.</span>
 
-i, data = next(enumerate(datamodule.val_dataloader()))
-data.keys()
+<span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">datamodule</span><span class="o">.</span><span class="n">val_dataloader</span><span class="p">()))</span>
+<span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-dict_keys([&#39;image&#39;, &#39;image_path&#39;, &#39;label&#39;, &#39;mask_path&#39;, &#39;mask&#39;])
+dict_keys([&#39;image_path&#39;, &#39;label&#39;, &#39;image&#39;, &#39;mask_path&#39;, &#39;mask&#39;])
 </pre></div></div>
 </div>
 <p>Let’s check the shapes of the input images and masks.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(data[&quot;image&quot;].shape, data[&quot;mask&quot;].shape)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -653,66 +837,89 @@ torch.Size([32, 3, 256, 256]) torch.Size([32, 256, 256])
 </div>
 <p>We could now visualize a normal and abnormal sample from the validation set.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def show_image_and_mask(sample: Dict[str, Any], index: int) -&gt; Image:
-    img = ToPILImage()(Denormalize()(sample[&quot;image&quot;][index].clone()))
-    msk = ToPILImage()(sample[&quot;mask&quot;][index]).convert(&quot;RGB&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">show_image_and_mask</span><span class="p">(</span><span class="n">sample</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Image</span><span class="p">:</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">ToPILImage</span><span class="p">()(</span><span class="n">Denormalize</span><span class="p">()(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()))</span>
+    <span class="n">msk</span> <span class="o">=</span> <span class="n">ToPILImage</span><span class="p">()(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">])</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">)</span>
 
-    return Image.fromarray(np.hstack((np.array(img), np.array(msk))))
+    <span class="k">return</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">msk</span><span class="p">))))</span>
 
 
-# Visualize a normal image-mask
-show_image_and_mask(data, index=0)
+<span class="c1"># Visualize a normal image-mask</span>
+<span class="n">show_image_and_mask</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/user/conda/lib/python3.8/site-packages/anomalib/pre_processing/transforms/custom.py:24: UserWarning: Denormalize is no longer used and will be deprecated in v0.4.0
+  warnings.warn(&#34;Denormalize is no longer used and will be deprecated in v0.4.0&#34;)
+</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_15_0.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_15_0.png" />
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_21_1.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_21_1.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Visualize an abnormal image-mask
-show_image_and_mask(data, index=20)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualize an abnormal image-mask</span>
+<span class="n">show_image_and_mask</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_16_0.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_16_0.png" />
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_22_0.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_22_0.png" />
 </div>
 </div>
 </section>
 <section id="Prepare-Model-and-Callbacks">
 <h1>Prepare Model and Callbacks<a class="headerlink" href="#Prepare-Model-and-Callbacks" title="Permalink to this heading">¶</a></h1>
 <p>Now, the config file is updated as we want. We can now start model training with it. Here we will be using <code class="docutils literal notranslate"><span class="pre">datamodule</span></code>, <code class="docutils literal notranslate"><span class="pre">model</span></code> and <code class="docutils literal notranslate"><span class="pre">callbacks</span></code> to train the model. Callbacks are self-contained objects, which contains non-essential logic. This way we could inject as many callbacks as possible such as ModelLoading, Timer, Metrics, Normalization and Visualization</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model = get_model(config)
-callbacks = get_callbacks(config)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="n">callbacks</span> <span class="o">=</span> <span class="n">get_callbacks</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/user/conda/lib/python3.8/site-packages/torchmetrics/utilities/prints.py:36: DeprecationWarning: From v0.10 an `&#39;Binary*&#39;`, `&#39;Multiclass*&#39;, `&#39;Multilabel*&#39;` version now exist of each classification metric. Moving forward we recommend using these versions. This base metric will still work as it did prior to v0.10 until v0.11. From v0.11 the `task` argument introduced in this metric will be required and the general order of arguments may change, such that this metric will just function as an single entrypoint to calling the three specialized versions.
+  warnings.warn(*args, **kwargs)
+/home/user/conda/lib/python3.8/site-packages/torchmetrics/utilities/prints.py:36: UserWarning: Metric `PrecisionRecallCurve` will save all targets and predictions in buffer. For large datasets this may lead to large memory footprint.
+  warnings.warn(*args, **kwargs)
+FeatureExtractor is deprecated. Use TimmFeatureExtractor instead. Both FeatureExtractor and TimmFeatureExtractor will be removed in version 2023.1
+/home/user/conda/lib/python3.8/site-packages/anomalib/utils/callbacks/__init__.py:142: UserWarning: Export option: None not found. Defaulting to no model export
+  warnings.warn(f&#34;Export option: {config.optimization.export_mode} not found. Defaulting to no model export&#34;)
+</pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># start training
-trainer = Trainer(**config.trainer, callbacks=callbacks)
-trainer.fit(model=model, datamodule=datamodule)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># start training</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="o">.</span><span class="n">trainer</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">datamodule</span><span class="o">=</span><span class="n">datamodule</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -730,30 +937,27 @@ HPU available: False, using: 0 HPUs
 `Trainer(limit_test_batches=1.0)` was configured so 100% of the batches will be used..
 `Trainer(limit_predict_batches=1.0)` was configured so 100% of the batches will be used..
 `Trainer(val_check_interval=1.0)` was configured so validation will run at the end of the training epoch..
-Missing logger folder: results/padim/mvtec/bottle/lightning_logs
-/home/sakcay/miniconda3/envs/anomalib/lib/python3.8/site-packages/torchmetrics/utilities/prints.py:36: UserWarning: Metric `ROC` will save all targets and predictions in buffer. For large datasets this may lead to large memory footprint.
+Missing logger folder: results/padim/mvtec/bottle/run/lightning_logs
+/home/user/conda/lib/python3.8/site-packages/torchmetrics/utilities/prints.py:36: UserWarning: Metric `ROC` will save all targets and predictions in buffer. For large datasets this may lead to large memory footprint.
   warnings.warn(*args, **kwargs)
-/home/sakcay/miniconda3/envs/anomalib/lib/python3.8/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:608: UserWarning: Checkpoint directory /home/sakcay/projects/anomalib/notebooks/001_getting_started/results/padim/mvtec/bottle/weights exists and is not empty.
-  rank_zero_warn(f&#34;Checkpoint directory {dirpath} exists and is not empty.&#34;)
-LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
-/home/sakcay/miniconda3/envs/anomalib/lib/python3.8/site-packages/pytorch_lightning/core/optimizer.py:183: UserWarning: `LightningModule.configure_optimizers` returned `None`, this fit will run with no optimizer
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [3]
+/home/user/conda/lib/python3.8/site-packages/pytorch_lightning/core/optimizer.py:183: UserWarning: `LightningModule.configure_optimizers` returned `None`, this fit will run with no optimizer
   rank_zero_warn(
 
   | Name                  | Type                     | Params
 -------------------------------------------------------------------
-0 | image_threshold       | AdaptiveThreshold        | 0
-1 | pixel_threshold       | AdaptiveThreshold        | 0
-2 | training_distribution | AnomalyScoreDistribution | 0
-3 | min_max               | MinMax                   | 0
-4 | model                 | PadimModel               | 11.7 M
-5 | image_metrics         | AnomalibMetricCollection | 0
-6 | pixel_metrics         | AnomalibMetricCollection | 0
+0 | image_threshold       | AnomalyScoreThreshold    | 0
+1 | pixel_threshold       | AnomalyScoreThreshold    | 0
+2 | model                 | PadimModel               | 2.8 M
+3 | image_metrics         | AnomalibMetricCollection | 0
+4 | pixel_metrics         | AnomalibMetricCollection | 0
+5 | normalization_metrics | MinMax                   | 0
 -------------------------------------------------------------------
-11.7 M    Trainable params
+2.8 M     Trainable params
 0         Non-trainable params
-11.7 M    Total params
-46.758    Total estimated model params size (MB)
-/home/sakcay/miniconda3/envs/anomalib/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py:1927: PossibleUserWarning: The number of training batches (7) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+2.8 M     Total params
+11.131    Total estimated model params size (MB)
+/home/user/conda/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py:1933: PossibleUserWarning: The number of training batches (7) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
   rank_zero_warn(
 </pre></div></div>
 </div>
@@ -762,7 +966,7 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0:  40%|████      | 4/10 [00:01&lt;00:02,  2.29it/s, loss=nan, v_num=0]
+Epoch 0:  40%|████      | 4/10 [00:01&lt;00:02,  2.14it/s, loss=nan, v_num=0]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -770,7 +974,7 @@ Epoch 0:  40%|████      | 4/10 [00:01&lt;00:02,  2.29it/s, loss=nan, v_n
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/home/sakcay/miniconda3/envs/anomalib/lib/python3.8/site-packages/pytorch_lightning/loops/optimization/optimizer_loop.py:137: UserWarning: `training_step` returned `None`. If this was on purpose, ignore this warning...
+/home/user/conda/lib/python3.8/site-packages/pytorch_lightning/loops/optimization/optimizer_loop.py:137: UserWarning: `training_step` returned `None`. If this was on purpose, ignore this warning...
   self.warning_cache.warn(&#34;`training_step` returned `None`. If this was on purpose, ignore this warning...&#34;)
 </pre></div></div>
 </div>
@@ -779,7 +983,16 @@ Epoch 0:  40%|████      | 4/10 [00:01&lt;00:02,  2.29it/s, loss=nan, v_n
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.05it/s, loss=nan, v_num=0, pixel_F1Score=0.731, pixel_AUROC=0.984]
+Epoch 0:  70%|███████   | 7/10 [00:02&lt;00:00,  3.45it/s, loss=nan, v_num=0]
+Validation: 0it [00:00, ?it/s]
+Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Validation DataLoader 0:  33%|███▎      | 1/3 [00:00&lt;00:00,  7.93it/s]
+Epoch 0:  80%|████████  | 8/10 [00:08&lt;00:02,  1.05s/it, loss=nan, v_num=0]
+Validation DataLoader 0:  67%|██████▋   | 2/3 [00:00&lt;00:00,  8.05it/s]
+Epoch 0:  90%|█████████ | 9/10 [00:08&lt;00:00,  1.05it/s, loss=nan, v_num=0]
+Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.07it/s, loss=nan, v_num=0, pixel_F1Score=0.723, pixel_AUROC=0.984]
+Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.07it/s, loss=nan, v_num=0, pixel_F1Score=0.723, pixel_AUROC=0.984]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -787,15 +1000,7 @@ Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.05it/s, 
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/home/sakcay/miniconda3/envs/anomalib/lib/python3.8/site-packages/torchmetrics/utilities/prints.py:36: UserWarning: Torchmetrics v0.9 introduced a new argument class property called `full_state_update` that has
-                not been set for this class (_ResultMetric). The property determines if `update` by
-                default needs access to the full metric state. If this is not the case, significant speedups can be
-                achieved and we recommend setting this to `False`.
-                We provide an checking function
-                `from torchmetrics.utilities import check_forward_no_full_state`
-                that can be used to check if the `full_state_update=True` (old and potential slower behaviour,
-                default for now) or if `full_state_update=False` can be used safely.
-
+/home/user/conda/lib/python3.8/site-packages/torchmetrics/utilities/prints.py:36: DeprecationWarning: `torchmetrics.functional.auc` has been move to `torchmetrics.utilities.compute` in v0.10 and will be removed in v0.11.
   warnings.warn(*args, **kwargs)
 </pre></div></div>
 </div>
@@ -804,20 +1009,20 @@ Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.05it/s, 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0: 100%|██████████| 10/10 [00:10&lt;00:00,  1.01s/it, loss=nan, v_num=0, pixel_F1Score=0.731, pixel_AUROC=0.984]
+Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.02it/s, loss=nan, v_num=0, pixel_F1Score=0.723, pixel_AUROC=0.984]
 </pre></div></div>
 </div>
 </section>
 <section id="Validation">
 <h1>Validation<a class="headerlink" href="#Validation" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># load best model from checkpoint before evaluating
-load_model_callback = LoadModelCallback(weights_path=trainer.checkpoint_callback.best_model_path)
-trainer.callbacks.insert(0, load_model_callback)
-trainer.test(model=model, datamodule=datamodule)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load best model from checkpoint before evaluating</span>
+<span class="n">load_model_callback</span> <span class="o">=</span> <span class="n">LoadModelCallback</span><span class="p">(</span><span class="n">weights_path</span><span class="o">=</span><span class="n">trainer</span><span class="o">.</span><span class="n">checkpoint_callback</span><span class="o">.</span><span class="n">best_model_path</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">load_model_callback</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">datamodule</span><span class="o">=</span><span class="n">datamodule</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -826,7 +1031,7 @@ trainer.test(model=model, datamodule=datamodule)
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [3]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -834,41 +1039,35 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Testing DataLoader 0: 100%|██████████| 3/3 [00:22&lt;00:00,  7.62s/it]
+Testing DataLoader 0: 100%|██████████| 3/3 [00:20&lt;00:00,  6.76s/it]
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+       Test metric             DataLoader 0
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+       image_AUROC          0.9976190328598022
+      image_F1Score         0.9921259880065918
+       pixel_AUROC          0.9835835099220276
+      pixel_F1Score         0.7233028411865234
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 </pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area rendered_html docutils container">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃<span style="font-weight: bold">        Test metric        </span>┃<span style="font-weight: bold">       DataLoader 0        </span>┃
-┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│<span style="color: #008080; text-decoration-color: #008080">        image_AUROC        </span>│<span style="color: #800080; text-decoration-color: #800080">    0.9968253970146179     </span>│
-│<span style="color: #008080; text-decoration-color: #008080">       image_F1Score       </span>│<span style="color: #800080; text-decoration-color: #800080">         0.984375          </span>│
-│<span style="color: #008080; text-decoration-color: #008080">        pixel_AUROC        </span>│<span style="color: #800080; text-decoration-color: #800080">    0.9835128784179688     </span>│
-│<span style="color: #008080; text-decoration-color: #008080">       pixel_F1Score       </span>│<span style="color: #800080; text-decoration-color: #800080">    0.7311428785324097     </span>│
-└───────────────────────────┴───────────────────────────┘
-</pre></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[{&#39;pixel_F1Score&#39;: 0.7311428785324097,
-  &#39;pixel_AUROC&#39;: 0.9835128784179688,
-  &#39;image_F1Score&#39;: 0.984375,
-  &#39;image_AUROC&#39;: 0.9968253970146179}]
+[{&#39;pixel_F1Score&#39;: 0.7233028411865234,
+  &#39;pixel_AUROC&#39;: 0.9835835099220276,
+  &#39;image_F1Score&#39;: 0.9921259880065918,
+  &#39;image_AUROC&#39;: 0.9976190328598022}]
 </pre></div></div>
 </div>
 <p>By default, the output images are saved into <code class="docutils literal notranslate"><span class="pre">results</span></code> directory. We could get the output filenames from the directory, read the saved the images and visualize here.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(config[&quot;project&quot;][&quot;path&quot;])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;project&quot;</span><span class="p">][</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -877,15 +1076,15 @@ Testing DataLoader 0: 100%|██████████| 3/3 [00:22&lt;00:00, 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-results/padim/mvtec/bottle
+results/padim/mvtec/bottle/run
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>image_filenames = list(Path(config[&quot;project&quot;][&quot;path&quot;]).glob(&quot;**/*.png&quot;))
-print(image_filenames[0])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image_filenames</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;project&quot;</span><span class="p">][</span><span class="s2">&quot;path&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;**/*.png&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">image_filenames</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -894,17 +1093,612 @@ print(image_filenames[0])
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-results/padim/mvtec/bottle/images/contamination/017.png
+results/padim/mvtec/bottle/run/images/image_ROC.png
 </pre></div></div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for filename in image_filenames:
-    image = Image.open(filename)
-    display(image)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">image_filenames</span><span class="p">:</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_0.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_1.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_2.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_2.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_3.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_3.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_4.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_4.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_5.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_5.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_6.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_6.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_7.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_7.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_8.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_8.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_9.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_9.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_10.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_10.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_11.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_11.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_12.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_12.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_13.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_13.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_14.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_14.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_15.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_15.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_16.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_16.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_17.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_17.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_18.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_18.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_19.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_19.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_20.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_20.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_21.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_21.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_22.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_22.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_23.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_23.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_24.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_24.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_25.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_25.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_26.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_26.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_27.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_27.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_28.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_28.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_29.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_29.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_30.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_30.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_31.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_31.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_32.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_32.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_33.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_33.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_34.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_34.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_35.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_35.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_36.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_36.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_37.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_37.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_38.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_38.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_39.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_39.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_40.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_40.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_41.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_41.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_42.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_42.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_43.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_43.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_44.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_44.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_45.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_45.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_46.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_46.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_47.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_47.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_48.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_48.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_49.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_49.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_50.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_50.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_51.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_51.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_52.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_52.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_53.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_53.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_54.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_54.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_55.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_55.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_56.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_56.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_57.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_57.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_58.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_58.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_59.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_59.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_60.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_60.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_61.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_61.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_62.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_62.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_63.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_63.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_64.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_64.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_65.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_65.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_66.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_66.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_67.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_67.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_68.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_68.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_69.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_69.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_70.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_70.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_71.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_71.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_72.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_72.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_73.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_73.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_74.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_74.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_75.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_75.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_76.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_76.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_77.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_77.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_78.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_78.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_79.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_79.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_80.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_80.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_81.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_81.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_82.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_82.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_83.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_83.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_84.png" src="../../../_images/how_to_guides_notebooks_000_getting_started_001_getting_started_31_84.png" />
 </div>
 </div>
 </section>
@@ -936,8 +1730,34 @@ results/padim/mvtec/bottle/images/contamination/017.png
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Installing Anomalib</a><ul>
+<li><a class="reference internal" href="#I.-Install-via-PyPI">I. Install via PyPI</a></li>
+<li><a class="reference internal" href="#II.-Install-from-Source">II. Install from Source</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Imports">Imports</a></li>
+<li><a class="reference internal" href="#Model">Model</a></li>
+<li><a class="reference internal" href="#Configuration">Configuration</a></li>
+<li><a class="reference internal" href="#Dataset:-MVTec-AD">Dataset: MVTec AD</a></li>
+<li><a class="reference internal" href="#Prepare-Model-and-Callbacks">Prepare Model and Callbacks</a></li>
+<li><a class="reference internal" href="#Validation">Validation</a></li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

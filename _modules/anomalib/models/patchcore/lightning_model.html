@@ -173,9 +173,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Tiling Large Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/200_models/201_fastflow.html">Train a Model via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../how_to_guides/notebooks/400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -273,12 +275,14 @@
 <span class="c1"># Copyright (C) 2022 Intel Corporation</span>
 <span class="c1"># SPDX-License-Identifier: Apache-2.0</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">MODEL_REGISTRY</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.types</span> <span class="kn">import</span> <span class="n">STEP_OUTPUT</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
@@ -289,12 +293,12 @@
 
 <div class="viewcode-block" id="Patchcore"><a class="viewcode-back" href="../../../../reference_guide/algorithms/patchcore.html#anomalib.models.patchcore.lightning_model.Patchcore">[docs]</a><span class="nd">@MODEL_REGISTRY</span>
 <span class="k">class</span> <span class="nc">Patchcore</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;PatchcoreLightning Module to train PatchCore algorithm.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;PatchcoreLightning Module to train PatchCore algorithm.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        input_size (Tuple[int, int]): Size of the model input.</span>
+<span class="sd">        input_size (tuple[int, int]): Size of the model input.</span>
 <span class="sd">        backbone (str): Backbone CNN network</span>
-<span class="sd">        layers (List[str]): Layers to extract features from the backbone CNN</span>
+<span class="sd">        layers (list[str]): Layers to extract features from the backbone CNN</span>
 <span class="sd">        pre_trained (bool, optional): Boolean to check whether to use a pre_trained backbone.</span>
 <span class="sd">        coreset_sampling_ratio (float, optional): Coreset sampling ratio to subsample embedding.</span>
 <span class="sd">            Defaults to 0.1.</span>
@@ -303,9 +307,9 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">input_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">input_size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
         <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">layers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">layers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
         <span class="n">pre_trained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">coreset_sampling_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
         <span class="n">num_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span>
@@ -320,25 +324,24 @@
             <span class="n">num_neighbors</span><span class="o">=</span><span class="n">num_neighbors</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">coreset_sampling_ratio</span> <span class="o">=</span> <span class="n">coreset_sampling_ratio</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
 <div class="viewcode-block" id="Patchcore.configure_optimizers"><a class="viewcode-back" href="../../../../reference_guide/algorithms/patchcore.html#anomalib.models.patchcore.lightning_model.Patchcore.configure_optimizers">[docs]</a>    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Configure optimizers.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Configure optimizers.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            None: Do not set optimizers by returning None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Patchcore.training_step"><a class="viewcode-back" href="../../../../reference_guide/algorithms/patchcore.html#anomalib.models.patchcore.lightning_model.Patchcore.training_step">[docs]</a>    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_batch_idx</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
-        <span class="sd">&quot;&quot;&quot;Generate feature embedding of the batch.</span>
+<div class="viewcode-block" id="Patchcore.training_step"><a class="viewcode-back" href="../../../../reference_guide/algorithms/patchcore.html#anomalib.models.patchcore.lightning_model.Patchcore.training_step">[docs]</a>    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate feature embedding of the batch.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            batch (Dict[str, Any]): Batch containing image filename, image, label and mask</span>
-<span class="sd">            _batch_idx (int): Batch Index</span>
+<span class="sd">            batch (dict[str, str | Tensor]): Batch containing image filename, image, label and mask</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Dict[str, np.ndarray]: Embedding Vector</span>
+<span class="sd">            dict[str, np.ndarray]: Embedding Vector</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
         <span class="n">embedding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">])</span>
@@ -350,7 +353,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">embedding</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Patchcore.on_validation_start"><a class="viewcode-back" href="../../../../reference_guide/algorithms/patchcore.html#anomalib.models.patchcore.lightning_model.Patchcore.on_validation_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Apply subsampling to the embedding collected from the training set.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply subsampling to the embedding collected from the training set.&quot;&quot;&quot;</span>
         <span class="c1"># NOTE: Previous anomalib versions fit subsampling at the end of the epoch.</span>
         <span class="c1">#   This is not possible anymore with PyTorch Lightning v1.4.0 since validation</span>
         <span class="c1">#   is run within train epoch.</span>
@@ -360,16 +363,15 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Applying core-set subsampling to get the embedding.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">subsample_embedding</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">coreset_sampling_ratio</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Patchcore.validation_step"><a class="viewcode-back" href="../../../../reference_guide/algorithms/patchcore.html#anomalib.models.patchcore.lightning_model.Patchcore.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>  <span class="c1"># pylint: disable=arguments-differ</span>
-        <span class="sd">&quot;&quot;&quot;Get batch of anomaly maps from input image batch.</span>
+<div class="viewcode-block" id="Patchcore.validation_step"><a class="viewcode-back" href="../../../../reference_guide/algorithms/patchcore.html#anomalib.models.patchcore.lightning_model.Patchcore.validation_step">[docs]</a>    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">STEP_OUTPUT</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get batch of anomaly maps from input image batch.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            batch (Dict[str, Any]): Batch containing image filename,</span>
-<span class="sd">                                    image, label and mask</span>
-<span class="sd">            _ (int): Batch Index</span>
+<span class="sd">            batch (dict[str, str | Tensor]): Batch containing image filename,</span>
+<span class="sd">                image, label and mask</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Dict[str, Any]: Image filenames, test images, GT and predicted label/masks</span>
+<span class="sd">            dict[str, Any]: Image filenames, test images, GT and predicted label/masks</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">anomaly_maps</span><span class="p">,</span> <span class="n">anomaly_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">])</span>
@@ -380,10 +382,10 @@
 
 
 <div class="viewcode-block" id="PatchcoreLightning"><a class="viewcode-back" href="../../../../reference_guide/algorithms/patchcore.html#anomalib.models.patchcore.lightning_model.PatchcoreLightning">[docs]</a><span class="k">class</span> <span class="nc">PatchcoreLightning</span><span class="p">(</span><span class="n">Patchcore</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;PatchcoreLightning Module to train PatchCore algorithm.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;PatchcoreLightning Module to train PatchCore algorithm.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        hparams (Union[DictConfig, ListConfig]): Model params</span>
+<span class="sd">        hparams (DictConfig | ListConfig): Model params</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -395,7 +397,7 @@
             <span class="n">coreset_sampling_ratio</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">coreset_sampling_ratio</span><span class="p">,</span>
             <span class="n">num_neighbors</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">num_neighbors</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hparams</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span>  <span class="c1"># type: ignore</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span></div>
 </pre></div>
         </article>
