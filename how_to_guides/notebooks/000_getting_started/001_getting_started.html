@@ -966,7 +966,7 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [3]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0:  40%|████      | 4/10 [00:01&lt;00:02,  2.09it/s, loss=nan, v_num=0]
+Epoch 0:  40%|████      | 4/10 [00:01&lt;00:02,  2.18it/s, loss=nan, v_num=0]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -983,16 +983,16 @@ Epoch 0:  40%|████      | 4/10 [00:01&lt;00:02,  2.09it/s, loss=nan, v_n
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0:  70%|███████   | 7/10 [00:02&lt;00:00,  3.37it/s, loss=nan, v_num=0]
+Epoch 0:  70%|███████   | 7/10 [00:02&lt;00:00,  3.50it/s, loss=nan, v_num=0]
 Validation: 0it [00:00, ?it/s]
 Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
 Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Validation DataLoader 0:  33%|███▎      | 1/3 [00:00&lt;00:00,  8.75it/s]
-Epoch 0:  80%|████████  | 8/10 [00:08&lt;00:02,  1.07s/it, loss=nan, v_num=0]
-Validation DataLoader 0:  67%|██████▋   | 2/3 [00:00&lt;00:00,  8.51it/s]
-Epoch 0:  90%|█████████ | 9/10 [00:08&lt;00:00,  1.04it/s, loss=nan, v_num=0]
-Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.06it/s, loss=nan, v_num=0, pixel_F1Score=0.714, pixel_AUROC=0.982]
-Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.06it/s, loss=nan, v_num=0, pixel_F1Score=0.714, pixel_AUROC=0.982]
+Validation DataLoader 0:  33%|███▎      | 1/3 [00:00&lt;00:00,  8.63it/s]
+Epoch 0:  80%|████████  | 8/10 [00:08&lt;00:02,  1.01s/it, loss=nan, v_num=0]
+Validation DataLoader 0:  67%|██████▋   | 2/3 [00:00&lt;00:00,  8.59it/s]
+Epoch 0:  90%|█████████ | 9/10 [00:08&lt;00:00,  1.10it/s, loss=nan, v_num=0]
+Epoch 0: 100%|██████████| 10/10 [00:08&lt;00:00,  1.11it/s, loss=nan, v_num=0, pixel_F1Score=0.716, pixel_AUROC=0.982]
+Epoch 0: 100%|██████████| 10/10 [00:08&lt;00:00,  1.11it/s, loss=nan, v_num=0, pixel_F1Score=0.716, pixel_AUROC=0.982]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1009,7 +1009,7 @@ Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.06it/s, 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.01it/s, loss=nan, v_num=0, pixel_F1Score=0.714, pixel_AUROC=0.982]
+Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.06it/s, loss=nan, v_num=0, pixel_F1Score=0.716, pixel_AUROC=0.982]
 </pre></div></div>
 </div>
 </section>
@@ -1039,14 +1039,14 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [3]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Testing DataLoader 0: 100%|██████████| 3/3 [00:19&lt;00:00,  6.65s/it]
+Testing DataLoader 0: 100%|██████████| 3/3 [00:19&lt;00:00,  6.60s/it]
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
        Test metric             DataLoader 0
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-       image_AUROC          0.9960317611694336
-      image_F1Score         0.9921259880065918
-       pixel_AUROC           0.982471227645874
-      pixel_F1Score         0.7135489583015442
+       image_AUROC          0.9944444894790649
+      image_F1Score              0.984375
+       pixel_AUROC          0.9819654226303101
+      pixel_F1Score         0.7155288457870483
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 </pre></div></div>
 </div>
@@ -1056,10 +1056,10 @@ Testing DataLoader 0: 100%|██████████| 3/3 [00:19&lt;00:00, 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[{&#39;pixel_F1Score&#39;: 0.7135489583015442,
-  &#39;pixel_AUROC&#39;: 0.982471227645874,
-  &#39;image_F1Score&#39;: 0.9921259880065918,
-  &#39;image_AUROC&#39;: 0.9960317611694336}]
+[{&#39;pixel_F1Score&#39;: 0.7155288457870483,
+  &#39;pixel_AUROC&#39;: 0.9819654226303101,
+  &#39;image_F1Score&#39;: 0.984375,
+  &#39;image_AUROC&#39;: 0.9944444894790649}]
 </pre></div></div>
 </div>
 <p>By default, the output images are saved into <code class="docutils literal notranslate"><span class="pre">results</span></code> directory. We could get the output filenames from the directory, read the saved the images and visualize here.</p>

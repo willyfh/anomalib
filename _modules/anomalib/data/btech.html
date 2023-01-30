@@ -357,12 +357,13 @@
     <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">!=</span> <span class="s2">&quot;ground_truth&quot;</span><span class="p">]</span>
 
     <span class="c1"># Create mask_path column</span>
+    <span class="c1"># (safely handles cases where non-mask image_paths end with either .png or .bmp)</span>
     <span class="n">samples</span><span class="p">[</span><span class="s2">&quot;mask_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">samples</span><span class="o">.</span><span class="n">path</span>
         <span class="o">+</span> <span class="s2">&quot;/ground_truth/&quot;</span>
         <span class="o">+</span> <span class="n">samples</span><span class="o">.</span><span class="n">label</span>
         <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
-        <span class="o">+</span> <span class="n">samples</span><span class="o">.</span><span class="n">image_path</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="o">+</span> <span class="n">samples</span><span class="o">.</span><span class="n">image_path</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;bmp&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
         <span class="o">+</span> <span class="s2">&quot;.png&quot;</span>
     <span class="p">)</span>
 
