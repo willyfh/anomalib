@@ -422,7 +422,7 @@
 <span class="sd">        task (TaskType): Task type, ``classification``, ``detection`` or ``segmentation``</span>
 <span class="sd">        transform (A.Compose): Albumentations Compose object describing the transforms that are applied to the inputs.</span>
 <span class="sd">        split (str | Split | None): Split of the dataset, usually Split.TRAIN or Split.TEST</span>
-<span class="sd">        root (str): Path to the root of the dataset</span>
+<span class="sd">        root (Path | str): Path to the root of the dataset</span>
 <span class="sd">        category (str): Sub-category of the dataset, e.g. &#39;bottle&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -430,7 +430,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">task</span><span class="p">:</span> <span class="n">TaskType</span><span class="p">,</span>
         <span class="n">transform</span><span class="p">:</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">,</span>
-        <span class="n">root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">root</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">split</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Split</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -447,7 +447,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;MVTec Datamodule.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        root (str): Path to the root of the dataset</span>
+<span class="sd">        root (Path | str): Path to the root of the dataset</span>
 <span class="sd">        category (str): Category of the MVTec dataset (e.g. &quot;bottle&quot; or &quot;cable&quot;).</span>
 <span class="sd">        image_size (int | tuple[int, int] | None, optional): Size of the input image.</span>
 <span class="sd">            Defaults to None.</span>
@@ -473,7 +473,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">root</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">image_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">center_crop</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>

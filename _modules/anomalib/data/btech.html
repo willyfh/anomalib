@@ -451,7 +451,7 @@
 
 <span class="sd">    Args:</span>
 
-<span class="sd">        root (str): Path to the BTech dataset.</span>
+<span class="sd">        root (Path | str): Path to the BTech dataset.</span>
 <span class="sd">        category (str): Name of the BTech category.</span>
 <span class="sd">        image_size (int | tuple[int, int] | None, optional): Variable to which image is resized. Defaults to None.</span>
 <span class="sd">        center_crop (int | tuple[int, int] | None, optional): When provided, the images will be center-cropped to the</span>
@@ -510,7 +510,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">root</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">image_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">center_crop</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
