@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Reference Guide" href="../../../reference_guide/index.html" /><link rel="prev" title="Walkthrough on Hyperparameter Optimization using Weights and Biases" href="../300_benchmarking/302_hpo_wandb.html" />
 
     <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
-        <title>int-8 Model Quantization via NNCF - Anomalib v0.4.0dev</title>
+        <title>Setting up the Working Directory - Anomalib v0.4.0dev</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -171,14 +171,29 @@
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../index.html">How to Guides</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../train_custom_data.html">Training with Custom Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../adding_a_new_model.html">Adding a New Model to Anomalib</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/101_btech.html">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/101_btech.html#Use-BeanTech-Dataset-via-API">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/104_tiling.html">Tiling Large Images</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html">Train a Model via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/102_mvtec.html#Setting-up-the-Working-Directory">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/103_folder.html">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/103_folder.html#Use-Folder-Dataset-(for-Custom-Datasets)-via-API">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/104_tiling.html">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/104_tiling.html#Tiling-in-Anomalib-Training">Tiling in Anomalib Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#Imports">Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#Data-Module">Data Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#FastFlow-Model">FastFlow Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#Optimizer">Optimizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#Callbacks">Callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#Training">Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#Testing">Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#Inference">Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#Visualization">Visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">int-8 Model Quantization via NNCF</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#1.-Standard-Training-without-NNCF">1. Standard Training without NNCF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#2.-Training-with-NNCF">2. Training with NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -525,12 +540,43 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
+<section id="Setting-up-the-Working-Directory">
+<h1>Setting up the Working Directory<a class="headerlink" href="#Setting-up-the-Working-Directory" title="Permalink to this heading">¶</a></h1>
+<p>This cell is to ensure we change the directory to anomalib source code to have access to the datasets and config files. We assume that you already went through <code class="docutils literal notranslate"><span class="pre">001_getting_started.ipynb</span></code> and install the required packages.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">git.repo</span> <span class="kn">import</span> <span class="n">Repo</span>
+
+<span class="n">current_directory</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">current_directory</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;400_openvino&quot;</span><span class="p">:</span>
+    <span class="c1"># On the assumption that, the notebook is located in</span>
+    <span class="c1">#   ~/anomalib/notebooks/400_openvino/</span>
+    <span class="n">root_directory</span> <span class="o">=</span> <span class="n">current_directory</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+<span class="k">elif</span> <span class="n">current_directory</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;anomalib&quot;</span><span class="p">:</span>
+    <span class="c1"># This means that the notebook is run from the main anomalib directory.</span>
+    <span class="n">root_directory</span> <span class="o">=</span> <span class="n">current_directory</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Otherwise, we&#39;ll need to clone the anomalib repo to the `current_directory`</span>
+    <span class="n">repo</span> <span class="o">=</span> <span class="n">Repo</span><span class="o">.</span><span class="n">clone_from</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://github.com/openvinotoolkit/anomalib.git&quot;</span><span class="p">,</span> <span class="n">to_path</span><span class="o">=</span><span class="n">current_directory</span><span class="p">)</span>
+    <span class="n">root_directory</span> <span class="o">=</span> <span class="n">current_directory</span> <span class="o">/</span> <span class="s2">&quot;anomalib&quot;</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">root_directory</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <section id="int-8-Model-Quantization-via-NNCF">
-<h1>int-8 Model Quantization via NNCF<a class="headerlink" href="#int-8-Model-Quantization-via-NNCF" title="Permalink to this heading">¶</a></h1>
+<h2>int-8 Model Quantization via NNCF<a class="headerlink" href="#int-8-Model-Quantization-via-NNCF" title="Permalink to this heading">¶</a></h2>
 <p>It is possible to use Neural Network Compression Framework (<a class="reference external" href="https://github.com/openvinotoolkit/nncf">NNCF</a>) with anomalib for inference optimization in <a class="reference external" href="https://docs.openvino.ai/latest/index.html">OpenVINO</a> with minimal accuracy drop.</p>
 <p>This notebook demonstrates how NNCF is enabled in anomalib to optimize the model for inference. Before diving into the details, let’s first train a model using the standard Torch training loop.</p>
+</section>
+</section>
 <section id="1.-Standard-Training-without-NNCF">
-<h2>1. Standard Training without NNCF<a class="headerlink" href="#1.-Standard-Training-without-NNCF" title="Permalink to this heading">¶</a></h2>
+<h1>1. Standard Training without NNCF<a class="headerlink" href="#1.-Standard-Training-without-NNCF" title="Permalink to this heading">¶</a></h1>
 <p>To train model without NNCF, we use the standard training loop. We use the same training loop as in the <a class="reference external" href="https://github.com/openvinotoolkit/anomalib/blob/main/notebooks/000_getting_started/001_getting_started.ipynb">Getting Started Notebook</a>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -545,33 +591,38 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<section id="Configuration">
-<h3>Configuration<a class="headerlink" href="#Configuration" title="Permalink to this heading">¶</a></h3>
 <p>Similar to the <a class="reference external" href="https://github.com/openvinotoolkit/anomalib/blob/main/notebooks/000_getting_started/001_getting_started.ipynb">Getting Started Notebook</a>, we will start with the <a class="reference external" href="https://github.com/openvinotoolkit/anomalib/tree/main/anomalib/models/padim">PADIM</a> model. We follow the standard training loop, where we first import the config file, with which we import datamodule, model, callbacks and trainer, respectively.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MODEL</span> <span class="o">=</span> <span class="s2">&quot;padim&quot;</span>  <span class="c1"># &#39;padim&#39;, &#39;stfpm&#39;</span>
-<span class="n">CONFIG_PATH</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;../../anomalib/models/</span><span class="si">{</span><span class="n">MODEL</span><span class="si">}</span><span class="s2">/config.yaml&quot;</span>
+<span class="n">CONFIG_PATH</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;anomalib/models/</span><span class="si">{</span><span class="n">MODEL</span><span class="si">}</span><span class="s2">/config.yaml&quot;</span>
 
 <span class="n">config</span> <span class="o">=</span> <span class="n">get_configurable_parameters</span><span class="p">(</span><span class="n">config_path</span><span class="o">=</span><span class="n">CONFIG_PATH</span><span class="p">)</span>
-<span class="n">config</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">][</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;../../datasets/MVTec&quot;</span>  <span class="c1"># or wherever the MVTec dataset is stored.</span>
 </pre></div>
 </div>
 </div>
 <p>Note that we will run OpenVINO’s <code class="docutils literal notranslate"><span class="pre">benchmark_app</span></code> on the model, which requires the model to be in the ONNX format. Therefore, we set the <code class="docutils literal notranslate"><span class="pre">export_mode</span></code> flag to <code class="docutils literal notranslate"><span class="pre">onnx</span></code> in the <code class="docutils literal notranslate"><span class="pre">optimization</span></code> <a class="reference external" href="https://github.com/openvinotoolkit/anomalib/blob/main/anomalib/models/padim/config.yaml#L61">config file</a>. Let’s check the current config:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;optimization&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;export_mode&#39;: None}
+</pre></div></div>
+</div>
 <p>As mentioned above, we need to explicitly state that we want onnx export mode to be able to run <code class="docutils literal notranslate"><span class="pre">benchmark_app</span></code> to compute the throughput and latency of the model.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;optimization&quot;</span><span class="p">][</span><span class="s2">&quot;export_mode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;onnx&quot;</span>
@@ -594,12 +645,9 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 </section>
-</section>
 <section id="2.-Training-with-NNCF">
-<h2>2. Training with NNCF<a class="headerlink" href="#2.-Training-with-NNCF" title="Permalink to this heading">¶</a></h2>
+<h1>2. Training with NNCF<a class="headerlink" href="#2.-Training-with-NNCF" title="Permalink to this heading">¶</a></h1>
 <p>The above results indicate the performance of the standard fp32 model. We will now use NNCF to optimize the model for inference using int8 quantization. Note, that NNCF and Anomalib integration is still in the experimental stage and currently only Padim and STFPM models are optimized. It is likely that other models would work with NNCF; however, we do not guarantee that the accuracy will not drop significantly.</p>
-<section id="2.1.-Padim-Model">
-<h3>2.1. Padim Model<a class="headerlink" href="#2.1.-Padim-Model" title="Permalink to this heading">¶</a></h3>
 <p>To optimize the Padim model for inference, we need to add NNCF configurations to the <code class="docutils literal notranslate"><span class="pre">optimization</span></code> section of the <a class="reference external" href="https://github.com/openvinotoolkit/anomalib/blob/main/anomalib/models/padim/config.yaml#L60">config file</a>. The following configurations are added to the config file:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">optimization</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">export_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1">#options: onnx, openvino</span>
@@ -615,18 +663,11 @@ div.rendered_html tbody tr:hover {
 <span class="w">          </span><span class="nt">num_init_samples</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">250</span>
 <span class="w">        </span><span class="nt">batchnorm_adaptation</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">num_bn_adaptation_samples</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">250</span>
-<span class="w">      </span><span class="nt">ignored_scopes</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PadimModel/sqrt_0</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PadimModel/interpolate_2</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PadimModel/__truediv___0</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PadimModel/__truediv___1</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PadimModel/matmul_1</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PadimModel/conv2d_0</span>
 </pre></div>
 </div>
 <p>After updating the <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code> file, <code class="docutils literal notranslate"><span class="pre">config</span></code> could be reloaded and the model could be trained with NNCF enabled. Alternatively, we could manually add these NNCF settings to the <code class="docutils literal notranslate"><span class="pre">config</span></code> dictionary here. Since we already have the <code class="docutils literal notranslate"><span class="pre">config</span></code> dictionary, we will choose the latter option, and manually add the NNCF configs.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;optimization&quot;</span><span class="p">][</span><span class="s2">&quot;nncf&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
@@ -636,14 +677,6 @@ div.rendered_html tbody tr:hover {
         <span class="s2">&quot;algorithm&quot;</span><span class="p">:</span> <span class="s2">&quot;quantization&quot;</span><span class="p">,</span>
         <span class="s2">&quot;preset&quot;</span><span class="p">:</span> <span class="s2">&quot;mixed&quot;</span><span class="p">,</span>
         <span class="s2">&quot;initializer&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;num_init_samples&quot;</span><span class="p">:</span> <span class="mi">250</span><span class="p">},</span> <span class="s2">&quot;batchnorm_adaptation&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;num_bn_adaptation_samples&quot;</span><span class="p">:</span> <span class="mi">250</span><span class="p">}},</span>
-        <span class="s2">&quot;ignored_scopes&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;PadimModel/sqrt_0&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;PadimModel/interpolate_2&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;PadimModel/__truediv___0&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;PadimModel/__truediv___1&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;PadimModel/matmul_1&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;PadimModel/conv2d_0&quot;</span><span class="p">,</span>
-        <span class="p">],</span>
     <span class="p">},</span>
 <span class="p">}</span>
 </pre></div>
@@ -666,7 +699,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">fp32_results</span><span class="p">)</span>
@@ -674,19 +707,15 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[{&#39;pixel_F1Score&#39;: 0.7201628684997559,
-  &#39;pixel_AUROC&#39;: 0.9823368787765503,
-  &#39;image_F1Score&#39;: 0.984375,
-  &#39;image_AUROC&#39;: 0.9952381253242493}]
+[{&#39;pixel_F1Score&#39;: 0.7241847515106201, &#39;pixel_AUROC&#39;: 0.9831862449645996, &#39;image_F1Score&#39;: 0.9921259880065918, &#39;image_AUROC&#39;: 0.9960317611694336}]
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">int8_results</span><span class="p">)</span>
@@ -694,15 +723,11 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[{&#39;pixel_F1Score&#39;: 0.6734229922294617,
-  &#39;pixel_AUROC&#39;: 0.9672871232032776,
-  &#39;image_F1Score&#39;: 0.9767441749572754,
-  &#39;image_AUROC&#39;: 0.9912698268890381}]
+[{&#39;pixel_F1Score&#39;: 0.7164928913116455, &#39;pixel_AUROC&#39;: 0.9731722474098206, &#39;image_F1Score&#39;: 0.9841269850730896, &#39;image_AUROC&#39;: 0.9904761910438538}]
 </pre></div></div>
 </div>
 <p>As can be seen above, there is a slight performance drop in the accuracy of the model. However, the model is now ready to be optimized for inference. We could now use <code class="docutils literal notranslate"><span class="pre">benchmark_app</span></code> to compute the throughput and latency of the fp32 and int8 models and compare the results.</p>
@@ -725,9 +750,6 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <p>We have observed approximately 30.1% performance improvement in the throughput and latency of the int8 model compared to the fp32 model. This is a significant performance improvement, which could be achieved with 6.94% drop pixel F1-Score.</p>
-</section>
-<section id="2.2.-STFPM-Model">
-<h3>2.2. STFPM Model<a class="headerlink" href="#2.2.-STFPM-Model" title="Permalink to this heading">¶</a></h3>
 <p>Same steps in 2.1 could be followed to optimize the STFPM model for inference. The only difference is that the <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code> file for STFPM model, located <a class="reference external" href="https://github.com/openvinotoolkit/anomalib/blob/main/anomalib/models/stfpm/config.yaml#L67">here</a>, should be updated with the following:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">optimization</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">export_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"> </span><span class="c1">#options: onnx, openvino</span>
@@ -754,8 +776,6 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <p>This is to ensure that we achieve the best accuracy vs throughput trade-off.</p>
-</section>
-</section>
 </section>
 
         </article>
@@ -815,18 +835,12 @@ div.rendered_html tbody tr:hover {
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">int-8 Model Quantization via NNCF</a><ul>
-<li><a class="reference internal" href="#1.-Standard-Training-without-NNCF">1. Standard Training without NNCF</a><ul>
-<li><a class="reference internal" href="#Configuration">Configuration</a></li>
+<li><a class="reference internal" href="#">Setting up the Working Directory</a><ul>
+<li><a class="reference internal" href="#int-8-Model-Quantization-via-NNCF">int-8 Model Quantization via NNCF</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#2.-Training-with-NNCF">2. Training with NNCF</a><ul>
-<li><a class="reference internal" href="#2.1.-Padim-Model">2.1. Padim Model</a></li>
-<li><a class="reference internal" href="#2.2.-STFPM-Model">2.2. STFPM Model</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a class="reference internal" href="#1.-Standard-Training-without-NNCF">1. Standard Training without NNCF</a></li>
+<li><a class="reference internal" href="#2.-Training-with-NNCF">2. Training with NNCF</a></li>
 </ul>
 
           </div>

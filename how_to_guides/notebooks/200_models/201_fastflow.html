@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Short walkthrough on Benchmarking in Anomalib" href="../300_benchmarking/301_benchmarking.html" /><link rel="prev" title="Tiling Large Images" href="../100_datamodules/104_tiling.html" />
+<link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Short walkthrough on Benchmarking in Anomalib" href="../300_benchmarking/301_benchmarking.html" /><link rel="prev" title="Setting up the Working Directory" href="../100_datamodules/104_tiling.html" />
 
     <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
-        <title>Train a Model via API - Anomalib v0.4.0dev</title>
+        <title>Setting up the Working Directory - Anomalib v0.4.0dev</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -171,14 +171,29 @@
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../index.html">How to Guides</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../train_custom_data.html">Training with Custom Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../adding_a_new_model.html">Adding a New Model to Anomalib</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/101_btech.html">Use BeanTech Dataset via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/101_btech.html">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/101_btech.html#Use-BeanTech-Dataset-via-API">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/104_tiling.html">Tiling Large Images</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Train a Model via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/102_mvtec.html#Setting-up-the-Working-Directory">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/103_folder.html">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/103_folder.html#Use-Folder-Dataset-(for-Custom-Datasets)-via-API">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/104_tiling.html">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../100_datamodules/104_tiling.html#Tiling-in-Anomalib-Training">Tiling in Anomalib Training</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Imports">Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Data-Module">Data Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#FastFlow-Model">FastFlow Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Optimizer">Optimizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Callbacks">Callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Training">Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Testing">Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Inference">Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Visualization">Visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../400_openvino/nncf.html">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../400_openvino/nncf.html#1.-Standard-Training-without-NNCF">1. Standard Training without NNCF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../400_openvino/nncf.html#2.-Training-with-NNCF">2. Training with NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -525,56 +540,109 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<section id="Train-a-Model-via-API">
-<h1>Train a Model via API<a class="headerlink" href="#Train-a-Model-via-API" title="Permalink to this heading">¶</a></h1>
-<p>This notebook demonstrates how to train, test and infer the FastFlow model via Anomalib API. Compared to the CLI entrypoints such as `tools/&lt;train, test, inference&gt;.py, the API offers more flexibility such as modifying the existing model or designing custom approaches.</p>
-<section id="Imports">
-<h2>Imports<a class="headerlink" href="#Imports" title="Permalink to this heading">¶</a></h2>
+<section id="Setting-up-the-Working-Directory">
+<h1>Setting up the Working Directory<a class="headerlink" href="#Setting-up-the-Working-Directory" title="Permalink to this heading">¶</a></h1>
+<p>This cell is to ensure we change the directory to anomalib source code to have access to the datasets and config files. We assume that you already went through <code class="docutils literal notranslate"><span class="pre">001_getting_started.ipynb</span></code> and install the required packages.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span><span class="p">,</span> <span class="n">update_wrapper</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span><span class="p">,</span> <span class="n">update_wrapper</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">MethodType</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">git.repo</span> <span class="kn">import</span> <span class="n">Repo</span>
+
+<span class="n">current_directory</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">current_directory</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;200_models&quot;</span><span class="p">:</span>
+    <span class="c1"># On the assumption that, the notebook is located in</span>
+    <span class="c1">#   ~/anomalib/notebooks/100_datamodules/</span>
+    <span class="n">root_directory</span> <span class="o">=</span> <span class="n">current_directory</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+<span class="k">elif</span> <span class="n">current_directory</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;anomalib&quot;</span><span class="p">:</span>
+    <span class="c1"># This means that the notebook is run from the main anomalib directory.</span>
+    <span class="n">root_directory</span> <span class="o">=</span> <span class="n">current_directory</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Otherwise, we&#39;ll need to clone the anomalib repo to the `current_directory`</span>
+    <span class="n">repo</span> <span class="o">=</span> <span class="n">Repo</span><span class="o">.</span><span class="n">clone_from</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://github.com/openvinotoolkit/anomalib.git&quot;</span><span class="p">,</span> <span class="n">to_path</span><span class="o">=</span><span class="n">current_directory</span><span class="p">)</span>
+    <span class="n">root_directory</span> <span class="o">=</span> <span class="n">current_directory</span> <span class="o">/</span> <span class="s2">&quot;anomalib&quot;</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">root_directory</span><span class="p">)</span>
+<span class="n">dataset_root</span> <span class="o">=</span> <span class="n">root_directory</span> <span class="o">/</span> <span class="s2">&quot;datasets&quot;</span> <span class="o">/</span> <span class="s2">&quot;MVTec&quot;</span>
+</pre></div>
+</div>
+</div>
+<section id="Train-a-Model-via-API">
+<h2>Train a Model via API<a class="headerlink" href="#Train-a-Model-via-API" title="Permalink to this heading">¶</a></h2>
+<p>This notebook demonstrates how to train, test and infer the FastFlow model via Anomalib API. Compared to the CLI entrypoints such as `tools/&lt;train, test, inference&gt;.py, the API offers more flexibility such as modifying the existing model or designing custom approaches.</p>
+</section>
+</section>
+<section id="Imports">
+<h1>Imports<a class="headerlink" href="#Imports" title="Permalink to this heading">¶</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">LightningModule</span><span class="p">,</span> <span class="n">Trainer</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">EarlyStopping</span><span class="p">,</span> <span class="n">ModelCheckpoint</span>
 <span class="kn">from</span> <span class="nn">torch.optim</span> <span class="kn">import</span> <span class="n">Optimizer</span>
 <span class="kn">from</span> <span class="nn">torch.optim.adam</span> <span class="kn">import</span> <span class="n">Adam</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
 
-<span class="kn">from</span> <span class="nn">anomalib.data</span> <span class="kn">import</span> <span class="n">InferenceDataset</span>
+<span class="kn">from</span> <span class="nn">anomalib.data</span> <span class="kn">import</span> <span class="n">InferenceDataset</span><span class="p">,</span> <span class="n">TaskType</span>
 <span class="kn">from</span> <span class="nn">anomalib.data.mvtec</span> <span class="kn">import</span> <span class="n">MVTec</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.fastflow.lightning_model</span> <span class="kn">import</span> <span class="n">Fastflow</span>
-<span class="kn">from</span> <span class="nn">anomalib.post_processing</span> <span class="kn">import</span> <span class="n">superimpose_anomaly_map</span>
+<span class="kn">from</span> <span class="nn">anomalib.post_processing</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">NormalizationMethod</span><span class="p">,</span>
+    <span class="n">ThresholdMethod</span><span class="p">,</span>
+    <span class="n">superimpose_anomaly_map</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">anomalib.pre_processing.transforms</span> <span class="kn">import</span> <span class="n">Denormalize</span>
 <span class="kn">from</span> <span class="nn">anomalib.utils.callbacks</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ImageVisualizerCallback</span><span class="p">,</span>
     <span class="n">MetricsConfigurationCallback</span><span class="p">,</span>
     <span class="n">MetricVisualizerCallback</span><span class="p">,</span>
-    <span class="n">MinMaxNormalizationCallback</span><span class="p">,</span>
+    <span class="n">PostProcessingConfigurationCallback</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/user/conda/lib/python3.8/site-packages/tqdm/auto.py:22: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre></div></div>
+</div>
 </section>
 <section id="Data-Module">
-<h2>Data Module<a class="headerlink" href="#Data-Module" title="Permalink to this heading">¶</a></h2>
+<h1>Data Module<a class="headerlink" href="#Data-Module" title="Permalink to this heading">¶</a></h1>
 <p>To train the model end-to-end, we do need to have a dataset. In our <a class="reference external" href="https://github.com/openvinotoolkit/anomalib/tree/main/notebooks/100_datamodules">previous notebooks</a>, we demonstrate how to initialize benchmark- and custom datasets. In this tutorial, we will use MVTec AD DataModule. We assume that <code class="docutils literal notranslate"><span class="pre">datasets</span></code> directory is created in the <code class="docutils literal notranslate"><span class="pre">anomalib</span></code> root directory and <code class="docutils literal notranslate"><span class="pre">MVTec</span></code> dataset is located in <code class="docutils literal notranslate"><span class="pre">datasets</span></code> directory.</p>
+<p>Before creating the dataset, let’s define the task type that we will be working on. In this notebook, we will be working on a segmentation task. Therefore the <code class="docutils literal notranslate"><span class="pre">task</span></code> variable would be:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">task</span> <span class="o">=</span> <span class="n">TaskType</span><span class="o">.</span><span class="n">SEGMENTATION</span>
+</pre></div>
+</div>
+</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datamodule</span> <span class="o">=</span> <span class="n">MVTec</span><span class="p">(</span>
-    <span class="n">root</span><span class="o">=</span><span class="s2">&quot;../../datasets/MVTec/&quot;</span><span class="p">,</span>
+    <span class="n">root</span><span class="o">=</span><span class="n">dataset_root</span><span class="p">,</span>
     <span class="n">category</span><span class="o">=</span><span class="s2">&quot;bottle&quot;</span><span class="p">,</span>
     <span class="n">image_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
     <span class="n">train_batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
-    <span class="n">test_batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+    <span class="n">eval_batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
     <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
-    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;segmentation&quot;</span><span class="p">,</span>
+    <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">datamodule</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 <span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">datamodule</span><span class="o">.</span><span class="n">test_dataloader</span><span class="p">()))</span>
@@ -592,27 +660,38 @@ Image Shape: torch.Size([32, 3, 256, 256]) Mask Shape: torch.Size([32, 256, 256]
 </div>
 </section>
 <section id="FastFlow-Model">
-<h2>FastFlow Model<a class="headerlink" href="#FastFlow-Model" title="Permalink to this heading">¶</a></h2>
+<h1>FastFlow Model<a class="headerlink" href="#FastFlow-Model" title="Permalink to this heading">¶</a></h1>
 <p>Now that we have created the MVTec datamodule, we could create the FastFlow model. We could start with printing its docstring.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Fastflow<span class="o">??</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Fastflow</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">],</span> <span class="n">backbone</span><span class="o">=</span><span class="s2">&quot;resnet18&quot;</span><span class="p">,</span> <span class="n">flow_steps</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Fastflow</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">backbone</span><span class="o">=</span><span class="s2">&quot;resnet18&quot;</span><span class="p">,</span> <span class="n">flow_steps</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/user/conda/lib/python3.8/site-packages/torchmetrics/utilities/prints.py:36: DeprecationWarning: From v0.10 an `&#39;Binary*&#39;`, `&#39;Multiclass*&#39;, `&#39;Multilabel*&#39;` version now exist of each classification metric. Moving forward we recommend using these versions. This base metric will still work as it did prior to v0.10 until v0.11. From v0.11 the `task` argument introduced in this metric will be required and the general order of arguments may change, such that this metric will just function as an single entrypoint to calling the three specialized versions.
+  warnings.warn(*args, **kwargs)
+/home/user/conda/lib/python3.8/site-packages/torchmetrics/utilities/prints.py:36: UserWarning: Metric `PrecisionRecallCurve` will save all targets and predictions in buffer. For large datasets this may lead to large memory footprint.
+  warnings.warn(*args, **kwargs)
+</pre></div></div>
 </div>
 <p>Depending on the <code class="docutils literal notranslate"><span class="pre">training</span></code> mode, <code class="docutils literal notranslate"><span class="pre">model</span></code> returns two different outputs. If the model is in <code class="docutils literal notranslate"><span class="pre">training</span></code> mode, it returns the hidden variable and the log of the jacobian, based on the feature maps.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">training</span> <span class="o">=</span> <span class="kc">True</span>
@@ -632,7 +711,7 @@ Hidden Variable Shape: torch.Size([32, 64, 64, 64])
 </div>
 <p>During the test/inference mode, the model returns an anomaly heatmap localizing the anomalous regions.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">training</span> <span class="o">=</span> <span class="kc">False</span>
@@ -651,10 +730,10 @@ Anomaly Map Shape: torch.Size([32, 1, 256, 256])
 </div>
 </section>
 <section id="Optimizer">
-<h2>Optimizer<a class="headerlink" href="#Optimizer" title="Permalink to this heading">¶</a></h2>
+<h1>Optimizer<a class="headerlink" href="#Optimizer" title="Permalink to this heading">¶</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">LightningModule</span></code> has <code class="docutils literal notranslate"><span class="pre">configure_optimizer</span></code> method that returns the optimizer object. This is not implemented in the FastFlow model. Instead, it is left to the user to make it configurable by either CLI or API. Here we will be configuring it via the API. To do so, we first need to create the optimizer object, wrap it around a function and finally inject this function into the model class.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="n">lightning_module</span><span class="p">:</span> <span class="n">LightningModule</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">:</span> <span class="n">Optimizer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>  <span class="c1"># pylint: disable=W0613,W0621</span>
@@ -671,17 +750,17 @@ Anomaly Map Shape: torch.Size([32, 1, 256, 256])
 </div>
 </section>
 <section id="Callbacks">
-<h2>Callbacks<a class="headerlink" href="#Callbacks" title="Permalink to this heading">¶</a></h2>
+<h1>Callbacks<a class="headerlink" href="#Callbacks" title="Permalink to this heading">¶</a></h1>
 <p>To train the model properly, we will to add some other “non-essential” logic such as saving the weights, early-stopping, normalizing the anomaly scores and visualizing the input/output images. To achieve these we use <code class="docutils literal notranslate"><span class="pre">Callbacks</span></code>. Anomalib has its own callbacks and also supports PyTorch Lightning’s native callbacks. So, let’s create the list of callbacks we want to execute during the training.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">callbacks</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">MetricsConfigurationCallback</span><span class="p">(</span>
-        <span class="n">adaptive_threshold</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">image_metric_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;AUROC&quot;</span><span class="p">],</span>
-        <span class="n">pixel_metric_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;AUROC&quot;</span><span class="p">],</span>
+        <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span>
+        <span class="n">image_metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;AUROC&quot;</span><span class="p">],</span>
+        <span class="n">pixel_metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;AUROC&quot;</span><span class="p">],</span>
     <span class="p">),</span>
     <span class="n">ModelCheckpoint</span><span class="p">(</span>
         <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;max&quot;</span><span class="p">,</span>
@@ -692,20 +771,23 @@ Anomaly Map Shape: torch.Size([32, 1, 256, 256])
         <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;max&quot;</span><span class="p">,</span>
         <span class="n">patience</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="p">),</span>
-    <span class="n">MinMaxNormalizationCallback</span><span class="p">(),</span>
-    <span class="n">ImageVisualizerCallback</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s2">&quot;segmentation&quot;</span><span class="p">,</span> <span class="n">image_save_path</span><span class="o">=</span><span class="s2">&quot;./results/images&quot;</span><span class="p">),</span>
-    <span class="n">MetricVisualizerCallback</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s2">&quot;segmentation&quot;</span><span class="p">,</span> <span class="n">image_save_path</span><span class="o">=</span><span class="s2">&quot;./results/images&quot;</span><span class="p">),</span>
+    <span class="n">PostProcessingConfigurationCallback</span><span class="p">(</span>
+        <span class="n">normalization_method</span><span class="o">=</span><span class="n">NormalizationMethod</span><span class="o">.</span><span class="n">MIN_MAX</span><span class="p">,</span>
+        <span class="n">threshold_method</span><span class="o">=</span><span class="n">ThresholdMethod</span><span class="o">.</span><span class="n">ADAPTIVE</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">ImageVisualizerCallback</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">image_save_path</span><span class="o">=</span><span class="s2">&quot;./results/images&quot;</span><span class="p">),</span>
+    <span class="n">MetricVisualizerCallback</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">image_save_path</span><span class="o">=</span><span class="s2">&quot;./results/images&quot;</span><span class="p">),</span>
 <span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </section>
 <section id="Training">
-<h2>Training<a class="headerlink" href="#Training" title="Permalink to this heading">¶</a></h2>
+<h1>Training<a class="headerlink" href="#Training" title="Permalink to this heading">¶</a></h1>
 <p>Now that we set up the datamodule, model, optimizer and the callbacks, we could now train the model.</p>
 <p>The final component to train the model is <code class="docutils literal notranslate"><span class="pre">pytorch_lightning</span></code> <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> object, which handles train/test/predict pipeline. Let’s create the trainer object to train the model.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
@@ -731,7 +813,7 @@ HPU available: False, using: 0 HPUs
 <p><code class="docutils literal notranslate"><span class="pre">Trainer</span></code> object has number of options that suit all specific needs. For more details, refer to <a class="reference external" href="https://pytorch-lightning.readthedocs.io/en/stable/common/trainer.html">Lightning Documentation</a> to see how it could be tweaked to your needs.</p>
 <p>Let’s train the model now.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">datamodule</span><span class="o">=</span><span class="n">datamodule</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
@@ -743,21 +825,20 @@ HPU available: False, using: 0 HPUs
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/home/sakcay/miniconda3/envs/anomalib/lib/python3.8/site-packages/torchmetrics/utilities/prints.py:36: UserWarning: Metric `ROC` will save all targets and predictions in buffer. For large datasets this may lead to large memory footprint.
+Missing logger folder: /home/user/actions-runner/_work/anomalib/anomalib/lightning_logs
+/home/user/conda/lib/python3.8/site-packages/torchmetrics/utilities/prints.py:36: UserWarning: Metric `ROC` will save all targets and predictions in buffer. For large datasets this may lead to large memory footprint.
   warnings.warn(*args, **kwargs)
-LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [3]
 
-  | Name                  | Type                     | Params
--------------------------------------------------------------------
-0 | image_threshold       | AdaptiveThreshold        | 0
-1 | pixel_threshold       | AdaptiveThreshold        | 0
-2 | training_distribution | AnomalyScoreDistribution | 0
-3 | min_max               | MinMax                   | 0
-4 | model                 | FastflowModel            | 7.7 M
-5 | loss                  | FastflowLoss             | 0
-6 | image_metrics         | AnomalibMetricCollection | 0
-7 | pixel_metrics         | AnomalibMetricCollection | 0
--------------------------------------------------------------------
+  | Name            | Type                     | Params
+-------------------------------------------------------------
+0 | image_threshold | AnomalyScoreThreshold    | 0
+1 | pixel_threshold | AnomalyScoreThreshold    | 0
+2 | model           | FastflowModel            | 7.7 M
+3 | loss            | FastflowLoss             | 0
+4 | image_metrics   | AnomalibMetricCollection | 0
+5 | pixel_metrics   | AnomalibMetricCollection | 0
+-------------------------------------------------------------
 3.5 M     Trainable params
 4.2 M     Non-trainable params
 7.7 M     Total params
@@ -777,18 +858,44 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/home/sakcay/miniconda3/envs/anomalib/lib/python3.8/site-packages/torchmetrics/utilities/prints.py:36: UserWarning: Torchmetrics v0.9 introduced a new argument class property called `full_state_update` that has
-                not been set for this class (_ResultMetric). The property determines if `update` by
-                default needs access to the full metric state. If this is not the case, significant speedups can be
-                achieved and we recommend setting this to `False`.
-                We provide an checking function
-                `from torchmetrics.utilities import check_forward_no_full_state`
-                that can be used to check if the `full_state_update=True` (old and potential slower behaviour,
-                default for now) or if `full_state_update=False` can be used safely.
-
+/home/user/conda/lib/python3.8/site-packages/torchmetrics/utilities/prints.py:36: DeprecationWarning: `torchmetrics.functional.auc` has been move to `torchmetrics.utilities.compute` in v0.10 and will be removed in v0.11.
   warnings.warn(*args, **kwargs)
-/home/sakcay/miniconda3/envs/anomalib/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py:1927: PossibleUserWarning: The number of training batches (7) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+/home/user/conda/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py:1933: PossibleUserWarning: The number of training batches (7) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
   rank_zero_warn(
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Epoch 0:  10%|█         | 1/10 [00:01&lt;00:17,  1.99s/it, loss=2.33e+05, v_num=0, train_loss_step=2.33e+5]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/user/conda/lib/python3.8/site-packages/pytorch_lightning/utilities/data.py:72: UserWarning: Trying to infer the `batch_size` from an ambiguous collection. The batch size we found is 32. To avoid any miscalculations, use `self.log(..., batch_size=batch_size)`.
+  warning_cache.warn(
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Epoch 0:  70%|███████   | 7/10 [00:02&lt;00:01,  2.56it/s, loss=1.67e+05, v_num=0, train_loss_step=1.12e+5]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/user/conda/lib/python3.8/site-packages/pytorch_lightning/utilities/data.py:72: UserWarning: Trying to infer the `batch_size` from an ambiguous collection. The batch size we found is 17. To avoid any miscalculations, use `self.log(..., batch_size=batch_size)`.
+  warning_cache.warn(
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -796,16 +903,104 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 11: 100%|██████████| 10/10 [02:14&lt;00:00, 13.47s/it, loss=-4.27e+05, v_num=2, pixel_AUROC=0.974]
+
+Validation: 0it [00:00, ?it/s]
+Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Epoch 0:  80%|████████  | 8/10 [00:04&lt;00:01,  1.70it/s, loss=1.67e+05, v_num=0, train_loss_step=1.12e+5]
+Validation DataLoader 0:  67%|██████▋   | 2/3 [00:00&lt;00:00, 10.90it/s]
+Epoch 0:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.87it/s, loss=1.67e+05, v_num=0, train_loss_step=1.12e+5]
+Epoch 0: 100%|██████████| 10/10 [00:05&lt;00:00,  1.78it/s, loss=1.67e+05, v_num=0, train_loss_step=1.12e+5, pixel_AUROC=0.794]
+Epoch 1:  70%|███████   | 7/10 [00:02&lt;00:01,  2.53it/s, loss=1.09e+05, v_num=0, train_loss_step=6e+3, pixel_AUROC=0.794, train_loss_epoch=1.71e+5]
+Validation: 0it [00:00, ?it/s]
+Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Epoch 1:  80%|████████  | 8/10 [00:04&lt;00:01,  1.71it/s, loss=1.09e+05, v_num=0, train_loss_step=6e+3, pixel_AUROC=0.794, train_loss_epoch=1.71e+5]
+Validation DataLoader 0:  67%|██████▋   | 2/3 [00:00&lt;00:00, 11.08it/s]
+Epoch 1:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.89it/s, loss=1.09e+05, v_num=0, train_loss_step=6e+3, pixel_AUROC=0.794, train_loss_epoch=1.71e+5]
+Epoch 1: 100%|██████████| 10/10 [00:05&lt;00:00,  1.79it/s, loss=1.09e+05, v_num=0, train_loss_step=6e+3, pixel_AUROC=0.892, train_loss_epoch=1.71e+5]
+Epoch 2:  70%|███████   | 7/10 [00:02&lt;00:01,  2.54it/s, loss=4.9e+04, v_num=0, train_loss_step=-7.71e+4, pixel_AUROC=0.892, train_loss_epoch=5.33e+4]
+Validation: 0it [00:00, ?it/s]
+Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Epoch 2:  80%|████████  | 8/10 [00:04&lt;00:01,  1.70it/s, loss=4.9e+04, v_num=0, train_loss_step=-7.71e+4, pixel_AUROC=0.892, train_loss_epoch=5.33e+4]
+Validation DataLoader 0:  67%|██████▋   | 2/3 [00:00&lt;00:00, 10.48it/s]
+Epoch 2:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.87it/s, loss=4.9e+04, v_num=0, train_loss_step=-7.71e+4, pixel_AUROC=0.892, train_loss_epoch=5.33e+4]
+Epoch 2: 100%|██████████| 10/10 [00:05&lt;00:00,  1.78it/s, loss=4.9e+04, v_num=0, train_loss_step=-7.71e+4, pixel_AUROC=0.948, train_loss_epoch=5.33e+4]
+Epoch 3:  70%|███████   | 7/10 [00:02&lt;00:01,  2.49it/s, loss=-4.52e+04, v_num=0, train_loss_step=-1.52e+5, pixel_AUROC=0.948, train_loss_epoch=-4.15e+4]
+Validation: 0it [00:00, ?it/s]
+Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Epoch 3:  80%|████████  | 8/10 [00:04&lt;00:01,  1.67it/s, loss=-4.52e+04, v_num=0, train_loss_step=-1.52e+5, pixel_AUROC=0.948, train_loss_epoch=-4.15e+4]
+Validation DataLoader 0:  67%|██████▋   | 2/3 [00:00&lt;00:00, 10.81it/s]
+Epoch 3:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.85it/s, loss=-4.52e+04, v_num=0, train_loss_step=-1.52e+5, pixel_AUROC=0.948, train_loss_epoch=-4.15e+4]
+Epoch 3: 100%|██████████| 10/10 [00:05&lt;00:00,  1.76it/s, loss=-4.52e+04, v_num=0, train_loss_step=-1.52e+5, pixel_AUROC=0.962, train_loss_epoch=-4.15e+4]
+Epoch 4:  70%|███████   | 7/10 [00:02&lt;00:01,  2.63it/s, loss=-1.23e+05, v_num=0, train_loss_step=-2.12e+5, pixel_AUROC=0.962, train_loss_epoch=-1.19e+5]
+Validation: 0it [00:00, ?it/s]
+Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Epoch 4:  80%|████████  | 8/10 [00:04&lt;00:01,  1.74it/s, loss=-1.23e+05, v_num=0, train_loss_step=-2.12e+5, pixel_AUROC=0.962, train_loss_epoch=-1.19e+5]
+Validation DataLoader 0:  67%|██████▋   | 2/3 [00:00&lt;00:00, 10.78it/s]
+Epoch 4:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.92it/s, loss=-1.23e+05, v_num=0, train_loss_step=-2.12e+5, pixel_AUROC=0.962, train_loss_epoch=-1.19e+5]
+Epoch 4: 100%|██████████| 10/10 [00:05&lt;00:00,  1.82it/s, loss=-1.23e+05, v_num=0, train_loss_step=-2.12e+5, pixel_AUROC=0.967, train_loss_epoch=-1.19e+5]
+Epoch 5:  70%|███████   | 7/10 [00:02&lt;00:01,  2.54it/s, loss=-1.87e+05, v_num=0, train_loss_step=-2.63e+5, pixel_AUROC=0.967, train_loss_epoch=-1.84e+5]
+Validation: 0it [00:00, ?it/s]
+Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Epoch 5:  80%|████████  | 8/10 [00:04&lt;00:01,  1.67it/s, loss=-1.87e+05, v_num=0, train_loss_step=-2.63e+5, pixel_AUROC=0.967, train_loss_epoch=-1.84e+5]
+Validation DataLoader 0:  67%|██████▋   | 2/3 [00:00&lt;00:00,  9.85it/s]
+Epoch 5:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.84it/s, loss=-1.87e+05, v_num=0, train_loss_step=-2.63e+5, pixel_AUROC=0.967, train_loss_epoch=-1.84e+5]
+Epoch 5: 100%|██████████| 10/10 [00:05&lt;00:00,  1.75it/s, loss=-1.87e+05, v_num=0, train_loss_step=-2.63e+5, pixel_AUROC=0.970, train_loss_epoch=-1.84e+5]
+Epoch 6:  70%|███████   | 7/10 [00:02&lt;00:01,  2.54it/s, loss=-2.41e+05, v_num=0, train_loss_step=-3.05e+5, pixel_AUROC=0.970, train_loss_epoch=-2.39e+5]
+Validation: 0it [00:00, ?it/s]
+Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Epoch 6:  80%|████████  | 8/10 [00:04&lt;00:01,  1.71it/s, loss=-2.41e+05, v_num=0, train_loss_step=-3.05e+5, pixel_AUROC=0.970, train_loss_epoch=-2.39e+5]
+Validation DataLoader 0:  67%|██████▋   | 2/3 [00:00&lt;00:00, 11.08it/s]
+Epoch 6:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.89it/s, loss=-2.41e+05, v_num=0, train_loss_step=-3.05e+5, pixel_AUROC=0.970, train_loss_epoch=-2.39e+5]
+Epoch 6: 100%|██████████| 10/10 [00:05&lt;00:00,  1.79it/s, loss=-2.41e+05, v_num=0, train_loss_step=-3.05e+5, pixel_AUROC=0.970, train_loss_epoch=-2.39e+5]
+Epoch 7:  70%|███████   | 7/10 [00:02&lt;00:01,  2.42it/s, loss=-2.87e+05, v_num=0, train_loss_step=-3.45e+5, pixel_AUROC=0.970, train_loss_epoch=-2.84e+5]
+Validation: 0it [00:00, ?it/s]
+Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Epoch 7:  80%|████████  | 8/10 [00:04&lt;00:01,  1.66it/s, loss=-2.87e+05, v_num=0, train_loss_step=-3.45e+5, pixel_AUROC=0.970, train_loss_epoch=-2.84e+5]
+Validation DataLoader 0:  67%|██████▋   | 2/3 [00:00&lt;00:00, 10.51it/s]
+Epoch 7:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.83it/s, loss=-2.87e+05, v_num=0, train_loss_step=-3.45e+5, pixel_AUROC=0.970, train_loss_epoch=-2.84e+5]
+Epoch 7: 100%|██████████| 10/10 [00:05&lt;00:00,  1.74it/s, loss=-2.87e+05, v_num=0, train_loss_step=-3.45e+5, pixel_AUROC=0.973, train_loss_epoch=-2.84e+5]
+Epoch 8:  70%|███████   | 7/10 [00:02&lt;00:01,  2.49it/s, loss=-3.28e+05, v_num=0, train_loss_step=-3.76e+5, pixel_AUROC=0.973, train_loss_epoch=-3.25e+5]
+Validation: 0it [00:00, ?it/s]
+Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Epoch 8:  80%|████████  | 8/10 [00:04&lt;00:01,  1.66it/s, loss=-3.28e+05, v_num=0, train_loss_step=-3.76e+5, pixel_AUROC=0.973, train_loss_epoch=-3.25e+5]
+Validation DataLoader 0:  67%|██████▋   | 2/3 [00:00&lt;00:00, 10.46it/s]
+Epoch 8:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.83it/s, loss=-3.28e+05, v_num=0, train_loss_step=-3.76e+5, pixel_AUROC=0.973, train_loss_epoch=-3.25e+5]
+Epoch 8: 100%|██████████| 10/10 [00:05&lt;00:00,  1.75it/s, loss=-3.28e+05, v_num=0, train_loss_step=-3.76e+5, pixel_AUROC=0.972, train_loss_epoch=-3.25e+5]
+Epoch 9:  70%|███████   | 7/10 [00:02&lt;00:01,  2.47it/s, loss=-3.65e+05, v_num=0, train_loss_step=-4.12e+5, pixel_AUROC=0.972, train_loss_epoch=-3.63e+5]
+Validation: 0it [00:00, ?it/s]
+Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Epoch 9:  80%|████████  | 8/10 [00:04&lt;00:01,  1.68it/s, loss=-3.65e+05, v_num=0, train_loss_step=-4.12e+5, pixel_AUROC=0.972, train_loss_epoch=-3.63e+5]
+Validation DataLoader 0:  67%|██████▋   | 2/3 [00:00&lt;00:00, 10.75it/s]
+Epoch 9:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.85it/s, loss=-3.65e+05, v_num=0, train_loss_step=-4.12e+5, pixel_AUROC=0.972, train_loss_epoch=-3.63e+5]
+Epoch 9: 100%|██████████| 10/10 [00:05&lt;00:00,  1.76it/s, loss=-3.65e+05, v_num=0, train_loss_step=-4.12e+5, pixel_AUROC=0.972, train_loss_epoch=-3.63e+5]
+Epoch 10:  70%|███████   | 7/10 [00:02&lt;00:01,  2.52it/s, loss=-3.98e+05, v_num=0, train_loss_step=-4.38e+5, pixel_AUROC=0.972, train_loss_epoch=-3.95e+5]
+Validation: 0it [00:00, ?it/s]
+Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+Epoch 10:  80%|████████  | 8/10 [00:04&lt;00:01,  1.72it/s, loss=-3.98e+05, v_num=0, train_loss_step=-4.38e+5, pixel_AUROC=0.972, train_loss_epoch=-3.95e+5]
+Validation DataLoader 0:  67%|██████▋   | 2/3 [00:00&lt;00:00,  9.99it/s]
+Epoch 10:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.89it/s, loss=-3.98e+05, v_num=0, train_loss_step=-4.38e+5, pixel_AUROC=0.972, train_loss_epoch=-3.95e+5]
+Epoch 10: 100%|██████████| 10/10 [00:05&lt;00:00,  1.80it/s, loss=-3.98e+05, v_num=0, train_loss_step=-4.38e+5, pixel_AUROC=0.972, train_loss_epoch=-3.95e+5]
+Epoch 10: 100%|██████████| 10/10 [00:05&lt;00:00,  1.79it/s, loss=-3.98e+05, v_num=0, train_loss_step=-4.38e+5, pixel_AUROC=0.972, train_loss_epoch=-4.27e+5]
 </pre></div></div>
 </div>
 <p>The training has finished after 12 epochs. This is because, we set the <code class="docutils literal notranslate"><span class="pre">EarlyStopping</span></code> criteria with a patience of 3, which terminated the training after <code class="docutils literal notranslate"><span class="pre">pixel_AUROC</span></code> stopped improving. If we increased the <code class="docutils literal notranslate"><span class="pre">patience</span></code>, the training would continue further.</p>
 </section>
 <section id="Testing">
-<h2>Testing<a class="headerlink" href="#Testing" title="Permalink to this heading">¶</a></h2>
+<h1>Testing<a class="headerlink" href="#Testing" title="Permalink to this heading">¶</a></h1>
 <p>Now that we trained the model, we could test the model to check the overall performance on the test set. We will also be writing the output of the test images to a file since we set <code class="docutils literal notranslate"><span class="pre">VisualizerCallback</span></code> in <code class="docutils literal notranslate"><span class="pre">callbacks</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainer</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">datamodule</span><span class="o">=</span><span class="n">datamodule</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
@@ -817,7 +1012,7 @@ Epoch 11: 100%|██████████| 10/10 [02:14&lt;00:00, 13.47s/it,
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [3]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -825,36 +1020,30 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Testing DataLoader 0: 100%|██████████| 3/3 [00:23&lt;00:00,  7.93s/it]
+Testing DataLoader 0: 100%|██████████| 3/3 [00:20&lt;00:00,  6.68s/it]
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+       Test metric             DataLoader 0
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+       image_AUROC          0.9960317611694336
+       pixel_AUROC          0.9724125266075134
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 </pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area rendered_html docutils container">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃<span style="font-weight: bold">        Test metric        </span>┃<span style="font-weight: bold">       DataLoader 0        </span>┃
-┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│<span style="color: #008080; text-decoration-color: #008080">        image_AUROC        </span>│<span style="color: #800080; text-decoration-color: #800080">            1.0            </span>│
-│<span style="color: #008080; text-decoration-color: #008080">        pixel_AUROC        </span>│<span style="color: #800080; text-decoration-color: #800080">    0.9744887351989746     </span>│
-└───────────────────────────┴───────────────────────────┘
-</pre></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[{&#39;pixel_AUROC&#39;: 0.9744887351989746, &#39;image_AUROC&#39;: 1.0}]
+[{&#39;pixel_AUROC&#39;: 0.9724125266075134, &#39;image_AUROC&#39;: 0.9960317611694336}]
 </pre></div></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">trainer.test</span></code> returns the <code class="docutils literal notranslate"><span class="pre">pixel_AUROC</span></code> and <code class="docutils literal notranslate"><span class="pre">image_AUROC</span></code> results. We could also find the saved output in <code class="docutils literal notranslate"><span class="pre">images</span></code> directory.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span><span class="w"> </span>ls<span class="w"> </span>images
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>ls<span class="w"> </span>images
 </pre></div>
 </div>
 </div>
@@ -863,27 +1052,25 @@ Testing DataLoader 0: 100%|██████████| 3/3 [00:23&lt;00:00, 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-broken_large  broken_small  contamination  good
+ls: cannot access &#39;images&#39;: No such file or directory
 </pre></div></div>
 </div>
 </section>
 <section id="Inference">
-<h2>Inference<a class="headerlink" href="#Inference" title="Permalink to this heading">¶</a></h2>
+<h1>Inference<a class="headerlink" href="#Inference" title="Permalink to this heading">¶</a></h1>
 <p>Since we have a trained model, we could infer the model on an individual image or folder of images. Anomalib has an <code class="docutils literal notranslate"><span class="pre">InferenceDataset</span></code> to let you create an inference dataset. So let’s try it.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inference_dataset</span> <span class="o">=</span> <span class="n">InferenceDataset</span><span class="p">(</span>
-    <span class="n">path</span><span class="o">=</span><span class="s2">&quot;../../datasets/MVTec/bottle/test/broken_large/000.png&quot;</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
-<span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inference_dataset</span> <span class="o">=</span> <span class="n">InferenceDataset</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">dataset_root</span> <span class="o">/</span> <span class="s2">&quot;bottle/test/broken_large/000.png&quot;</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
 <span class="n">inference_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">inference_dataset</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <p>We could utilize <code class="docutils literal notranslate"><span class="pre">Trainer</span></code>’s <code class="docutils literal notranslate"><span class="pre">predict</span></code> method to infer, and get the outputs to visualize</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">dataloaders</span><span class="o">=</span><span class="n">inference_dataloader</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -895,8 +1082,8 @@ broken_large  broken_small  contamination  good
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
-/home/sakcay/miniconda3/envs/anomalib/lib/python3.8/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:240: PossibleUserWarning: The dataloader, predict_dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 96 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [3]
+/home/user/conda/lib/python3.8/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:240: PossibleUserWarning: The dataloader, predict_dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 96 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
   rank_zero_warn(
 </pre></div></div>
 </div>
@@ -905,12 +1092,12 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Predicting DataLoader 0: 100%|██████████| 1/1 [00:00&lt;00:00, -48.12it/s]
+Predicting DataLoader 0: 100%|██████████| 1/1 [00:00&lt;00:00, -17.98it/s]
 </pre></div></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">predictions</span></code> contain image, anomaly maps, predicted scores, labels and masks. These are all stored in a dictionary. We could check this by printing the <code class="docutils literal notranslate"><span class="pre">prediction</span></code> keys.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">predictions</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -922,11 +1109,11 @@ Predicting DataLoader 0: 100%|██████████| 1/1 [00:00&lt;00:0
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-dict_keys([&#39;image&#39;, &#39;anomaly_maps&#39;, &#39;pred_scores&#39;, &#39;pred_labels&#39;, &#39;pred_masks&#39;])
+dict_keys([&#39;image&#39;, &#39;image_path&#39;, &#39;anomaly_maps&#39;, &#39;pred_scores&#39;, &#39;pred_labels&#39;, &#39;pred_masks&#39;, &#39;pred_boxes&#39;, &#39;box_scores&#39;, &#39;box_labels&#39;])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
@@ -942,16 +1129,18 @@ dict_keys([&#39;image&#39;, &#39;anomaly_maps&#39;, &#39;pred_scores&#39;, &#39;
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-torch.Size([1, 3, 256, 256]) torch.Size([1, 1, 256, 256]) torch.Size([1, 1, 256, 256])
+Image Shape: torch.Size([1, 3, 256, 256]),
+Anomaly Map Shape: {predictions[&#34;anomaly_maps&#34;].shape},
+Predicted Mask Shape: {predictions[&#34;pred_masks&#34;].shape}
 </pre></div></div>
 </div>
 </section>
 <section id="Visualization">
-<h2>Visualization<a class="headerlink" href="#Visualization" title="Permalink to this heading">¶</a></h2>
+<h1>Visualization<a class="headerlink" href="#Visualization" title="Permalink to this heading">¶</a></h1>
 <p>To properly visualize the predictions, we will need to perform some post-processing operations.</p>
 <p>Let’s post-process each output one by one. We could start with the image. Each <code class="docutils literal notranslate"><span class="pre">image</span></code> is a tensor and within (0, 1) range. To visualize it, we need to denormalize it to (0, 255) scale. Anomalib already has a class for this. Let’s use it.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
@@ -960,19 +1149,28 @@ torch.Size([1, 3, 256, 256]) torch.Size([1, 1, 256, 256]) torch.Size([1, 1, 256,
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Shape of the Image: (256, 256, 3)
- Min Pixel Value: 29
- Max Pixel Value: 255
+Image Shape: (256, 256, 3)
+ Min Pixel: 29
+ Max Pixel: 255
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/user/actions-runner/_work/anomalib/anomalib/anomalib/pre_processing/transforms/custom.py:24: UserWarning: Denormalize is no longer used and will be deprecated in v0.4.0
+  warnings.warn(&#34;Denormalize is no longer used and will be deprecated in v0.4.0&#34;)
 </pre></div></div>
 </div>
 <p>We could now see that <code class="docutils literal notranslate"><span class="pre">image</span></code> is of a numpy array and within the range of [0, 255]. It’s ready to be visualized now.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
@@ -980,24 +1178,24 @@ Shape of the Image: (256, 256, 3)
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.image.AxesImage at 0x7f766139b220&gt;
+&lt;matplotlib.image.AxesImage at 0x7f08d8881a30&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_34_1.png" src="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_34_1.png" />
+<img alt="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_37_1.png" src="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_37_1.png" />
 </div>
 </div>
 <p>The second output of the predictions is the anomaly map. As can be seen above, it’s also a torch tensor and of size <code class="docutils literal notranslate"><span class="pre">torch.Size([1,</span> <span class="pre">1,</span> <span class="pre">256,</span> <span class="pre">256])</span></code>. We therefore need to convert it to numpy and squeeze the dimensions to make it <code class="docutils literal notranslate"><span class="pre">256x256</span></code> output to visualize.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">&quot;anomaly_maps&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
@@ -1007,24 +1205,24 @@ Shape of the Image: (256, 256, 3)
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.image.AxesImage at 0x7f766110f4c0&gt;
+&lt;matplotlib.image.AxesImage at 0x7f08d87c5df0&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_36_1.png" src="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_36_1.png" />
+<img alt="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_39_1.png" src="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_39_1.png" />
 </div>
 </div>
 <p>We could superimpose (overlay) the anomaly map on top of the original image to get a heat map. Anomalib has a built-in function to achieve this. Let’s try it.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heat_map</span> <span class="o">=</span> <span class="n">superimpose_anomaly_map</span><span class="p">(</span><span class="n">anomaly_map</span><span class="o">=</span><span class="n">anomaly_map</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1033,24 +1231,24 @@ Shape of the Image: (256, 256, 3)
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.image.AxesImage at 0x7f7661317460&gt;
+&lt;matplotlib.image.AxesImage at 0x7f08d8737cd0&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_38_1.png" src="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_38_1.png" />
+<img alt="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_41_1.png" src="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_41_1.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">predictions</span></code> also contains prediction scores and labels.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_score</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">&quot;pred_scores&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
@@ -1064,12 +1262,12 @@ Shape of the Image: (256, 256, 3)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-tensor(0.7830) tensor(True)
+tensor(-0.0399) tensor(True)
 </pre></div></div>
 </div>
 <p>The last part of the predictions is the mask that is predicted by the model. This is a boolean mask containing True/False for the abnormal/normal pixels, respectively.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_masks</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">&quot;pred_masks&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
@@ -1078,23 +1276,22 @@ tensor(0.7830) tensor(True)
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.image.AxesImage at 0x7f7661283a00&gt;
+&lt;matplotlib.image.AxesImage at 0x7f08d86b9160&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_42_1.png" src="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_42_1.png" />
+<img alt="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_45_1.png" src="../../../_images/how_to_guides_notebooks_200_models_201_fastflow_45_1.png" />
 </div>
 </div>
 <p>That wraps it! In this notebook, we show how we could train, test and finally infer a FastFlow model using Anomalib API.</p>
-</section>
 </section>
 
         </article>
@@ -1118,7 +1315,7 @@ tensor(0.7830) tensor(True)
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Tiling Large Images</div>
+                <div class="title">Setting up the Working Directory</div>
                 
               </div>
             </a>
@@ -1154,7 +1351,10 @@ tensor(0.7830) tensor(True)
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Train a Model via API</a><ul>
+<li><a class="reference internal" href="#">Setting up the Working Directory</a><ul>
+<li><a class="reference internal" href="#Train-a-Model-via-API">Train a Model via API</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#Imports">Imports</a></li>
 <li><a class="reference internal" href="#Data-Module">Data Module</a></li>
 <li><a class="reference internal" href="#FastFlow-Model">FastFlow Model</a></li>
@@ -1164,8 +1364,6 @@ tensor(0.7830) tensor(True)
 <li><a class="reference internal" href="#Testing">Testing</a></li>
 <li><a class="reference internal" href="#Inference">Inference</a></li>
 <li><a class="reference internal" href="#Visualization">Visualization</a></li>
-</ul>
-</li>
 </ul>
 
           </div>

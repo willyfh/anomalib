@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Train a Model via API" href="../200_models/201_fastflow.html" /><link rel="prev" title="Use Folder Dataset (for Custom Datasets) via API" href="103_folder.html" />
+<link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Setting up the Working Directory" href="../200_models/201_fastflow.html" /><link rel="prev" title="Setting up the Working Directory" href="103_folder.html" />
 
     <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
-        <title>Tiling Large Images - Anomalib v0.4.0dev</title>
+        <title>Setting up the Working Directory - Anomalib v0.4.0dev</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -171,14 +171,29 @@
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../index.html">How to Guides</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../train_custom_data.html">Training with Custom Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../adding_a_new_model.html">Adding a New Model to Anomalib</a></li>
-<li class="toctree-l2"><a class="reference internal" href="101_btech.html">Use BeanTech Dataset via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="101_btech.html">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="101_btech.html#Use-BeanTech-Dataset-via-API">Use BeanTech Dataset via API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="102_mvtec.html">Use MVTec AD Dataset via API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="103_folder.html">Use Folder Dataset (for Custom Datasets) via API</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Tiling Large Images</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html">Train a Model via API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="102_mvtec.html#Setting-up-the-Working-Directory">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="103_folder.html">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="103_folder.html#Use-Folder-Dataset-(for-Custom-Datasets)-via-API">Use Folder Dataset (for Custom Datasets) via API</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Tiling-in-Anomalib-Training">Tiling in Anomalib Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#Imports">Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#Data-Module">Data Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#FastFlow-Model">FastFlow Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#Optimizer">Optimizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#Callbacks">Callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#Training">Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#Testing">Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#Inference">Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../200_models/201_fastflow.html#Visualization">Visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../400_openvino/nncf.html">int-8 Model Quantization via NNCF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../400_openvino/nncf.html">Setting up the Working Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../400_openvino/nncf.html#1.-Standard-Training-without-NNCF">1. Standard Training without NNCF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../400_openvino/nncf.html#2.-Training-with-NNCF">2. Training with NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -525,13 +540,43 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
+<section id="Setting-up-the-Working-Directory">
+<h1>Setting up the Working Directory<a class="headerlink" href="#Setting-up-the-Working-Directory" title="Permalink to this heading">¶</a></h1>
+<p>This cell is to ensure we change the directory to anomalib source code to have access to the datasets and config files. We assume that you already went through <code class="docutils literal notranslate"><span class="pre">001_getting_started.ipynb</span></code> and install the required packages.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">git.repo</span> <span class="kn">import</span> <span class="n">Repo</span>
+
+<span class="n">current_directory</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">current_directory</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;100_datamodules&quot;</span><span class="p">:</span>
+    <span class="c1"># On the assumption that, the notebook is located in</span>
+    <span class="c1">#   ~/anomalib/notebooks/100_datamodules/</span>
+    <span class="n">root_directory</span> <span class="o">=</span> <span class="n">current_directory</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+<span class="k">elif</span> <span class="n">current_directory</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;anomalib&quot;</span><span class="p">:</span>
+    <span class="c1"># This means that the notebook is run from the main anomalib directory.</span>
+    <span class="n">root_directory</span> <span class="o">=</span> <span class="n">current_directory</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Otherwise, we&#39;ll need to clone the anomalib repo to the `current_directory`</span>
+    <span class="n">repo</span> <span class="o">=</span> <span class="n">Repo</span><span class="o">.</span><span class="n">clone_from</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://github.com/openvinotoolkit/anomalib.git&quot;</span><span class="p">,</span> <span class="n">to_path</span><span class="o">=</span><span class="n">current_directory</span><span class="p">)</span>
+    <span class="n">root_directory</span> <span class="o">=</span> <span class="n">current_directory</span> <span class="o">/</span> <span class="s2">&quot;anomalib&quot;</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">root_directory</span><span class="p">)</span>
+<span class="n">dataset_root</span> <span class="o">=</span> <span class="n">root_directory</span> <span class="o">/</span> <span class="s2">&quot;datasets&quot;</span> <span class="o">/</span> <span class="s2">&quot;MVTec&quot;</span> <span class="o">/</span> <span class="s2">&quot;transistor&quot;</span>
+</pre></div>
+</div>
+</div>
 <section id="Tiling-Large-Images">
-<h1>Tiling Large Images<a class="headerlink" href="#Tiling-Large-Images" title="Permalink to this heading">¶</a></h1>
+<h2>Tiling Large Images<a class="headerlink" href="#Tiling-Large-Images" title="Permalink to this heading">¶</a></h2>
 <p>In the literature on deep learning, input image sizes typically range from 224 to 768 pixels. In the majority of industrial applications, however, input image sizes are significantly larger. Before the forward pass, these images are resized to a smaller scale before being fed into the models. However, this is problematic in the context of anomaly detection tasks, where the anomaly is typically quite small. The detection of abnormalities becomes extremely difficult when the image is shrunk in
 size. A common method for addressing this issue is to tile the input images so that no information is lost during the resizing operation.</p>
 <p>This notebook demonstrates how tiling works in anomalib, and how tiling can be enabled when training a model using anomalib.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
@@ -553,21 +598,21 @@ size. A common method for addressing this issue is to tile the input images so t
 </pre></div></div>
 </div>
 <section id="Effect-of-Resizing-the-Input-Image">
-<h2>Effect of Resizing the Input Image<a class="headerlink" href="#Effect-of-Resizing-the-Input-Image" title="Permalink to this heading">¶</a></h2>
+<h3>Effect of Resizing the Input Image<a class="headerlink" href="#Effect-of-Resizing-the-Input-Image" title="Permalink to this heading">¶</a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Assuming that datasets directory is located in the root directory.</span>
 <span class="c1"># image = read_image(path=&quot;../../datasets/MVTec/bottle/test/good/000.png&quot;)</span>
-<span class="n">image</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;../../datasets/MVTec/transistor/test/cut_lead/000.png&quot;</span><span class="p">)</span>
-<span class="n">mask</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;../../datasets/MVTec/transistor/ground_truth/cut_lead/000_mask.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">bool</span><span class="p">()</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">dataset_root</span> <span class="o">/</span> <span class="s2">&quot;test/cut_lead/000.png&quot;</span><span class="p">))</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">dataset_root</span> <span class="o">/</span> <span class="s2">&quot;ground_truth/cut_lead/000_mask.png&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">bool</span><span class="p">()</span>
 <span class="n">overlayed_image</span> <span class="o">=</span> <span class="n">draw_segmentation_masks</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;red&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ToPILImage</span><span class="p">()(</span><span class="n">overlayed_image</span><span class="p">)</span>
@@ -575,16 +620,16 @@ size. A common method for addressing this issue is to tile the input images so t
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_4_0.png" src="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_4_0.png" />
+<img alt="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_6_0.png" src="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_6_0.png" />
 </div>
 </div>
 <p>As can be seen above, the original MVTec image is 1024x1024. Most anomaly detection algorithms resize this input size into a smaller value such as 256x256. As mentioned above, this poses a problem for small anomalous regions as they become even smaller. Let’s visualize this by resizing the input image into 256x256 image.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resized_image</span> <span class="o">=</span> <span class="n">Resize</span><span class="p">((</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">))(</span><span class="n">image</span><span class="p">)</span>
@@ -594,7 +639,7 @@ size. A common method for addressing this issue is to tile the input images so t
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ToPILImage</span><span class="p">()(</span><span class="n">resized_overlayed_image</span><span class="p">)</span>
@@ -602,21 +647,21 @@ size. A common method for addressing this issue is to tile the input images so t
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_7_0.png" src="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_7_0.png" />
+<img alt="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_9_0.png" src="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_9_0.png" />
 </div>
 </div>
 <p>The figures above demonstrates how resizing affect the input image size. The original image is 1024x1024. The resized image is 256x256. The anomaly is now much smaller and is difficult to detect.</p>
 </section>
 <section id="Effect-of-Tiling">
-<h2>Effect of Tiling<a class="headerlink" href="#Effect-of-Tiling" title="Permalink to this heading">¶</a></h2>
+<h3>Effect of Tiling<a class="headerlink" href="#Effect-of-Tiling" title="Permalink to this heading">¶</a></h3>
 <p>To avoid losing information with resizing we could instead tile the image into multiple patches. We could utilize anomalib’s <code class="docutils literal notranslate"><span class="pre">Tiler</span></code> object to do this. The <code class="docutils literal notranslate"><span class="pre">Tiler</span></code> object takes in the input image and the desired output size. It then tiles the image into patches of the desired size. The <code class="docutils literal notranslate"><span class="pre">Tiler</span></code> object also returns the coordinates of the patches in the original image. This is useful for reconstructing the tiled image back into the original image. Let’s create a tiler object, tile the input
 image and visualize the tiled image.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tiler</span> <span class="o">=</span> <span class="n">Tiler</span><span class="p">(</span><span class="n">tile_size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
@@ -625,7 +670,7 @@ image and visualize the tiled image.</p>
 </div>
 <p>where stride is the parameter defining the spatial distance in pixels between adjacent tiles, and tile size is the size of each tile (patches). Tile size and stride are here defined as (256, 256) and 256, respectively. As a result, we move 256 pixels to the right to take 256x256 patches. This will result in “non-overlapping tiles”.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tiled_image</span> <span class="o">=</span> <span class="n">tiler</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
@@ -634,7 +679,7 @@ image and visualize the tiled image.</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tiled_image</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">tiled_mask</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
@@ -650,7 +695,7 @@ torch.Size([16, 3, 256, 256]) torch.Size([16, 1, 256, 256])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ToPILImage</span><span class="p">()(</span><span class="n">make_grid</span><span class="p">(</span><span class="n">tiled_image</span><span class="p">,</span> <span class="n">nrow</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
@@ -658,16 +703,16 @@ torch.Size([16, 3, 256, 256]) torch.Size([16, 1, 256, 256])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_13_0.png" src="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_13_0.png" />
+<img alt="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_15_0.png" src="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_15_0.png" />
 </div>
 </div>
 <p>The image is tiled into non-overlapping patches as seen in the figure above. We have 16 patches in total because the original input size is 1024x1024 and the tile and stride sizes are (256, 256) and 25, respectively. As we can see, the fourteenth tile is the one that contains the anomalous region. We can visualize it by running the following:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">overlayed_tile</span> <span class="o">=</span> <span class="n">draw_segmentation_masks</span><span class="p">(</span><span class="n">tiled_image</span><span class="p">[</span><span class="mi">13</span><span class="p">],</span> <span class="n">tiled_mask</span><span class="p">[</span><span class="mi">13</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;red&quot;</span><span class="p">])</span>
@@ -675,27 +720,10 @@ torch.Size([16, 3, 256, 256]) torch.Size([16, 1, 256, 256])
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ToPILImage</span><span class="p">()(</span><span class="n">overlayed_tile</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<img alt="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_16_0.png" src="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_16_0.png" />
-</div>
-</div>
-<p>We could also visualize the resized image and the tiled region by stacking them together. This would show how tiling could preserve the data that resizing operations would otherwise lose.</p>
-<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ToPILImage</span><span class="p">()(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">resized_overlayed_image</span><span class="p">,</span> <span class="n">overlayed_tile</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ToPILImage</span><span class="p">()(</span><span class="n">overlayed_tile</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -707,9 +735,29 @@ torch.Size([16, 3, 256, 256]) torch.Size([16, 1, 256, 256])
 <img alt="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_18_0.png" src="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_18_0.png" />
 </div>
 </div>
+<p>We could also visualize the resized image and the tiled region by stacking them together. This would show how tiling could preserve the data that resizing operations would otherwise lose.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ToPILImage</span><span class="p">()(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">resized_overlayed_image</span><span class="p">,</span> <span class="n">overlayed_tile</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_20_0.png" src="../../../_images/how_to_guides_notebooks_100_datamodules_104_tiling_20_0.png" />
+</div>
+</div>
 <p>Overall, tiling could be a useful feature when the input image size is large and the anomalous region size is small. Tiling the input could avoid information loss that would otherwise occur with resizing.</p>
+</section>
+</section>
+</section>
 <section id="Tiling-in-Anomalib-Training">
-<h3>Tiling in Anomalib Training<a class="headerlink" href="#Tiling-in-Anomalib-Training" title="Permalink to this heading">¶</a></h3>
+<h1>Tiling in Anomalib Training<a class="headerlink" href="#Tiling-in-Anomalib-Training" title="Permalink to this heading">¶</a></h1>
 <p>This section demonstrates how tiling could be enabled in anomalib training. The dataset section in the configuration files needs to be changed in order to enable tiling in anomalib. The dataset contains a tiling section where tiling parameters are set. Below is an illustration of a tiling configuration;</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">tiling</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">apply</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
@@ -732,8 +780,6 @@ torch.Size([16, 3, 256, 256]) torch.Size([16, 1, 256, 256])
 </div>
 <p>depending on the use-case ,these tiling configurations could potentially improve the performance of the anomaly detection models.</p>
 </section>
-</section>
-</section>
 
         </article>
       </div>
@@ -745,7 +791,7 @@ torch.Size([16, 3, 256, 256]) torch.Size([16, 1, 256, 256])
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Train a Model via API</div>
+                <div class="title">Setting up the Working Directory</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -756,7 +802,7 @@ torch.Size([16, 3, 256, 256]) torch.Size([16, 1, 256, 256])
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Use Folder Dataset (for Custom Datasets) via API</div>
+                <div class="title">Setting up the Working Directory</div>
                 
               </div>
             </a>
@@ -792,14 +838,15 @@ torch.Size([16, 3, 256, 256]) torch.Size([16, 1, 256, 256])
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Tiling Large Images</a><ul>
+<li><a class="reference internal" href="#">Setting up the Working Directory</a><ul>
+<li><a class="reference internal" href="#Tiling-Large-Images">Tiling Large Images</a><ul>
 <li><a class="reference internal" href="#Effect-of-Resizing-the-Input-Image">Effect of Resizing the Input Image</a></li>
-<li><a class="reference internal" href="#Effect-of-Tiling">Effect of Tiling</a><ul>
+<li><a class="reference internal" href="#Effect-of-Tiling">Effect of Tiling</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a class="reference internal" href="#Tiling-in-Anomalib-Training">Tiling in Anomalib Training</a></li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
 
           </div>
