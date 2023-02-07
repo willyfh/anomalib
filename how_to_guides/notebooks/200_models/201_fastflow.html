@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Short walkthrough on Benchmarking in Anomalib" href="../300_benchmarking/301_benchmarking.html" /><link rel="prev" title="Setting up the Working Directory" href="../100_datamodules/104_tiling.html" />
 
     <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
-        <title>Setting up the Working Directory - Anomalib v0.4.0dev</title>
+        <title>Setting up the Working Directory - Anomalib v0.4.0rc1</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">Anomalib v0.4.0dev</div></a>
+      <a href="../../../index.html"><div class="brand">Anomalib v0.4.0rc1</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -871,7 +871,7 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [3]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0:  20%|██        | 2/10 [00:02&lt;00:08,  1.04s/it, loss=2.22e+05, v_num=0, train_loss_step=2.08e+5]
+Epoch 0:  20%|██        | 2/10 [00:02&lt;00:08,  1.01s/it, loss=2.2e+05, v_num=0, train_loss_step=2.06e+5]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -888,7 +888,7 @@ Epoch 0:  20%|██        | 2/10 [00:02&lt;00:08,  1.04s/it, loss=2.22e+05, v_
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0:  70%|███████   | 7/10 [00:02&lt;00:01,  2.66it/s, loss=1.7e+05, v_num=0, train_loss_step=1.15e+5]
+Epoch 0:  70%|███████   | 7/10 [00:02&lt;00:01,  2.71it/s, loss=1.65e+05, v_num=0, train_loss_step=1.08e+5]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -909,115 +909,73 @@ Epoch 0:  70%|███████   | 7/10 [00:02&lt;00:01,  2.66it/s, loss=1.
 Validation: 0it [00:00, ?it/s]
 Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
 Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 0:  80%|████████  | 8/10 [00:04&lt;00:01,  1.78it/s, loss=1.7e+05, v_num=0, train_loss_step=1.15e+5]
-Epoch 0:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.96it/s, loss=1.7e+05, v_num=0, train_loss_step=1.15e+5]
-Epoch 0: 100%|██████████| 10/10 [00:05&lt;00:00,  1.86it/s, loss=1.7e+05, v_num=0, train_loss_step=1.15e+5, pixel_AUROC=0.797]
-Epoch 1:  70%|███████   | 7/10 [00:02&lt;00:01,  2.57it/s, loss=1.11e+05, v_num=0, train_loss_step=8.85e+3, pixel_AUROC=0.797, train_loss_epoch=1.73e+5]
+Epoch 0:  80%|████████  | 8/10 [00:04&lt;00:01,  1.76it/s, loss=1.65e+05, v_num=0, train_loss_step=1.08e+5]
+Epoch 0:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.94it/s, loss=1.65e+05, v_num=0, train_loss_step=1.08e+5]
+Epoch 0: 100%|██████████| 10/10 [00:05&lt;00:00,  1.86it/s, loss=1.65e+05, v_num=0, train_loss_step=1.08e+5, pixel_AUROC=0.801]
+Epoch 1:  70%|███████   | 7/10 [00:02&lt;00:01,  2.36it/s, loss=1.06e+05, v_num=0, train_loss_step=757.0, pixel_AUROC=0.801, train_loss_epoch=1.7e+5]
 Validation: 0it [00:00, ?it/s]
 Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
 Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 1:  80%|████████  | 8/10 [00:04&lt;00:01,  1.70it/s, loss=1.11e+05, v_num=0, train_loss_step=8.85e+3, pixel_AUROC=0.797, train_loss_epoch=1.73e+5]
-Epoch 1:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.87it/s, loss=1.11e+05, v_num=0, train_loss_step=8.85e+3, pixel_AUROC=0.797, train_loss_epoch=1.73e+5]
-Epoch 1: 100%|██████████| 10/10 [00:05&lt;00:00,  1.78it/s, loss=1.11e+05, v_num=0, train_loss_step=8.85e+3, pixel_AUROC=0.891, train_loss_epoch=1.73e+5]
-Epoch 2:  70%|███████   | 7/10 [00:02&lt;00:01,  2.56it/s, loss=4.98e+04, v_num=0, train_loss_step=-8.38e+4, pixel_AUROC=0.891, train_loss_epoch=5.55e+4]
+Epoch 1:  80%|████████  | 8/10 [00:05&lt;00:01,  1.58it/s, loss=1.06e+05, v_num=0, train_loss_step=757.0, pixel_AUROC=0.801, train_loss_epoch=1.7e+5]
+Epoch 1:  90%|█████████ | 9/10 [00:05&lt;00:00,  1.75it/s, loss=1.06e+05, v_num=0, train_loss_step=757.0, pixel_AUROC=0.801, train_loss_epoch=1.7e+5]
+Epoch 1: 100%|██████████| 10/10 [00:05&lt;00:00,  1.68it/s, loss=1.06e+05, v_num=0, train_loss_step=757.0, pixel_AUROC=0.897, train_loss_epoch=1.7e+5]
+Epoch 2:  70%|███████   | 7/10 [00:02&lt;00:01,  2.51it/s, loss=4.46e+04, v_num=0, train_loss_step=-8.65e+4, pixel_AUROC=0.897, train_loss_epoch=4.88e+4]
 Validation: 0it [00:00, ?it/s]
 Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
 Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 2:  80%|████████  | 8/10 [00:04&lt;00:01,  1.68it/s, loss=4.98e+04, v_num=0, train_loss_step=-8.38e+4, pixel_AUROC=0.891, train_loss_epoch=5.55e+4]
-Epoch 2:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.85it/s, loss=4.98e+04, v_num=0, train_loss_step=-8.38e+4, pixel_AUROC=0.891, train_loss_epoch=5.55e+4]
-Epoch 2: 100%|██████████| 10/10 [00:05&lt;00:00,  1.78it/s, loss=4.98e+04, v_num=0, train_loss_step=-8.38e+4, pixel_AUROC=0.940, train_loss_epoch=5.55e+4]
-Epoch 3:  70%|███████   | 7/10 [00:02&lt;00:01,  2.56it/s, loss=-4.62e+04, v_num=0, train_loss_step=-1.54e+5, pixel_AUROC=0.940, train_loss_epoch=-4.31e+4]
+Epoch 2:  80%|████████  | 8/10 [00:04&lt;00:01,  1.66it/s, loss=4.46e+04, v_num=0, train_loss_step=-8.65e+4, pixel_AUROC=0.897, train_loss_epoch=4.88e+4]
+Epoch 2:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.83it/s, loss=4.46e+04, v_num=0, train_loss_step=-8.65e+4, pixel_AUROC=0.897, train_loss_epoch=4.88e+4]
+Epoch 2: 100%|██████████| 10/10 [00:05&lt;00:00,  1.75it/s, loss=4.46e+04, v_num=0, train_loss_step=-8.65e+4, pixel_AUROC=0.934, train_loss_epoch=4.88e+4]
+Epoch 3:  70%|███████   | 7/10 [00:02&lt;00:01,  2.54it/s, loss=-5.02e+04, v_num=0, train_loss_step=-1.54e+5, pixel_AUROC=0.934, train_loss_epoch=-4.78e+4]
 Validation: 0it [00:00, ?it/s]
 Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
 Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 3:  80%|████████  | 8/10 [00:04&lt;00:01,  1.71it/s, loss=-4.62e+04, v_num=0, train_loss_step=-1.54e+5, pixel_AUROC=0.940, train_loss_epoch=-4.31e+4]
-Epoch 3:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.88it/s, loss=-4.62e+04, v_num=0, train_loss_step=-1.54e+5, pixel_AUROC=0.940, train_loss_epoch=-4.31e+4]
-Epoch 3: 100%|██████████| 10/10 [00:05&lt;00:00,  1.80it/s, loss=-4.62e+04, v_num=0, train_loss_step=-1.54e+5, pixel_AUROC=0.962, train_loss_epoch=-4.31e+4]
-Epoch 4:  70%|███████   | 7/10 [00:02&lt;00:01,  2.53it/s, loss=-1.25e+05, v_num=0, train_loss_step=-2.12e+5, pixel_AUROC=0.962, train_loss_epoch=-1.22e+5]
+Epoch 3:  80%|████████  | 8/10 [00:04&lt;00:01,  1.69it/s, loss=-5.02e+04, v_num=0, train_loss_step=-1.54e+5, pixel_AUROC=0.934, train_loss_epoch=-4.78e+4]
+Epoch 3:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.86it/s, loss=-5.02e+04, v_num=0, train_loss_step=-1.54e+5, pixel_AUROC=0.934, train_loss_epoch=-4.78e+4]
+Epoch 3: 100%|██████████| 10/10 [00:05&lt;00:00,  1.77it/s, loss=-5.02e+04, v_num=0, train_loss_step=-1.54e+5, pixel_AUROC=0.964, train_loss_epoch=-4.78e+4]
+Epoch 4:  70%|███████   | 7/10 [00:02&lt;00:01,  2.54it/s, loss=-1.27e+05, v_num=0, train_loss_step=-2.13e+5, pixel_AUROC=0.964, train_loss_epoch=-1.23e+5]
 Validation: 0it [00:00, ?it/s]
 Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
 Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 4:  80%|████████  | 8/10 [00:04&lt;00:01,  1.67it/s, loss=-1.25e+05, v_num=0, train_loss_step=-2.12e+5, pixel_AUROC=0.962, train_loss_epoch=-1.22e+5]
-Epoch 4:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.84it/s, loss=-1.25e+05, v_num=0, train_loss_step=-2.12e+5, pixel_AUROC=0.962, train_loss_epoch=-1.22e+5]
-Epoch 4: 100%|██████████| 10/10 [00:05&lt;00:00,  1.75it/s, loss=-1.25e+05, v_num=0, train_loss_step=-2.12e+5, pixel_AUROC=0.968, train_loss_epoch=-1.22e+5]
-Epoch 5:  70%|███████   | 7/10 [00:02&lt;00:01,  2.47it/s, loss=-1.9e+05, v_num=0, train_loss_step=-2.63e+5, pixel_AUROC=0.968, train_loss_epoch=-1.88e+5]
+Epoch 4:  80%|████████  | 8/10 [00:04&lt;00:01,  1.68it/s, loss=-1.27e+05, v_num=0, train_loss_step=-2.13e+5, pixel_AUROC=0.964, train_loss_epoch=-1.23e+5]
+Epoch 4:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.85it/s, loss=-1.27e+05, v_num=0, train_loss_step=-2.13e+5, pixel_AUROC=0.964, train_loss_epoch=-1.23e+5]
+Epoch 4: 100%|██████████| 10/10 [00:05&lt;00:00,  1.75it/s, loss=-1.27e+05, v_num=0, train_loss_step=-2.13e+5, pixel_AUROC=0.969, train_loss_epoch=-1.23e+5]
+Epoch 5:  70%|███████   | 7/10 [00:02&lt;00:01,  2.57it/s, loss=-1.9e+05, v_num=0, train_loss_step=-2.62e+5, pixel_AUROC=0.969, train_loss_epoch=-1.88e+5]
 Validation: 0it [00:00, ?it/s]
 Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
 Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 5:  80%|████████  | 8/10 [00:04&lt;00:01,  1.68it/s, loss=-1.9e+05, v_num=0, train_loss_step=-2.63e+5, pixel_AUROC=0.968, train_loss_epoch=-1.88e+5]
-Epoch 5:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.85it/s, loss=-1.9e+05, v_num=0, train_loss_step=-2.63e+5, pixel_AUROC=0.968, train_loss_epoch=-1.88e+5]
-Epoch 5: 100%|██████████| 10/10 [00:05&lt;00:00,  1.77it/s, loss=-1.9e+05, v_num=0, train_loss_step=-2.63e+5, pixel_AUROC=0.969, train_loss_epoch=-1.88e+5]
-Epoch 6:  70%|███████   | 7/10 [00:02&lt;00:01,  2.50it/s, loss=-2.44e+05, v_num=0, train_loss_step=-3.05e+5, pixel_AUROC=0.969, train_loss_epoch=-2.41e+5]
+Epoch 5:  80%|████████  | 8/10 [00:04&lt;00:01,  1.70it/s, loss=-1.9e+05, v_num=0, train_loss_step=-2.62e+5, pixel_AUROC=0.969, train_loss_epoch=-1.88e+5]
+Epoch 5:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.87it/s, loss=-1.9e+05, v_num=0, train_loss_step=-2.62e+5, pixel_AUROC=0.969, train_loss_epoch=-1.88e+5]
+Epoch 5: 100%|██████████| 10/10 [00:05&lt;00:00,  1.77it/s, loss=-1.9e+05, v_num=0, train_loss_step=-2.62e+5, pixel_AUROC=0.973, train_loss_epoch=-1.88e+5]
+Epoch 6:  70%|███████   | 7/10 [00:02&lt;00:01,  2.49it/s, loss=-2.43e+05, v_num=0, train_loss_step=-3.04e+5, pixel_AUROC=0.973, train_loss_epoch=-2.41e+5]
 Validation: 0it [00:00, ?it/s]
 Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
 Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 6:  80%|████████  | 8/10 [00:04&lt;00:01,  1.68it/s, loss=-2.44e+05, v_num=0, train_loss_step=-3.05e+5, pixel_AUROC=0.969, train_loss_epoch=-2.41e+5]
-Epoch 6:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.85it/s, loss=-2.44e+05, v_num=0, train_loss_step=-3.05e+5, pixel_AUROC=0.969, train_loss_epoch=-2.41e+5]
-Epoch 6: 100%|██████████| 10/10 [00:05&lt;00:00,  1.76it/s, loss=-2.44e+05, v_num=0, train_loss_step=-3.05e+5, pixel_AUROC=0.971, train_loss_epoch=-2.41e+5]
-Epoch 7:  70%|███████   | 7/10 [00:02&lt;00:01,  2.48it/s, loss=-2.91e+05, v_num=0, train_loss_step=-3.49e+5, pixel_AUROC=0.971, train_loss_epoch=-2.87e+5]
+Epoch 6:  80%|████████  | 8/10 [00:04&lt;00:01,  1.69it/s, loss=-2.43e+05, v_num=0, train_loss_step=-3.04e+5, pixel_AUROC=0.973, train_loss_epoch=-2.41e+5]
+Epoch 6:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.86it/s, loss=-2.43e+05, v_num=0, train_loss_step=-3.04e+5, pixel_AUROC=0.973, train_loss_epoch=-2.41e+5]
+Epoch 6: 100%|██████████| 10/10 [00:05&lt;00:00,  1.77it/s, loss=-2.43e+05, v_num=0, train_loss_step=-3.04e+5, pixel_AUROC=0.974, train_loss_epoch=-2.41e+5]
+Epoch 7:  70%|███████   | 7/10 [00:02&lt;00:01,  2.49it/s, loss=-2.89e+05, v_num=0, train_loss_step=-3.47e+5, pixel_AUROC=0.974, train_loss_epoch=-2.86e+5]
 Validation: 0it [00:00, ?it/s]
 Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
 Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 7:  80%|████████  | 8/10 [00:04&lt;00:01,  1.65it/s, loss=-2.91e+05, v_num=0, train_loss_step=-3.49e+5, pixel_AUROC=0.971, train_loss_epoch=-2.87e+5]
-Epoch 7:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.82it/s, loss=-2.91e+05, v_num=0, train_loss_step=-3.49e+5, pixel_AUROC=0.971, train_loss_epoch=-2.87e+5]
-Epoch 7: 100%|██████████| 10/10 [00:05&lt;00:00,  1.74it/s, loss=-2.91e+05, v_num=0, train_loss_step=-3.49e+5, pixel_AUROC=0.970, train_loss_epoch=-2.87e+5]
-Epoch 8:  70%|███████   | 7/10 [00:02&lt;00:01,  2.55it/s, loss=-3.32e+05, v_num=0, train_loss_step=-3.8e+5, pixel_AUROC=0.970, train_loss_epoch=-3.3e+5]
+Epoch 7:  80%|████████  | 8/10 [00:04&lt;00:01,  1.69it/s, loss=-2.89e+05, v_num=0, train_loss_step=-3.47e+5, pixel_AUROC=0.974, train_loss_epoch=-2.86e+5]
+Epoch 7:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.86it/s, loss=-2.89e+05, v_num=0, train_loss_step=-3.47e+5, pixel_AUROC=0.974, train_loss_epoch=-2.86e+5]
+Epoch 7: 100%|██████████| 10/10 [00:05&lt;00:00,  1.77it/s, loss=-2.89e+05, v_num=0, train_loss_step=-3.47e+5, pixel_AUROC=0.973, train_loss_epoch=-2.86e+5]
+Epoch 8:  70%|███████   | 7/10 [00:02&lt;00:01,  2.56it/s, loss=-3.29e+05, v_num=0, train_loss_step=-3.81e+5, pixel_AUROC=0.973, train_loss_epoch=-3.28e+5]
 Validation: 0it [00:00, ?it/s]
 Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
 Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 8:  80%|████████  | 8/10 [00:04&lt;00:01,  1.68it/s, loss=-3.32e+05, v_num=0, train_loss_step=-3.8e+5, pixel_AUROC=0.970, train_loss_epoch=-3.3e+5]
-Epoch 8:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.86it/s, loss=-3.32e+05, v_num=0, train_loss_step=-3.8e+5, pixel_AUROC=0.970, train_loss_epoch=-3.3e+5]
-Epoch 8: 100%|██████████| 10/10 [00:05&lt;00:00,  1.76it/s, loss=-3.32e+05, v_num=0, train_loss_step=-3.8e+5, pixel_AUROC=0.973, train_loss_epoch=-3.3e+5]
-Epoch 9:  70%|███████   | 7/10 [00:02&lt;00:01,  2.55it/s, loss=-3.69e+05, v_num=0, train_loss_step=-4.05e+5, pixel_AUROC=0.973, train_loss_epoch=-3.67e+5]
+Epoch 8:  80%|████████  | 8/10 [00:04&lt;00:01,  1.69it/s, loss=-3.29e+05, v_num=0, train_loss_step=-3.81e+5, pixel_AUROC=0.973, train_loss_epoch=-3.28e+5]
+Epoch 8:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.86it/s, loss=-3.29e+05, v_num=0, train_loss_step=-3.81e+5, pixel_AUROC=0.973, train_loss_epoch=-3.28e+5]
+Epoch 8: 100%|██████████| 10/10 [00:05&lt;00:00,  1.76it/s, loss=-3.29e+05, v_num=0, train_loss_step=-3.81e+5, pixel_AUROC=0.971, train_loss_epoch=-3.28e+5]
+Epoch 9:  70%|███████   | 7/10 [00:02&lt;00:01,  2.49it/s, loss=-3.64e+05, v_num=0, train_loss_step=-4.07e+5, pixel_AUROC=0.971, train_loss_epoch=-3.61e+5]
 Validation: 0it [00:00, ?it/s]
 Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
 Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 9:  80%|████████  | 8/10 [00:04&lt;00:01,  1.70it/s, loss=-3.69e+05, v_num=0, train_loss_step=-4.05e+5, pixel_AUROC=0.973, train_loss_epoch=-3.67e+5]
-Epoch 9:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.86it/s, loss=-3.69e+05, v_num=0, train_loss_step=-4.05e+5, pixel_AUROC=0.973, train_loss_epoch=-3.67e+5]
-Epoch 9: 100%|██████████| 10/10 [00:05&lt;00:00,  1.76it/s, loss=-3.69e+05, v_num=0, train_loss_step=-4.05e+5, pixel_AUROC=0.974, train_loss_epoch=-3.67e+5]
-Epoch 10:  70%|███████   | 7/10 [00:02&lt;00:01,  2.57it/s, loss=-4.01e+05, v_num=0, train_loss_step=-4.41e+5, pixel_AUROC=0.974, train_loss_epoch=-3.99e+5]
-Validation: 0it [00:00, ?it/s]
-Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 10:  80%|████████  | 8/10 [00:04&lt;00:01,  1.69it/s, loss=-4.01e+05, v_num=0, train_loss_step=-4.41e+5, pixel_AUROC=0.974, train_loss_epoch=-3.99e+5]
-Epoch 10:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.86it/s, loss=-4.01e+05, v_num=0, train_loss_step=-4.41e+5, pixel_AUROC=0.974, train_loss_epoch=-3.99e+5]
-Epoch 10: 100%|██████████| 10/10 [00:05&lt;00:00,  1.77it/s, loss=-4.01e+05, v_num=0, train_loss_step=-4.41e+5, pixel_AUROC=0.972, train_loss_epoch=-3.99e+5]
-Epoch 11:  70%|███████   | 7/10 [00:02&lt;00:01,  2.52it/s, loss=-4.31e+05, v_num=0, train_loss_step=-4.71e+5, pixel_AUROC=0.972, train_loss_epoch=-4.28e+5]
-Validation: 0it [00:00, ?it/s]
-Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 11:  80%|████████  | 8/10 [00:04&lt;00:01,  1.65it/s, loss=-4.31e+05, v_num=0, train_loss_step=-4.71e+5, pixel_AUROC=0.972, train_loss_epoch=-4.28e+5]
-Epoch 11:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.82it/s, loss=-4.31e+05, v_num=0, train_loss_step=-4.71e+5, pixel_AUROC=0.972, train_loss_epoch=-4.28e+5]
-Epoch 11: 100%|██████████| 10/10 [00:05&lt;00:00,  1.73it/s, loss=-4.31e+05, v_num=0, train_loss_step=-4.71e+5, pixel_AUROC=0.974, train_loss_epoch=-4.28e+5]
-Epoch 12:  70%|███████   | 7/10 [00:02&lt;00:01,  2.53it/s, loss=-4.59e+05, v_num=0, train_loss_step=-4.91e+5, pixel_AUROC=0.974, train_loss_epoch=-4.57e+5]
-Validation: 0it [00:00, ?it/s]
-Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 12:  80%|████████  | 8/10 [00:04&lt;00:01,  1.66it/s, loss=-4.59e+05, v_num=0, train_loss_step=-4.91e+5, pixel_AUROC=0.974, train_loss_epoch=-4.57e+5]
-Epoch 12:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.83it/s, loss=-4.59e+05, v_num=0, train_loss_step=-4.91e+5, pixel_AUROC=0.974, train_loss_epoch=-4.57e+5]
-Epoch 12: 100%|██████████| 10/10 [00:05&lt;00:00,  1.75it/s, loss=-4.59e+05, v_num=0, train_loss_step=-4.91e+5, pixel_AUROC=0.975, train_loss_epoch=-4.57e+5]
-Epoch 13:  70%|███████   | 7/10 [00:02&lt;00:01,  2.42it/s, loss=-4.87e+05, v_num=0, train_loss_step=-5.24e+5, pixel_AUROC=0.975, train_loss_epoch=-4.84e+5]
-Validation: 0it [00:00, ?it/s]
-Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 13:  80%|████████  | 8/10 [00:04&lt;00:01,  1.64it/s, loss=-4.87e+05, v_num=0, train_loss_step=-5.24e+5, pixel_AUROC=0.975, train_loss_epoch=-4.84e+5]
-Epoch 13:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.80it/s, loss=-4.87e+05, v_num=0, train_loss_step=-5.24e+5, pixel_AUROC=0.975, train_loss_epoch=-4.84e+5]
-Epoch 13: 100%|██████████| 10/10 [00:05&lt;00:00,  1.73it/s, loss=-4.87e+05, v_num=0, train_loss_step=-5.24e+5, pixel_AUROC=0.972, train_loss_epoch=-4.84e+5]
-Epoch 14:  70%|███████   | 7/10 [00:02&lt;00:01,  2.52it/s, loss=-5.13e+05, v_num=0, train_loss_step=-5.49e+5, pixel_AUROC=0.972, train_loss_epoch=-5.11e+5]
-Validation: 0it [00:00, ?it/s]
-Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 14:  80%|████████  | 8/10 [00:04&lt;00:01,  1.70it/s, loss=-5.13e+05, v_num=0, train_loss_step=-5.49e+5, pixel_AUROC=0.972, train_loss_epoch=-5.11e+5]
-Epoch 14:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.88it/s, loss=-5.13e+05, v_num=0, train_loss_step=-5.49e+5, pixel_AUROC=0.972, train_loss_epoch=-5.11e+5]
-Epoch 14: 100%|██████████| 10/10 [00:05&lt;00:00,  1.78it/s, loss=-5.13e+05, v_num=0, train_loss_step=-5.49e+5, pixel_AUROC=0.972, train_loss_epoch=-5.11e+5]
-Epoch 15:  70%|███████   | 7/10 [00:02&lt;00:01,  2.54it/s, loss=-5.36e+05, v_num=0, train_loss_step=-5.57e+5, pixel_AUROC=0.972, train_loss_epoch=-5.35e+5]
-Validation: 0it [00:00, ?it/s]
-Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 15:  80%|████████  | 8/10 [00:04&lt;00:01,  1.68it/s, loss=-5.36e+05, v_num=0, train_loss_step=-5.57e+5, pixel_AUROC=0.972, train_loss_epoch=-5.35e+5]
-Epoch 15:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.85it/s, loss=-5.36e+05, v_num=0, train_loss_step=-5.57e+5, pixel_AUROC=0.972, train_loss_epoch=-5.35e+5]
-Epoch 15: 100%|██████████| 10/10 [00:05&lt;00:00,  1.76it/s, loss=-5.36e+05, v_num=0, train_loss_step=-5.57e+5, pixel_AUROC=0.975, train_loss_epoch=-5.35e+5]
-Epoch 15: 100%|██████████| 10/10 [00:05&lt;00:00,  1.76it/s, loss=-5.36e+05, v_num=0, train_loss_step=-5.57e+5, pixel_AUROC=0.975, train_loss_epoch=-5.54e+5]
+Epoch 9:  80%|████████  | 8/10 [00:04&lt;00:01,  1.66it/s, loss=-3.64e+05, v_num=0, train_loss_step=-4.07e+5, pixel_AUROC=0.971, train_loss_epoch=-3.61e+5]
+Epoch 9:  90%|█████████ | 9/10 [00:04&lt;00:00,  1.83it/s, loss=-3.64e+05, v_num=0, train_loss_step=-4.07e+5, pixel_AUROC=0.971, train_loss_epoch=-3.61e+5]
+Epoch 9: 100%|██████████| 10/10 [00:05&lt;00:00,  1.75it/s, loss=-3.64e+05, v_num=0, train_loss_step=-4.07e+5, pixel_AUROC=0.974, train_loss_epoch=-3.61e+5]
+Epoch 9: 100%|██████████| 10/10 [00:05&lt;00:00,  1.75it/s, loss=-3.64e+05, v_num=0, train_loss_step=-4.07e+5, pixel_AUROC=0.974, train_loss_epoch=-3.93e+5]
 </pre></div></div>
 </div>
 <p>The training has finished after 12 epochs. This is because, we set the <code class="docutils literal notranslate"><span class="pre">EarlyStopping</span></code> criteria with a patience of 3, which terminated the training after <code class="docutils literal notranslate"><span class="pre">pixel_AUROC</span></code> stopped improving. If we increased the <code class="docutils literal notranslate"><span class="pre">patience</span></code>, the training would continue further.</p>
@@ -1046,12 +1004,12 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [3]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Testing DataLoader 0: 100%|██████████| 3/3 [00:20&lt;00:00,  6.70s/it]
+Testing DataLoader 0: 100%|██████████| 3/3 [00:20&lt;00:00,  6.67s/it]
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
        Test metric             DataLoader 0
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-       image_AUROC          0.9992063045501709
-       pixel_AUROC          0.9745992422103882
+       image_AUROC          0.9984126687049866
+       pixel_AUROC          0.9737977981567383
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 </pre></div></div>
 </div>
@@ -1061,7 +1019,7 @@ Testing DataLoader 0: 100%|██████████| 3/3 [00:20&lt;00:00, 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[{&#39;pixel_AUROC&#39;: 0.9745992422103882, &#39;image_AUROC&#39;: 0.9992063045501709}]
+[{&#39;pixel_AUROC&#39;: 0.9737977981567383, &#39;image_AUROC&#39;: 0.9984126687049866}]
 </pre></div></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">trainer.test</span></code> returns the <code class="docutils literal notranslate"><span class="pre">pixel_AUROC</span></code> and <code class="docutils literal notranslate"><span class="pre">image_AUROC</span></code> results. We could also find the saved output in <code class="docutils literal notranslate"><span class="pre">images</span></code> directory.</p>
@@ -1209,7 +1167,7 @@ Image Shape: (256, 256, 3)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.image.AxesImage at 0x7f57e8cef9d0&gt;
+&lt;matplotlib.image.AxesImage at 0x7f70bdef3b50&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1236,7 +1194,7 @@ Image Shape: (256, 256, 3)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.image.AxesImage at 0x7f57e8c2bfd0&gt;
+&lt;matplotlib.image.AxesImage at 0x7f70bde31f40&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1262,7 +1220,7 @@ Image Shape: (256, 256, 3)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.image.AxesImage at 0x7f57e8ba3bb0&gt;
+&lt;matplotlib.image.AxesImage at 0x7f70bdda2e20&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1288,7 +1246,7 @@ Image Shape: (256, 256, 3)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-tensor(-0.0224) tensor(True)
+tensor(-0.0449) tensor(True)
 </pre></div></div>
 </div>
 <p>The last part of the predictions is the mask that is predicted by the model. This is a boolean mask containing True/False for the abnormal/normal pixels, respectively.</p>
@@ -1307,7 +1265,7 @@ tensor(-0.0224) tensor(True)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.image.AxesImage at 0x7f57e8b18fd0&gt;
+&lt;matplotlib.image.AxesImage at 0x7f70bdd27220&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
