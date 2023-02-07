@@ -295,15 +295,9 @@
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">import_module</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
 
 <span class="kn">from</span> <span class="nn">omegaconf.omegaconf</span> <span class="kn">import</span> <span class="n">OmegaConf</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">LightningDataModule</span><span class="p">,</span> <span class="n">LightningModule</span><span class="p">,</span> <span class="n">Trainer</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">LightningArgumentParser</span><span class="p">,</span>
-    <span class="n">LightningCLI</span><span class="p">,</span>
-    <span class="n">SaveConfigCallback</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.cli</span> <span class="kn">import</span> <span class="n">LightningArgumentParser</span><span class="p">,</span> <span class="n">LightningCLI</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.utils.callbacks</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">CdfNormalizationCallback</span><span class="p">,</span>
@@ -330,46 +324,6 @@
 <span class="sd">    possible to use both the CLI and a configuration file simultaneously.</span>
 <span class="sd">    For more details, the reader could refer to PyTorch Lightning CLI documentation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>  <span class="c1"># pylint: disable=too-many-function-args</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">model_class</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">LightningModule</span><span class="p">]</span> <span class="o">|</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">LightningModule</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">datamodule_class</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">LightningDataModule</span><span class="p">]</span> <span class="o">|</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">LightningDataModule</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">save_config_callback</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">SaveConfigCallback</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">SaveConfigCallback</span><span class="p">,</span>
-        <span class="n">save_config_filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;config.yaml&quot;</span><span class="p">,</span>
-        <span class="n">save_config_overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">save_config_multifile</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">trainer_class</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Trainer</span><span class="p">]</span> <span class="o">|</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Trainer</span><span class="p">]</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">,</span>
-        <span class="n">trainer_defaults</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">seed_everything_default</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Anomalib trainer command line tool&quot;</span><span class="p">,</span>
-        <span class="n">env_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Anomalib&quot;</span><span class="p">,</span>
-        <span class="n">env_parse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">parser_kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">subclass_mode_model</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">subclass_mode_data</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">auto_registry</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">model_class</span><span class="p">,</span>
-            <span class="n">datamodule_class</span><span class="p">,</span>
-            <span class="n">save_config_callback</span><span class="p">,</span>
-            <span class="n">save_config_filename</span><span class="p">,</span>
-            <span class="n">save_config_overwrite</span><span class="p">,</span>
-            <span class="n">save_config_multifile</span><span class="p">,</span>
-            <span class="n">trainer_class</span><span class="p">,</span>
-            <span class="n">trainer_defaults</span><span class="p">,</span>
-            <span class="n">seed_everything_default</span><span class="p">,</span>
-            <span class="n">description</span><span class="p">,</span>
-            <span class="n">env_prefix</span><span class="p">,</span>
-            <span class="n">env_parse</span><span class="p">,</span>
-            <span class="n">parser_kwargs</span><span class="p">,</span>
-            <span class="n">subclass_mode_model</span><span class="p">,</span>
-            <span class="n">subclass_mode_data</span><span class="p">,</span>
-            <span class="n">run</span><span class="p">,</span>
-            <span class="n">auto_registry</span><span class="p">,</span>
-        <span class="p">)</span>
 
 <div class="viewcode-block" id="AnomalibCLI.add_arguments_to_parser"><a class="viewcode-back" href="../../../../reference_guide/api/cli.html#anomalib.utils.cli.AnomalibCLI.add_arguments_to_parser">[docs]</a>    <span class="k">def</span> <span class="nf">add_arguments_to_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">:</span> <span class="n">LightningArgumentParser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add default arguments.</span>

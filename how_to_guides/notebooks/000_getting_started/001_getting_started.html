@@ -749,50 +749,46 @@ optimization:
 
 # PL Trainer Args. Don&#39;t add extra parameter here.
 trainer:
-  accelerator: auto # &lt;&#34;cpu&#34;, &#34;gpu&#34;, &#34;tpu&#34;, &#34;ipu&#34;, &#34;hpu&#34;, &#34;auto&#34;&gt;
-  accumulate_grad_batches: 1
-  amp_backend: native
-  auto_lr_find: false
-  auto_scale_batch_size: false
-  auto_select_gpus: false
-  benchmark: false
-  check_val_every_n_epoch: 1 # Don&#39;t validate before extracting features.
-  default_root_dir: null
-  detect_anomaly: false
-  deterministic: false
-  devices: 1
   enable_checkpointing: true
-  enable_model_summary: true
-  enable_progress_bar: true
-  fast_dev_run: false
-  gpus: null # Set automatically
+  default_root_dir: null
   gradient_clip_val: 0
-  ipus: null
-  limit_predict_batches: 1.0
-  limit_test_batches: 1.0
+  gradient_clip_algorithm: norm
+  num_nodes: 1
+  devices: 1
+  enable_progress_bar: true
+  overfit_batches: 0.0
+  track_grad_norm: -1
+  check_val_every_n_epoch: 1 # Don&#39;t validate before extracting features.
+  fast_dev_run: false
+  accumulate_grad_batches: 1
+  max_epochs: 1
+  min_epochs: null
+  max_steps: -1
+  min_steps: null
+  max_time: null
   limit_train_batches: 1.0
   limit_val_batches: 1.0
+  limit_test_batches: 1.0
+  limit_predict_batches: 1.0
+  val_check_interval: 1.0 # Don&#39;t validate before extracting features.
   log_every_n_steps: 50
-  max_epochs: 1
-  max_steps: -1
-  max_time: null
-  min_epochs: null
-  min_steps: null
+  accelerator: auto # &lt;&#34;cpu&#34;, &#34;gpu&#34;, &#34;tpu&#34;, &#34;ipu&#34;, &#34;hpu&#34;, &#34;auto&#34;&gt;
+  strategy: null
+  sync_batchnorm: false
+  precision: 32
+  enable_model_summary: true
+  num_sanity_val_steps: 0
+  profiler: null
+  benchmark: false
+  deterministic: false
+  reload_dataloaders_every_n_epochs: 0
+  auto_lr_find: false
+  replace_sampler_ddp: true
+  detect_anomaly: false
+  auto_scale_batch_size: false
+  plugins: null
   move_metrics_to_cpu: false
   multiple_trainloader_mode: max_size_cycle
-  num_nodes: 1
-  num_processes: null
-  num_sanity_val_steps: 0
-  overfit_batches: 0.0
-  plugins: null
-  precision: 32
-  profiler: null
-  reload_dataloaders_every_n_epochs: 0
-  replace_sampler_ddp: true
-  sync_batchnorm: false
-  tpu_cores: null
-  track_grad_norm: -1
-  val_check_interval: 1.0 # Don&#39;t validate before extracting features.
 
 </pre></div></div>
 </div>
@@ -880,7 +876,7 @@ torch.Size([32, 3, 256, 256]) torch.Size([32, 256, 256])
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/home/user/actions-runner/_work/anomalib/anomalib/anomalib/pre_processing/transforms/custom.py:24: UserWarning: Denormalize is no longer used and will be deprecated in v0.4.0
+/home/user/actions-runner/_work/anomalib/anomalib/anomalib/pre_processing/transforms/custom.py:25: UserWarning: Denormalize is no longer used and will be deprecated in v0.4.0
   warnings.warn(&#34;Denormalize is no longer used and will be deprecated in v0.4.0&#34;)
 </pre></div></div>
 </div>
@@ -951,7 +947,7 @@ FeatureExtractor is deprecated. Use TimmFeatureExtractor instead. Both FeatureEx
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-GPU available: True, used: True
+GPU available: True (cuda), used: True
 TPU available: False, using: 0 TPU cores
 IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
@@ -980,7 +976,9 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [3]
 0         Non-trainable params
 2.8 M     Total params
 11.131    Total estimated model params size (MB)
-/home/user/conda/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py:1933: PossibleUserWarning: The number of training batches (7) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+/home/user/conda/lib/python3.8/site-packages/torch/utils/tensorboard/__init__.py:4: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if not hasattr(tensorboard, &#34;__version__&#34;) or LooseVersion(
+/home/user/conda/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py:1600: PossibleUserWarning: The number of training batches (7) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
   rank_zero_warn(
 </pre></div></div>
 </div>
@@ -989,7 +987,7 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [3]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0:  40%|████      | 4/10 [00:01&lt;00:02,  2.23it/s, loss=nan, v_num=0]
+Epoch 0:  40%|████      | 4/10 [00:01&lt;00:02,  2.09it/s, loss=nan, v_num=0]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -997,7 +995,7 @@ Epoch 0:  40%|████      | 4/10 [00:01&lt;00:02,  2.23it/s, loss=nan, v_n
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/home/user/conda/lib/python3.8/site-packages/pytorch_lightning/loops/optimization/optimizer_loop.py:137: UserWarning: `training_step` returned `None`. If this was on purpose, ignore this warning...
+/home/user/conda/lib/python3.8/site-packages/pytorch_lightning/loops/optimization/optimizer_loop.py:138: UserWarning: `training_step` returned `None`. If this was on purpose, ignore this warning...
   self.warning_cache.warn(&#34;`training_step` returned `None`. If this was on purpose, ignore this warning...&#34;)
 </pre></div></div>
 </div>
@@ -1006,16 +1004,14 @@ Epoch 0:  40%|████      | 4/10 [00:01&lt;00:02,  2.23it/s, loss=nan, v_n
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0:  70%|███████   | 7/10 [00:01&lt;00:00,  3.59it/s, loss=nan, v_num=0]
+Epoch 0:  70%|███████   | 7/10 [00:02&lt;00:00,  3.37it/s, loss=nan, v_num=0]
 Validation: 0it [00:00, ?it/s]
 Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
 Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Validation DataLoader 0:  33%|███▎      | 1/3 [00:00&lt;00:00,  8.76it/s]
-Epoch 0:  80%|████████  | 8/10 [00:08&lt;00:02,  1.01s/it, loss=nan, v_num=0]
-Validation DataLoader 0:  67%|██████▋   | 2/3 [00:00&lt;00:00,  8.87it/s]
-Epoch 0:  90%|█████████ | 9/10 [00:08&lt;00:00,  1.10it/s, loss=nan, v_num=0]
-Epoch 0: 100%|██████████| 10/10 [00:08&lt;00:00,  1.12it/s, loss=nan, v_num=0, pixel_F1Score=0.728, pixel_AUROC=0.983]
-Epoch 0: 100%|██████████| 10/10 [00:08&lt;00:00,  1.12it/s, loss=nan, v_num=0, pixel_F1Score=0.728, pixel_AUROC=0.983]
+Epoch 0:  80%|████████  | 8/10 [00:08&lt;00:02,  1.03s/it, loss=nan, v_num=0]
+Epoch 0:  90%|█████████ | 9/10 [00:08&lt;00:00,  1.07it/s, loss=nan, v_num=0]
+Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.08it/s, loss=nan, v_num=0, pixel_F1Score=0.728, pixel_AUROC=0.984]
+Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.08it/s, loss=nan, v_num=0, pixel_F1Score=0.728, pixel_AUROC=0.984]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1025,6 +1021,7 @@ Epoch 0: 100%|██████████| 10/10 [00:08&lt;00:00,  1.12it/s, 
 <div class="highlight"><pre>
 /home/user/conda/lib/python3.8/site-packages/torchmetrics/utilities/prints.py:36: DeprecationWarning: `torchmetrics.functional.auc` has been move to `torchmetrics.utilities.compute` in v0.10 and will be removed in v0.11.
   warnings.warn(*args, **kwargs)
+`Trainer.fit` stopped: `max_epochs=1` reached.
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1032,7 +1029,7 @@ Epoch 0: 100%|██████████| 10/10 [00:08&lt;00:00,  1.12it/s, 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.07it/s, loss=nan, v_num=0, pixel_F1Score=0.728, pixel_AUROC=0.983]
+Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.04it/s, loss=nan, v_num=0, pixel_F1Score=0.728, pixel_AUROC=0.984]
 </pre></div></div>
 </div>
 </section>
@@ -1062,14 +1059,14 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [3]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Testing DataLoader 0: 100%|██████████| 3/3 [00:20&lt;00:00,  6.69s/it]
+Testing DataLoader 0: 100%|██████████| 3/3 [00:19&lt;00:00,  6.62s/it]
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
        Test metric             DataLoader 0
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-       image_AUROC          0.9992063045501709
+       image_AUROC          0.9992063641548157
       image_F1Score         0.9921259880065918
-       pixel_AUROC          0.9831510782241821
-      pixel_F1Score         0.7275111079216003
+       pixel_AUROC          0.9840987920761108
+      pixel_F1Score         0.7282739877700806
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 </pre></div></div>
 </div>
@@ -1079,10 +1076,10 @@ Testing DataLoader 0: 100%|██████████| 3/3 [00:20&lt;00:00, 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[{&#39;pixel_F1Score&#39;: 0.7275111079216003,
-  &#39;pixel_AUROC&#39;: 0.9831510782241821,
+[{&#39;pixel_F1Score&#39;: 0.7282739877700806,
+  &#39;pixel_AUROC&#39;: 0.9840987920761108,
   &#39;image_F1Score&#39;: 0.9921259880065918,
-  &#39;image_AUROC&#39;: 0.9992063045501709}]
+  &#39;image_AUROC&#39;: 0.9992063641548157}]
 </pre></div></div>
 </div>
 <p>By default, the output images are saved into <code class="docutils literal notranslate"><span class="pre">results</span></code> directory. We could get the output filenames from the directory, read the saved the images and visualize here.</p>

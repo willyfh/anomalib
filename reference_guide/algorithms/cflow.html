@@ -397,11 +397,6 @@ These are required in <cite>validation_epoch_end</cite> for feature concatenatio
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.Cflow.training">
-<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.cflow.lightning_model.Cflow.training" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -428,66 +423,6 @@ config.yaml file or from CLI.</p>
 </div></blockquote>
 </div>
 </dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.allow_zero_length_dataloader_with_multiple_devices">
-<span class="sig-name descname"><span class="pre">allow_zero_length_dataloader_with_multiple_devices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.allow_zero_length_dataloader_with_multiple_devices" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.callbacks">
-<span class="sig-name descname"><span class="pre">callbacks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Callback</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.callbacks" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.image_metrics">
-<span class="sig-name descname"><span class="pre">image_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AnomalibMetricCollection</span></em><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.image_metrics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.loss">
-<span class="sig-name descname"><span class="pre">loss</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">nn.Module</span></em><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.loss" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.model">
-<span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#anomalib.models.cflow.torch_model.CflowModel" title="anomalib.models.cflow.torch_model.CflowModel"><span class="pre">CflowModel</span></a></em><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.normalization_metrics">
-<span class="sig-name descname"><span class="pre">normalization_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Metric</span></em><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.normalization_metrics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.pixel_metrics">
-<span class="sig-name descname"><span class="pre">pixel_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AnomalibMetricCollection</span></em><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.pixel_metrics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.precision">
-<span class="sig-name descname"><span class="pre">precision</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.precision" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.prepare_data_per_node">
-<span class="sig-name descname"><span class="pre">prepare_data_per_node</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.prepare_data_per_node" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.threshold_method">
-<span class="sig-name descname"><span class="pre">threshold_method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../api/post_processing.html#anomalib.post_processing.ThresholdMethod" title="anomalib.post_processing.ThresholdMethod"><span class="pre">ThresholdMethod</span></a></em><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.threshold_method" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.trainer">
-<span class="sig-name descname"><span class="pre">trainer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pl.Trainer'</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.trainer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.cflow.lightning_model.CflowLightning.training">
-<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.cflow.lightning_model.CflowLightning.training" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 
@@ -618,23 +553,10 @@ config.yaml file or from CLI.</p>
 <li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.Cflow.configure_optimizers"><code class="docutils literal notranslate"><span class="pre">Cflow.configure_optimizers()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.Cflow.training_step"><code class="docutils literal notranslate"><span class="pre">Cflow.training_step()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.Cflow.validation_step"><code class="docutils literal notranslate"><span class="pre">Cflow.validation_step()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.Cflow.training"><code class="docutils literal notranslate"><span class="pre">Cflow.training</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning"><code class="docutils literal notranslate"><span class="pre">CflowLightning</span></code></a><ul>
 <li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.configure_callbacks"><code class="docutils literal notranslate"><span class="pre">CflowLightning.configure_callbacks()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.allow_zero_length_dataloader_with_multiple_devices"><code class="docutils literal notranslate"><span class="pre">CflowLightning.allow_zero_length_dataloader_with_multiple_devices</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.callbacks"><code class="docutils literal notranslate"><span class="pre">CflowLightning.callbacks</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.image_metrics"><code class="docutils literal notranslate"><span class="pre">CflowLightning.image_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.loss"><code class="docutils literal notranslate"><span class="pre">CflowLightning.loss</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.model"><code class="docutils literal notranslate"><span class="pre">CflowLightning.model</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.normalization_metrics"><code class="docutils literal notranslate"><span class="pre">CflowLightning.normalization_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.pixel_metrics"><code class="docutils literal notranslate"><span class="pre">CflowLightning.pixel_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.precision"><code class="docutils literal notranslate"><span class="pre">CflowLightning.precision</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.prepare_data_per_node"><code class="docutils literal notranslate"><span class="pre">CflowLightning.prepare_data_per_node</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.threshold_method"><code class="docutils literal notranslate"><span class="pre">CflowLightning.threshold_method</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.trainer"><code class="docutils literal notranslate"><span class="pre">CflowLightning.trainer</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.cflow.lightning_model.CflowLightning.training"><code class="docutils literal notranslate"><span class="pre">CflowLightning.training</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#anomalib.models.cflow.anomaly_map.AnomalyMapGenerator"><code class="docutils literal notranslate"><span class="pre">AnomalyMapGenerator</span></code></a><ul>

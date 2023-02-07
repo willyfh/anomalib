@@ -294,7 +294,6 @@
 
 <span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Callback</span><span class="p">,</span> <span class="n">Trainer</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">CALLBACK_REGISTRY</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.types</span> <span class="kn">import</span> <span class="n">STEP_OUTPUT</span>
 <span class="kn">from</span> <span class="nn">torch.distributions</span> <span class="kn">import</span> <span class="n">LogNormal</span>
 
@@ -306,8 +305,7 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="CdfNormalizationCallback"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.CdfNormalizationCallback">[docs]</a><span class="nd">@CALLBACK_REGISTRY</span>
-<span class="k">class</span> <span class="nc">CdfNormalizationCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+<div class="viewcode-block" id="CdfNormalizationCallback"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.CdfNormalizationCallback">[docs]</a><span class="k">class</span> <span class="nc">CdfNormalizationCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback that standardizes the image-level and pixel-level anomaly scores.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -397,7 +395,7 @@
 <span class="sd">         estimate the distribution of anomaly scores for normal data at the image and pixel level by computing</span>
 <span class="sd">         the mean and standard deviations. A dictionary containing the computed statistics is stored in self.stats.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">predictions</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">gpus</span><span class="o">=</span><span class="n">trainer</span><span class="o">.</span><span class="n">gpus</span><span class="p">)</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">accelerator</span><span class="o">=</span><span class="n">trainer</span><span class="o">.</span><span class="n">accelerator</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="n">trainer</span><span class="o">.</span><span class="n">num_devices</span><span class="p">)</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
             <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_inference_model</span><span class="p">(</span><span class="n">pl_module</span><span class="p">),</span> <span class="n">dataloaders</span><span class="o">=</span><span class="n">trainer</span><span class="o">.</span><span class="n">datamodule</span><span class="o">.</span><span class="n">train_dataloader</span><span class="p">()</span>
         <span class="p">)</span>
         <span class="n">pl_module</span><span class="o">.</span><span class="n">normalization_metrics</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>

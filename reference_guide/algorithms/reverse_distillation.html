@@ -423,11 +423,6 @@ These are required in <cite>validation_epoch_end</cite> for feature concatenatio
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.reverse_distillation.lightning_model.ReverseDistillation.training">
-<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillation.training" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -454,66 +449,6 @@ config.yaml file or from CLI.</p>
 </div></blockquote>
 </div>
 </dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.allow_zero_length_dataloader_with_multiple_devices">
-<span class="sig-name descname"><span class="pre">allow_zero_length_dataloader_with_multiple_devices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.allow_zero_length_dataloader_with_multiple_devices" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.callbacks">
-<span class="sig-name descname"><span class="pre">callbacks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Callback</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.callbacks" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.image_metrics">
-<span class="sig-name descname"><span class="pre">image_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AnomalibMetricCollection</span></em><a class="headerlink" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.image_metrics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.loss">
-<span class="sig-name descname"><span class="pre">loss</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">nn.Module</span></em><a class="headerlink" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.loss" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.model">
-<span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">nn.Module</span></em><a class="headerlink" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.normalization_metrics">
-<span class="sig-name descname"><span class="pre">normalization_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Metric</span></em><a class="headerlink" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.normalization_metrics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.pixel_metrics">
-<span class="sig-name descname"><span class="pre">pixel_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AnomalibMetricCollection</span></em><a class="headerlink" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.pixel_metrics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.precision">
-<span class="sig-name descname"><span class="pre">precision</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.precision" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.prepare_data_per_node">
-<span class="sig-name descname"><span class="pre">prepare_data_per_node</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.prepare_data_per_node" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.threshold_method">
-<span class="sig-name descname"><span class="pre">threshold_method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../api/post_processing.html#anomalib.post_processing.ThresholdMethod" title="anomalib.post_processing.ThresholdMethod"><span class="pre">ThresholdMethod</span></a></em><a class="headerlink" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.threshold_method" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.trainer">
-<span class="sig-name descname"><span class="pre">trainer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pl.Trainer'</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.trainer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.training">
-<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.training" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 
@@ -637,23 +572,10 @@ Defaults to “multiply”.</p></li>
 <li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillation.configure_optimizers"><code class="docutils literal notranslate"><span class="pre">ReverseDistillation.configure_optimizers()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillation.training_step"><code class="docutils literal notranslate"><span class="pre">ReverseDistillation.training_step()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillation.validation_step"><code class="docutils literal notranslate"><span class="pre">ReverseDistillation.validation_step()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillation.training"><code class="docutils literal notranslate"><span class="pre">ReverseDistillation.training</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning"><code class="docutils literal notranslate"><span class="pre">ReverseDistillationLightning</span></code></a><ul>
 <li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.configure_callbacks"><code class="docutils literal notranslate"><span class="pre">ReverseDistillationLightning.configure_callbacks()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.allow_zero_length_dataloader_with_multiple_devices"><code class="docutils literal notranslate"><span class="pre">ReverseDistillationLightning.allow_zero_length_dataloader_with_multiple_devices</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.callbacks"><code class="docutils literal notranslate"><span class="pre">ReverseDistillationLightning.callbacks</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.image_metrics"><code class="docutils literal notranslate"><span class="pre">ReverseDistillationLightning.image_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.loss"><code class="docutils literal notranslate"><span class="pre">ReverseDistillationLightning.loss</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.model"><code class="docutils literal notranslate"><span class="pre">ReverseDistillationLightning.model</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.normalization_metrics"><code class="docutils literal notranslate"><span class="pre">ReverseDistillationLightning.normalization_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.pixel_metrics"><code class="docutils literal notranslate"><span class="pre">ReverseDistillationLightning.pixel_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.precision"><code class="docutils literal notranslate"><span class="pre">ReverseDistillationLightning.precision</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.prepare_data_per_node"><code class="docutils literal notranslate"><span class="pre">ReverseDistillationLightning.prepare_data_per_node</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.threshold_method"><code class="docutils literal notranslate"><span class="pre">ReverseDistillationLightning.threshold_method</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.trainer"><code class="docutils literal notranslate"><span class="pre">ReverseDistillationLightning.trainer</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.reverse_distillation.lightning_model.ReverseDistillationLightning.training"><code class="docutils literal notranslate"><span class="pre">ReverseDistillationLightning.training</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#anomalib.models.reverse_distillation.anomaly_map.AnomalyMapGenerator"><code class="docutils literal notranslate"><span class="pre">AnomalyMapGenerator</span></code></a><ul>

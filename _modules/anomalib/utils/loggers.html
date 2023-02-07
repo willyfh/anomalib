@@ -297,7 +297,7 @@
 
 <span class="kn">from</span> <span class="nn">omegaconf.dictconfig</span> <span class="kn">import</span> <span class="n">DictConfig</span>
 <span class="kn">from</span> <span class="nn">omegaconf.listconfig</span> <span class="kn">import</span> <span class="n">ListConfig</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning.loggers</span> <span class="kn">import</span> <span class="n">CSVLogger</span><span class="p">,</span> <span class="n">LightningLoggerBase</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.loggers</span> <span class="kn">import</span> <span class="n">CSVLogger</span><span class="p">,</span> <span class="n">Logger</span>
 
 <span class="kn">from</span> <span class="nn">.comet</span> <span class="kn">import</span> <span class="n">AnomalibCometLogger</span>
 <span class="kn">from</span> <span class="nn">.tensorboard</span> <span class="kn">import</span> <span class="n">AnomalibTensorBoardLogger</span>
@@ -346,7 +346,7 @@
 
 <div class="viewcode-block" id="get_experiment_logger"><a class="viewcode-back" href="../../../reference_guide/api/loggers.html#anomalib.utils.loggers.get_experiment_logger">[docs]</a><span class="k">def</span> <span class="nf">get_experiment_logger</span><span class="p">(</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LightningLoggerBase</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">LightningLoggerBase</span><span class="p">]</span> <span class="o">|</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Logger</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Logger</span><span class="p">]</span> <span class="o">|</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a logger based on the choice of logger in the config file.</span>
 
 <span class="sd">    Args:</span>
@@ -356,7 +356,7 @@
 <span class="sd">        ValueError: for any logger types apart from false and tensorboard</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        LightningLoggerBase | Iterable[LightningLoggerBase] | bool]: Logger</span>
+<span class="sd">        Logger | Iterable[Logger] | bool]: Logger</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading the experiment logger(s)&quot;</span><span class="p">)</span>
 
@@ -375,7 +375,7 @@
     <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">logger</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="n">logger_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">LightningLoggerBase</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">logger_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Logger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">logger</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">config</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="p">[</span><span class="n">config</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">logger</span><span class="p">]</span>
 

@@ -303,7 +303,6 @@
 <span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pandas.core.frame</span> <span class="kn">import</span> <span class="n">DataFrame</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">DATAMODULE_REGISTRY</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.data.base</span> <span class="kn">import</span> <span class="n">AnomalibDataModule</span><span class="p">,</span> <span class="n">AnomalibDataset</span>
@@ -460,8 +459,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="n">make_btech_dataset</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root_category</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="BTech"><a class="viewcode-back" href="../../../reference_guide/api/data/btech.html#anomalib.data.btech.BTech">[docs]</a><span class="nd">@DATAMODULE_REGISTRY</span>
-<span class="k">class</span> <span class="nc">BTech</span><span class="p">(</span><span class="n">AnomalibDataModule</span><span class="p">):</span>
+<div class="viewcode-block" id="BTech"><a class="viewcode-back" href="../../../reference_guide/api/data/btech.html#anomalib.data.btech.BTech">[docs]</a><span class="k">class</span> <span class="nc">BTech</span><span class="p">(</span><span class="n">AnomalibDataModule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;BTech Lightning Data Module.</span>
 
 <span class="sd">    Args:</span>

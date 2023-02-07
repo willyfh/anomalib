@@ -293,7 +293,11 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="kn">import</span> <span class="n">Figure</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning.loggers.tensorboard</span> <span class="kn">import</span> <span class="n">TensorBoardLogger</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pytorch_lightning.loggers.tensorboard</span> <span class="kn">import</span> <span class="n">TensorBoardLogger</span>
+<span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;To use tensorboard logger install it using `pip install tensorboard`&quot;</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities</span> <span class="kn">import</span> <span class="n">rank_zero_only</span>
 
 <span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">ImageLoggerBase</span>

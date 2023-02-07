@@ -600,11 +600,6 @@ image through the network and computes the training loss.</p>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.draem.lightning_model.Draem.training">
-<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.draem.lightning_model.Draem.training" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -637,71 +632,6 @@ config.yaml file or from CLI.</p>
 <span class="sig-name descname"><span class="pre">configure_optimizers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optimizer</span></span></span><a class="reference internal" href="../../_modules/anomalib/models/draem/lightning_model.html#DraemLightning.configure_optimizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.models.draem.lightning_model.DraemLightning.configure_optimizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Configure the Adam optimizer.</p>
 </dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.draem.lightning_model.DraemLightning.allow_zero_length_dataloader_with_multiple_devices">
-<span class="sig-name descname"><span class="pre">allow_zero_length_dataloader_with_multiple_devices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.draem.lightning_model.DraemLightning.allow_zero_length_dataloader_with_multiple_devices" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.draem.lightning_model.DraemLightning.callbacks">
-<span class="sig-name descname"><span class="pre">callbacks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Callback</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.models.draem.lightning_model.DraemLightning.callbacks" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.draem.lightning_model.DraemLightning.image_metrics">
-<span class="sig-name descname"><span class="pre">image_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AnomalibMetricCollection</span></em><a class="headerlink" href="#anomalib.models.draem.lightning_model.DraemLightning.image_metrics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.draem.lightning_model.DraemLightning.loss">
-<span class="sig-name descname"><span class="pre">loss</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">nn.Module</span></em><a class="headerlink" href="#anomalib.models.draem.lightning_model.DraemLightning.loss" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.draem.lightning_model.DraemLightning.model">
-<span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">nn.Module</span></em><a class="headerlink" href="#anomalib.models.draem.lightning_model.DraemLightning.model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.draem.lightning_model.DraemLightning.normalization_metrics">
-<span class="sig-name descname"><span class="pre">normalization_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Metric</span></em><a class="headerlink" href="#anomalib.models.draem.lightning_model.DraemLightning.normalization_metrics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.draem.lightning_model.DraemLightning.pixel_metrics">
-<span class="sig-name descname"><span class="pre">pixel_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AnomalibMetricCollection</span></em><a class="headerlink" href="#anomalib.models.draem.lightning_model.DraemLightning.pixel_metrics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.draem.lightning_model.DraemLightning.precision">
-<span class="sig-name descname"><span class="pre">precision</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#anomalib.models.draem.lightning_model.DraemLightning.precision" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.draem.lightning_model.DraemLightning.prepare_data_per_node">
-<span class="sig-name descname"><span class="pre">prepare_data_per_node</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.draem.lightning_model.DraemLightning.prepare_data_per_node" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.draem.lightning_model.DraemLightning.sspcab_activations">
-<span class="sig-name descname"><span class="pre">sspcab_activations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#anomalib.models.draem.lightning_model.DraemLightning.sspcab_activations" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.draem.lightning_model.DraemLightning.threshold_method">
-<span class="sig-name descname"><span class="pre">threshold_method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../api/post_processing.html#anomalib.post_processing.ThresholdMethod" title="anomalib.post_processing.ThresholdMethod"><span class="pre">ThresholdMethod</span></a></em><a class="headerlink" href="#anomalib.models.draem.lightning_model.DraemLightning.threshold_method" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.draem.lightning_model.DraemLightning.trainer">
-<span class="sig-name descname"><span class="pre">trainer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pl.Trainer'</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.models.draem.lightning_model.DraemLightning.trainer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.draem.lightning_model.DraemLightning.training">
-<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.draem.lightning_model.DraemLightning.training" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 
@@ -808,25 +738,11 @@ config.yaml file or from CLI.</p>
 <li><a class="reference internal" href="#anomalib.models.draem.lightning_model.Draem.setup_sspcab"><code class="docutils literal notranslate"><span class="pre">Draem.setup_sspcab()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.models.draem.lightning_model.Draem.training_step"><code class="docutils literal notranslate"><span class="pre">Draem.training_step()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.models.draem.lightning_model.Draem.validation_step"><code class="docutils literal notranslate"><span class="pre">Draem.validation_step()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.draem.lightning_model.Draem.training"><code class="docutils literal notranslate"><span class="pre">Draem.training</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#anomalib.models.draem.lightning_model.DraemLightning"><code class="docutils literal notranslate"><span class="pre">DraemLightning</span></code></a><ul>
 <li><a class="reference internal" href="#anomalib.models.draem.lightning_model.DraemLightning.configure_callbacks"><code class="docutils literal notranslate"><span class="pre">DraemLightning.configure_callbacks()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.models.draem.lightning_model.DraemLightning.configure_optimizers"><code class="docutils literal notranslate"><span class="pre">DraemLightning.configure_optimizers()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.draem.lightning_model.DraemLightning.allow_zero_length_dataloader_with_multiple_devices"><code class="docutils literal notranslate"><span class="pre">DraemLightning.allow_zero_length_dataloader_with_multiple_devices</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.draem.lightning_model.DraemLightning.callbacks"><code class="docutils literal notranslate"><span class="pre">DraemLightning.callbacks</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.draem.lightning_model.DraemLightning.image_metrics"><code class="docutils literal notranslate"><span class="pre">DraemLightning.image_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.draem.lightning_model.DraemLightning.loss"><code class="docutils literal notranslate"><span class="pre">DraemLightning.loss</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.draem.lightning_model.DraemLightning.model"><code class="docutils literal notranslate"><span class="pre">DraemLightning.model</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.draem.lightning_model.DraemLightning.normalization_metrics"><code class="docutils literal notranslate"><span class="pre">DraemLightning.normalization_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.draem.lightning_model.DraemLightning.pixel_metrics"><code class="docutils literal notranslate"><span class="pre">DraemLightning.pixel_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.draem.lightning_model.DraemLightning.precision"><code class="docutils literal notranslate"><span class="pre">DraemLightning.precision</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.draem.lightning_model.DraemLightning.prepare_data_per_node"><code class="docutils literal notranslate"><span class="pre">DraemLightning.prepare_data_per_node</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.draem.lightning_model.DraemLightning.sspcab_activations"><code class="docutils literal notranslate"><span class="pre">DraemLightning.sspcab_activations</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.draem.lightning_model.DraemLightning.threshold_method"><code class="docutils literal notranslate"><span class="pre">DraemLightning.threshold_method</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.draem.lightning_model.DraemLightning.trainer"><code class="docutils literal notranslate"><span class="pre">DraemLightning.trainer</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.draem.lightning_model.DraemLightning.training"><code class="docutils literal notranslate"><span class="pre">DraemLightning.training</span></code></a></li>
 </ul>
 </li>
 </ul>

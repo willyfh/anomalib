@@ -435,11 +435,6 @@ These are required in <cite>validation_epoch_end</cite> for feature concatenatio
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.Padim.training">
-<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.padim.lightning_model.Padim.training" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -452,76 +447,6 @@ These are required in <cite>validation_epoch_end</cite> for feature concatenatio
 <dd class="field-odd"><p><strong>hparams</strong> (<em>DictConfig</em><em> | </em><em>ListConfig</em>) – Model params</p>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.PadimLightning.allow_zero_length_dataloader_with_multiple_devices">
-<span class="sig-name descname"><span class="pre">allow_zero_length_dataloader_with_multiple_devices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.padim.lightning_model.PadimLightning.allow_zero_length_dataloader_with_multiple_devices" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.PadimLightning.callbacks">
-<span class="sig-name descname"><span class="pre">callbacks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Callback</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.models.padim.lightning_model.PadimLightning.callbacks" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.PadimLightning.embeddings">
-<span class="sig-name descname"><span class="pre">embeddings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.models.padim.lightning_model.PadimLightning.embeddings" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.PadimLightning.image_metrics">
-<span class="sig-name descname"><span class="pre">image_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AnomalibMetricCollection</span></em><a class="headerlink" href="#anomalib.models.padim.lightning_model.PadimLightning.image_metrics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.PadimLightning.loss">
-<span class="sig-name descname"><span class="pre">loss</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">nn.Module</span></em><a class="headerlink" href="#anomalib.models.padim.lightning_model.PadimLightning.loss" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.PadimLightning.model">
-<span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#anomalib.models.padim.torch_model.PadimModel" title="anomalib.models.padim.torch_model.PadimModel"><span class="pre">PadimModel</span></a></em><a class="headerlink" href="#anomalib.models.padim.lightning_model.PadimLightning.model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.PadimLightning.normalization_metrics">
-<span class="sig-name descname"><span class="pre">normalization_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Metric</span></em><a class="headerlink" href="#anomalib.models.padim.lightning_model.PadimLightning.normalization_metrics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.PadimLightning.pixel_metrics">
-<span class="sig-name descname"><span class="pre">pixel_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AnomalibMetricCollection</span></em><a class="headerlink" href="#anomalib.models.padim.lightning_model.PadimLightning.pixel_metrics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.PadimLightning.precision">
-<span class="sig-name descname"><span class="pre">precision</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#anomalib.models.padim.lightning_model.PadimLightning.precision" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.PadimLightning.prepare_data_per_node">
-<span class="sig-name descname"><span class="pre">prepare_data_per_node</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.padim.lightning_model.PadimLightning.prepare_data_per_node" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.PadimLightning.stats">
-<span class="sig-name descname"><span class="pre">stats</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.models.padim.lightning_model.PadimLightning.stats" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.PadimLightning.threshold_method">
-<span class="sig-name descname"><span class="pre">threshold_method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../api/post_processing.html#anomalib.post_processing.ThresholdMethod" title="anomalib.post_processing.ThresholdMethod"><span class="pre">ThresholdMethod</span></a></em><a class="headerlink" href="#anomalib.models.padim.lightning_model.PadimLightning.threshold_method" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.PadimLightning.trainer">
-<span class="sig-name descname"><span class="pre">trainer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pl.Trainer'</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.models.padim.lightning_model.PadimLightning.trainer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.padim.lightning_model.PadimLightning.training">
-<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.padim.lightning_model.PadimLightning.training" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <span class="target" id="module-anomalib.models.padim.anomaly_map"></span><p>Anomaly Map Generator for the PaDiM model implementation.</p>
@@ -708,26 +633,9 @@ distribution.</p>
 <li><a class="reference internal" href="#anomalib.models.padim.lightning_model.Padim.on_validation_start"><code class="docutils literal notranslate"><span class="pre">Padim.on_validation_start()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.models.padim.lightning_model.Padim.training_step"><code class="docutils literal notranslate"><span class="pre">Padim.training_step()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.models.padim.lightning_model.Padim.validation_step"><code class="docutils literal notranslate"><span class="pre">Padim.validation_step()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.Padim.training"><code class="docutils literal notranslate"><span class="pre">Padim.training</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning"><code class="docutils literal notranslate"><span class="pre">PadimLightning</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.allow_zero_length_dataloader_with_multiple_devices"><code class="docutils literal notranslate"><span class="pre">PadimLightning.allow_zero_length_dataloader_with_multiple_devices</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.callbacks"><code class="docutils literal notranslate"><span class="pre">PadimLightning.callbacks</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.embeddings"><code class="docutils literal notranslate"><span class="pre">PadimLightning.embeddings</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.image_metrics"><code class="docutils literal notranslate"><span class="pre">PadimLightning.image_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.loss"><code class="docutils literal notranslate"><span class="pre">PadimLightning.loss</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.model"><code class="docutils literal notranslate"><span class="pre">PadimLightning.model</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.normalization_metrics"><code class="docutils literal notranslate"><span class="pre">PadimLightning.normalization_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.pixel_metrics"><code class="docutils literal notranslate"><span class="pre">PadimLightning.pixel_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.precision"><code class="docutils literal notranslate"><span class="pre">PadimLightning.precision</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.prepare_data_per_node"><code class="docutils literal notranslate"><span class="pre">PadimLightning.prepare_data_per_node</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.stats"><code class="docutils literal notranslate"><span class="pre">PadimLightning.stats</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.threshold_method"><code class="docutils literal notranslate"><span class="pre">PadimLightning.threshold_method</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.trainer"><code class="docutils literal notranslate"><span class="pre">PadimLightning.trainer</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning.training"><code class="docutils literal notranslate"><span class="pre">PadimLightning.training</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#anomalib.models.padim.lightning_model.PadimLightning"><code class="docutils literal notranslate"><span class="pre">PadimLightning</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator"><code class="docutils literal notranslate"><span class="pre">AnomalyMapGenerator</span></code></a><ul>
 <li><a class="reference internal" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.compute_anomaly_map"><code class="docutils literal notranslate"><span class="pre">AnomalyMapGenerator.compute_anomaly_map()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.models.padim.anomaly_map.AnomalyMapGenerator.compute_distance"><code class="docutils literal notranslate"><span class="pre">AnomalyMapGenerator.compute_distance()</span></code></a></li>

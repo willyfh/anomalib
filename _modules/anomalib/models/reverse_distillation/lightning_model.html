@@ -294,7 +294,6 @@
 
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">EarlyStopping</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">MODEL_REGISTRY</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.types</span> <span class="kn">import</span> <span class="n">STEP_OUTPUT</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">optim</span>
 
@@ -304,8 +303,7 @@
 <span class="kn">from</span> <span class="nn">.torch_model</span> <span class="kn">import</span> <span class="n">ReverseDistillationModel</span>
 
 
-<div class="viewcode-block" id="ReverseDistillation"><a class="viewcode-back" href="../../../../reference_guide/algorithms/reverse_distillation.html#anomalib.models.reverse_distillation.lightning_model.ReverseDistillation">[docs]</a><span class="nd">@MODEL_REGISTRY</span>
-<span class="k">class</span> <span class="nc">ReverseDistillation</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
+<div class="viewcode-block" id="ReverseDistillation"><a class="viewcode-back" href="../../../../reference_guide/algorithms/reverse_distillation.html#anomalib.models.reverse_distillation.lightning_model.ReverseDistillation">[docs]</a><span class="k">class</span> <span class="nc">ReverseDistillation</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;PL Lightning Module for Reverse Distillation Algorithm.</span>
 
 <span class="sd">    Args:</span>
@@ -372,6 +370,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">          Feature Map</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>  <span class="c1"># These variables are not used.</span>
+
         <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;train_loss&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">on_epoch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">prog_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="p">}</span></div>
@@ -389,6 +389,8 @@
 <span class="sd">          Dictionary containing images, anomaly maps, true labels and masks.</span>
 <span class="sd">          These are required in `validation_epoch_end` for feature concatenation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>  <span class="c1"># These variables are not used.</span>
+
         <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;anomaly_maps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">batch</span></div></div>
 

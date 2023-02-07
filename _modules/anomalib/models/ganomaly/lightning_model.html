@@ -297,7 +297,6 @@
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span><span class="p">,</span> <span class="n">EarlyStopping</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">MODEL_REGISTRY</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.types</span> <span class="kn">import</span> <span class="n">EPOCH_OUTPUT</span><span class="p">,</span> <span class="n">STEP_OUTPUT</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">optim</span>
 
@@ -309,8 +308,7 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Ganomaly"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.lightning_model.Ganomaly">[docs]</a><span class="nd">@MODEL_REGISTRY</span>
-<span class="k">class</span> <span class="nc">Ganomaly</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
+<div class="viewcode-block" id="Ganomaly"><a class="viewcode-back" href="../../../../reference_guide/algorithms/ganomaly.html#anomalib.models.ganomaly.lightning_model.Ganomaly">[docs]</a><span class="k">class</span> <span class="nc">Ganomaly</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;PL Lightning Module for the GANomaly Algorithm.</span>
 
 <span class="sd">    Args:</span>

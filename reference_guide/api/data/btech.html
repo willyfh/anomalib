@@ -358,6 +358,20 @@ Defaults to 0.5.</p></li>
 <span class="go">(torch.Size([32, 3, 256, 256]), torch.Size([32, 256, 256]))</span>
 </pre></div>
 </div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.data.btech.BTech.prepare_data_per_node">
+<span class="sig-name descname"><span class="pre">prepare_data_per_node</span></span><a class="headerlink" href="#anomalib.data.btech.BTech.prepare_data_per_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, each LOCAL_RANK=0 will call prepare data.
+Otherwise only NODE_RANK=0, LOCAL_RANK=0 will prepare data.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.data.btech.BTech.allow_zero_length_dataloader_with_multiple_devices">
+<span class="sig-name descname"><span class="pre">allow_zero_length_dataloader_with_multiple_devices</span></span><a class="headerlink" href="#anomalib.data.btech.BTech.allow_zero_length_dataloader_with_multiple_devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, dataloader with zero length within local rank is allowed.
+Default value is False.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="anomalib.data.btech.BTech.prepare_data">
 <span class="sig-name descname"><span class="pre">prepare_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/btech.html#BTech.prepare_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.btech.BTech.prepare_data" title="Permalink to this definition">¶</a></dt>
@@ -532,6 +546,8 @@ could set this flag to <code class="docutils literal notranslate"><span class="p
             <ul>
 <li><a class="reference internal" href="#">Btech Dataset</a><ul>
 <li><a class="reference internal" href="#anomalib.data.btech.BTech"><code class="docutils literal notranslate"><span class="pre">BTech</span></code></a><ul>
+<li><a class="reference internal" href="#anomalib.data.btech.BTech.prepare_data_per_node"><code class="docutils literal notranslate"><span class="pre">BTech.prepare_data_per_node</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.data.btech.BTech.allow_zero_length_dataloader_with_multiple_devices"><code class="docutils literal notranslate"><span class="pre">BTech.allow_zero_length_dataloader_with_multiple_devices</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.data.btech.BTech.prepare_data"><code class="docutils literal notranslate"><span class="pre">BTech.prepare_data()</span></code></a></li>
 </ul>
 </li>

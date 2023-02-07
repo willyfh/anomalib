@@ -295,7 +295,6 @@
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">EarlyStopping</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">MODEL_REGISTRY</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.types</span> <span class="kn">import</span> <span class="n">STEP_OUTPUT</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">optim</span>
 
@@ -306,7 +305,6 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;StfpmLightning&quot;</span><span class="p">]</span>
 
 
-<span class="nd">@MODEL_REGISTRY</span>
 <span class="k">class</span> <span class="nc">Stfpm</span><span class="p">(</span><span class="n">AnomalyModule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;PL Lightning Module for the STFPM algorithm.</span>
 
@@ -342,6 +340,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">          Loss value</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>  <span class="c1"># These variables are not used.</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">teacher_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
         <span class="n">teacher_features</span><span class="p">,</span> <span class="n">student_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">])</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">teacher_features</span><span class="p">,</span> <span class="n">student_features</span><span class="p">)</span>
@@ -361,8 +361,9 @@
 <span class="sd">          Dictionary containing images, anomaly maps, true labels and masks.</span>
 <span class="sd">          These are required in `validation_epoch_end` for feature concatenation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;anomaly_maps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">])</span>
+        <span class="k">del</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>  <span class="c1"># These variables are not used.</span>
 
+        <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;anomaly_maps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">batch</span>
 
 

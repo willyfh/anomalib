@@ -294,15 +294,13 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">CALLBACK_REGISTRY</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
 
 <span class="kn">from</span> <span class="nn">.visualizer_base</span> <span class="kn">import</span> <span class="n">BaseVisualizerCallback</span>
 
 
-<div class="viewcode-block" id="MetricVisualizerCallback"><a class="viewcode-back" href="../../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.MetricVisualizerCallback">[docs]</a><span class="nd">@CALLBACK_REGISTRY</span>
-<span class="k">class</span> <span class="nc">MetricVisualizerCallback</span><span class="p">(</span><span class="n">BaseVisualizerCallback</span><span class="p">):</span>
+<div class="viewcode-block" id="MetricVisualizerCallback"><a class="viewcode-back" href="../../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.MetricVisualizerCallback">[docs]</a><span class="k">class</span> <span class="nc">MetricVisualizerCallback</span><span class="p">(</span><span class="n">BaseVisualizerCallback</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback that visualizes the metric results of a model by plotting the corresponding curves.</span>
 
 <span class="sd">    To save the images to the filesystem, add the &#39;local&#39; keyword to the `project.log_images_to` parameter in the</span>

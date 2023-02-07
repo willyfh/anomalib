@@ -428,11 +428,6 @@ Defaults to 0.05.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.Dfkde.training">
-<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.Dfkde.training" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -445,71 +440,6 @@ Defaults to 0.05.</p></li>
 <dd class="field-odd"><p><strong>hparams</strong> (<em>DictConfig</em><em> | </em><em>ListConfig</em>) – Model params</p>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.allow_zero_length_dataloader_with_multiple_devices">
-<span class="sig-name descname"><span class="pre">allow_zero_length_dataloader_with_multiple_devices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.allow_zero_length_dataloader_with_multiple_devices" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.callbacks">
-<span class="sig-name descname"><span class="pre">callbacks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Callback</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.callbacks" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.embeddings">
-<span class="sig-name descname"><span class="pre">embeddings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.embeddings" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.image_metrics">
-<span class="sig-name descname"><span class="pre">image_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AnomalibMetricCollection</span></em><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.image_metrics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.loss">
-<span class="sig-name descname"><span class="pre">loss</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">nn.Module</span></em><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.loss" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.model">
-<span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">nn.Module</span></em><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.normalization_metrics">
-<span class="sig-name descname"><span class="pre">normalization_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Metric</span></em><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.normalization_metrics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.pixel_metrics">
-<span class="sig-name descname"><span class="pre">pixel_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AnomalibMetricCollection</span></em><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.pixel_metrics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.precision">
-<span class="sig-name descname"><span class="pre">precision</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.precision" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.prepare_data_per_node">
-<span class="sig-name descname"><span class="pre">prepare_data_per_node</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.prepare_data_per_node" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.threshold_method">
-<span class="sig-name descname"><span class="pre">threshold_method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../api/post_processing.html#anomalib.post_processing.ThresholdMethod" title="anomalib.post_processing.ThresholdMethod"><span class="pre">ThresholdMethod</span></a></em><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.threshold_method" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.trainer">
-<span class="sig-name descname"><span class="pre">trainer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'pl.Trainer'</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.trainer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="anomalib.models.dfkde.lightning_model.DfkdeLightning.training">
-<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.training" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 </section>
@@ -590,25 +520,9 @@ Defaults to 0.05.</p></li>
 <li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.Dfkde.on_validation_start"><code class="docutils literal notranslate"><span class="pre">Dfkde.on_validation_start()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.Dfkde.training_step"><code class="docutils literal notranslate"><span class="pre">Dfkde.training_step()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.Dfkde.validation_step"><code class="docutils literal notranslate"><span class="pre">Dfkde.validation_step()</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.Dfkde.training"><code class="docutils literal notranslate"><span class="pre">Dfkde.training</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning"><code class="docutils literal notranslate"><span class="pre">DfkdeLightning</span></code></a><ul>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.allow_zero_length_dataloader_with_multiple_devices"><code class="docutils literal notranslate"><span class="pre">DfkdeLightning.allow_zero_length_dataloader_with_multiple_devices</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.callbacks"><code class="docutils literal notranslate"><span class="pre">DfkdeLightning.callbacks</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.embeddings"><code class="docutils literal notranslate"><span class="pre">DfkdeLightning.embeddings</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.image_metrics"><code class="docutils literal notranslate"><span class="pre">DfkdeLightning.image_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.loss"><code class="docutils literal notranslate"><span class="pre">DfkdeLightning.loss</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.model"><code class="docutils literal notranslate"><span class="pre">DfkdeLightning.model</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.normalization_metrics"><code class="docutils literal notranslate"><span class="pre">DfkdeLightning.normalization_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.pixel_metrics"><code class="docutils literal notranslate"><span class="pre">DfkdeLightning.pixel_metrics</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.precision"><code class="docutils literal notranslate"><span class="pre">DfkdeLightning.precision</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.prepare_data_per_node"><code class="docutils literal notranslate"><span class="pre">DfkdeLightning.prepare_data_per_node</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.threshold_method"><code class="docutils literal notranslate"><span class="pre">DfkdeLightning.threshold_method</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.trainer"><code class="docutils literal notranslate"><span class="pre">DfkdeLightning.trainer</span></code></a></li>
-<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning.training"><code class="docutils literal notranslate"><span class="pre">DfkdeLightning.training</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#anomalib.models.dfkde.lightning_model.DfkdeLightning"><code class="docutils literal notranslate"><span class="pre">DfkdeLightning</span></code></a></li>
 </ul>
 </li>
 </ul>

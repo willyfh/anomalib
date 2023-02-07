@@ -294,7 +294,6 @@
 
 <span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">CALLBACK_REGISTRY</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.data</span> <span class="kn">import</span> <span class="n">TaskType</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.components.base.anomaly_module</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
@@ -305,8 +304,7 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;MetricsConfigurationCallback&quot;</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="MetricsConfigurationCallback"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.MetricsConfigurationCallback">[docs]</a><span class="nd">@CALLBACK_REGISTRY</span>
-<span class="k">class</span> <span class="nc">MetricsConfigurationCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+<div class="viewcode-block" id="MetricsConfigurationCallback"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.MetricsConfigurationCallback">[docs]</a><span class="k">class</span> <span class="nc">MetricsConfigurationCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Metrics Configuration Callback.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>

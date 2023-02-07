@@ -294,7 +294,6 @@
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Callback</span><span class="p">,</span> <span class="n">LightningModule</span><span class="p">,</span> <span class="n">Trainer</span>
-<span class="kn">from</span> <span class="nn">pytorch_lightning.utilities.cli</span> <span class="kn">import</span> <span class="n">CALLBACK_REGISTRY</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components.base.anomaly_module</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
 <span class="kn">from</span> <span class="nn">anomalib.post_processing</span> <span class="kn">import</span> <span class="n">NormalizationMethod</span><span class="p">,</span> <span class="n">ThresholdMethod</span>
@@ -304,8 +303,7 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;PostProcessingConfigurationCallback&quot;</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="PostProcessingConfigurationCallback"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.PostProcessingConfigurationCallback">[docs]</a><span class="nd">@CALLBACK_REGISTRY</span>
-<span class="k">class</span> <span class="nc">PostProcessingConfigurationCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+<div class="viewcode-block" id="PostProcessingConfigurationCallback"><a class="viewcode-back" href="../../../../reference_guide/api/callbacks.html#anomalib.utils.callbacks.PostProcessingConfigurationCallback">[docs]</a><span class="k">class</span> <span class="nc">PostProcessingConfigurationCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Post-Processing Configuration Callback.</span>
 
 <span class="sd">    Args:</span>
