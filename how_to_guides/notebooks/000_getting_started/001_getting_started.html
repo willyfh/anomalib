@@ -987,7 +987,7 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [3]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0:  40%|████      | 4/10 [00:01&lt;00:02,  2.11it/s, loss=nan, v_num=0]
+Epoch 0:  40%|████      | 4/10 [00:01&lt;00:02,  2.19it/s, loss=nan, v_num=0]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1004,14 +1004,14 @@ Epoch 0:  40%|████      | 4/10 [00:01&lt;00:02,  2.11it/s, loss=nan, v_n
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0:  70%|███████   | 7/10 [00:02&lt;00:00,  3.41it/s, loss=nan, v_num=0]
+Epoch 0:  70%|███████   | 7/10 [00:01&lt;00:00,  3.51it/s, loss=nan, v_num=0]
 Validation: 0it [00:00, ?it/s]
 Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
 Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 0:  80%|████████  | 8/10 [00:08&lt;00:02,  1.07s/it, loss=nan, v_num=0]
-Epoch 0:  90%|█████████ | 9/10 [00:08&lt;00:00,  1.04it/s, loss=nan, v_num=0]
-Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.05it/s, loss=nan, v_num=0, pixel_F1Score=0.716, pixel_AUROC=0.982]
-Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.05it/s, loss=nan, v_num=0, pixel_F1Score=0.716, pixel_AUROC=0.982]
+Epoch 0:  80%|████████  | 8/10 [00:07&lt;00:01,  1.05it/s, loss=nan, v_num=0]
+Epoch 0:  90%|█████████ | 9/10 [00:07&lt;00:00,  1.16it/s, loss=nan, v_num=0]
+Epoch 0: 100%|██████████| 10/10 [00:08&lt;00:00,  1.16it/s, loss=nan, v_num=0, pixel_F1Score=0.733, pixel_AUROC=0.984]
+Epoch 0: 100%|██████████| 10/10 [00:08&lt;00:00,  1.16it/s, loss=nan, v_num=0, pixel_F1Score=0.733, pixel_AUROC=0.984]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1029,7 +1029,7 @@ Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.05it/s, 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.01it/s, loss=nan, v_num=0, pixel_F1Score=0.716, pixel_AUROC=0.982]
+Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.11it/s, loss=nan, v_num=0, pixel_F1Score=0.733, pixel_AUROC=0.984]
 </pre></div></div>
 </div>
 </section>
@@ -1059,14 +1059,14 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [3]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Testing DataLoader 0: 100%|██████████| 3/3 [00:19&lt;00:00,  6.60s/it]
+Testing DataLoader 0: 100%|██████████| 3/3 [00:19&lt;00:00,  6.66s/it]
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
        Test metric             DataLoader 0
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-       image_AUROC          0.9968253970146179
-      image_F1Score              0.984375
-       pixel_AUROC           0.982398271560669
-      pixel_F1Score         0.7157238721847534
+       image_AUROC          0.9976190328598022
+      image_F1Score         0.9921259880065918
+       pixel_AUROC          0.9836058616638184
+      pixel_F1Score         0.7327966690063477
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 </pre></div></div>
 </div>
@@ -1076,10 +1076,10 @@ Testing DataLoader 0: 100%|██████████| 3/3 [00:19&lt;00:00, 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[{&#39;pixel_F1Score&#39;: 0.7157238721847534,
-  &#39;pixel_AUROC&#39;: 0.982398271560669,
-  &#39;image_F1Score&#39;: 0.984375,
-  &#39;image_AUROC&#39;: 0.9968253970146179}]
+[{&#39;pixel_F1Score&#39;: 0.7327966690063477,
+  &#39;pixel_AUROC&#39;: 0.9836058616638184,
+  &#39;image_F1Score&#39;: 0.9921259880065918,
+  &#39;image_AUROC&#39;: 0.9976190328598022}]
 </pre></div></div>
 </div>
 <p>By default, the output images are saved into <code class="docutils literal notranslate"><span class="pre">results</span></code> directory. We could get the output filenames from the directory, read the saved the images and visualize here.</p>
