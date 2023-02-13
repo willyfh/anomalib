@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <link rel="shortcut icon" href="../../../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
-        <title>Installing Anomalib - Anomalib v0.4.0rc2</title>
+        <title>Installing Anomalib - Anomalib v0.4.0dev</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">Anomalib v0.4.0rc2</div></a>
+      <a href="../../../index.html"><div class="brand">Anomalib v0.4.0dev</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -987,7 +987,7 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [3]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0:  40%|████      | 4/10 [00:01&lt;00:02,  2.27it/s, loss=nan, v_num=0]
+Epoch 0:  30%|███       | 3/10 [00:01&lt;00:04,  1.64it/s, loss=nan, v_num=0]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1004,14 +1004,14 @@ Epoch 0:  40%|████      | 4/10 [00:01&lt;00:02,  2.27it/s, loss=nan, v_n
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0:  70%|███████   | 7/10 [00:01&lt;00:00,  3.63it/s, loss=nan, v_num=0]
+Epoch 0:  70%|███████   | 7/10 [00:02&lt;00:00,  3.41it/s, loss=nan, v_num=0]
 Validation: 0it [00:00, ?it/s]
 Validation:   0%|          | 0/3 [00:00&lt;?, ?it/s]
 Validation DataLoader 0:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Epoch 0:  80%|████████  | 8/10 [00:07&lt;00:01,  1.08it/s, loss=nan, v_num=0]
-Epoch 0:  90%|█████████ | 9/10 [00:07&lt;00:00,  1.19it/s, loss=nan, v_num=0]
-Epoch 0: 100%|██████████| 10/10 [00:08&lt;00:00,  1.19it/s, loss=nan, v_num=0, pixel_F1Score=0.728, pixel_AUROC=0.983]
-Epoch 0: 100%|██████████| 10/10 [00:08&lt;00:00,  1.19it/s, loss=nan, v_num=0, pixel_F1Score=0.728, pixel_AUROC=0.983]
+Epoch 0:  80%|████████  | 8/10 [00:08&lt;00:02,  1.01s/it, loss=nan, v_num=0]
+Epoch 0:  90%|█████████ | 9/10 [00:08&lt;00:00,  1.10it/s, loss=nan, v_num=0]
+Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.10it/s, loss=nan, v_num=0, pixel_F1Score=0.720, pixel_AUROC=0.983]
+Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.10it/s, loss=nan, v_num=0, pixel_F1Score=0.720, pixel_AUROC=0.983]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1029,7 +1029,7 @@ Epoch 0: 100%|██████████| 10/10 [00:08&lt;00:00,  1.19it/s, 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 0: 100%|██████████| 10/10 [00:08&lt;00:00,  1.13it/s, loss=nan, v_num=0, pixel_F1Score=0.728, pixel_AUROC=0.983]
+Epoch 0: 100%|██████████| 10/10 [00:09&lt;00:00,  1.05it/s, loss=nan, v_num=0, pixel_F1Score=0.720, pixel_AUROC=0.983]
 </pre></div></div>
 </div>
 </section>
@@ -1059,14 +1059,14 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [3]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Testing DataLoader 0: 100%|██████████| 3/3 [00:19&lt;00:00,  6.62s/it]
+Testing DataLoader 0: 100%|██████████| 3/3 [00:20&lt;00:00,  6.83s/it]
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
        Test metric             DataLoader 0
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-       image_AUROC          0.9952380657196045
-      image_F1Score         0.9921259880065918
-       pixel_AUROC          0.9832430481910706
-      pixel_F1Score         0.7279346585273743
+       image_AUROC          0.9944444298744202
+      image_F1Score              0.984375
+       pixel_AUROC          0.9826254844665527
+      pixel_F1Score         0.7203021049499512
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 </pre></div></div>
 </div>
@@ -1076,10 +1076,10 @@ Testing DataLoader 0: 100%|██████████| 3/3 [00:19&lt;00:00, 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[{&#39;pixel_F1Score&#39;: 0.7279346585273743,
-  &#39;pixel_AUROC&#39;: 0.9832430481910706,
-  &#39;image_F1Score&#39;: 0.9921259880065918,
-  &#39;image_AUROC&#39;: 0.9952380657196045}]
+[{&#39;pixel_F1Score&#39;: 0.7203021049499512,
+  &#39;pixel_AUROC&#39;: 0.9826254844665527,
+  &#39;image_F1Score&#39;: 0.984375,
+  &#39;image_AUROC&#39;: 0.9944444298744202}]
 </pre></div></div>
 </div>
 <p>By default, the output images are saved into <code class="docutils literal notranslate"><span class="pre">results</span></code> directory. We could get the output filenames from the directory, read the saved the images and visualize here.</p>
