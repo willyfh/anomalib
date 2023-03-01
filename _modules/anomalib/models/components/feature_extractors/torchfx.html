@@ -304,7 +304,7 @@
 <span class="k">class</span> <span class="nc">BackboneParams</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Used for serializing the backbone.&quot;&quot;&quot;</span>
 
-    <span class="n">class_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span>
+    <span class="n">class_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">type</span><span class="p">[</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">]</span>
     <span class="n">init_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span></div>
 
 
@@ -314,7 +314,8 @@
 <span class="sd">    Args:</span>
 <span class="sd">        backbone (str | BackboneParams | dict | nn.Module): The backbone to which the feature extraction hooks are</span>
 <span class="sd">            attached. If the name is provided, the model is loaded from torchvision. Otherwise, the model class can be</span>
-<span class="sd">            provided and it will try to load the weights from the provided weights file.</span>
+<span class="sd">            provided and it will try to load the weights from the provided weights file. Last, an instance of nn.Module</span>
+<span class="sd">            can also be passed directly.</span>
 <span class="sd">        return_nodes (Iterable[str]): List of layer names of the backbone to which the hooks are attached.</span>
 <span class="sd">            You can find the names of these nodes by using ``get_graph_node_names`` function.</span>
 <span class="sd">        weights (str | WeightsEnum | None): Weights enum to use for the model. Torchvision models require</span>
@@ -343,6 +344,7 @@
 
 <span class="sd">        With custom models:</span>
 
+<span class="sd">            &gt;&gt;&gt; import torch</span>
 <span class="sd">            &gt;&gt;&gt; from anomalib.models.components.feature_extractors import TorchFXFeatureExtractor</span>
 <span class="sd">            &gt;&gt;&gt; feature_extractor = TorchFXFeatureExtractor(</span>
 <span class="sd">                    &quot;path.to.CustomModel&quot;, [&quot;linear_relu_stack.3&quot;], weights=&quot;path/to/weights.pth&quot;</span>
@@ -351,6 +353,20 @@
 <span class="sd">            &gt;&gt;&gt; features = feature_extractor(input)</span>
 <span class="sd">            &gt;&gt;&gt; [layer for layer in features.keys()]</span>
 <span class="sd">                [&quot;linear_relu_stack.3&quot;]</span>
+
+<span class="sd">        with model instances:</span>
+
+<span class="sd">            &gt;&gt;&gt; import torch</span>
+<span class="sd">            &gt;&gt;&gt; from anomalib.models.components.feature_extractors import TorchFXFeatureExtractor</span>
+<span class="sd">            &gt;&gt;&gt; from timm import create_model</span>
+<span class="sd">            &gt;&gt;&gt; model = create_model(&quot;resnet18&quot;, pretrained=True)</span>
+<span class="sd">            &gt;&gt;&gt; feature_extractor = TorchFXFeatureExtractor(model, [&quot;layer1&quot;])</span>
+<span class="sd">            &gt;&gt;&gt; input = torch.rand((32, 3, 256, 256))</span>
+<span class="sd">            &gt;&gt;&gt; features = feature_extractor(input)</span>
+<span class="sd">            &gt;&gt;&gt; [layer for layer in features.keys()]</span>
+<span class="sd">                [&quot;layer1&quot;]</span>
+<span class="sd">            &gt;&gt;&gt; [feature.shape for feature in features.values()]</span>
+<span class="sd">                [torch.Size([32, 64, 64, 64])]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -363,24 +379,29 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">backbone</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="n">backbone</span> <span class="o">=</span> <span class="n">BackboneParams</span><span class="p">(</span><span class="o">**</span><span class="n">backbone</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">backbone</span><span class="p">,</span> <span class="n">BackboneParams</span><span class="p">):</span>  <span class="c1"># if str or nn.Module</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">backbone</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">backbone</span> <span class="o">=</span> <span class="n">BackboneParams</span><span class="p">(</span><span class="n">class_path</span><span class="o">=</span><span class="n">backbone</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">backbone</span><span class="p">,</span> <span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> <span class="n">BackboneParams</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;backbone needs to be of type str | BackboneParams | dict | nn.Module, but was type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">backbone</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialize_feature_extractor</span><span class="p">(</span><span class="n">backbone</span><span class="p">,</span> <span class="n">return_nodes</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">requires_grad</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TorchFXFeatureExtractor.initialize_feature_extractor"><a class="viewcode-back" href="../../../../../reference_guide/api/model/feature_extractors.html#anomalib.models.components.feature_extractors.TorchFXFeatureExtractor.initialize_feature_extractor">[docs]</a>    <span class="k">def</span> <span class="nf">initialize_feature_extractor</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">backbone</span><span class="p">:</span> <span class="n">BackboneParams</span><span class="p">,</span>
+        <span class="n">backbone</span><span class="p">:</span> <span class="n">BackboneParams</span> <span class="o">|</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
         <span class="n">return_nodes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
         <span class="n">weights</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">WeightsEnum</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">requires_grad</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GraphModule</span> <span class="o">|</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GraphModule</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract features from a CNN.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            backbone (BackboneParams): The backbone to which the feature extraction hooks are attached.</span>
-<span class="sd">                If the name is provided, the model is loaded from torchvision. Otherwise, the model class can be</span>
-<span class="sd">                provided and it will try to load the weights from the provided weights file.</span>
+<span class="sd">            backbone (BackboneParams | nn.Module): The backbone to which the feature extraction hooks are attached.</span>
+<span class="sd">                If the name is provided for BackboneParams, the model is loaded from torchvision. Otherwise, the model</span>
+<span class="sd">                class can be provided and it will try to load the weights from the provided weights file. Last, an</span>
+<span class="sd">                instance of the model can be provided as well, which will be used as-is.</span>
 <span class="sd">            return_nodes (Iterable[str]): List of layer names of the backbone to which the hooks are attached.</span>
 <span class="sd">                You can find the names of these nodes by using ``get_graph_node_names`` function.</span>
 <span class="sd">            weights (str | WeightsEnum | None): Weights enum to use for the model. Torchvision models require</span>
@@ -392,22 +413,26 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Feature Extractor based on TorchFX.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">backbone</span><span class="o">.</span><span class="n">class_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">backbone_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_backbone_class</span><span class="p">(</span><span class="n">backbone</span><span class="o">.</span><span class="n">class_path</span><span class="p">)</span>
-            <span class="n">backbone_model</span> <span class="o">=</span> <span class="n">backbone_class</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="o">**</span><span class="n">backbone</span><span class="o">.</span><span class="n">init_args</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">backbone</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+            <span class="n">backbone_model</span> <span class="o">=</span> <span class="n">backbone</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">backbone_class</span> <span class="o">=</span> <span class="n">backbone</span><span class="o">.</span><span class="n">class_path</span>
-            <span class="n">backbone_model</span> <span class="o">=</span> <span class="n">backbone_class</span><span class="p">(</span><span class="o">**</span><span class="n">backbone</span><span class="o">.</span><span class="n">init_args</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">WeightsEnum</span><span class="p">):</span>  <span class="c1"># torchvision models</span>
-            <span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">create_feature_extractor</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">backbone_model</span><span class="p">,</span> <span class="n">return_nodes</span><span class="o">=</span><span class="n">return_nodes</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="s2">&quot;Weights should point to a path&quot;</span>
-                <span class="n">model_weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
-                <span class="k">if</span> <span class="s2">&quot;state_dict&quot;</span> <span class="ow">in</span> <span class="n">model_weights</span><span class="p">:</span>
-                    <span class="n">model_weights</span> <span class="o">=</span> <span class="n">model_weights</span><span class="p">[</span><span class="s2">&quot;state_dict&quot;</span><span class="p">]</span>
-                <span class="n">backbone_model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">model_weights</span><span class="p">)</span>
-            <span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">create_feature_extractor</span><span class="p">(</span><span class="n">backbone_model</span><span class="p">,</span> <span class="n">return_nodes</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">backbone</span><span class="o">.</span><span class="n">class_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">backbone_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_backbone_class</span><span class="p">(</span><span class="n">backbone</span><span class="o">.</span><span class="n">class_path</span><span class="p">)</span>
+                <span class="n">backbone_model</span> <span class="o">=</span> <span class="n">backbone_class</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="o">**</span><span class="n">backbone</span><span class="o">.</span><span class="n">init_args</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">backbone_class</span> <span class="o">=</span> <span class="n">backbone</span><span class="o">.</span><span class="n">class_path</span>
+                <span class="n">backbone_model</span> <span class="o">=</span> <span class="n">backbone_class</span><span class="p">(</span><span class="o">**</span><span class="n">backbone</span><span class="o">.</span><span class="n">init_args</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">WeightsEnum</span><span class="p">):</span>  <span class="c1"># torchvision models</span>
+                <span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">create_feature_extractor</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">backbone_model</span><span class="p">,</span> <span class="n">return_nodes</span><span class="o">=</span><span class="n">return_nodes</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="s2">&quot;Weights should point to a path&quot;</span>
+                    <span class="n">model_weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="s2">&quot;state_dict&quot;</span> <span class="ow">in</span> <span class="n">model_weights</span><span class="p">:</span>
+                        <span class="n">model_weights</span> <span class="o">=</span> <span class="n">model_weights</span><span class="p">[</span><span class="s2">&quot;state_dict&quot;</span><span class="p">]</span>
+                    <span class="n">backbone_model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">model_weights</span><span class="p">)</span>
+
+        <span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">create_feature_extractor</span><span class="p">(</span><span class="n">backbone_model</span><span class="p">,</span> <span class="n">return_nodes</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">requires_grad</span><span class="p">:</span>
             <span class="n">feature_extractor</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
