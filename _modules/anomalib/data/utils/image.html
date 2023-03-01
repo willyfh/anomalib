@@ -407,7 +407,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;input_path is expected to be a file to generate a proper output filename.&quot;</span><span class="p">)</span>
 
     <span class="n">file_path</span><span class="p">:</span> <span class="n">Path</span>
-    <span class="k">if</span> <span class="n">output_path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">output_path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
         <span class="c1"># If the output is a directory, then add parent directory name</span>
         <span class="c1"># and filename to the path. This is to ensure we do not overwrite</span>
         <span class="c1"># images and organize based on the categories.</span>
