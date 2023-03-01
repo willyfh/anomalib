@@ -171,29 +171,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../how_to_guides/index.html">How to Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/train_custom_data.html">Training with Custom Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/adding_a_new_model.html">Adding a New Model to Anomalib</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/101_btech.html">Setting up the Working Directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/101_btech.html#Use-BeanTech-Dataset-via-API">Use BeanTech Dataset via API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html">Use MVTec AD Dataset via API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/102_mvtec.html#Setting-up-the-Working-Directory">Setting up the Working Directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/103_folder.html">Setting up the Working Directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/103_folder.html#Use-Folder-Dataset-(for-Custom-Datasets)-via-API">Use Folder Dataset (for Custom Datasets) via API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/104_tiling.html">Setting up the Working Directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/100_datamodules/104_tiling.html#Tiling-in-Anomalib-Training">Tiling in Anomalib Training</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/200_models/201_fastflow.html">Setting up the Working Directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/200_models/201_fastflow.html#Imports">Imports</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/200_models/201_fastflow.html#Data-Module">Data Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/200_models/201_fastflow.html#FastFlow-Model">FastFlow Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/200_models/201_fastflow.html#Optimizer">Optimizer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/200_models/201_fastflow.html#Callbacks">Callbacks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/200_models/201_fastflow.html#Training">Training</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/200_models/201_fastflow.html#Testing">Testing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/200_models/201_fastflow.html#Inference">Inference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/200_models/201_fastflow.html#Visualization">Visualization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/300_benchmarking/301_benchmarking.html">Short walkthrough on Benchmarking in Anomalib</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/300_benchmarking/302_hpo_wandb.html">Walkthrough on Hyperparameter Optimization using Weights and Biases</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/400_openvino/nncf.html">Setting up the Working Directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/400_openvino/nncf.html#1.-Standard-Training-without-NNCF">1. Standard Training without NNCF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../how_to_guides/notebooks/400_openvino/nncf.html#2.-Training-with-NNCF">2. Training with NNCF</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../index.html">Reference Guide</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -781,6 +758,26 @@ be maintained in each of the subsets.</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="anomalib.data.utils.read_depth_image">
+<span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">read_depth_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/utils/image.html#read_depth_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.read_depth_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read tiff depth image from disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em><em>, </em><em>Path</em>) – path to the image file</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">read_depth_image</span><span class="p">(</span><span class="s2">&quot;test_image.tiff&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>image as numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="anomalib.data.utils.read_image">
 <span class="sig-prename descclassname"><span class="pre">anomalib.data.utils.</span></span><span class="sig-name descname"><span class="pre">read_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span></span></span><a class="reference internal" href="../../../_modules/anomalib/data/utils/image.html#read_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.data.utils.read_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read image from disk in RGB format.</p>
@@ -913,6 +910,7 @@ be maintained in each of the subsets.</p></li>
 <li><a class="reference internal" href="#anomalib.data.utils.masks_to_boxes"><code class="docutils literal notranslate"><span class="pre">masks_to_boxes()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.data.utils.random_2d_perlin"><code class="docutils literal notranslate"><span class="pre">random_2d_perlin()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.data.utils.random_split"><code class="docutils literal notranslate"><span class="pre">random_split()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.data.utils.read_depth_image"><code class="docutils literal notranslate"><span class="pre">read_depth_image()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.data.utils.read_image"><code class="docutils literal notranslate"><span class="pre">read_image()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.data.utils.split_by_label"><code class="docutils literal notranslate"><span class="pre">split_by_label()</span></code></a></li>
 </ul>
