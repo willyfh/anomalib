@@ -271,19 +271,19 @@
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span><span class="p">,</span> <span class="n">ListConfig</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span>
 
 <span class="kn">from</span> <span class="nn">anomalib.deploy</span> <span class="kn">import</span> <span class="n">OpenVINOInferencer</span><span class="p">,</span> <span class="n">TorchInferencer</span>
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
 
 
-<div class="viewcode-block" id="get_torch_throughput"><a class="viewcode-back" href="../../../../../reference_guide/api/sweep.html#anomalib.utils.sweep.get_torch_throughput">[docs]</a><span class="k">def</span> <span class="nf">get_torch_throughput</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">,</span> <span class="n">test_dataset</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<div class="viewcode-block" id="get_torch_throughput"><a class="viewcode-back" href="../../../../../reference_guide/api/sweep.html#anomalib.utils.sweep.get_torch_throughput">[docs]</a><span class="k">def</span> <span class="nf">get_torch_throughput</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">AnomalyModule</span><span class="p">,</span> <span class="n">test_dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Tests the model on dummy data. Images are passed sequentially to make the comparision with OpenVINO model fair.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        config (DictConfig | ListConfig): Model config.</span>
 <span class="sd">        model (Path): Model on which inference is called.</span>
-<span class="sd">        test_dataset (DataLoader): The test dataset used as a reference for the mock dataset.</span>
+<span class="sd">        test_dataset (Dataset): The test dataset used as a reference for the mock dataset.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        float: Inference throughput</span>
@@ -308,20 +308,17 @@
     <span class="k">return</span> <span class="n">throughput</span></div>
 
 
-<div class="viewcode-block" id="get_openvino_throughput"><a class="viewcode-back" href="../../../../../reference_guide/api/sweep.html#anomalib.utils.sweep.get_openvino_throughput">[docs]</a><span class="k">def</span> <span class="nf">get_openvino_throughput</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">DictConfig</span> <span class="o">|</span> <span class="n">ListConfig</span><span class="p">,</span> <span class="n">model_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">test_dataset</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<div class="viewcode-block" id="get_openvino_throughput"><a class="viewcode-back" href="../../../../../reference_guide/api/sweep.html#anomalib.utils.sweep.get_openvino_throughput">[docs]</a><span class="k">def</span> <span class="nf">get_openvino_throughput</span><span class="p">(</span><span class="n">model_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">test_dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Runs the generated OpenVINO model on a dummy dataset to get throughput.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        config (DictConfig | ListConfig): Model config.</span>
 <span class="sd">        model_path (Path): Path to folder containing the OpenVINO models. It then searches `model.xml` in the folder.</span>
-<span class="sd">        test_dataset (DataLoader): The test dataset used as a reference for the mock dataset.</span>
+<span class="sd">        test_dataset (Dataset): The test dataset used as a reference for the mock dataset.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        float: Inference throughput</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">inferencer</span> <span class="o">=</span> <span class="n">OpenVINOInferencer</span><span class="p">(</span>
-        <span class="n">config</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">/</span> <span class="s2">&quot;openvino&quot;</span> <span class="o">/</span> <span class="s2">&quot;model.xml&quot;</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">/</span> <span class="s2">&quot;openvino&quot;</span> <span class="o">/</span> <span class="s2">&quot;meta_data.json&quot;</span>
-    <span class="p">)</span>
+    <span class="n">inferencer</span> <span class="o">=</span> <span class="n">OpenVINOInferencer</span><span class="p">(</span><span class="n">model_path</span> <span class="o">/</span> <span class="s2">&quot;openvino&quot;</span> <span class="o">/</span> <span class="s2">&quot;model.xml&quot;</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">/</span> <span class="s2">&quot;openvino&quot;</span> <span class="o">/</span> <span class="s2">&quot;metadata.json&quot;</span><span class="p">)</span>
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">image_path</span> <span class="ow">in</span> <span class="n">test_dataset</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">image_path</span><span class="p">:</span>
         <span class="n">inferencer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>

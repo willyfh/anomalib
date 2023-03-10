@@ -311,85 +311,15 @@
 <section id="openvino-inference">
 <h2>OpenVINO Inference<a class="headerlink" href="#openvino-inference" title="Permalink to this heading">¶</a></h2>
 <p>To run OpenVINO inference, first make sure that your model has been exported to the OpenVINO IR format. Once the model has been exported, OpenVINO inference can be triggered by running the OpenVINO entrypoint script in <code class="docutils literal notranslate"><span class="pre">tools/inference/openvino.py</span></code>. The command line arguments are very similar to PyTorch inference entrypoint script:</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Parameter</p></th>
-<th class="head"><p>Required</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>config</p></td>
-<td><p>True</p></td>
-<td><p>Path to the model config file.</p></td>
-</tr>
-<tr class="row-odd"><td><p>weights</p></td>
-<td><p>True</p></td>
-<td><p>Path to the OpenVINO IR model file (either <code class="docutils literal notranslate"><span class="pre">.xml</span></code> or <code class="docutils literal notranslate"><span class="pre">.bin</span></code>)</p></td>
-</tr>
-<tr class="row-even"><td><p>image</p></td>
-<td><p>True</p></td>
-<td><p>Path to the image source. This can be a single image or a folder of images.</p></td>
-</tr>
-<tr class="row-odd"><td><p>save_data</p></td>
-<td><p>False</p></td>
-<td><p>Path to which the output images should be saved. Leave empty for live visualization.</p></td>
-</tr>
-<tr class="row-even"><td><p>meta_data</p></td>
-<td><p>True</p></td>
-<td><p>Path to the JSON file containing the model’s meta data (e.g. normalization
-parameters and anomaly score threshold).</p></td>
-</tr>
-<tr class="row-odd"><td><p>device</p></td>
-<td><p>False</p></td>
-<td><p>Device on which OpenVINO will perform the computations (<code class="docutils literal notranslate"><span class="pre">CPU</span></code>, <code class="docutils literal notranslate"><span class="pre">GPU</span></code> or <code class="docutils literal notranslate"><span class="pre">VPU</span></code>)</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>For correct inference results, the <code class="docutils literal notranslate"><span class="pre">meta_data</span></code> argument should be specified and point to the <code class="docutils literal notranslate"><span class="pre">meta_data.json</span></code> file that was generated when exporting the OpenVINO IR model. The file is stored in the same folder as the <code class="docutils literal notranslate"><span class="pre">.xml</span></code> and <code class="docutils literal notranslate"><span class="pre">.bin</span></code> files of the model.</p>
+<p>For correct inference results, the <code class="docutils literal notranslate"><span class="pre">metadata</span></code> argument should be specified and point to the <code class="docutils literal notranslate"><span class="pre">metadata.json</span></code> file that was generated when exporting the OpenVINO IR model. The file is stored in the same folder as the <code class="docutils literal notranslate"><span class="pre">.xml</span></code> and <code class="docutils literal notranslate"><span class="pre">.bin</span></code> files of the model.</p>
 <p>As an example, OpenVINO inference can be triggered by the following command:</p>
-<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">tools/inference/openvino.py</span> <span class="pre">--config</span> <span class="pre">padim.yaml</span> <span class="pre">--weights</span> <span class="pre">results/openvino/model.xml</span> <span class="pre">--input</span> <span class="pre">image.png</span> <span class="pre">--meta_data</span> <span class="pre">results/openvino/meta_data.json</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">tools/inference/openvino.py</span> <span class="pre">--config</span> <span class="pre">padim.yaml</span> <span class="pre">--weights</span> <span class="pre">results/openvino/model.xml</span> <span class="pre">--input</span> <span class="pre">image.png</span> <span class="pre">--metadata</span> <span class="pre">results/openvino/metadata.json</span></code></p>
 <p>Similar to PyTorch inference, the visualization results will be displayed on the screen, and optionally saved to the file system location specified by the <code class="docutils literal notranslate"><span class="pre">save_data</span></code> parameter.</p>
 </section>
 <section id="gradio-inference">
 <h2>Gradio Inference<a class="headerlink" href="#gradio-inference" title="Permalink to this heading">¶</a></h2>
 <p>The gradio inference is supported for both PyTorch and OpenVINO models.</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Parameter</p></th>
-<th class="head"><p>Required</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>config</p></td>
-<td><p>True</p></td>
-<td><p>Path to the model config file.</p></td>
-</tr>
-<tr class="row-odd"><td><p>weights</p></td>
-<td><p>True</p></td>
-<td><p>Path to the OpenVINO IR model file (either <code class="docutils literal notranslate"><span class="pre">.xml</span></code> or <code class="docutils literal notranslate"><span class="pre">.bin</span></code>)</p></td>
-</tr>
-<tr class="row-even"><td><p>meta_data</p></td>
-<td><p>False</p></td>
-<td><p>Path to the JSON file containing the model’s meta data.
-This is needed only for OpenVINO model.</p></td>
-</tr>
-<tr class="row-odd"><td><p>threshold</p></td>
-<td><p>False</p></td>
-<td><p>Threshold value used for identifying anomalies. Range 1-100.</p></td>
-</tr>
-<tr class="row-even"><td><p>share</p></td>
-<td><p>False</p></td>
-<td><p>Share Gradio <cite>share_url</cite></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>To use gradio with OpenVINO model, first make sure that your model has been exported to the OpenVINO IR format and ensure that the <cite>meta_data</cite> argument points to the <code class="docutils literal notranslate"><span class="pre">meta_data.json</span></code> file that was generated when exporting the OpenVINO IR model. The file is stored in the same folder as the <code class="docutils literal notranslate"><span class="pre">.xml</span></code> and <code class="docutils literal notranslate"><span class="pre">.bin</span></code> files of the model.</p>
+<p>To use gradio with OpenVINO model, first make sure that your model has been exported to the OpenVINO IR format and ensure that the <cite>metadata</cite> argument points to the <code class="docutils literal notranslate"><span class="pre">metadata.json</span></code> file that was generated when exporting the OpenVINO IR model. The file is stored in the same folder as the <code class="docutils literal notranslate"><span class="pre">.xml</span></code> and <code class="docutils literal notranslate"><span class="pre">.bin</span></code> files of the model.</p>
 <p>As an example, PyTorch model can be used by the following command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>tools/inference/gradio_inference.py<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--config<span class="w"> </span>./anomalib/models/padim/config.yaml<span class="w"> </span><span class="se">\</span>
@@ -400,7 +330,7 @@ This is needed only for OpenVINO model.</p></td>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>python<span class="w"> </span>tools/inference/gradio_inference.py<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--config<span class="w"> </span>./anomalib/models/padim/config.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--weights<span class="w"> </span>./results/padim/mvtec/bottle/openvino/openvino_model.onnx<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--meta_data<span class="w"> </span>./results/padim/mvtec/bottle/openvino/meta_data.json
+<span class="w">    </span>--metadata<span class="w"> </span>./results/padim/mvtec/bottle/openvino/metadata.json
 </pre></div>
 </div>
 </section>
