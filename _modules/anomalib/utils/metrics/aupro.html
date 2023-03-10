@@ -423,7 +423,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute</span><span class="p">()</span>
 
-        <span class="n">aupro</span> <span class="o">=</span> <span class="n">auc</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">)</span>
+        <span class="n">aupro</span> <span class="o">=</span> <span class="n">auc</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">reorder</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">aupro</span> <span class="o">=</span> <span class="n">aupro</span> <span class="o">/</span> <span class="n">fpr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># normalize the area</span>
 
         <span class="k">return</span> <span class="n">aupro</span></div>
