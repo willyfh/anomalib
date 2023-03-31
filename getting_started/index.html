@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Training" href="training.html" /><link rel="prev" title="Tutorials" href="index.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Installation" href="installation/index.html" /><link rel="prev" title="Structure of the Documentation" href="../index.html" />
 
     <link rel="shortcut icon" href="../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
-        <title>Installation - Anomalib v0.5.0-dev</title>
+        <title>Getting Started - Anomalib v0.5.0-dev</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -158,33 +158,55 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Tutorials</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="training.html">Training</a></li>
-<li class="toctree-l2"><a class="reference internal" href="inference.html">Inference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="export.html">Export &amp; Optimization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
-<li class="toctree-l2"><a class="reference internal" href="logging.html">Logging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hyperparameter_optimization.html">Hyperparameter Optimization</a></li>
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">Getting Started</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="installation/index.html">Installation</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="installation/operating_systems/index.html">Operating Systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation/operating_systems/windows.html">Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation/operating_systems/mac.html">MacOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation/operating_systems/linux/ubuntu.html">Ubuntu</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation/operating_systems/linux/redhat_and_centos.html">RedHat and CentOS</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_guides/index.html">How to Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="installation/environment_managers/index.html">Environment Managers</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation/environment_managers/conda.html">Conda</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="installation/cloud_services/index.html">Cloud Service Providers</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation/cloud_services/azure_ml.html">Azure ML Studio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation/cloud_services/sagemaker.html">Amazon SageMaker Studio</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="installation/docker/index.html">Docker</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/training.html">Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/inference.html">Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/export.html">Export &amp; Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/logging.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/hyperparameter_optimization.html">Hyperparameter Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_guides/index.html">How to Guides</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/train_custom_data.html">Training with Custom Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_guides/adding_a_new_model.html">Adding a New Model to Anomalib</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../reference_guide/api/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference_guide/index.html">Reference Guide</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference_guide/api/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../reference_guide/api/cli.html">CLI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../reference_guide/api/config.html">Configuration</a></li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../reference_guide/api/data/index.html">Dataset</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../reference_guide/api/data/index.html">Dataset</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../reference_guide/api/data/btech.html">Btech Dataset</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../reference_guide/api/data/mvtec.html">MVTec Dataset</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../reference_guide/api/data/folder.html">Folder Dataset</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../reference_guide/api/data/utils.html">Utils</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../reference_guide/api/model/index.html">Model</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../reference_guide/api/model/index.html">Model</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../reference_guide/api/model/base.html">Base Model</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../reference_guide/api/model/dimensionality_reduction.html">Dimensionality Reduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../reference_guide/api/model/feature_extractors.html">Feature Extractors</a></li>
@@ -201,7 +223,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../reference_guide/api/callbacks.html">Callbacks</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../reference_guide/algorithms/index.html">Algorithms</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference_guide/algorithms/index.html">Algorithms</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../reference_guide/algorithms/cflow.html">CFlow</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../reference_guide/algorithms/dfkde.html">DFKDE</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../reference_guide/algorithms/dfm.html">DFM</a></li>
@@ -216,14 +238,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../developer_guide/index.html">Developer Guide</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../developer_guide/index.html">Developer Guide</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../developer_guide/getting_started.html">Getting Started with Development</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../developer_guide/pre_commit_hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../developer_guide/using_tox.html">Using Tox</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../developer_guide/developing_on_docker.html">Developing on Docker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../developer_guide/developing_on_docker.html#build-the-docker-image">Build the Docker Image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../developer_guide/developing_on_docker.html#run-the-docker-image">Run the Docker Image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../developer_guide/developing_on_docker.html#using-vscode">Using VSCode</a></li>
 </ul>
 </li>
 </ul>
@@ -260,25 +278,39 @@
           </label>
         </div>
         <article role="main">
-          <section id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h1>
-<p>The repo is thoroughly tested based on the following configuration.</p>
-<ul class="simple">
-<li><p>Ubuntu 20.04</p></li>
-<li><p>NVIDIA GeForce RTX 3090</p></li>
+          <section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">¶</a></h1>
+<p>Welcome to this documentation’s Getting Started section! Here you will find all the information necessary to get started with Anomalib. In this section, we’ll walk you through the installation process step-by-step, so you should be able to follow along even if you’re new to this field. We’ve made the installation process as simple and straightforward as possible, but if you encounter any problems or have questions along the way, please ask your question in <a class="reference external" href="https://github.com/openvinotoolkit/anomalib/discussions">Anomalib Discussions</a>. After the installation process is complete, you will be able to utilise the library to its fullest extent. You can then proceed to the other sections of this documentation to learn more about its capabilities and features. Let’s get started!</p>
+<div class="toctree-wrapper compound" id="start">
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation/index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation/operating_systems/index.html">Operating Systems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation/operating_systems/windows.html">Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation/operating_systems/mac.html">MacOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation/operating_systems/linux/ubuntu.html">Ubuntu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation/operating_systems/linux/redhat_and_centos.html">RedHat and CentOS</a></li>
 </ul>
-<p>You will need
-<a class="reference external" href="https://www.anaconda.com/products/individual">Anaconda</a> installed on
-your system before proceeding with the Anomaly Library install.</p>
-<p>After downloading the Anomaly Library, extract the files and navigate to
-the extracted location.</p>
-<p>To perform a development install, run the following:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yes<span class="w"> </span><span class="p">|</span><span class="w"> </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>anomalib<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8
-conda<span class="w"> </span>activate<span class="w"> </span>anomalib
-pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-</pre></div>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation/environment_managers/index.html">Environment Managers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation/environment_managers/conda.html">Conda</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation/cloud_services/index.html">Cloud Service Providers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation/cloud_services/azure_ml.html">Azure ML Studio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation/cloud_services/sagemaker.html">Amazon SageMaker Studio</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation/docker/index.html">Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation/docker/index.html#build-the-docker-image">Build the Docker Image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation/docker/index.html#run-the-docker-image">Run the Docker Image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation/docker/index.html#using-vscode">Using VSCode</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </div>
-<p>Optionally, if you prefer using a Docker image for development, refer to the guide <a class="reference internal" href="../developer_guide/developing_on_docker.html#developing-on-docker"><span class="std std-ref">Developing on Docker</span></a></p>
 </section>
 
         </article>
@@ -286,23 +318,23 @@ pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </s
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="training.html">
+          <a class="next-page" href="installation/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Training</div>
+                <div class="title">Installation</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="index.html">
+          <a class="prev-page" href="../index.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Tutorials</div>
+                <div class="title">Home</div>
                 
               </div>
             </a>
