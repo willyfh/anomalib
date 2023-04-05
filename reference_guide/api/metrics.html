@@ -395,6 +395,22 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="anomalib.utils.metrics.AUPRO.compute_pro">
+<span class="sig-name descname"><span class="pre">compute_pro</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cca</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupro.html#AUPRO.compute_pro"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPRO.compute_pro" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the pro/fpr value-pairs until the fpr specified by self.fpr_limit.</p>
+<p>It leverages the fact that the overlap corresponds to the tpr, and thus computes the overall
+PRO curve by aggregating per-region tpr/fpr values produced by ROC-construction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple containing final fpr and tpr values.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[Tensor, Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="anomalib.utils.metrics.AUPRO.generate_figure">
 <span class="sig-name descname"><span class="pre">generate_figure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Figure</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupro.html#AUPRO.generate_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPRO.generate_figure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a figure containing the PRO curve and the AUPRO.</p>
@@ -422,6 +438,24 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>y-values at corresponding new_x values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anomalib.utils.metrics.AUPRO.perform_cca">
+<span class="sig-name descname"><span class="pre">perform_cca</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="../../_modules/anomalib/utils/metrics/aupro.html#AUPRO.perform_cca"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.utils.metrics.AUPRO.perform_cca" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the Connected Component Analysis on the self.target tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – ValueError is raised if self.target doesn’t conform with requirements imposed by kornia for
+    connected component analysis.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Components labeled from 0 to N.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Tensor</p>
@@ -756,8 +790,10 @@ threshold as attribute and return the maximum value of the F1 score.</p>
 </li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.AUPRO"><code class="docutils literal notranslate"><span class="pre">AUPRO</span></code></a><ul>
 <li><a class="reference internal" href="#anomalib.utils.metrics.AUPRO.compute"><code class="docutils literal notranslate"><span class="pre">AUPRO.compute()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.utils.metrics.AUPRO.compute_pro"><code class="docutils literal notranslate"><span class="pre">AUPRO.compute_pro()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.AUPRO.generate_figure"><code class="docutils literal notranslate"><span class="pre">AUPRO.generate_figure()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.AUPRO.interp1d"><code class="docutils literal notranslate"><span class="pre">AUPRO.interp1d()</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.utils.metrics.AUPRO.perform_cca"><code class="docutils literal notranslate"><span class="pre">AUPRO.perform_cca()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.AUPRO.update"><code class="docutils literal notranslate"><span class="pre">AUPRO.update()</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.AUPRO.full_state_update"><code class="docutils literal notranslate"><span class="pre">AUPRO.full_state_update</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.utils.metrics.AUPRO.higher_is_better"><code class="docutils literal notranslate"><span class="pre">AUPRO.higher_is_better</span></code></a></li>

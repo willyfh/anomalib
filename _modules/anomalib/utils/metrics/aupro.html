@@ -339,21 +339,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the pro/fpr value-pairs until the fpr specified by self.fpr_limit.</span>
-
-<span class="sd">        It leverages the fact that the overlap corresponds to the tpr, and thus computes the overall</span>
-<span class="sd">        PRO curve by aggregating per-region tpr/fpr values produced by ROC-construction.</span>
+<div class="viewcode-block" id="AUPRO.perform_cca"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.AUPRO.perform_cca">[docs]</a>    <span class="k">def</span> <span class="nf">perform_cca</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform the Connected Component Analysis on the self.target tensor.</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            ValueError: ValueError is raised if self.target doesn&#39;t conform with requirements imposed by kornia for</span>
 <span class="sd">                        connected component analysis.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            tuple[Tensor, Tensor]: tuple containing final fpr and tpr values.</span>
+<span class="sd">            Tensor: Components labeled from 0 to N.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">target</span> <span class="o">=</span> <span class="n">dim_zero_cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
-        <span class="n">preds</span> <span class="o">=</span> <span class="n">dim_zero_cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preds</span><span class="p">)</span>
 
         <span class="c1"># check and prepare target for labeling via kornia</span>
         <span class="k">if</span> <span class="n">target</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">target</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -368,9 +364,17 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">cca</span> <span class="o">=</span> <span class="n">connected_components_cpu</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
 
-        <span class="n">preds</span> <span class="o">=</span> <span class="n">preds</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-        <span class="n">cca</span> <span class="o">=</span> <span class="n">cca</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-        <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">cca</span></div>
+
+<div class="viewcode-block" id="AUPRO.compute_pro"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.AUPRO.compute_pro">[docs]</a>    <span class="k">def</span> <span class="nf">compute_pro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cca</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">preds</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the pro/fpr value-pairs until the fpr specified by self.fpr_limit.</span>
+
+<span class="sd">        It leverages the fact that the overlap corresponds to the tpr, and thus computes the overall</span>
+<span class="sd">        PRO curve by aggregating per-region tpr/fpr values produced by ROC-construction.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple[Tensor, Tensor]: tuple containing final fpr and tpr values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># compute the global fpr-size</span>
         <span class="n">fpr</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">roc</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">target</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># only need fpr</span>
@@ -431,7 +435,22 @@
         <span class="c1"># Actually perform the averaging</span>
         <span class="n">tpr</span> <span class="o">/=</span> <span class="n">labels</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">fpr</span> <span class="o">/=</span> <span class="n">labels</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span>
+        <span class="k">return</span> <span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span></div>
+
+    <span class="k">def</span> <span class="nf">_compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the PRO curve.</span>
+
+<span class="sd">        Perform the Connected Component Analysis first then compute the PRO curve.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple[Tensor, Tensor]: tuple containing final fpr and tpr values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">cca</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">perform_cca</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">dim_zero_cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="n">preds</span> <span class="o">=</span> <span class="n">dim_zero_cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preds</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_pro</span><span class="p">(</span><span class="n">cca</span><span class="o">=</span><span class="n">cca</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="n">preds</span><span class="o">=</span><span class="n">preds</span><span class="p">)</span>
 
 <div class="viewcode-block" id="AUPRO.compute"><a class="viewcode-back" href="../../../../reference_guide/api/metrics.html#anomalib.utils.metrics.AUPRO.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Fist compute PRO curve, then compute and scale area under the curve.</span>
