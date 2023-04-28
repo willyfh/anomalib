@@ -393,14 +393,31 @@
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="anomalib.post_processing.VisualizationMode">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.post_processing.</span></span><span class="sig-name descname"><span class="pre">VisualizationMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/post_processing/visualizer.html#VisualizationMode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.post_processing.VisualizationMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Type of visualization mode.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.post_processing.VisualizationMode.FULL">
+<span class="sig-name descname"><span class="pre">FULL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'full'</span></em><a class="headerlink" href="#anomalib.post_processing.VisualizationMode.FULL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anomalib.post_processing.VisualizationMode.SIMPLE">
+<span class="sig-name descname"><span class="pre">SIMPLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'simple'</span></em><a class="headerlink" href="#anomalib.post_processing.VisualizationMode.SIMPLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="anomalib.post_processing.Visualizer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.post_processing.</span></span><span class="sig-name descname"><span class="pre">Visualizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TaskType</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/post_processing/visualizer.html#Visualizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.post_processing.Visualizer" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anomalib.post_processing.</span></span><span class="sig-name descname"><span class="pre">Visualizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#anomalib.post_processing.VisualizationMode" title="anomalib.post_processing.visualizer.VisualizationMode"><span class="pre">VisualizationMode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TaskType</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/anomalib/post_processing/visualizer.html#Visualizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anomalib.post_processing.Visualizer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class that handles the logic of composing the visualizations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mode</strong> (<em>str</em>) – visualization mode, either “full” or “simple”</p></li>
+<li><p><strong>mode</strong> (<a class="reference internal" href="#anomalib.post_processing.VisualizationMode" title="anomalib.post_processing.VisualizationMode"><em>VisualizationMode</em></a>) – visualization mode, either “full” or “simple”</p></li>
 <li><p><strong>task</strong> (<em>TaskType</em>) – task type “segmentation”, “detection” or “classification”</p></li>
 </ul>
 </dd>
@@ -628,6 +645,11 @@ be normalized to image min-max</p></li>
 <li><a class="reference internal" href="#anomalib.post_processing.ThresholdMethod"><code class="docutils literal notranslate"><span class="pre">ThresholdMethod</span></code></a><ul>
 <li><a class="reference internal" href="#anomalib.post_processing.ThresholdMethod.ADAPTIVE"><code class="docutils literal notranslate"><span class="pre">ThresholdMethod.ADAPTIVE</span></code></a></li>
 <li><a class="reference internal" href="#anomalib.post_processing.ThresholdMethod.MANUAL"><code class="docutils literal notranslate"><span class="pre">ThresholdMethod.MANUAL</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#anomalib.post_processing.VisualizationMode"><code class="docutils literal notranslate"><span class="pre">VisualizationMode</span></code></a><ul>
+<li><a class="reference internal" href="#anomalib.post_processing.VisualizationMode.FULL"><code class="docutils literal notranslate"><span class="pre">VisualizationMode.FULL</span></code></a></li>
+<li><a class="reference internal" href="#anomalib.post_processing.VisualizationMode.SIMPLE"><code class="docutils literal notranslate"><span class="pre">VisualizationMode.SIMPLE</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#anomalib.post_processing.Visualizer"><code class="docutils literal notranslate"><span class="pre">Visualizer</span></code></a><ul>

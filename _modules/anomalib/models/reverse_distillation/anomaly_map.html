@@ -290,11 +290,20 @@
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
 <span class="kn">from</span> <span class="nn">kornia.filters</span> <span class="kn">import</span> <span class="n">gaussian_blur2d</span>
 <span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">ListConfig</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">nn</span>
+
+
+<div class="viewcode-block" id="AnomalyMapGenerationMode"><a class="viewcode-back" href="../../../../reference_guide/algorithms/reverse_distillation.html#anomalib.models.reverse_distillation.anomaly_map.AnomalyMapGenerationMode">[docs]</a><span class="k">class</span> <span class="nc">AnomalyMapGenerationMode</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Type of mode when generating anomaly imape.&quot;&quot;&quot;</span>
+
+    <span class="n">ADD</span> <span class="o">=</span> <span class="s2">&quot;add&quot;</span>
+    <span class="n">MULTIPLY</span> <span class="o">=</span> <span class="s2">&quot;multiply&quot;</span></div>
 
 
 <div class="viewcode-block" id="AnomalyMapGenerator"><a class="viewcode-back" href="../../../../reference_guide/algorithms/reverse_distillation.html#anomalib.models.reverse_distillation.anomaly_map.AnomalyMapGenerator">[docs]</a><span class="k">class</span> <span class="nc">AnomalyMapGenerator</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -303,20 +312,26 @@
 <span class="sd">    Args:</span>
 <span class="sd">        image_size (ListConfig, tuple): Size of original image used for upscaling the anomaly map.</span>
 <span class="sd">        sigma (int): Standard deviation of the gaussian kernel used to smooth anomaly map.</span>
-<span class="sd">        mode (str, optional): Operation used to generate anomaly map. Options are `add` and `multiply`.</span>
-<span class="sd">                Defaults to &quot;multiply&quot;.</span>
+<span class="sd">        mode (AnomalyMapGenerationMode, optional): Operation used to generate anomaly map.</span>
+<span class="sd">        Options are `AnomalyMapGenerationMode.ADD` and `AnomalyMapGenerationMode.MULTIPLY`.</span>
+<span class="sd">        Defaults to &quot;AnomalyMapGenerationMode.MULTIPLY&quot;.</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: In case modes other than multiply and add are passed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_size</span><span class="p">:</span> <span class="n">ListConfig</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;multiply&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">image_size</span><span class="p">:</span> <span class="n">ListConfig</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">,</span>
+        <span class="n">sigma</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="n">mode</span><span class="p">:</span> <span class="n">AnomalyMapGenerationMode</span> <span class="o">=</span> <span class="n">AnomalyMapGenerationMode</span><span class="o">.</span><span class="n">MULTIPLY</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_size</span> <span class="o">=</span> <span class="n">image_size</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">image_size</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
 
-        <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="s2">&quot;multiply&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">AnomalyMapGenerationMode</span><span class="o">.</span><span class="n">ADD</span><span class="p">,</span> <span class="n">AnomalyMapGenerationMode</span><span class="o">.</span><span class="n">MULTIPLY</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found mode </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2">. Only multiply and add are supported.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
 
@@ -330,11 +345,11 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Tensor: Anomaly maps of length batch.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiply&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">AnomalyMapGenerationMode</span><span class="o">.</span><span class="n">MULTIPLY</span><span class="p">:</span>
             <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span>
                 <span class="p">[</span><span class="n">student_features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">student_features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">device</span>
             <span class="p">)</span>  <span class="c1"># b c h w</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;add&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">AnomalyMapGenerationMode</span><span class="o">.</span><span class="n">ADD</span><span class="p">:</span>
             <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
                 <span class="p">[</span><span class="n">student_features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">student_features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">device</span>
             <span class="p">)</span>
@@ -343,9 +358,9 @@
             <span class="n">distance_map</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">F</span><span class="o">.</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">student_feature</span><span class="p">,</span> <span class="n">teacher_feature</span><span class="p">)</span>
             <span class="n">distance_map</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="n">distance_map</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
             <span class="n">distance_map</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">distance_map</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;bilinear&quot;</span><span class="p">,</span> <span class="n">align_corners</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiply&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">AnomalyMapGenerationMode</span><span class="o">.</span><span class="n">MULTIPLY</span><span class="p">:</span>
                 <span class="n">anomaly_map</span> <span class="o">*=</span> <span class="n">distance_map</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;add&quot;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">AnomalyMapGenerationMode</span><span class="o">.</span><span class="n">ADD</span><span class="p">:</span>
                 <span class="n">anomaly_map</span> <span class="o">+=</span> <span class="n">distance_map</span>
 
         <span class="n">anomaly_map</span> <span class="o">=</span> <span class="n">gaussian_blur2d</span><span class="p">(</span>

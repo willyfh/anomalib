@@ -305,6 +305,7 @@
 <span class="kn">from</span> <span class="nn">anomalib.data.utils</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">DownloadInfo</span><span class="p">,</span>
     <span class="n">InputNormalizationMethod</span><span class="p">,</span>
+    <span class="n">LabelName</span><span class="p">,</span>
     <span class="n">Split</span><span class="p">,</span>
     <span class="n">TestSplitMode</span><span class="p">,</span>
     <span class="n">ValSplitMode</span><span class="p">,</span>
@@ -383,8 +384,8 @@
     <span class="n">samples</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">samples</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;ok&quot;</span><span class="p">),</span> <span class="s2">&quot;mask_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
     <span class="c1"># Create label index for normal (0) and anomalous (1) images.</span>
-    <span class="n">samples</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">samples</span><span class="o">.</span><span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;ok&quot;</span><span class="p">),</span> <span class="s2">&quot;label_index&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">samples</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">samples</span><span class="o">.</span><span class="n">label</span> <span class="o">!=</span> <span class="s2">&quot;ok&quot;</span><span class="p">),</span> <span class="s2">&quot;label_index&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">samples</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">samples</span><span class="o">.</span><span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;ok&quot;</span><span class="p">),</span> <span class="s2">&quot;label_index&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">LabelName</span><span class="o">.</span><span class="n">NORMAL</span>
+    <span class="n">samples</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">samples</span><span class="o">.</span><span class="n">label</span> <span class="o">!=</span> <span class="s2">&quot;ok&quot;</span><span class="p">),</span> <span class="s2">&quot;label_index&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">LabelName</span><span class="o">.</span><span class="n">ABNORMAL</span>
     <span class="n">samples</span><span class="o">.</span><span class="n">label_index</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">label_index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
     <span class="c1"># Get the data frame for the split.</span>

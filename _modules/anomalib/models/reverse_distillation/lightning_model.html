@@ -294,6 +294,7 @@
 
 <span class="kn">from</span> <span class="nn">anomalib.models.components</span> <span class="kn">import</span> <span class="n">AnomalyModule</span>
 
+<span class="kn">from</span> <span class="nn">.anomaly_map</span> <span class="kn">import</span> <span class="n">AnomalyMapGenerationMode</span>
 <span class="kn">from</span> <span class="nn">.loss</span> <span class="kn">import</span> <span class="n">ReverseDistillationLoss</span>
 <span class="kn">from</span> <span class="nn">.torch_model</span> <span class="kn">import</span> <span class="n">ReverseDistillationModel</span>
 
@@ -313,7 +314,7 @@
         <span class="n">input_size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
         <span class="n">backbone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">layers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-        <span class="n">anomaly_map_mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">anomaly_map_mode</span><span class="p">:</span> <span class="n">AnomalyMapGenerationMode</span><span class="p">,</span>
         <span class="n">lr</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">beta1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">beta2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>

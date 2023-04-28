@@ -285,6 +285,7 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span>
 
@@ -340,16 +341,23 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">anomalous_boxes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pred_boxes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">box_labels</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)]</span></div>
 
 
+<div class="viewcode-block" id="VisualizationMode"><a class="viewcode-back" href="../../../reference_guide/api/post_processing.html#anomalib.post_processing.VisualizationMode">[docs]</a><span class="k">class</span> <span class="nc">VisualizationMode</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Type of visualization mode.&quot;&quot;&quot;</span>
+
+    <span class="n">FULL</span> <span class="o">=</span> <span class="s2">&quot;full&quot;</span>
+    <span class="n">SIMPLE</span> <span class="o">=</span> <span class="s2">&quot;simple&quot;</span></div>
+
+
 <div class="viewcode-block" id="Visualizer"><a class="viewcode-back" href="../../../reference_guide/api/post_processing.html#anomalib.post_processing.Visualizer">[docs]</a><span class="k">class</span> <span class="nc">Visualizer</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class that handles the logic of composing the visualizations.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        mode (str): visualization mode, either &quot;full&quot; or &quot;simple&quot;</span>
+<span class="sd">        mode (VisualizationMode): visualization mode, either &quot;full&quot; or &quot;simple&quot;</span>
 <span class="sd">        task (TaskType): task type &quot;segmentation&quot;, &quot;detection&quot; or &quot;classification&quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="n">TaskType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;full&quot;</span><span class="p">,</span> <span class="s2">&quot;simple&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="n">VisualizationMode</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="n">TaskType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">VisualizationMode</span><span class="o">.</span><span class="n">FULL</span><span class="p">,</span> <span class="n">VisualizationMode</span><span class="o">.</span><span class="n">SIMPLE</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown visualization mode: </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2">. Please choose one of [&#39;full&#39;, &#39;simple&#39;]&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
         <span class="k">if</span> <span class="n">task</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">TaskType</span><span class="o">.</span><span class="n">CLASSIFICATION</span><span class="p">,</span> <span class="n">TaskType</span><span class="o">.</span><span class="n">DETECTION</span><span class="p">,</span> <span class="n">TaskType</span><span class="o">.</span><span class="n">SEGMENTATION</span><span class="p">):</span>
@@ -401,9 +409,9 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            The full or simple visualization for the image, depending on the specified mode.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;full&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">VisualizationMode</span><span class="o">.</span><span class="n">FULL</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visualize_full</span><span class="p">(</span><span class="n">image_result</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;simple&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">VisualizationMode</span><span class="o">.</span><span class="n">SIMPLE</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visualize_simple</span><span class="p">(</span><span class="n">image_result</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown visualization mode: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
