@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Export &amp; Optimization" href="export.html" /><link rel="prev" title="Training" href="training.html" />
 
     <link rel="shortcut icon" href="../_static/anomalib-favicon.png"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
-        <title>Inference - Anomalib v0.5.0-dev</title>
+        <title>Inference - Anomalib v0.5.0</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">Anomalib v0.5.0-dev</div></a>
+      <a href="../index.html"><div class="brand">Anomalib v0.5.0</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -331,7 +331,7 @@
 <p>To run OpenVINO inference, first make sure that your model has been exported to the OpenVINO IR format. Once the model has been exported, OpenVINO inference can be triggered by running the OpenVINO entrypoint script in <code class="docutils literal notranslate"><span class="pre">tools/inference/openvino.py</span></code>. The command line arguments are very similar to PyTorch inference entrypoint script:</p>
 <p>For correct inference results, the <code class="docutils literal notranslate"><span class="pre">metadata</span></code> argument should be specified and point to the <code class="docutils literal notranslate"><span class="pre">metadata.json</span></code> file that was generated when exporting the OpenVINO IR model. The file is stored in the same folder as the <code class="docutils literal notranslate"><span class="pre">.xml</span></code> and <code class="docutils literal notranslate"><span class="pre">.bin</span></code> files of the model.</p>
 <p>As an example, OpenVINO inference can be triggered by the following command:</p>
-<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">tools/inference/openvino.py</span> <span class="pre">--config</span> <span class="pre">padim.yaml</span> <span class="pre">--weights</span> <span class="pre">results/openvino/model.xml</span> <span class="pre">--input</span> <span class="pre">image.png</span> <span class="pre">--metadata</span> <span class="pre">results/openvino/metadata.json</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">tools/inference/openvino.py</span> <span class="pre">--weights</span> <span class="pre">results/openvino/model.xml</span> <span class="pre">--input</span> <span class="pre">image.png</span> <span class="pre">--metadata</span> <span class="pre">results/openvino/metadata.json</span></code></p>
 <p>Similar to PyTorch inference, the visualization results will be displayed on the screen, and optionally saved to the file system location specified by the <code class="docutils literal notranslate"><span class="pre">save_data</span></code> parameter.</p>
 </section>
 <section id="gradio-inference">
@@ -340,13 +340,11 @@
 <p>To use gradio with OpenVINO model, first make sure that your model has been exported to the OpenVINO IR format and ensure that the <cite>metadata</cite> argument points to the <code class="docutils literal notranslate"><span class="pre">metadata.json</span></code> file that was generated when exporting the OpenVINO IR model. The file is stored in the same folder as the <code class="docutils literal notranslate"><span class="pre">.xml</span></code> and <code class="docutils literal notranslate"><span class="pre">.bin</span></code> files of the model.</p>
 <p>As an example, PyTorch model can be used by the following command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>tools/inference/gradio_inference.py<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--config<span class="w"> </span>./anomalib/models/padim/config.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--weights<span class="w"> </span>./results/padim/mvtec/bottle/weights/model.ckpt
 </pre></div>
 </div>
 <p>Similarly, you can use OpenVINO model by the following command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>python<span class="w"> </span>tools/inference/gradio_inference.py<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--config<span class="w"> </span>./anomalib/models/padim/config.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--weights<span class="w"> </span>./results/padim/mvtec/bottle/openvino/openvino_model.onnx<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--metadata<span class="w"> </span>./results/padim/mvtec/bottle/openvino/metadata.json
 </pre></div>
